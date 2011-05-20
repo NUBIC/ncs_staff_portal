@@ -1,0 +1,22 @@
+%p#notice= notice
+-display_content(@staff.name, "Name:")
+-display_content(@staff.email, "Email:")
+-display_content(@staff.netid, "Netid:")
+-display_content("Northwestern University", "Study center:")
+-display_content(@staff.staff_type, "Staff Type:", true)
+-display_content(@staff.staff_type_other, "Staff Type Other:")
+-display_content(@staff.yob, "Year of birth:")
+-display_content(@staff.gender, "Gender:", true)
+-display_content(@staff.race, "Race:", true)
+-display_content(@staff.race_other, "Other race type:")
+-display_content(@staff.ethnicity, "Ethnicity:", true)
+-display_content(@staff.subcontractor, "Does staff member work for subcontractor:", true)
+-display_content(@staff.experience, "Direct experience conducting population based, household field interviewing:", true)
+
+= link_to 'Edit', edit_staff_path(@staff)
+\|
+= link_to 'Back', staff_index_path
+\|
+= link_to 'Certifications/Trainings', new_staff_staff_cert_training_path(params[:id])
+\|
+= link_to 'Tasks and Expenses', new_staff_management_task_path(params[:id])

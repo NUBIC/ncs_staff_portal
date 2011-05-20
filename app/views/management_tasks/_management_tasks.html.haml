@@ -1,0 +1,53 @@
+%h1 Listing Management Tasks
+%div.yui-skin-sam
+  %div#tasks-list
+    %table#management-tasks-list
+      - @management_tasks.each do |management_task|
+        %tr
+          %td= link_to management_task.task_date, edit_staff_management_task_path(@staff, management_task)
+          - if !management_task.task_type_code.blank?
+            - if management_task.task_type.display_text == "Other"
+              %td= management_task.task_type_other
+            - else
+              %td= management_task.task_type.display_text
+          - else 
+            %td= ""
+          %td= management_task.hours
+          %td= management_task.miles
+          %td= management_task.expenses
+          %td= management_task.comment
+          %td= button_to "Delete", { :action => "destroy", :id => management_task.id, :staff_id => params[:staff_id] },:confirm => "Are you sure?", :method => :delete  
+%br
+= link_to 'Back to the staff', staff_path(params[:staff_id])
+:javascript
+    $(document).ready(function() {
+      displayTasksList()
+    });
+    
+    function displayTasksList() {
+      var columnDefs = [
+          { key: "date", label: "Task Date", sortable: true },
+          { key: "type", label: "Type" },
+          { key: "hours", label: "Hours" },
+          { key: "miles", label: "Miles" },
+          { key: "expenses", label: "Expenses" },
+          { key: "comment", label: "Comment" },
+          { key: "controls", label: "Controls"}
+      ];
+      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("management-tasks-list"));
+      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+      dataSource.responseSchema = {
+        fields: [
+          { key: "date" },
+          { key: "type" },
+          { key: "hours" },
+          { key: "miles" },
+          { key: "expenses" },
+          { key: "comment" },
+          { key: "controls" }
+        ]
+      };
+      new YAHOO.widget.DataTable("tasks-list", columnDefs, dataSource, {
+        sortedBy: { key: "date" }
+      });
+    }

@@ -1,0 +1,41 @@
+= form_for [@staff, @staff_cert_training] do |f|
+  -if @staff_cert_training.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@staff_cert_training.errors.count, "error")} prohibited this staff_cert_training from being saved:"
+      %ul
+        - @staff_cert_training.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :certificate_type_code, "Certification/Training Type"
+    = f.select :certificate_type_code, NcsCode.ncs_code_lookup(:certificate_type_code), :prompt => 'Select Certification/Training Type'
+  .field
+    = f.label :complete_code, "Does the staff member completed training?"
+    = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), :prompt => 'Select Completed Status'
+  .field
+    = f.radio_button :cert_date, :cert_date
+    = f.label :cert_date, "Date staff member was certified: (YYYY-MM-DD) "
+    = f.text_field :cert_date, :class => "datepicker"
+  .field
+    = f.radio_button:cert_date, "-2" 
+    = f.label :cert_date, "Don't Know"
+  .field
+    = f.radio_button:cert_date, "-7" 
+    = f.label :cert_date, "Not Applicable"
+  .field
+    = f.label :background_check_code, "Level of background check required"
+    = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
+  .field
+    = f.label :frequency, "Frequency at which certification/training needs to be completed" 
+    = f.text_field :frequency
+  .field
+    = f.label :expiration_date, "Cerification/Training expiration date"
+    = f.text_field :expiration_date, :class => "datepicker"
+  .field
+    = f.label :comment
+    = f.text_field :comment
+  .actions
+    = f.submit 'Save'
+    = link_to 'Cancel', new_staff_staff_cert_training_path(params[:staff_id])
+  :javascript
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });

@@ -1,0 +1,48 @@
+= form_for [@staff, @staff_weekly_expense] do |f|
+  -if @staff_weekly_expense.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@staff_weekly_expense.errors.count, "error")} prohibited this staff_weekly_expense from being saved:"
+      %ul
+        - @staff_weekly_expense.errors.full_messages.each do |msg|
+          %li= msg
+  - @managementTasksTemplate = generate_nested_attributes_template(f, :management_tasks, 'staff_weekly_expenses/management_tasks')
+  .field
+    = f.label :week_start_date
+    = f.text_field :week_start_date, :class => "datepicker"
+  .field
+    = f.label :staff_pay
+    = f.text_field :staff_pay
+  .field
+    = f.label :staff_hours
+    = f.text_field :staff_hours
+  .field
+    = f.label :staff_expenses
+    = f.text_field :staff_expenses
+  .field
+    = f.label :staff_miles
+    = f.text_field :staff_miles
+  .field
+    = f.label :comment
+    = f.text_area :comment
+  %table{ :class => 'records management_tasks' }
+    %thead
+      %tr
+        %th
+          Management Tasks
+        %th
+    %tbody.nested_records_management_tasks
+      - f.fields_for :management_tasks do |management_task|
+        = render :partial => 'staff_weekly_expenses/management_tasks', :locals => { :f => management_task }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add", :management_tasks
+  .actions
+    = f.submit 'Save'
+  :javascript
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    $(function () {
+      var managementTasksTemplate = '#{@managementTasksTemplate}',
+      managmentTasksUI = new NCSPortal.ManagementTasks.UI({managementTasksTemplate: managementTasksTemplate });
+    });
+

@@ -1,0 +1,29 @@
+%h1 Listing staff weekly expenses
+
+%table
+  %tr
+    %th Week start date
+    %th Staff pay
+    %th Staff hours
+    %th Staff expenses
+    %th Staff miles
+    %th
+    %th
+    %th
+
+  - @staff_weekly_expenses.each do |staff_weekly_expense|
+    %tr
+      %td= staff_weekly_expense.week_start_date
+      %td= staff_weekly_expense.staff_pay
+      %td= staff_weekly_expense.staff_hours
+      %td= staff_weekly_expense.staff_expenses
+      %td= staff_weekly_expense.staff_miles
+      %td= link_to 'Show', staff_staff_weekly_expense_path(params[:staff_id], staff_weekly_expense)
+      %td= link_to 'Edit', edit_staff_staff_weekly_expense_path(params[:staff_id], staff_weekly_expense)
+
+
+%br
+
+= link_to 'Add new weekly expense', new_staff_staff_weekly_expense_path(params[:staff_id])
+\|
+= link_to 'Back to the staff', staff_path(params[:staff_id])

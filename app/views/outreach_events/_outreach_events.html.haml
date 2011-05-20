@@ -1,0 +1,148 @@
+= form_for @outreach_event do |f|
+  -if @outreach_event.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@outreach_event.errors.count, "error")} prohibited this outreach_event from being saved:"
+      %ul
+        - @outreach_event.errors.full_messages.each do |msg|
+          %li= msg
+  - @outreachStaffMembersTemplate = generate_nested_attributes_template(f, :outreach_staff_members, 'outreach_events/outreach_staff_members')
+  
+  = label_tag "Outreach Description"
+  .field
+    = f.label :event_date, "Date of outreach activity:"
+    = f.text_field :event_date, :class => "datepicker", :id => "pickdate"
+  .field
+    = label_tag "Outreach target(s). Check all that apply."
+    - NcsCode.ncs_code_lookup(:target_code).each do |code| 
+      .field   
+        = check_box_tag "outreach_event[target_attributes][][target_code]", code.second, @outreach_event.outreach_targets.map(&:target_code).include?(code.second)
+        = code.first
+  .field
+    = f.label :mode_code, "Outreach mode:"
+    = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), :prompt => "Select"
+  .field
+    = f.label :mode_other, "Outreach mode - other specify:"
+    = f.text_field :mode_other
+  .field
+    = f.label :outreach_type_code, "Outreach type:"
+    = f.select :outreach_type_code, NcsCode.ncs_code_lookup(:outreach_type_code), :prompt => "Select"
+  .field
+    = f.label :outreach_type_other, "Outreach type - other specify:"
+    = f.text_field :outreach_type_other
+  
+  = label_tag "Outreach Details"
+  .field
+    = f.label :quantity, "Number of letters mailed/attendance at meeting,etc:"
+    = f.text_field :quantity
+  .field
+    = f.label :cost, "Non-labor cost to conduct outreach:"
+    = f.text_field :cost
+  .field
+    = f.label :no_of_staff, "Number of staff required for activity:"
+    = f.text_field :no_of_staff
+  = label_tag "Outreach Targets"
+  .field
+    = f.label :tailored_code, "Was outreach effort tailored to a specific group?"
+    = f.select :tailored_code, NcsCode.ncs_code_lookup(:tailored_code), :prompt => "Select"
+  .field
+    = f.label :language_specific_code, "Was the outreach language specific?"
+    = f.select :language_specific_code, NcsCode.ncs_code_lookup(:language_specific_code), :prompt => "Select"
+  .field
+    = f.label :language_code, "Specific Language target:"
+    = f.select :language_code, NcsCode.ncs_code_lookup(:language_code), :prompt => "Select"
+  .field
+    = f.label :language_other, "Language target - other specify:"
+    = f.text_field :language_other
+  .field
+    = f.label :race_specific_code, "Was the outreach targeted to a specific racial group?"
+    = f.select :race_specific_code, NcsCode.ncs_code_lookup(:race_specific_code), :prompt => "Select"
+  
+  = label_tag "Targeted racial group(s). Check all that apply."
+  - NcsCode.ncs_code_lookup(:outreach_race_code).each do |code|
+    .field()
+      - if ((race = @outreach_event.outreach_races.detect {|outreach_race| outreach_race.race_code == code.second}) != nil)
+        = check_box_tag "outreach_event[race_attributes][][race_code]", code.second, true, :onclick => "check_for_destroy(this)", :id => "outreach_event[race_attributes][#{code.second}][race_code]"
+        = label_tag "", code.first, :for => "outreach_event[race_attributes][#{code.second}][race_code]"
+        - if (code.first.to_s == "Other")
+          = text_field_tag "outreach_event[race_attributes][][race_other]"
+        = hidden_field_tag "outreach_event[race_attributes][][id]", race.id
+        = hidden_field_tag "outreach_event[race_attributes][][should_destroy]", false, :class => "should_destroy"
+      - else
+        = check_box_tag "outreach_event[new_race_attributes][][race_code]", code.second, false, :id => "outreach_event[new_race_attributes][#{code.second}][race_code]"
+        = label_tag "", code.first, :for => "outreach_event[new_race_attributes][#{code.second}][race_code]"
+        - if (code.first.to_s == "Other")
+          = text_field_tag "outreach_event[new_race_attributes][][race_other]"
+  .field
+    = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
+    = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), :prompt => "Select"
+  .field
+    = f.label :culture_code, "Targerted cultural group:"
+    = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), :prompt => "Select"
+  .field
+    = f.label :culture_other, "Cultural group - other specify:"
+    = f.text_field :culture_other
+  
+  = label_tag "Outreach Evaluation"
+  .field
+    = label_tag "How was the outreach evaluated? Check all that apply?"
+    - NcsCode.ncs_code_lookup(:evaluation_code).each do |code|
+      .field()      
+        = check_box_tag "outreach_event[evaluation_attributes][][evaluation_code]", code[1], @outreach_event.outreach_evaluations.map(&:evaluation_code).include?(code.second)
+        = code.first
+  .field
+    = f.label :evaluation_result_code, "Results of the outreach activity:"
+    = f.select :evaluation_result_code, NcsCode.ncs_code_lookup(:evaluation_result_code), :prompt => "Select"
+  
+  %table{ :class => 'records outreach_staff_members' }
+    %thead
+      %tr
+        %th
+          Staff Members Participating in Outreach Event
+        %th
+    %tbody.nested_records_outreach_staff_members
+      - f.fields_for :outreach_staff_members do |outreach_staff_member|
+        = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add", :outreach_staff_members
+  .actions
+    = f.submit 'Save'
+  :javascript
+    $(function () {
+      var outreachStaffMembersTemplate = '#{@outreachStaffMembersTemplate}',
+      outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: outreachStaffMembersTemplate });
+    });
+    var prev_sat_class = "unavailable"; 
+    $(".datepicker").datepicker({
+      dateFormat: 'yy-mm-dd',
+      beforeShowDay: checkAvailability,
+      firstDay: 1,
+    
+      maxDate: "31 December 2011",
+      prevText: "&lt;",
+      nextText: "&gt;",
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "0:+1",
+      onSelect:function(input,inst){prev_sat_class = "unavailable";},
+      onChangeMonthYear:function(input,inst){prev_sat_class = "unavailable";} 
+      });
+
+      function checkAvailability(showdate) {
+      var available = false; 
+      var return_class = "unavailable";
+      if (showdate.getDay() == 1) 
+        {
+        var checkdate = $.datepicker.formatDate('yy-mm-dd', showdate);
+        var datestatus = "available";
+        var return_class = datestatus;
+        if (datestatus == "available") available = true;
+        else available = false;
+        prev_sat_class = return_class;
+        }
+      else return_class = prev_sat_class;
+      return [available, return_class];
+      }

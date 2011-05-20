@@ -1,0 +1,23 @@
+%h1 Listing outreach_events
+
+%table
+  %tr
+    %th Outreach Event date
+    %th Outreach target(s)
+    %th Result of outreach activity
+    %th
+    %th
+    %th
+
+  - @outreach_events.each do |outreach_event|
+    %tr
+      %td= outreach_event.event_date
+      %td= outreach_event.outreach_targets.map{|target| target.target.display_text}.join(', ')
+      %td= outreach_event.evaluation_result.display_text unless outreach_event.evaluation_result_code.blank?
+      %td= link_to 'Show', outreach_event
+      %td= link_to 'Edit', edit_outreach_event_path(outreach_event)
+      %td= link_to 'Destroy', outreach_event, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Outreach event', new_outreach_event_path

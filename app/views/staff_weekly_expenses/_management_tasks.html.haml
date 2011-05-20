@@ -1,0 +1,15 @@
+%tr{ :class => "management_task fields" }
+  %td
+    = f.label :task_type_code, "Management Task Type"
+    = f.select :task_type_code, NcsCode.ncs_code_lookup(:task_type_code), :prompt => 'Select Management Task Type'
+  %td
+    = f.label :task_type_other, "Other Management Task Type"
+    = f.text_field :task_type_other
+  %td
+    = f.label :task_hours, "Number of hours spent on task"
+    = f.text_field :task_hours
+  %td
+    = f.label :comment, "Comment"
+    = f.text_field :comment
+  %td
+    = link_to_remove_fields 'Remove', f, :management_tasks

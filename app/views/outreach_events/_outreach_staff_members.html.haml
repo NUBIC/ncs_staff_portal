@@ -1,0 +1,6 @@
+%tr{ :class => "outreach_staff_member fields" }
+  %td
+    = label_tag "Participating staff member:"
+    = f.select :staff_id, Staff.all.map {|s| [s.netid, s.id]}, { :include_blank => true },{ :class => 'outreach_staff_combobox_autocompleter' }
+  %td
+    = link_to_remove_fields 'Remove', f, :outreach_staff_members

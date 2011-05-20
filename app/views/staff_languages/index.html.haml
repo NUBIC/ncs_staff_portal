@@ -1,0 +1,21 @@
+x%h1 Listing staff_languages
+
+%table
+  %tr
+    %th Staff
+    %th Lang code
+    %th
+    %th
+    %th
+
+  - @staff_languages.each do |staff_language|
+    %tr
+      %td= staff_language.staff_id
+      %td= staff_language.lang_code
+      %td= link_to 'Show', staff_language
+      %td= link_to 'Edit', edit_staff_language_path(staff_language)
+      %td= link_to 'Destroy', staff_language, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Staff language', new_staff_language_path

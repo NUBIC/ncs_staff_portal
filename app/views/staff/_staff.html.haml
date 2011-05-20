@@ -1,0 +1,72 @@
+- form_for @staff, :html => { :id => 'staff' } do |f|
+  -if @staff.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@staff.errors.count, "error")} prohibited this staff from being saved:"
+      %ul
+        - @staff.errors.full_messages.each do |msg|
+          %li= msg
+  - @staffLanguagesTemplate = generate_nested_attributes_template(f, :staff_languages, 'staff/staff_languages')
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :email
+    = f.text_field :email
+  .field
+    = f.label :netid
+    = f.text_field :netid
+  .field
+    = label_tag "Study center:"
+    = text_field_tag "study_center", "Northwestern University", :readonly => true
+    = f.hidden_field :study_center, :value => 20000029
+  .field
+    = f.label :staff_type_code, "Staff Type"
+    = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), :prompt => 'Select NCS Staff Type'
+  .field
+    = f.label :staff_type_other, "Other staff type"
+    = f.text_field :staff_type_other
+  .field
+    = f.label :yob , "Year of birth"
+    = f.text_field :yob, {:size =>4, :maxlength =>4}
+  .field
+    = f.label :age_range_code, "Age range"
+    = f.select :age_range_code, NcsCode.ncs_code_lookup(:age_range_code), :prompt => 'Select Age range'
+  .field
+    = f.label :gender_code, "Gender"
+    = f.select :gender_code, NcsCode.ncs_code_lookup(:gender_code), :prompt => 'Select Gender'
+  .field
+    = f.label :race_code, "Race"
+    = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), :prompt => 'Select Race'
+  .field
+    = f.label :race_other, "Other race type"
+    = f.text_field :race_other
+  .field
+    = f.label :ethnicity_code, "Ethnicity"
+    = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
+  .field
+    = f.label :subcontractor_code, "Does staff member work for subcontrator"
+    = f.select :subcontractor_code, NcsCode.ncs_code_lookup(:subcontractor_code), :prompt => 'Select'
+  .field
+    = f.label :experience_code, "Direct experience conducting population based, household field interviewing"
+    = f.select :experience_code, NcsCode.ncs_code_lookup(:experience_code), :prompt => 'Select Experience'
+  %table{ :class => 'records staff_languages' }
+    %thead
+      %tr
+        %th
+          Languages
+        %th
+    %tbody.nested_records_staff_languages
+      - f.fields_for :staff_languages do |staff_language|
+        = render :partial => 'staff/staff_languages', :locals => { :f => staff_language }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add", :staff_languages
+  .actions
+    = f.submit 'Save'
+  
+  :javascript
+    $(function () {
+      var staffLanguagesTemplate = '#{@staffLanguagesTemplate }',
+      staffLanguageUI = new NCSPortal.StaffLanguages.UI({staffLanguagesTemplate: staffLanguagesTemplate });
+    });

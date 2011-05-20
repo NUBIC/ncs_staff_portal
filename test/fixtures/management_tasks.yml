@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: MyString
+  weekly_staff_expense_id: MyString
+  type: 1
+  type_other: MyString
+  hours: 9.99
+  comment: MyText
+
+two:
+  id: MyString
+  weekly_staff_expense_id: MyString
+  type: 1
+  type_other: MyString
+  hours: 9.99
+  comment: MyText

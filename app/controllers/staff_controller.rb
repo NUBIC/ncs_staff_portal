@@ -1,0 +1,88 @@
+class StaffController < SecuredController
+  set_tab :staff
+  # GET /staff
+  # GET /staff.xml
+  def index
+    @staff = Staff.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @staff }
+    end
+  end
+
+  # GET /staff/1
+  # GET /staff/1.xml
+  def show
+    @staff = Staff.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @staff }
+    end
+  end
+
+  # GET /staff/new
+  # GET /staff/new.xml
+  def new
+    @staff = Staff.new
+    # @staff.staff_languages.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @staff }
+    end
+  end
+
+  # GET /staff/1/edit
+  def edit
+    @staff = Staff.find(params[:id])
+  end
+
+  # POST /staff
+  # POST /staff.xml
+  def create
+    @staff = Staff.new(params[:staff])
+
+    respond_to do |format|
+      if @staff.save
+        format.html { redirect_to(@staff, :notice => 'Staff was successfully created.') }
+        format.xml  { render :xml => @staff, :status => :created, :location => @staff }
+      else
+        Rails.logger.info('hello jalpa')
+        Rails.logger.info("Errors: #{@staff.errors.size}")
+        Rails.logger.info("Errors: #{@staff.errors.full_messages}")                
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /staff/1
+  # PUT /staff/1.xml
+  def update
+    @staff = Staff.find(params[:id])
+
+    respond_to do |format|
+      if @staff.update_attributes(params[:staff])
+        format.html { redirect_to(@staff, :notice => 'Staff was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /staff/1
+  # DELETE /staff/1.xml
+  def destroy
+    @staff = Staff.find(params[:id])
+    @staff.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(staff_index_url) }
+      format.xml  { head :ok }
+    end
+  end
+end

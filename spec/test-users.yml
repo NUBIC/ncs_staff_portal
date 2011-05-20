@@ -1,0 +1,20 @@
+users:
+  superuser: 
+    password: superuser
+    first_name: FName1
+    last_name: LName1
+    portals: 
+      - StaffPortal: 
+        - staff
+        - supervisor
+  staff: 
+    password: staff
+    first_name: FName2
+    last_name: LName2
+    portals:
+      - StaffPortal:
+        - staff
+groups: 
+  StaffPortal:
+    - staff
+    - supervisor

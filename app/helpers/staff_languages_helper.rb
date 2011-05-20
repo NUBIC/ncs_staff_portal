@@ -1,0 +1,2 @@
+module StaffLanguagesHelper
+end

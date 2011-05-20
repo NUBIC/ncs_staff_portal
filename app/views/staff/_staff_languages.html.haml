@@ -1,0 +1,8 @@
+%tr{ :class => "staff_language fields" }
+  %td
+    = f.label :lang_code, "Language"
+    = f.select :lang_code, NcsCode.ncs_code_lookup(:lang_code), :prompt => 'Select language'
+    = f.label :lang_other, "Other language"
+    = f.text_field :lang_other
+  %td
+    = link_to_remove_fields 'Remove', f, :staff_languages
