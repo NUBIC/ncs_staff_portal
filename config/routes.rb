@@ -13,8 +13,9 @@ OMA::Application.routes.draw do
     resources :staff_cert_trainings, :staff_weekly_expenses, :management_tasks
   end
 
-  root :to => "staff#index"
+  root :to => "public#index"
   
+  match 'dashboard' => 'secured#dashboard', :as => 'dashboard'
   match 'logout' => 'logout', :as => 'logout'
 
   # The priority is based upon order of creation:

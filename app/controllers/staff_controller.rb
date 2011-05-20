@@ -1,13 +1,15 @@
 class StaffController < SecuredController
-  set_tab :staff
+  set_tab :staff, :except => :show #This will change for Superviors, TODO:fix to support supervisor viewing of staff info under staff tab and not 'my info' tab
+  set_tab :my_info, :only => :show
+
   # GET /staff
   # GET /staff.xml
   def index
-    @staff = Staff.all
+    @staff_list = Staff.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @staff }
+      format.xml  { render :xml => @staff_list }
     end
   end
 

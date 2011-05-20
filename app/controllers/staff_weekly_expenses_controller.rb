@@ -1,4 +1,6 @@
 class StaffWeeklyExpensesController < SecuredController
+  set_tab :staff_weekly_expenses
+
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
   def index

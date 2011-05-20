@@ -4,7 +4,7 @@
 %div.yui-skin-sam
   %div#staff-list
     %table#staff-list-tbl
-      - @staff.each do |staff|
+      - @staff_list.each do |staff|
         %tr
           %td= link_to staff.netid, staff
           %td= staff.name

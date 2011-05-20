@@ -14,12 +14,9 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
-    t.date     "task_date"
     t.integer  "task_type_code"
     t.string   "task_type_other"
-    t.decimal  "hours"
-    t.decimal  "expenses"
-    t.decimal  "miles"
+    t.decimal  "task_hours"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -36,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
   end
 
   create_table "outreach_evaluations", :force => true do |t|
-    t.integer  "outreach_event_id"
     t.integer  "evaluation_code"
     t.string   "evaluation_other"
     t.datetime "created_at"
@@ -81,7 +77,6 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
   end
 
   create_table "outreach_targets", :force => true do |t|
-    t.integer  "outreach_event_id"
     t.integer  "target_code"
     t.string   "target_other"
     t.datetime "created_at"
@@ -110,9 +105,9 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
 
   create_table "staff_cert_trainings", :force => true do |t|
     t.integer  "staff_id"
-    t.integer  "certificate_type_code"
+    t.integer  "type_code"
     t.integer  "complete_code"
-    t.string   "cert_date"
+    t.date     "cert_date"
     t.integer  "background_check_code"
     t.string   "frequency"
     t.date     "expiration_date"

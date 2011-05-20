@@ -2,16 +2,19 @@
 %html
   %head>
     %title NCS Staff Portal
-      =stylesheet_link_tag :all
-      = javascript_include_tag('jquery-1.4.4', 'jquery-ui-1.8.7', 'application','YUI/2.9/yahoo-dom-event','YUI/2.9/element-min','YUI/2.9/datasource-min','YUI/2.9/datatable-min')
-      = stylesheet_link_tag('jquery-ui-1.8.7.custom.css', 'YUI/2.9/datatable', 'YUI/2.9/datatable-skin')
-      = yield :javascript
-      = yield :head
-      = csrf_meta_tag
+    = stylesheet_link_tag :all
+    = javascript_include_tag('jquery-1.4.4', 'jquery-ui-1.8.7', 'application','YUI/2.9/yahoo-dom-event','YUI/2.9/element-min','YUI/2.9/datasource-min','YUI/2.9/datatable-min')
+    = stylesheet_link_tag('jquery-ui-1.8.7.custom.css', 'YUI/2.9/datatable', 'YUI/2.9/datatable-skin')
+    = yield :javascript
+    = yield :head
+    = csrf_meta_tag
   %body
     -tabs_tag do |tab|
-      -if current_user.permit?(:Supervisor)
-        = tab.staff 'Staff Roaster', root_path
       = tab.outreach_events 'Outreach Activities', outreach_events_path
+      = tab.staff_weekly_expenses 'Time and Expense', staff_staff_weekly_expenses_path(:staff_id => @current_staff.id) 
+      -if current_user.permit?(:supervisor)
+        = tab.staff 'Staff Roaster', staff_index_path
+      = tab.my_info 'My Information', staff_path(@current_staff)
+      
     = render('partials/current_user', :current_user => current_user)
     = yield 
