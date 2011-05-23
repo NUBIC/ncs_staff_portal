@@ -12,13 +12,25 @@
     = yield :javascript
     = yield :head
     = csrf_meta_tag
-  %body
-    -tabs_tag do |tab|
-      = tab.outreach_events 'Outreach Activities', outreach_events_path
-      = tab.staff_weekly_expenses 'Time and Expense', staff_staff_weekly_expenses_path(:staff_id => @current_staff.id) 
-      -if current_user.permit?(:supervisor)
-        = tab.staff 'Staff Roaster', staff_index_path
-      = tab.my_info 'My Information', staff_path(@current_staff)
-      
-    = render('partials/current_user', :current_user => current_user)
-    = yield 
+  %body.bp.ncs
+    #container
+      #header
+        #app_name
+          NCS Staff Portal
+        = render('partials/current_user', :current_user => current_user)
+        #tab_navigation
+          -tabs_tag do |tab|
+            = tab.outreach_events 'Outreach Activities', outreach_events_path
+            = tab.staff_weekly_expenses 'Time and Expense', staff_staff_weekly_expenses_path(:staff_id => @current_staff.id) 
+            -if current_user.permit?(:supervisor)
+              = tab.staff 'Staff Roaster', staff_index_path
+            = tab.my_info 'My Information', staff_path(@current_staff)
+      #content
+        = yield 
+      #footer
+        %p
+          Release Version 1.0
+        %p
+          For help contact 123-123-1234
+          or email
+

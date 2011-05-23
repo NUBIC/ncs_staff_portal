@@ -29,21 +29,64 @@ body.bp {
 }
 
 form.bp {
-  @include blueprint-form; }
+  @include blueprint-form; 
+}
 
 // Page layout can be done using mixins applied to your semantic classes and IDs:
-body.two-col {
+body.ncs {
+  
   #container {
-    @include container; }
+    @include container; 
+    @include showgrid(); //for debug and allignment purposes
+    border: 2px solid #00f;
+
+  }
+  
   #header, #footer {
-    @include column($blueprint-grid-columns); }
-  #sidebar {
-    // One third of the grid columns, rounding down. With 24 cols, this is 8.
-    $sidebar-columns: floor($blueprint-grid-columns / 3);
-    @include column($sidebar-columns); }
+    @include column($blueprint-grid-columns);
+    border: 2px solid #f00;
+  }
+
+  #header{
+    #app_name{
+      font-size: 2.0em; 
+      @include column($blueprint-grid-columns/2); 
+    }
+
+    #current_user{
+      @include column(11, true);
+      @include append(1);
+      text-align: right;
+    }
+    
+    #tab_navigation{
+      @include column($blueprint-grid-columns);
+      ul {
+        list-style-type: none;
+      }
+
+      ul li{
+        display: inline;
+        float: left;
+        padding: 1em;
+      }
+
+      li a{
+        display: block;
+        background-color: $tab_nav_bg_color;
+        width: 10em;
+      }
+      
+      
+
+    }
+
+    
+  }
+  
   #content {
-    // Two thirds of the grid columns, rounding up.
-    // With 24 cols, this is 16.
-    $content-columns: ceil(2 * $blueprint-grid-columns / 3);
-    // true means it's the last column in the row
-    @include column($content-columns, true); } }
+    border: 2px solid #ff0; 
+  }
+}
+
+
