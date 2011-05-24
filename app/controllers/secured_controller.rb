@@ -5,7 +5,11 @@ class SecuredController < ApplicationController
   before_filter :set_current_staff
 
   def dashboard
-    redirect_to staff_index_path
+    if current_user.permit?(:supervisor)
+      redirect_to staff_weekly_expenses_path
+    else
+      redirect_to new_staff_management_task_path(@current_staff.id) 
+    end
   end
 
   def set_current_staff

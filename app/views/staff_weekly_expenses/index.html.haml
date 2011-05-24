@@ -1,29 +1,51 @@
-%h1 Listing staff weekly expenses
+- if permit?(:supervisor)
+  %h1 Listing staff weekly expenses
+  = link_to 'Add my time and expenses', new_staff_management_task_path(@current_staff.id)
+  %br
 
-%table
-  %tr
-    %th Week start date
-    %th Staff pay
-    %th Staff hours
-    %th Staff expenses
-    %th Staff miles
-    %th
-    %th
-    %th
+  %div.yui-skin-sam
+    %div#weekly-expense-list
+      %table#weekly-expense-tbl
+        - @staff_weekly_expenses.each do |staff_weekly_expense|
+          %tr
+            %td=link_to staff_weekly_expense.week_start_date, new_staff_management_task_path(staff_weekly_expense.staff.id)
+            %td= staff_weekly_expense.staff.name
+            %td= staff_weekly_expense.management_tasks.map(&:hours).inject(0){ |total, hours| total + hours}
+            %td= staff_weekly_expense.management_tasks.map(&:expenses).inject(0){ |total, expenses| total + expenses}
+            %td= staff_weekly_expense.management_tasks.map(&:miles).inject(0){ |total, miles| total + miles}
+            %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id },:confirm => "Are you sure?", :method => :delete 
+  :javascript
+      $(document).ready(function() {
+        displayWeeklyExpenseList()
+      });
+    
+      function displayWeeklyExpenseList() {
+        var columnDefs = [
+            { key: "week_start_date", label: "Week start date", sortable: true },
+            { key: "staff_name", label: "Staff Name", sortable: true},
+            { key: "hours", label: "Hours" },
+            { key: "miles", label: "Miles" },
+            { key: "expenses", label: "Expenses" },
+            { key: "controls", label: "Controls" }
+        ];
+        var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
+        dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        dataSource.responseSchema = {
+          fields: [
+            { key: "week_start_date" },
+            { key: "staff_name" },
+            { key: "hours" },
+            { key: "miles" },
+            { key: "expenses" },
+            { key: "controls" }
+          ]
+        };
+        new YAHOO.widget.DataTable("weekly-expense-list", columnDefs, dataSource, {
+            sortedBy: { key: "week_start_date" }
+        });
+      }
 
-  - @staff_weekly_expenses.each do |staff_weekly_expense|
-    %tr
-      %td= staff_weekly_expense.week_start_date
-      %td= staff_weekly_expense.staff_pay
-      %td= staff_weekly_expense.staff_hours
-      %td= staff_weekly_expense.staff_expenses
-      %td= staff_weekly_expense.staff_miles
-      %td= link_to 'Show', staff_staff_weekly_expense_path(params[:staff_id], staff_weekly_expense)
-      %td= link_to 'Edit', edit_staff_staff_weekly_expense_path(params[:staff_id], staff_weekly_expense)
 
 
-%br
 
-= link_to 'Add new weekly expense', new_staff_staff_weekly_expense_path(params[:staff_id])
-\|
-= link_to 'Back to the staff', staff_path(params[:staff_id])
+
