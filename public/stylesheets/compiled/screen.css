@@ -381,7 +381,7 @@ body.bp .bottom {
 }
 /* line 8, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
 body.bp .showgrid {
-  background: url('/images/grid.png?1306184881');
+  background: url('/images/grid.png?1306187319');
 }
 /* line 4, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
 body.bp .error {
@@ -509,7 +509,7 @@ body.ncs #container {
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
-  background: url('/images/grid.png?1306184881');
+  background: url('/images/grid.png?1306187319');
   border: 2px solid #00f;
 }
 /* line 45, ../../../app/stylesheets/screen.scss */
@@ -568,15 +568,33 @@ body.ncs #header #tab_navigation ul {
 body.ncs #header #tab_navigation ul li {
   display: inline;
   float: left;
-  padding: 1em;
+  padding: 1em 0.5em 0 0.5em;
 }
 /* line 74, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li a {
   display: block;
-  background-color: #b796e0;
-  width: 10em;
+  width: 12em;
+  padding: 0.3em 0.3em 0.1em 0.3em;
+  background-color: #406cd5;
+  text-decoration: none;
+  border: 1px solid #406cd5;
+  border-bottom: 0px;
+  text-align: center;
+  color: #f0f0f0;
 }
-/* line 87, ../../../app/stylesheets/screen.scss */
+/* line 86, ../../../app/stylesheets/screen.scss */
+body.ncs #header #tab_navigation li.current span {
+  display: block;
+  width: 12em;
+  padding: 0.3em 0.3em 0.1em 0.3em;
+  background-color: #f0f0f0;
+  text-decoration: none;
+  border: 1px solid #406cd5;
+  border-bottom: 0px;
+  text-align: center;
+  color: #333333;
+}
+/* line 105, ../../../app/stylesheets/screen.scss */
 body.ncs #content {
   border: 2px solid #ff0;
 }

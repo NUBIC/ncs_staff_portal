@@ -11,4 +11,8 @@ $blueprint-grid-width: ($blueprint-container-size + $blueprint-grid-margin) / $b
 
 
 //NCS custom colors
-$tab_nav_bg_color: #B796E0;
+$tab_nav_bg: #406CD5;
+$tab_nav_border: #406CD5;
+$tab_nav_current_bg: #f0f0f0;
+$tab_nav_txt: #f0f0f0;
+$tab_nav_current_txt: #333;

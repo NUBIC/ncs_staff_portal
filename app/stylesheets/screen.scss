@@ -68,13 +68,31 @@ body.ncs {
       ul li{
         display: inline;
         float: left;
-        padding: 1em;
+        padding: 1em 0.5em 0 0.5em;
       }
 
       li a{
         display: block;
-        background-color: $tab_nav_bg_color;
-        width: 10em;
+        width: 12em;
+        padding: 0.3em 0.3em 0.1em 0.3em;
+        background-color: $tab_nav_bg;
+        text-decoration: none;
+        border: 1px solid $tab_nav_border;
+        border-bottom: 0px;
+        text-align: center;
+        color: $tab_nav_txt;
+      }
+
+      li.current span{
+        display: block;
+        width: 12em;
+        padding: 0.3em 0.3em 0.1em 0.3em;
+        background-color: $tab_nav_current_bg;
+        text-decoration: none;
+        border: 1px solid $tab_nav_border;
+        border-bottom: 0px;
+        text-align: center;
+        color: $tab_nav_current_txt; 
       }
       
       
