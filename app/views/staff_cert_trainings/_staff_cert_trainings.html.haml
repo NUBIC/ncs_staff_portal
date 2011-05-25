@@ -1,4 +1,4 @@
-%h1 Listing staff certifications/trainings
+%h3 List of certifications/trainings for #{@staff.name}
 %div.yui-skin-sam
   %div#tasks-list
     %table#management-tasks-list
@@ -14,8 +14,6 @@
           %td= staff_cert_training.complete.display_text unless staff_cert_training.complete_code.blank? 
           %td= button_to "Delete", { :action => "destroy", :id => staff_cert_training.id, :staff_id => params[:staff_id] },:confirm => "Are you sure?", :method => :delete  
 %br
-
-= link_to 'Back to the staff', staff_path(params[:staff_id])
 
 :javascript
     $(document).ready(function() {

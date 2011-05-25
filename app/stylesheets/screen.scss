@@ -82,8 +82,8 @@ body.ncs {
         text-align: center;
         color: $tab_nav_txt;
       }
-
-      li.current span{
+            
+      li.current a{
         display: block;
         width: 12em;
         padding: 0.3em 0.3em 0.1em 0.3em;
@@ -94,11 +94,44 @@ body.ncs {
         text-align: center;
         color: $tab_nav_current_txt; 
       }
-      
-      
 
     }
+    
+    #tab_vertical{
+      @include column($blueprint-grid-columns);
+      ul {
+        list-style-type: none;
+      }
 
+      ul li{
+        padding: 1em 0.5em 0 0.5em;
+      }
+
+      li a{
+        display: block;
+        width: 12em;
+        padding: 0.3em 0.3em 0.1em 0.3em;
+        background-color: $tab_vertical_bg;
+        text-decoration: none;
+        border: 1px solid $tab_vertical_border;
+        border-bottom: 0px;
+        text-align: center;
+        color: $tab_nav_txt;
+      }
+
+      li.current span{
+        display: block;
+        width: 12em;
+        padding: 0.3em 0.3em 0.1em 0.3em;
+        background-color: $tab_vertical_current_bg;
+        text-decoration: none;
+        border: 1px solid $tab_vertical_border;
+        border-bottom: 0px;
+        text-align: center;
+        color: $tab_vertical_current_txt; 
+      }
+
+    }
     
   }
   

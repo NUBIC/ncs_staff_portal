@@ -41,4 +41,15 @@ module ApplicationHelper
   def nested_record_id(builder, assocation)
     builder.object.id.nil? ? "new_nested_record" : "#{assocation.to_s.singularize}_#{builder.object.id}"
   end
+  
+  class NCSTabsBuilder < TabsOnRails::Tabs::TabsBuilder
+    def tab_for(tab, name, options)
+      content = @context.link_to(name, options)
+      if current_tab?(tab)
+        @context.content_tag(:li, content, :class => 'current')
+      else
+        @context.content_tag(:li, content)
+      end
+    end
+  end
 end

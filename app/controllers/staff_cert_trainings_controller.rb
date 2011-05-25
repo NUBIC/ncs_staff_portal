@@ -1,7 +1,6 @@
 class StaffCertTrainingsController < SecuredController
-  layout "layouts/my_information"
-  set_tab :my_info
-  set_tab :cert_trainings, :navigation
+  layout "layouts/staff_information"
+  set_tab :cert_trainings, :vertical
 
   # GET /staff_cert_trainings/new
   # GET /staff_cert_trainings/new.xml
@@ -9,7 +8,14 @@ class StaffCertTrainingsController < SecuredController
     @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings
     @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.build
-
+    
+    # TODO: write in helper file and reuse everywhere
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @staff_cert_training }
@@ -21,6 +27,13 @@ class StaffCertTrainingsController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @staff_cert_trainings = @staff.staff_cert_trainings
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
+    
+    # TODO: write in helper file and reuse everywhere
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
+    end
   end
 
   # POST /staff_cert_trainings

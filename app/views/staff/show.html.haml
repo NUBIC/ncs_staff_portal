@@ -1,3 +1,4 @@
+%h3 General Information for #{@staff.name}
 %p#notice= notice
 -display_content(@staff.name, "Name:")
 -display_content(@staff.email, "Email:")
@@ -14,5 +15,3 @@
 -display_content(@staff.experience, "Direct experience conducting population based, household field interviewing:", true)
 
 = link_to 'Edit', edit_staff_path(@staff)
-\|
-= link_to 'Certifications/Trainings', new_staff_staff_cert_training_path(params[:id])

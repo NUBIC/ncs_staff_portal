@@ -19,7 +19,7 @@
           NCS Staff Portal
         = render('partials/current_user', :current_user => current_user)
         #tab_navigation
-          -tabs_tag do |tab|
+          -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
             = tab.outreach_events 'Outreach Activities', outreach_events_path
             -if current_user.permit?(:supervisor)
               = tab.staff_weekly_expenses 'Time and Expense', staff_weekly_expenses_path 
@@ -28,10 +28,15 @@
             -if current_user.permit?(:supervisor)
               = tab.staff 'Staff Roaster', staff_index_path
             = tab.my_info 'My Information', staff_path(@current_staff)
-        #tab_navigation
-          -tabs_tag :namespace => :navigation do |tab|
-            = tab.general_info 'General Infomation', staff_path(@current_staff)
-            = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@current_staff)
+        #tab_vertical
+          -tabs_tag :namespace => :vertical do |tab|
+            - if @staff
+              = tab.general_info 'General Infomation', staff_path(@staff.id)
+              = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@staff.id)
+            - else
+              = tab.general_info 'General Infomation', staff_path(@current_staff)
+              = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@current_staff)
+
       #content
         = yield 
       #footer
