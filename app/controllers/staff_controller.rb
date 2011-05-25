@@ -9,7 +9,7 @@ class StaffController < SecuredController
     @staff_list = Staff.all.sort_by(&:netid)
     
     respond_to do |format|
-      format.html  {render :layout => "application"}
+      format.html  { render :layout => "application"}
       format.xml  { render :xml => @staff_list }
     end
 
@@ -37,9 +37,10 @@ class StaffController < SecuredController
   # GET /staff/new.xml
   def new
     @staff = Staff.new
-
+    set_tab :staff
+    
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => "application"}
       format.xml  { render :xml => @staff }
     end
   end
@@ -64,7 +65,7 @@ class StaffController < SecuredController
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to(@staff, :notice => 'Staff was successfully created.') }
+        format.html { redirect_to(staff_index_path, :notice => 'Staff was successfully created.') }
         format.xml  { render :xml => @staff, :status => :created, :location => @staff }
       else               
         format.html { render :action => "new" }
