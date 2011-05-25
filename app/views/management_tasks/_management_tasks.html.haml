@@ -4,7 +4,7 @@
     %table#management-tasks-list
       - @management_tasks.each do |management_task|
         %tr
-          %td= link_to management_task.task_date, edit_staff_management_task_path(@staff, management_task)
+          %td= link_to management_task.task_date.to_s, edit_staff_management_task_path(@staff, management_task)
           - if !management_task.task_type_code.blank?
             - if management_task.task_type.display_text == "Other"
               %td= management_task.task_type_other
@@ -24,7 +24,7 @@
     
     function displayTasksList() {
       var columnDefs = [
-          { key: "date", label: "Task Date", sortable: true },
+          { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
           { key: "type", label: "Type" },
           { key: "hours", label: "Hours" },
           { key: "miles", label: "Miles" },
@@ -46,6 +46,6 @@
         ]
       };
       new YAHOO.widget.DataTable("tasks-list", columnDefs, dataSource, {
-        sortedBy: { key: "date" }
+        sortedBy: { key: "date", dir: YAHOO.widget.DataTable.CLASS_DESC}
       });
     }

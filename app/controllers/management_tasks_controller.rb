@@ -3,7 +3,7 @@ class ManagementTasksController < SecuredController
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new
-    @management_tasks = Staff.find(params[:staff_id]).management_tasks
+    @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
     

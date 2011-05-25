@@ -6,7 +6,7 @@ class StaffController < SecuredController
   # GET /staff.xml
   def index
     set_tab :staff
-    @staff_list = Staff.all
+    @staff_list = Staff.all.sort_by(&:netid)
     
     respond_to do |format|
       format.html  {render :layout => "application"}

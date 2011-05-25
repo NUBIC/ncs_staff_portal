@@ -19,7 +19,7 @@
     
       function displayStaffList() {
         var columnDefs = [
-            { key: "netid", label: "NU netid", sortable: true },
+            { key: "netid", label: "NU netid", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
             { key: "name", label: "Name", sortable: true},
             { key: "type", label: "NCS Staff Type" },
             { key: "controls", label: "Controls" }
@@ -35,6 +35,6 @@
           ]
         };
         new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
-            sortedBy: { key: "netid" }
+            sortedBy: { key: "netid" , dir: YAHOO.widget.DataTable.CLASS_ASC }
         });
       }

@@ -8,7 +8,7 @@
       %table#weekly-expense-tbl
         - @staff_weekly_expenses.each do |staff_weekly_expense|
           %tr
-            %td=link_to staff_weekly_expense.week_start_date, new_staff_management_task_path(staff_weekly_expense.staff.id)
+            %td=link_to staff_weekly_expense.week_start_date.to_s, new_staff_management_task_path(staff_weekly_expense.staff.id)
             %td= staff_weekly_expense.staff.name
             %td= staff_weekly_expense.management_tasks.map(&:hours).inject(0){ |total, hours| total + hours}
             %td= staff_weekly_expense.management_tasks.map(&:expenses).inject(0){ |total, expenses| total + expenses}
@@ -21,7 +21,7 @@
     
       function displayWeeklyExpenseList() {
         var columnDefs = [
-            { key: "week_start_date", label: "Week start date", sortable: true },
+            { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
             { key: "staff_name", label: "Staff Name", sortable: true},
             { key: "hours", label: "Hours" },
             { key: "miles", label: "Miles" },
@@ -32,7 +32,7 @@
         dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
         dataSource.responseSchema = {
           fields: [
-            { key: "week_start_date" },
+            { key: "week_start_date"},
             { key: "staff_name" },
             { key: "hours" },
             { key: "miles" },
@@ -41,7 +41,7 @@
           ]
         };
         new YAHOO.widget.DataTable("weekly-expense-list", columnDefs, dataSource, {
-            sortedBy: { key: "week_start_date" }
+            sortedBy: { key: "week_start_date", dir: YAHOO.widget.DataTable.CLASS_DESC}
         });
       }
 
