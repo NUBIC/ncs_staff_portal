@@ -10,7 +10,7 @@
     = f.label :task_date
     = f.text_field :task_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
     = f.label :task_type_code, "Task Type"
-    = f.select :task_type_code, NcsCode.ncs_code_lookup(:management_task_type_code), :prompt => 'Select Tasks', :id => "task_type"
+    = f.select :task_type_code, NcsCode.ncs_code_lookup(:management_task_type_code), {:prompt => 'Select Tasks'}, {:id => "task_type"}
     = f.label :task_type_other
     = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"} 
     = f.label :hours, "Hours spent"
@@ -28,3 +28,10 @@
     
   :javascript
     $(".datepicker").datepicker();
+    // For the 'other' task type field
+    // Check on pageload
+    $(document).ready(function(){
+      wire_up_select_other("#task_type","#task_type_other");
+    });
+
+   
