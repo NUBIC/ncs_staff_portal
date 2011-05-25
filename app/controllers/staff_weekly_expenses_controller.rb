@@ -4,8 +4,7 @@ class StaffWeeklyExpensesController < SecuredController
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
   def index
-    @staff_weekly_expenses = Staff.find(params[:staff_id]).staff_weekly_expenses
-
+    @staff_weekly_expenses = StaffWeeklyExpense.all.sort_by &:week_start_date
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @staff_weekly_expenses }
@@ -79,7 +78,8 @@ class StaffWeeklyExpensesController < SecuredController
   # DELETE /staff_weekly_expenses/1
   # DELETE /staff_weekly_expenses/1.xml
   def destroy
-    @staff_weekly_expense = StaffWeeklyExpense.find(params[:id])
+    @staff = Staff.find(params[:staff_id])
+    @staff_weekly_expense = @staff.staff_weekly_expenses.find(params[:id])
     @staff_weekly_expense.destroy
 
     respond_to do |format|

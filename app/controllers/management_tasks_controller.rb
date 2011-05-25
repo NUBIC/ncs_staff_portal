@@ -1,5 +1,5 @@
 class ManagementTasksController < SecuredController
-  set_tab :staff
+  set_tab :my_tasks
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new

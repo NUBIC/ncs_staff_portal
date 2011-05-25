@@ -3,14 +3,14 @@ OMA::Application.routes.draw do
 
   #resources :management_tasks
 
-  # resources :staff_weekly_expenses
+  resources :staff_weekly_expenses
 
   # resources :staff_cert_trainings
 
   resources :staff_languages
 
   resources :staff do
-    resources :staff_cert_trainings, :staff_weekly_expenses, :management_tasks
+    resources :staff_cert_trainings, :management_tasks
   end
 
   root :to => "public#index"
