@@ -1,5 +1,7 @@
 class StaffCertTrainingsController < SecuredController
-  set_tab :staff
+  layout "layouts/my_information"
+  set_tab :my_info
+  set_tab :cert_trainings, :navigation
 
   # GET /staff_cert_trainings/new
   # GET /staff_cert_trainings/new.xml
