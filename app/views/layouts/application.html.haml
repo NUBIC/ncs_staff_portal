@@ -2,6 +2,7 @@
 %html
   %head>
     %title NCS Staff Portal
+    %link{ :rel=>"icon", :type=>"image/gif", :href=>"/images/favicon.gif"}
     = stylesheet_link_tag :all
     = javascript_include_tag('jquery-1.4.4', 'jquery-ui-1.8.7', 'application','YUI/2.9/yahoo-dom-event','YUI/2.9/element-min','YUI/2.9/datasource-min','YUI/2.9/datatable-min')
     = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
@@ -20,7 +21,7 @@
         = render('partials/current_user', :current_user => current_user)
         #tab_navigation
           -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
-            = tab.outreach_events 'Outreach Activities', outreach_events_path
+            -#= tab.outreach_events 'Outreach Activities', outreach_events_path
             -if current_user.permit?(:supervisor)
               = tab.staff_weekly_expenses 'Time and Expense', staff_weekly_expenses_path 
             -else
@@ -31,9 +32,5 @@
       #content
         = yield 
       #footer
-        %p
-          Release Version 1.0
-        %p
-          For help contact 123-123-1234
-          or email
+        = render('partials/footer')
 
