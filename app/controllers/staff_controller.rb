@@ -1,23 +1,32 @@
 class StaffController < SecuredController
-  set_tab :staff, :except => :show #This will change for Superviors, TODO:fix to support supervisor viewing of staff info under staff tab and not 'my info' tab
-  set_tab :my_info, :only => :show
+  layout "layouts/staff_information"
+  set_tab :general_info, :vertical
 
   # GET /staff
   # GET /staff.xml
   def index
+    set_tab :staff
     @staff_list = Staff.all
-
+    
     respond_to do |format|
-      format.html # index.html.erb
+      format.html  {render :layout => "application"}
       format.xml  { render :xml => @staff_list }
     end
+
   end
 
   # GET /staff/1
   # GET /staff/1.xml
   def show
     @staff = Staff.find(params[:id])
-
+    
+    # TODO: write in helper file and reuse everywhere 
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @staff }
@@ -28,7 +37,6 @@ class StaffController < SecuredController
   # GET /staff/new.xml
   def new
     @staff = Staff.new
-    # @staff.staff_languages.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,6 +47,14 @@ class StaffController < SecuredController
   # GET /staff/1/edit
   def edit
     @staff = Staff.find(params[:id])
+    
+    # TODO: write in helper file and reuse everywhere
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
+    end
+    
   end
 
   # POST /staff
@@ -50,10 +66,7 @@ class StaffController < SecuredController
       if @staff.save
         format.html { redirect_to(@staff, :notice => 'Staff was successfully created.') }
         format.xml  { render :xml => @staff, :status => :created, :location => @staff }
-      else
-        Rails.logger.info('hello jalpa')
-        Rails.logger.info("Errors: #{@staff.errors.size}")
-        Rails.logger.info("Errors: #{@staff.errors.full_messages}")                
+      else               
         format.html { render :action => "new" }
         format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
       end

@@ -15,6 +15,7 @@ module ApplicationHelper
   def stylesheet(*files)
     content_for(:head) { stylesheet_link_tag(*files) }
   end
+
   def generate_nested_attributes_template(f, association, association_prefix = nil )
     if association_prefix.nil?
       association_prefix = association.to_s.singularize
@@ -44,5 +45,16 @@ module ApplicationHelper
 
   def app_version_helper
     "Release Version #{ApplicationController::APP_VERSION}"
+  end
+  
+  class NCSTabsBuilder < TabsOnRails::Tabs::TabsBuilder
+    def tab_for(tab, name, options)
+      content = @context.link_to(name, options)
+      if current_tab?(tab)
+        @context.content_tag(:li, content, :class => 'current')
+      else
+        @context.content_tag(:li, content)
+      end
+    end
   end
 end

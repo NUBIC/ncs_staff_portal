@@ -1,4 +1,4 @@
-%h1 Listing Management Tasks
+%h3 Listing management tasks for #{@staff.name}
 %div.yui-skin-sam
   %div#tasks-list
     %table#management-tasks-list
@@ -17,8 +17,6 @@
           %td= management_task.expenses
           %td= management_task.comment
           %td= button_to "Delete", { :action => "destroy", :id => management_task.id, :staff_id => params[:staff_id] },:confirm => "Are you sure?", :method => :delete  
-%br
-= link_to 'Back to the staff', staff_path(params[:staff_id])
 :javascript
     $(document).ready(function() {
       displayTasksList()

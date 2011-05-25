@@ -6,6 +6,12 @@ class ManagementTasksController < SecuredController
     @management_tasks = Staff.find(params[:staff_id]).management_tasks
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
+    
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_tasks
+    else
+      set_tab :staff_weekly_expenses
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -18,6 +24,13 @@ class ManagementTasksController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @management_tasks = @staff.management_tasks
     @management_task = @staff.management_tasks.find(params[:id])
+    
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_tasks
+    else
+      set_tab :staff_weekly_expenses
+    end
+    
   end
 
   # POST /management_tasks

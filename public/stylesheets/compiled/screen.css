@@ -581,7 +581,7 @@ body.ncs #header #tab_navigation li a {
   color: #f0f0f0;
 }
 /* line 81, ../../../app/stylesheets/screen.scss */
-body.ncs #header #tab_navigation li.current span {
+body.ncs #header #tab_navigation li.current a {
   display: block;
   width: 12em;
   padding: 0.3em 0.3em 0.1em 0.3em;
@@ -592,16 +592,59 @@ body.ncs #header #tab_navigation li.current span {
   text-align: center;
   color: #333333;
 }
-/* line 95, ../../../app/stylesheets/screen.scss */
+/* line 97, ../../../app/stylesheets/screen.scss */
+body.ncs #tab_vertical {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 950px;
+}
+/* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs #tab_vertical {
+  overflow-x: hidden;
+}
+/* line 99, ../../../app/stylesheets/screen.scss */
+body.ncs #tab_vertical ul {
+  list-style-type: none;
+}
+/* line 103, ../../../app/stylesheets/screen.scss */
+body.ncs #tab_vertical ul li {
+  padding: 1em 0.5em 0 0.5em;
+}
+/* line 107, ../../../app/stylesheets/screen.scss */
+body.ncs #tab_vertical li a {
+  display: block;
+  width: 12em;
+  padding: 0.3em 0.3em 0.1em 0.3em;
+  background-color: #9672ff;
+  text-decoration: none;
+  border: 1px solid #9672ff;
+  border-bottom: 0px;
+  text-align: center;
+  color: #f0f0f0;
+}
+/* line 119, ../../../app/stylesheets/screen.scss */
+body.ncs #tab_vertical li.current span {
+  display: block;
+  width: 12em;
+  padding: 0.3em 0.3em 0.1em 0.3em;
+  background-color: #f0f0f0;
+  text-decoration: none;
+  border: 1px solid #9672ff;
+  border-bottom: 0px;
+  text-align: center;
+  color: #333333;
+}
+/* line 133, ../../../app/stylesheets/screen.scss */
 body.ncs #content {
   background-color: transparent;
 }
-/* line 99, ../../../app/stylesheets/screen.scss */
+/* line 137, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 103, ../../../app/stylesheets/screen.scss */
+/* line 141, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_logo {
   display: inline;
   float: left;
@@ -612,7 +655,7 @@ body.ncs #footer .ncs_logo {
 * html body.ncs #footer .ncs_logo {
   overflow-x: hidden;
 }
-/* line 107, ../../../app/stylesheets/screen.scss */
+/* line 145, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -625,7 +668,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 113, ../../../app/stylesheets/screen.scss */
+/* line 151, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text {
   margin-top: 1em;
   display: inline;
@@ -637,11 +680,11 @@ body.ncs #footer .ncs_text {
 * html body.ncs #footer .ncs_text {
   overflow-x: hidden;
 }
-/* line 116, ../../../app/stylesheets/screen.scss */
+/* line 154, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text img {
   display: block;
 }
-/* line 121, ../../../app/stylesheets/screen.scss */
+/* line 159, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

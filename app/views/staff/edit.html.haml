@@ -1,9 +1,7 @@
 - javascript 'nested_attributes', 'staff_languages_list'
-%h1 Editing staff
+%h3 Edit information for #{@staff.name}
 
 = render 'staff'
 
-= link_to 'Show', @staff
-\|
-= link_to 'Back', staff_index_path
+= link_to 'cancel', staff_path(params[:staff_id])
 

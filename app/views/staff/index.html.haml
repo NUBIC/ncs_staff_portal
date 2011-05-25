@@ -1,39 +1,40 @@
-= link_to 'Add New Staff Person', new_staff_path
-%br
+- if permit?(:supervisor)
+  = link_to 'Add New Staff Person', new_staff_path
+  %br
 
-%div.yui-skin-sam
-  %div#staff-list
-    %table#staff-list-tbl
-      - @staff_list.each do |staff|
-        %tr
-          %td= link_to staff.netid, staff
-          %td= staff.name
-          %td= staff.staff_type.display_text
-          %td= button_to "Delete", { :action => "destroy", :id => staff.id },:confirm => "Are you sure?", :method => :delete
+  %div.yui-skin-sam
+    %div#staff-list
+      %table#staff-list-tbl
+        - @staff_list.each do |staff|
+          %tr
+            %td= link_to staff.netid, staff
+            %td= staff.name
+            %td= staff.staff_type.display_text
+            %td= button_to "Delete", { :action => "destroy", :id => staff.id },:confirm => "Are you sure?", :method => :delete
 
-:javascript
-    $(document).ready(function() {
-      displayStaffList()
-    });
-    
-    function displayStaffList() {
-      var columnDefs = [
-          { key: "netid", label: "NU netid", sortable: true },
-          { key: "name", label: "Name", sortable: true},
-          { key: "type", label: "NCS Staff Type" },
-          { key: "controls", label: "Controls" }
-      ];
-      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
-      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-      dataSource.responseSchema = {
-        fields: [
-          { key: "netid" },
-          { key: "name" },
-          { key: "type" },
-          { key: "controls" }
-        ]
-      };
-      new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
-          sortedBy: { key: "netid" }
+  :javascript
+      $(document).ready(function() {
+        displayStaffList()
       });
-    }
+    
+      function displayStaffList() {
+        var columnDefs = [
+            { key: "netid", label: "NU netid", sortable: true },
+            { key: "name", label: "Name", sortable: true},
+            { key: "type", label: "NCS Staff Type" },
+            { key: "controls", label: "Controls" }
+        ];
+        var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
+        dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        dataSource.responseSchema = {
+          fields: [
+            { key: "netid" },
+            { key: "name" },
+            { key: "type" },
+            { key: "controls" }
+          ]
+        };
+        new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
+            sortedBy: { key: "netid" }
+        });
+      }
