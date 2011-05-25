@@ -4,7 +4,7 @@
     %table#management-tasks-list
       - @management_tasks.each do |management_task|
         %tr
-          %td= link_to management_task.task_date.to_s, edit_staff_management_task_path(@staff, management_task)
+          %td= link_to management_task.task_date, edit_staff_management_task_path(@staff, management_task)
           - if !management_task.task_type_code.blank?
             - if management_task.task_type.display_text == "Other"
               %td= management_task.task_type_other
