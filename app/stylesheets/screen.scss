@@ -10,9 +10,6 @@
 // Import the non-default scaffolding module.
 @import "blueprint/scaffolding";
 
-// To generate css equivalent to the blueprint css but with your
-// configuration applied, uncomment:
-// @include blueprint
 
 // But Compass recommends that you scope your blueprint styles
 // So that you can better control what pages use blueprint
@@ -38,13 +35,11 @@ body.ncs {
   #container {
     @include container; 
     @include showgrid(); //for debug and allignment purposes
-    border: 2px solid #00f;
 
   }
   
   #header, #footer {
     @include column($blueprint-grid-columns);
-    border: 2px solid #f00;
   }
 
   #header{
@@ -94,17 +89,39 @@ body.ncs {
         text-align: center;
         color: $tab_nav_current_txt; 
       }
-      
-      
+    } // end of tab nav
+  } // end of header
 
+  #content {
+    background-color: $content_bg;
+  }
+
+  #footer {
+    background-color: $footer_bg;
+    font-size: 1.1em;
+  
+    .ncs_logo {
+      @include column(6);
+    }
+  
+    .contact_info {
+      @include prepend-top(1em);
+      @include column(14);
+      text-align: center;
+    }
+  
+    .ncs_text{
+      @include prepend-top(1em);
+      @include column(3,true); 
+      img{
+        display: block;
+      }
     }
 
-    
-  }
-  
-  #content {
-    border: 2px solid #ff0; 
-  }
-}
-
-
+    .app_version{
+      color: #999;
+      @include column($blueprint-grid-columns);
+      text-align: right;
+    }
+  } // end of footer
+} // end of body

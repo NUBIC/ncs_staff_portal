@@ -133,7 +133,7 @@ body.bp form.inline p {
   margin-bottom: 0;
 }
 
-/* line 22, ../../../app/stylesheets/screen.scss */
+/* line 19, ../../../app/stylesheets/screen.scss */
 body.bp {
   line-height: 1.5;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -503,28 +503,26 @@ form.bp textarea {
   height: 250px;
 }
 
-/* line 38, ../../../app/stylesheets/screen.scss */
+/* line 35, ../../../app/stylesheets/screen.scss */
 body.ncs #container {
   width: 950px;
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
   background: url('/images/grid.png?1306187319');
-  border: 2px solid #00f;
 }
-/* line 45, ../../../app/stylesheets/screen.scss */
+/* line 41, ../../../app/stylesheets/screen.scss */
 body.ncs #header, body.ncs #footer {
   display: inline;
   float: left;
   margin-right: 10px;
   width: 950px;
-  border: 2px solid #f00;
 }
 /* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html body.ncs #header, * html body.ncs #footer {
   overflow-x: hidden;
 }
-/* line 51, ../../../app/stylesheets/screen.scss */
+/* line 46, ../../../app/stylesheets/screen.scss */
 body.ncs #header #app_name {
   font-size: 2.0em;
   display: inline;
@@ -536,7 +534,7 @@ body.ncs #header #app_name {
 * html body.ncs #header #app_name {
   overflow-x: hidden;
 }
-/* line 56, ../../../app/stylesheets/screen.scss */
+/* line 51, ../../../app/stylesheets/screen.scss */
 body.ncs #header #current_user {
   display: inline;
   float: left;
@@ -549,7 +547,7 @@ body.ncs #header #current_user {
 * html body.ncs #header #current_user {
   overflow-x: hidden;
 }
-/* line 62, ../../../app/stylesheets/screen.scss */
+/* line 57, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation {
   display: inline;
   float: left;
@@ -560,17 +558,17 @@ body.ncs #header #tab_navigation {
 * html body.ncs #header #tab_navigation {
   overflow-x: hidden;
 }
-/* line 64, ../../../app/stylesheets/screen.scss */
+/* line 59, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul {
   list-style-type: none;
 }
-/* line 68, ../../../app/stylesheets/screen.scss */
+/* line 63, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul li {
   display: inline;
   float: left;
   padding: 1em 0.5em 0 0.5em;
 }
-/* line 74, ../../../app/stylesheets/screen.scss */
+/* line 69, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li a {
   display: block;
   width: 12em;
@@ -582,7 +580,7 @@ body.ncs #header #tab_navigation li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 86, ../../../app/stylesheets/screen.scss */
+/* line 81, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li.current span {
   display: block;
   width: 12em;
@@ -594,7 +592,65 @@ body.ncs #header #tab_navigation li.current span {
   text-align: center;
   color: #333333;
 }
-/* line 105, ../../../app/stylesheets/screen.scss */
+/* line 95, ../../../app/stylesheets/screen.scss */
 body.ncs #content {
-  border: 2px solid #ff0;
+  background-color: transparent;
+}
+/* line 99, ../../../app/stylesheets/screen.scss */
+body.ncs #footer {
+  background-color: transparent;
+  font-size: 1.1em;
+}
+/* line 103, ../../../app/stylesheets/screen.scss */
+body.ncs #footer .ncs_logo {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 230px;
+}
+/* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs #footer .ncs_logo {
+  overflow-x: hidden;
+}
+/* line 107, ../../../app/stylesheets/screen.scss */
+body.ncs #footer .contact_info {
+  margin-top: 1em;
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 550px;
+  text-align: center;
+}
+/* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs #footer .contact_info {
+  overflow-x: hidden;
+}
+/* line 113, ../../../app/stylesheets/screen.scss */
+body.ncs #footer .ncs_text {
+  margin-top: 1em;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 110px;
+}
+/* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs #footer .ncs_text {
+  overflow-x: hidden;
+}
+/* line 116, ../../../app/stylesheets/screen.scss */
+body.ncs #footer .ncs_text img {
+  display: block;
+}
+/* line 121, ../../../app/stylesheets/screen.scss */
+body.ncs #footer .app_version {
+  color: #999;
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 950px;
+  text-align: right;
+}
+/* line 138, ../../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs #footer .app_version {
+  overflow-x: hidden;
 }

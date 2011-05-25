@@ -41,4 +41,8 @@ module ApplicationHelper
   def nested_record_id(builder, assocation)
     builder.object.id.nil? ? "new_nested_record" : "#{assocation.to_s.singularize}_#{builder.object.id}"
   end
+
+  def app_version_helper
+    "Release Version #{ApplicationController::APP_VERSION}"
+  end
 end

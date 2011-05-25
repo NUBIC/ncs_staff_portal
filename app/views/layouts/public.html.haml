@@ -2,6 +2,7 @@
 %html
   %head>
     %title NCS Staff Portal
+    %link{ :rel=>"icon", :type=>"image/gif", :href=>"/images/favicon.gif"}
     = stylesheet_link_tag :all
     = javascript_include_tag('jquery-1.4.4', 'jquery-ui-1.8.7', 'application','YUI/2.9/yahoo-dom-event','YUI/2.9/element-min','YUI/2.9/datasource-min','YUI/2.9/datatable-min')
     = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
@@ -18,5 +19,4 @@
       #content
         = yield
       #footer
-        Footer goes here
-
+        = render("partials/footer")
