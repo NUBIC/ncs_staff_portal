@@ -11,11 +11,12 @@
     = yield :javascript
     = yield :head
     = csrf_meta_tag
-  %body
-    #header
-      %h1 NCS Staff Portal
-    #content
-      = yield
-    #footer
-      Footer goes here
+  %body.bp.ncs
+    #container
+      #header
+        %h1 NCS Staff Portal
+      #content
+        = yield
+      #footer
+        Footer goes here
 
