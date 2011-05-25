@@ -1,5 +1,5 @@
 class StaffWeeklyExpensesController < SecuredController
-  set_tab :staff_weekly_expenses
+  set_tab :time_and_expenses
 
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml

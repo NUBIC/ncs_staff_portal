@@ -1,5 +1,5 @@
 class ManagementTasksController < SecuredController
-  set_tab :my_tasks
+  set_tab :time_and_expenses
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new
@@ -7,11 +7,11 @@ class ManagementTasksController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
     
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_tasks
-    else
-      set_tab :staff_weekly_expenses
-    end
+    # if (@staff.id == @current_staff.id) 
+    #     set_tab :my_tasks
+    #   else
+      # set_tab :staff_weekly_expenses
+    # end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -25,11 +25,11 @@ class ManagementTasksController < SecuredController
     @management_tasks = @staff.management_tasks
     @management_task = @staff.management_tasks.find(params[:id])
     
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_tasks
-    else
-      set_tab :staff_weekly_expenses
-    end
+    # if (@staff.id == @current_staff.id) 
+    #   set_tab :my_tasks
+    # else
+      # set_tab :staff_weekly_expenses
+    # end
     
   end
 
