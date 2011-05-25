@@ -46,4 +46,11 @@ OMA::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+    config.after_initialize do
+    Bcsec.configure do
+      static = Bcsec::Authorities::Static.from_file("#{Rails.root}/lib/static-auth.yml")
+      authorities :cas, static
+      central '/etc/nubic/bcsec-prod.yml'
+    end
+  end
 end
