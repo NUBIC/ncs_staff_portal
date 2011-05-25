@@ -47,7 +47,8 @@ class StaffCertTrainingsController < SecuredController
         format.html { redirect_to(new_staff_staff_cert_training_path(@staff), :notice => 'Staff cert training was successfully created.') }
         format.xml  { render :xml => @staff_cert_training, :status => :created, :location => @staff_cert_training }
       else
-        format.html { render :action => "new" }
+        @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings
+        format.html { render :action => "new", :staff_cert_trainings => @staff_cert_trainings }
         format.xml  { render :xml => @staff_cert_training.errors, :status => :unprocessable_entity }
       end
     end
