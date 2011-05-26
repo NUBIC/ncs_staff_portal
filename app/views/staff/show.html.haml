@@ -4,14 +4,22 @@
 -display_content(@staff.email, "Email:")
 -display_content(@staff.netid, "Netid:")
 -display_content("Northwestern University", "Study center:")
--display_content(@staff.staff_type, "Staff Type:", true)
--display_content(@staff.staff_type_other, "Staff Type Other:")
+- if @staff.staff_type_other.blank?
+  -display_content(@staff.staff_type, "Staff Type:", true)
+- else
+  -display_content(@staff.staff_type_other, "Staff Type:")
 -display_content(@staff.yob, "Year of birth:")
 -display_content(@staff.gender, "Gender:", true)
--display_content(@staff.race, "Race:", true)
--display_content(@staff.race_other, "Other race type:")
+- if @staff.race_other.blank?
+  -display_content(@staff.race, "Race:", true)
+- else
+  -display_content(@staff.race_other, "Race:")
 -display_content(@staff.ethnicity, "Ethnicity:", true)
 -display_content(@staff.subcontractor, "Does staff member work for subcontractor:", true)
 -display_content(@staff.experience, "Direct experience conducting population based, household field interviewing:", true)
-
+%p
+  %b Language(s) spoken:
+  = display_languages(@staff.staff_languages)
+  -# @staff.staff_languages.map{|language| language.lang.display_text unless language.lang != "Other"}.join(', ')
+  -# @staff.staff_languages.map{|language| language.lang_other unless language.lang_other.blank?}.join(', ')
 = link_to 'Edit', edit_staff_path(@staff)

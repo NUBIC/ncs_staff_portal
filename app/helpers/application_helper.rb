@@ -1,11 +1,20 @@
 module ApplicationHelper
   def display_content(value, label_text, isCode = nil)
-    # unless value.blank?
       haml_tag :p do
         haml_tag :b, label_text
         haml_concat isCode ? value.display_text : value unless value.blank?
       end
-    # end
+  end
+  
+  def display_languages(languages)
+    list = languages.map do |language|
+      if (language.lang.display_text == "Other")
+        language.lang_other
+      else
+        language.lang.display_text
+      end
+    end
+    list.join(', ')
   end
   
   def javascript(*files)
