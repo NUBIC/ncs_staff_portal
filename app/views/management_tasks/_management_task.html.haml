@@ -1,37 +1,39 @@
-= form_for [@staff, @management_task] do |f|
-  -if @management_task.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@management_task.errors.count, "error")} prohibited this management_task from being saved:"
-      %ul
-        - @management_task.errors.full_messages.each do |msg|
-          %li= msg
+.current_form
+  = form_for [@staff, @management_task] do |f|
+    -if @management_task.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@management_task.errors.count, "error")} prohibited this management_task from being saved:"
+        %ul
+          - @management_task.errors.full_messages.each do |msg|
+            %li= msg
 
-  .field
-    = f.label :task_date
-    = f.text_field :task_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
-    = f.label :task_type_code, "Task Type"
-    = f.select :task_type_code, NcsCode.ncs_code_lookup(:management_task_type_code), {:prompt => 'Select Tasks'}, {:id => "task_type"}
-    = f.label :task_type_other
-    = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"} 
-    = f.label :hours, "Hours spent"
-    = f.text_field :hours, {:size =>4}
-    = f.label :miles, "Miles driven"
-    = f.text_field :miles, {:size =>4}
-    = f.label :expenses
-    = f.text_field :expenses, {:size =>4}
-  .field
-    = f.label :comment
-    = f.text_field :comment
-  .actions
-    = f.submit 'Save'
-    = link_to 'Cancel', new_staff_management_task_path(params[:staff_id]) 
+    .field
+      = f.label :task_date
+      = f.text_field :task_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
+      = f.label :task_type_code, "Task Type"
+      = f.select :task_type_code, NcsCode.ncs_code_lookup(:management_task_type_code), {:prompt => 'Select Tasks'}, {:id => "task_type"}
+      = f.label :task_type_other
+      = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"} 
+    .field
+      = f.label :hours, "Hours spent"
+      = f.text_field :hours, {:size =>4}
+      = f.label :miles, "Miles driven"
+      = f.text_field :miles, {:size =>4}
+      = f.label :expenses
+      = f.text_field :expenses, {:size =>4}
+    .field
+      = f.label :comment
+      = f.text_field :comment
+    .actions
+      = f.submit 'Save'
+      = link_to 'Cancel', new_staff_management_task_path(params[:staff_id])
     
-  :javascript
-    $(".datepicker").datepicker();
-    // For the 'other' task type field
-    // Check on pageload
-    $(document).ready(function(){
-      wire_up_select_other("#task_type","#task_type_other");
-    });
+    :javascript
+      $(".datepicker").datepicker();
+      // For the 'other' task type field
+      // Check on pageload
+      $(document).ready(function(){
+        wire_up_select_other("#task_type","#task_type_other");
+      });
 
    

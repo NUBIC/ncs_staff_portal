@@ -31,6 +31,11 @@ form.bp {
 
 // Page layout can be done using mixins applied to your semantic classes and IDs:
 body.ncs {
+
+  a:hover {
+    background-color: $tab_nav_bg;
+    color: #f0f0f0;
+  }
   
   #container {
     @include container; 
@@ -144,6 +149,16 @@ body.ncs {
     @include prepend(1);
     @include append(1); 
     background-color: $tab_nav_current_bg;
+  }
+  
+  .current_form {
+    border: 1px solid #333;
+    background-color: $current_form_bg;
+    padding: 0.5em;
+    
+    .field label, .actions, .actions a {
+      padding-left: 1em;
+    }
   }
 
   #footer {
