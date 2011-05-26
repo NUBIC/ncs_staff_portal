@@ -1,11 +1,11 @@
 module ApplicationHelper
   def display_content(value, label_text, isCode = nil)
-    unless value.blank?
+    # unless value.blank?
       haml_tag :p do
         haml_tag :b, label_text
-        haml_concat isCode ? value.display_text : value
+        haml_concat isCode ? value.display_text : value unless value.blank?
       end
-    end
+    # end
   end
   
   def javascript(*files)
