@@ -57,11 +57,13 @@ NestedAttributes.prototype = {
 
   add_fields: function(link, association, content) {
     var new_id = new Date().getTime(),
-      regexp1 = new RegExp("new_" + association, "g"),
-      regexp2 = new RegExp("new_nested_record", "g");
-
+    regexp1 = new RegExp("new_" + association, "g"),
+    regexp2 = new RegExp("new_nested_record", "g");
+  
     content = content.replace(regexp1, new_id);
     content = content.replace(regexp2, 'new_nested_record_' + new_id);
     $(link).closest("." + association).find('.nested_records_' + association).append(content);
+    // TODO: find some place where below function can be called and be more generic 
+    wire_up_select_other_class(".lang", ".lang_other", ".lang_other_label");
   }
 };

@@ -42,31 +42,32 @@ function check_select_for_other(select_id, other_id){
   }
 }
 
-function wire_up_select_other_class(select_class, other_class){
+function wire_up_select_other_class(select_class, other_class, other_label_class){
   $(select_class).each(function(){ 
-    check_select_for_other_class($(this), $(this).siblings(other_class));
+    check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
   });
   $(select_class).each(function(){ 
 	$(this).change(function(){
-	    check_select_for_other_class($(this), $(this).siblings(other_class));
+	    check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
 	});
   });
 }
 
-function check_select_for_other_class(select_elt, other_elt){
+function check_select_for_other_class(select_elt, other_elt, other_label_class){
   var s = select_elt;
   var o = other_elt
 
   if((o.size() > 0) && (s.size() > 0)){
     // 'Other' = -5
     if(s.val() == "-5"){
-        o.removeAttr('disabled');
+	    o.siblings(other_label_class).show();
+	    o.show()
         o.css('background-color', '#EEF1C3'); //to make the change more visible
     }
     else{
         o.val(''); //clear the other field
-        o.attr('disabled', 'disabled');
-        o.css('background-color', '#d0d0d0'); // to make disabled more visible
+        o.siblings(other_label_class).hide();
+	    o.hide()
     }
   }
 }
