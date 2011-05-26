@@ -11,17 +11,23 @@
     = f.select :certificate_type_code, NcsCode.ncs_code_lookup(:certificate_type_code), :prompt => 'Select Certification/Training Type'
   .field
     = f.label :complete_code, "Does the staff member completed training?"
-    = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), :prompt => 'Select Completed Status'
+    = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), {:prompt => 'Select Completed Status'}, {:id => "complete_status"}
   .field
-    = f.radio_button :cert_date, :cert_date
-    = f.label :cert_date, "Date staff member was certified: (YYYY-MM-DD) "
-    = f.text_field :cert_date, :class => "datepicker"
+    - if (@staff_cert_training.cert_date != "-2" && @staff_cert_training.cert_date != "-7")
+      = radio_button_tag 'cert_date', 'date', true, :class => "cert_date"
+      = label_tag "Date staff member was certified: (YYYY-MM-DD) "
+      = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker', :id => "cert_date_temp"
+    - else
+      = radio_button_tag 'cert_date', 'date', false, :class => "cert_date"
+      = label_tag "Date staff member was certified: (YYYY-MM-DD) "
+      = text_field_tag 'cert_date_val', nil, :class => 'datepicker', :id => "cert_date_temp", :disabled => true
   .field
-    = f.radio_button:cert_date, "-2" 
-    = f.label :cert_date, "Don't Know"
+    = radio_button_tag 'cert_date', '-2', @staff_cert_training.cert_date == "-2", :class => "cert_date"
+    = label_tag "Don't Know"
   .field
-    = f.radio_button:cert_date, "-7" 
-    = f.label :cert_date, "Not Applicable"
+    = radio_button_tag 'cert_date', '-7', @staff_cert_training.cert_date == "-7", :class => "cert_date"
+    = label_tag  "Not Applicable"
+  = f.hidden_field :cert_date, :id => "cert_date_value"
   .field
     = f.label :background_check_code, "Level of background check required"
     = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
@@ -39,3 +45,9 @@
     = link_to 'Cancel', new_staff_staff_cert_training_path(params[:staff_id])
   :javascript
     $(".datepicker").datepicker();
+    // For the 'yes'  complete field
+    // Check on pageload
+    $(document).ready(function(){
+      wire_up_yes_enable_radio("#complete_status", ".cert_date");
+      get_cert_date_value();
+    });

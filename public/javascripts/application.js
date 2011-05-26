@@ -72,3 +72,57 @@ function check_select_for_other_class(select_elt, other_elt, other_label_class){
   }
 }
 
+
+function wire_up_yes_enable_radio(select_id, other_class){
+  check_select_for_yes(select_id, other_class);
+
+  $(select_id).change(function(){
+    check_select_for_yes(select_id, other_class);
+  });
+}
+
+function check_select_for_yes(select_id, other_class){
+  var s = $(select_id+" option:selected");
+  var o = $(other_class);
+  if((o.size() > 0) && (s.size() > 0)){
+    // 'Yes' = 1
+    if(s.val() == "1"){
+        o.removeAttr('disabled');
+        o.css('background-color', '#EEF1C3'); //to make the change more visible
+    }
+    else{
+	    o.removeAttr('checked');
+	    $("#cert_date_value").val('');
+	    make_cert_date_input_disable()
+        o.attr('disabled', 'disabled');
+        o.css('background-color', '#d0d0d0'); // to make disabled more visible
+    }
+  }
+}
+function get_cert_date_value() {
+  $("#cert_date_temp").change(function(){
+    $("#cert_date_value").val($("#cert_date_temp").val());
+  });
+  $("input:radio[name=cert_date]").click(function() {
+    if ( $(this).val() == 'date' ) {
+      make_cert_date_input_enable();
+    } else if ($(this).val() == '-2' ) {
+      $("#cert_date_value").val('-2')
+	  make_cert_date_input_disable();
+    } else if ($(this).val() == '-7' ) {
+      $("#cert_date_value").val('-7')
+	  make_cert_date_input_disable();
+    }
+  });
+}
+
+function make_cert_date_input_disable() {
+  $("#cert_date_temp").attr('disabled', 'disabled');
+  $("#cert_date_temp").css('background-color', '#d0d0d0')
+  $("#cert_date_temp").val('')
+}
+
+function make_cert_date_input_enable() {
+   $("#cert_date_temp").removeAttr('disabled');
+   $("#cert_date_temp").css('background-color', '#EEF1C3')
+}
