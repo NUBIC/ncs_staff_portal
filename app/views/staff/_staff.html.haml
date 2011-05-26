@@ -21,10 +21,10 @@
     = f.hidden_field :study_center, :value => 20000029
   .field
     = f.label :staff_type_code, "Staff Type"
-    = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), :prompt => 'Select NCS Staff Type'
+    = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
   .field
     = f.label :staff_type_other, "Other staff type"
-    = f.text_field :staff_type_other
+    = f.text_field :staff_type_other, {:size =>20 ,:id => "staff_type_other"} 
   .field
     = f.label :yob , "Year of birth"
     = f.text_field :yob, {:size =>4, :maxlength =>4}
@@ -36,10 +36,10 @@
     = f.select :gender_code, NcsCode.ncs_code_lookup(:gender_code), :prompt => 'Select Gender'
   .field
     = f.label :race_code, "Race"
-    = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), :prompt => 'Select Race'
+    = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), {:prompt => 'Select Race'}, {:id => "race"}
   .field
     = f.label :race_other, "Other race type"
-    = f.text_field :race_other
+    = f.text_field :race_other, {:size =>20 ,:id => "race_other"} 
   .field
     = f.label :ethnicity_code, "Ethnicity"
     = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
@@ -69,4 +69,10 @@
     $(function () {
       var staffLanguagesTemplate = '#{@staffLanguagesTemplate }',
       staffLanguageUI = new NCSPortal.StaffLanguages.UI({staffLanguagesTemplate: staffLanguagesTemplate });
+    });
+    // For the 'other'  field
+    // Check on pageload
+    $(document).ready(function(){
+      wire_up_select_other("#staff_type","#staff_type_other");
+      wire_up_select_other("#race","#race_other");
     });
