@@ -13,6 +13,7 @@
             %td= staff_weekly_expense.management_tasks.map(&:hours).inject(0){ |total, hours| total + hours}
             %td= staff_weekly_expense.management_tasks.map(&:expenses).inject(0){ |total, expenses| total + expenses}
             %td= staff_weekly_expense.management_tasks.map(&:miles).inject(0){ |total, miles| total + miles}
+            %td= staff_weekly_expense.management_tasks.length
             %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id },:confirm => "Are you sure?", :method => :delete 
   :javascript
       $(document).ready(function() {
@@ -23,9 +24,10 @@
         var columnDefs = [
             { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
             { key: "staff_name", label: "Staff Name", sortable: true},
-            { key: "hours", label: "Hours" },
+            { key: "hours", label: "Time (hours)" },
             { key: "miles", label: "Miles" },
-            { key: "expenses", label: "Expenses" },
+            { key: "expenses", label: "Expenses ($USD)" },
+            { key: "task_reported", label: "Task Reported" },
             { key: "controls", label: "Controls" }
         ];
         var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
@@ -37,6 +39,7 @@
             { key: "hours" },
             { key: "miles" },
             { key: "expenses" },
+            { key: "task_reported"},
             { key: "controls" }
           ]
         };
