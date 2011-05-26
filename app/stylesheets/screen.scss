@@ -34,7 +34,7 @@ body.ncs {
   
   #container {
     @include container; 
-    @include showgrid(); //for debug and allignment purposes
+    //@include showgrid(); //for debug and allignment purposes
 
   }
   
@@ -43,13 +43,16 @@ body.ncs {
   }
 
   #header{
+    background-color: $header_bg;
     #app_name{
+      @include prepend(1);
       font-size: 2.0em; 
-      @include column($blueprint-grid-columns/2); 
+      @include column(6); 
     }
 
     #current_user{
-      @include column(11, true);
+      @include prepend-top(0.5em);
+      @include column(16, true);
       @include append(1);
       text-align: right;
     }
@@ -95,13 +98,16 @@ body.ncs {
 
     
   #tab_vertical{
-     @include column($blueprint-grid-columns);
+     @include column(5);
+     @include prepend-top(1em);
      ul {
        list-style-type: none;
+       padding: 0;
+       margin: 0;
      }
 
      ul li{
-       padding: 1em 0.5em 0 0.5em;
+       padding: 0.5em;
      }
 
       li a{
@@ -111,7 +117,6 @@ body.ncs {
         background-color: $tab_vertical_bg;
         text-decoration: none;
         border: 1px solid $tab_vertical_border;
-        border-bottom: 0px;
         text-align: center;
         color: $tab_nav_txt;
       }
@@ -123,15 +128,22 @@ body.ncs {
         background-color: $tab_vertical_current_bg;
         text-decoration: none;
         border: 1px solid $tab_vertical_border;
-        border-bottom: 0px;
         text-align: center;
         color: $tab_vertical_current_txt; 
       }
 
     }
+  #content_vertical{
+   @include column(15,true);
+   @include prepend-top(1em); 
+  }
   
   #content {
-    background-color: $content_bg;
+    @include column($blueprint-grid-columns - 2);
+    padding: 1em 0;
+    @include prepend(1);
+    @include append(1); 
+    background-color: $tab_nav_current_bg;
   }
 
   #footer {

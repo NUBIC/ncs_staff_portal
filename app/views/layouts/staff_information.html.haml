@@ -28,6 +28,7 @@
             -if current_user.permit?(:supervisor)
               = tab.staff 'Staff Roaster', staff_index_path
             = tab.my_info 'My Information', staff_path(@current_staff)
+      #content
         #tab_vertical
           -tabs_tag :namespace => :vertical do |tab|
             - if @staff
@@ -36,12 +37,7 @@
             - else
               = tab.general_info 'General Infomation', staff_path(@current_staff)
               = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@current_staff)
-
-      #content
-        = yield 
+        #content_vertical
+          = yield 
       #footer
-        %p
-          Release Version 1.0
-        %p
-          For help contact 123-123-1234
-          or email
+        = render('partials/footer')
