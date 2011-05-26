@@ -155,8 +155,9 @@ body.ncs {
     border: 1px solid #333;
     background-color: $current_form_bg;
     padding: 0.5em;
+    @include append-bottom(1em);
     
-    .field label, .actions, .actions a {
+    .field label, .actions, .actions a{
       padding-left: 1em;
     }
   }

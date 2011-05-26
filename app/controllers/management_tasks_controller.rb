@@ -1,17 +1,12 @@
 class ManagementTasksController < SecuredController
   set_tab :time_and_expenses
+  before_filter :check_staff_access
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new
     @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
-    
-    # if (@staff.id == @current_staff.id) 
-    #     set_tab :my_tasks
-    #   else
-      # set_tab :staff_weekly_expenses
-    # end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -24,13 +19,6 @@ class ManagementTasksController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @management_tasks = @staff.management_tasks
     @management_task = @staff.management_tasks.find(params[:id])
-    
-    # if (@staff.id == @current_staff.id) 
-    #   set_tab :my_tasks
-    # else
-      # set_tab :staff_weekly_expenses
-    # end
-    
   end
 
   # POST /management_tasks
@@ -84,5 +72,9 @@ class ManagementTasksController < SecuredController
       format.html { redirect_to(new_staff_management_task_path(@staff))}
       format.xml  { head :ok }
     end
+  end
+  def check_staff_access
+    @staff = Staff.find(params[:staff_id])
+    check_user_access(@staff)
   end
 end

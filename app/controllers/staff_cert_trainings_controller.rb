@@ -1,6 +1,7 @@
 class StaffCertTrainingsController < SecuredController
   layout "layouts/staff_information"
   set_tab :cert_trainings, :vertical
+  before_filter :check_staff_access
 
   # GET /staff_cert_trainings/new
   # GET /staff_cert_trainings/new.xml
@@ -8,13 +9,6 @@ class StaffCertTrainingsController < SecuredController
     @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings
     @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.build
-    
-    # TODO: write in helper file and reuse everywhere
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_info
-    else
-      set_tab :staff
-    end
     
     respond_to do |format|
       format.html # new.html.erb
@@ -27,13 +21,7 @@ class StaffCertTrainingsController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @staff_cert_trainings = @staff.staff_cert_trainings
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
-    
-    # TODO: write in helper file and reuse everywhere
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_info
-    else
-      set_tab :staff
-    end
+
   end
 
   # POST /staff_cert_trainings
@@ -81,6 +69,17 @@ class StaffCertTrainingsController < SecuredController
     respond_to do |format|
       format.html { redirect_to(new_staff_staff_cert_training_path(@staff))}
       format.xml  { head :ok }
+    end
+  end
+  
+  def check_staff_access
+    @staff = Staff.find(params[:staff_id])
+    check_user_access(@staff)
+    # TODO: write in helper file and reuse everywhere 
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
     end
   end
 end

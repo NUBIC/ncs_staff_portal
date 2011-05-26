@@ -15,4 +15,10 @@ class SecuredController < ApplicationController
   def set_current_staff
    @current_staff = Staff.find_by_netid(current_user.username)
   end
+  
+  def check_user_access(requested_staff)
+    unless permit?(:supervisor) or (requested_staff.id == @current_staff.id)
+      throw :warden
+    end   
+  end
 end

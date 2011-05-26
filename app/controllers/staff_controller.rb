@@ -1,6 +1,7 @@
 class StaffController < SecuredController
   layout "layouts/staff_information"
   set_tab :general_info, :vertical
+  before_filter :check_staff_access,  :except => [:index, :new]
 
   # GET /staff
   # GET /staff.xml
@@ -18,14 +19,6 @@ class StaffController < SecuredController
   # GET /staff/1
   # GET /staff/1.xml
   def show
-    @staff = Staff.find(params[:id])
-    
-    # TODO: write in helper file and reuse everywhere 
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_info
-    else
-      set_tab :staff
-    end
     
     respond_to do |format|
       format.html # show.html.erb
@@ -36,9 +29,9 @@ class StaffController < SecuredController
   # GET /staff/new
   # GET /staff/new.xml
   def new
+    throw :warden unless permit?(:supervisor)
     @staff = Staff.new
     set_tab :staff
-    
     respond_to do |format|
       format.html { render :layout => "application"}
       format.xml  { render :xml => @staff }
@@ -47,15 +40,6 @@ class StaffController < SecuredController
 
   # GET /staff/1/edit
   def edit
-    @staff = Staff.find(params[:id])
-    
-    # TODO: write in helper file and reuse everywhere
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_info
-    else
-      set_tab :staff
-    end
-    
   end
 
   # POST /staff
@@ -99,6 +83,17 @@ class StaffController < SecuredController
     respond_to do |format|
       format.html { redirect_to(staff_index_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def check_staff_access
+    @staff = Staff.find(params[:id])
+    check_user_access(@staff)
+    # TODO: write in helper file and reuse everywhere 
+    if (@staff.id == @current_staff.id) 
+      set_tab :my_info
+    else
+      set_tab :staff
     end
   end
 end
