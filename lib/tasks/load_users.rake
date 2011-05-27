@@ -34,8 +34,8 @@ namespace :users do
    
    desc 'Loads the users into static auth file and assign default staff role'
    task :load_users_auth => :environment do
-      users = Hash.new([])
-      users_list = Hash.new([])
+      users = {} 
+      users_list = {}
       Staff.all.sort_by(&:netid).each do |s|
         users[s.netid] = {"portals" => [{"StaffPortal" => ["staff"]}]}
       end
@@ -47,5 +47,4 @@ namespace :users do
       
    end
   
-
 end
