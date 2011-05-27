@@ -28,7 +28,7 @@ module MdesDataLoader2
   # Removing Windows/PC based chars that would otherwise break things
   def  self.clnr(str)
     unless str.nil?
-      regx = [/\xD5/,/\x85/,/\xA0/,/\xD0/,/\xD2/,/\xCA/,/\xD3/]
+      regx = [/\xD5/,/\x85/,/\xA0/,/\xD0/,/\xD2/,/\xCA/,/\xD3/,/\xa8/,/\xae/,/\xa9/,/\xa1/]
       rt_str = str.strip
       regx.each do |r|
         rt_str.gsub!(r,'')
@@ -36,6 +36,7 @@ module MdesDataLoader2
       rt_str.gsub(/\x93/,'"').gsub(/\x94/,'"').gsub(/\x92/,'\'').gsub(/\x96/,'-')
     end
   end
+
 
 
 

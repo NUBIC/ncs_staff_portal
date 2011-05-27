@@ -39,7 +39,7 @@ namespace :users do
       Staff.all.sort_by(&:netid).each do |s|
         users[s.netid] = {"portals" => [{"StaffPortal" => ["staff"]}]}
       end
-      users_list["groups"] = [{"StaffPortal" => ["staff","supervisor"]}]
+      users_list["groups"] = {"StaffPortal" => ["staff","supervisor"]}
       users_list["users"] = users
 
       AUTH_FILE = 'static-auth.yml'
