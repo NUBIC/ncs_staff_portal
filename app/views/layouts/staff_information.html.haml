@@ -26,7 +26,7 @@
             -else
               = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@current_staff.id) 
             -if current_user.permit?(:supervisor)
-              = tab.staff 'Staff Roaster', staff_index_path
+              = tab.staff 'Staff Roster', staff_index_path
             = tab.my_info 'My Information', staff_path(@current_staff)
       #content
         #tab_vertical
