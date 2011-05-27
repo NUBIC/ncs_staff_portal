@@ -5,6 +5,13 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-require 'mdes_data_loader'
+
+# MDES Version 1.2
+# require 'mdes_data_loader'
 # Our custom data seed loader 
-MdesDataLoader::load_codes('MDES_V1.2-Specific_Code_Lists.csv')
+# MdesDataLoader::load_codes('MDES_V1.2-Specific_Code_Lists.csv')
+
+#MDES Version 2.0
+require 'mdes_data_loader_2'
+# Our custom data seed loader 
+MdesDataLoader2::load_codes('MDES_V2.0-Specific_Code_Lists.csv')

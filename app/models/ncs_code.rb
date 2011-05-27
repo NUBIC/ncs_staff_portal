@@ -1,5 +1,5 @@
 class NcsCode < ActiveRecord::Base
-  validates_presence_of :list_name, :display_text, :local_code, :global_code
+  validates_presence_of :list_name, :display_text, :local_code
   ATTRIBUTE_MAPPING = { 
     :staff_type_code => "STUDY_STAFF_TYPE_CL1",
     :age_range_code => "AGE_RANGE_CL1",
