@@ -20,7 +20,7 @@
         = render('partials/current_user', :current_user => current_user)
         #tab_navigation
           -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
-            = tab.outreach_events 'Outreach Activities', outreach_events_path
+            -#= tab.outreach_events 'Outreach Activities', outreach_events_path
             -if current_user.permit?(:supervisor)
               = tab.time_and_expenses 'Time and Expense', staff_weekly_expenses_path 
             -else
@@ -31,6 +31,8 @@
       #content
         #tab_vertical
           -tabs_tag :namespace => :vertical do |tab|
+            -if current_user.permit?(:supervisor) && current_tab.to_s == "staff"
+              = tab.staff_list 'Staff List', staff_index_path
             - if @staff
               = tab.general_info 'General Infomation', staff_path(@staff.id)
               = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@staff.id)
