@@ -8,7 +8,7 @@ development:
   database: ncs_staff_portal_development
   username: ncs_user
   password: childr3n!
-  encoding: SQL_ASCII
+  encoding: utf8
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,7 +18,7 @@ test: &test
   database: ncs_staff_portal_test
   username: ncs_user
   password: childr3n!
-  encoding: SQL_ASCII
+  encoding: utf8
 
 cucumber:
   <<: *test
