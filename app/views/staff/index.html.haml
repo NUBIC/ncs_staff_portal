@@ -9,7 +9,10 @@
           %tr
             %td= link_to staff.netid, staff
             %td= staff.name
-            %td= staff.staff_type.display_text
+            - if staff.staff_type_code.blank?
+              %td= ""
+            - else
+              %td= staff.staff_type.display_text
             %td= button_to "Delete", { :action => "destroy", :id => staff.id },:confirm => "Are you sure?", :method => :delete
 
   :javascript
