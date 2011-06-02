@@ -1,6 +1,7 @@
 class Staff < ActiveRecord::Base
   validates_presence_of :name, :netid, :study_center
   validates_presence_of :staff_type_code, :on => :update
+  validates_presence_of :hourly_rate, :on => :update
   validates_uniqueness_of :netid
   validates :yob, :numericality => { :only_integer => true, :greater_than => Time.now.year - 150, :less_than => Time.now.year, :allow_nil => true }
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }

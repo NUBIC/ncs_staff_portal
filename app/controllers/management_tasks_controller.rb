@@ -31,6 +31,7 @@ class ManagementTasksController < SecuredController
     if @staff_weekly_expense.nil?
        @staff_weekly_expense = @staff.staff_weekly_expenses.build
        @staff_weekly_expense.week_start_date = @start_date
+       @staff_weekly_expense.rate = @staff.hourly_rate
        @staff_weekly_expense.save
     end
     @management_task = @staff_weekly_expense.management_tasks.build(params[:management_task])

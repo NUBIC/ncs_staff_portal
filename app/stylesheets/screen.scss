@@ -154,11 +154,33 @@ body.ncs {
   .current_form {
     border: 1px solid #333;
     background-color: $current_form_bg;
-    padding: 0.5em;
+    @include column(22,true);
     @include append-bottom(1em);
     
-    .field label, .actions, .actions a{
+    label, a, .other_data{
       padding-left: 1em;
+    }
+    
+    em{ 
+    font-weight: bold;
+    font-style: normal;
+    }
+    
+    div{ 
+        padding: 0.5em;
+    }
+    .task_info{
+      @include column(18,true);
+    }
+    
+    .task_expense{
+      @include prepend(1);
+      @include column(6);
+    }
+    
+    .task_actions{
+      @include prepend(3);
+      @include column(4,true);
     }
   }
 

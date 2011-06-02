@@ -677,19 +677,70 @@ body.ncs #content {
 body.ncs .current_form {
   border: 1px solid #333;
   background-color: #e0e0e0;
-  padding: 0.5em;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 870px;
   margin-bottom: 1em;
 }
+/* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs .current_form {
+  overflow-x: hidden;
+}
 /* line 160, ../../../app/stylesheets/screen.scss */
-body.ncs .current_form .field label, body.ncs .current_form .actions, body.ncs .current_form .actions a {
+body.ncs .current_form label, body.ncs .current_form a, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
-/* line 165, ../../../app/stylesheets/screen.scss */
+/* line 164, ../../../app/stylesheets/screen.scss */
+body.ncs .current_form em {
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 169, ../../../app/stylesheets/screen.scss */
+body.ncs .current_form div {
+  padding: 0.5em;
+}
+/* line 172, ../../../app/stylesheets/screen.scss */
+body.ncs .current_form .task_info {
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 710px;
+}
+/* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs .current_form .task_info {
+  overflow-x: hidden;
+}
+/* line 176, ../../../app/stylesheets/screen.scss */
+body.ncs .current_form .task_expense {
+  padding-left: 40px;
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 230px;
+}
+/* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs .current_form .task_expense {
+  overflow-x: hidden;
+}
+/* line 181, ../../../app/stylesheets/screen.scss */
+body.ncs .current_form .task_actions {
+  padding-left: 120px;
+  display: inline;
+  float: left;
+  margin-right: 0;
+  width: 150px;
+}
+/* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
+* html body.ncs .current_form .task_actions {
+  overflow-x: hidden;
+}
+/* line 187, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 169, ../../../app/stylesheets/screen.scss */
+/* line 191, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_logo {
   display: inline;
   float: left;
@@ -700,7 +751,7 @@ body.ncs #footer .ncs_logo {
 * html body.ncs #footer .ncs_logo {
   overflow-x: hidden;
 }
-/* line 173, ../../../app/stylesheets/screen.scss */
+/* line 195, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -713,7 +764,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 179, ../../../app/stylesheets/screen.scss */
+/* line 201, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text {
   margin-top: 1em;
   display: inline;
@@ -725,11 +776,11 @@ body.ncs #footer .ncs_text {
 * html body.ncs #footer .ncs_text {
   overflow-x: hidden;
 }
-/* line 182, ../../../app/stylesheets/screen.scss */
+/* line 204, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text img {
   display: block;
 }
-/* line 187, ../../../app/stylesheets/screen.scss */
+/* line 209, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

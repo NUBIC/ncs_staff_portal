@@ -34,11 +34,13 @@
             -if current_user.permit?(:supervisor) && current_tab.to_s == "staff"
               = tab.staff_list 'Staff List', staff_index_path
             - if @staff
-              = tab.general_info 'General Infomation', staff_path(@staff.id)
-              = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@staff.id)
+              = tab.general_info 'General Information', staff_path(@staff.id)
+              = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@staff.id)
+              - if @staff.id != @current_staff.id
+                = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@staff.id) 
             - else
-              = tab.general_info 'General Infomation', staff_path(@current_staff)
-              = tab.cert_trainings 'Certificates/Trainings', new_staff_staff_cert_training_path(@current_staff)
+              = tab.general_info 'General Information', staff_path(@current_staff)
+              = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@current_staff)
         #content_vertical
           = yield 
       #footer

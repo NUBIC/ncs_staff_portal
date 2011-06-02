@@ -26,6 +26,9 @@
     = f.label :staff_type_other, "Other staff type"
     = f.text_field :staff_type_other, {:size =>20 ,:id => "staff_type_other"} 
   .field
+    = f.label :hourly_rate, "Hourly rate (in US Dollars per hour)"
+    = f.text_field :hourly_rate, {:size => 6, :maxlength =>6}
+  .field
     = f.label :yob , "Year of birth"
     = f.text_field :yob, {:size =>4, :maxlength =>4}
   .field

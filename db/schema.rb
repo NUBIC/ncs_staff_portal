@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110426203018) do
+ActiveRecord::Schema.define(:version => 20110602200045) do
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "hourly_rate",        :precision => 5, :scale => 2
   end
 
   create_table "staff_cert_trainings", :force => true do |t|
@@ -132,10 +133,10 @@ ActiveRecord::Schema.define(:version => 20110426203018) do
   create_table "staff_weekly_expenses", :force => true do |t|
     t.integer  "staff_id"
     t.date     "week_start_date"
-    t.decimal  "staff_pay"
-    t.decimal  "staff_hours"
-    t.decimal  "staff_expenses"
-    t.decimal  "staff_miles"
+    t.decimal  "rate",            :precision => 5,  :scale => 2
+    t.decimal  "hours",           :precision => 5,  :scale => 2
+    t.decimal  "expenses",        :precision => 10, :scale => 2
+    t.decimal  "miles",           :precision => 5,  :scale => 2
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
