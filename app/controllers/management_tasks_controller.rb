@@ -26,7 +26,8 @@ class ManagementTasksController < SecuredController
   def create
     @staff = Staff.find(params[:staff_id])
     @management_task_temp  = ManagementTask.new(params[:management_task])
-    @start_date = @management_task_temp.task_date.monday
+    @start_date = @management_task_temp.task_date.monday unless @management_task_temp.task_date.blank?
+    
     @staff_weekly_expense = StaffWeeklyExpense.find_by_week_start_date_and_staff_id(@start_date, @staff)
     if @staff_weekly_expense.nil?
        @staff_weekly_expense = @staff.staff_weekly_expenses.build
@@ -41,7 +42,8 @@ class ManagementTasksController < SecuredController
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully created.') }
         format.xml  { render :xml => @management_task, :status => :created, :location => @management_task }
       else
-        format.html { render :action => "new" }
+        @management_tasks = @staff.management_tasks
+        format.html { render :action => "new", :management_tasks => @management_tasks }
         format.xml  { render :xml => @management_task.errors, :status => :unprocessable_entity }
       end
     end
@@ -56,7 +58,8 @@ class ManagementTasksController < SecuredController
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        @management_tasks = @staff.management_tasks
+        format.html { render :action => "edit", :management_tasks => @management_tasks }
         format.xml  { render :xml => @management_task.errors, :status => :unprocessable_entity }
       end
     end
