@@ -76,8 +76,8 @@ class StaffCertTrainingsController < SecuredController
     @staff = Staff.find(params[:staff_id])
     check_user_access(@staff)
     # TODO: write in helper file and reuse everywhere 
-    if (@staff.id == @current_staff.id) 
-      set_tab :my_info
+    if @staff && (@staff.id == @current_staff.id)
+       set_tab :my_info
     else
       set_tab :staff
     end
