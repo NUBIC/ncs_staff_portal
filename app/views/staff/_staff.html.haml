@@ -8,19 +8,19 @@
   - @staffLanguagesTemplate = generate_nested_attributes_template(f, :staff_languages, 'staff/staff_languages')
   .field
     = f.label :name
-    = f.text_field :name
+    = f.text_field :name,:readonly => true
   .field
     = f.label :email
-    = f.text_field :email
+    = f.text_field :email,:readonly => true
   .field
     = f.label :netid
-    = f.text_field :netid
+    = f.text_field :netid,:readonly => true
   .field
     = label_tag "Study center:"
     = text_field_tag "study_center", "Northwestern University", :readonly => true
     = f.hidden_field :study_center, :value => 20000029
   .field
-    = f.label :staff_type_code, "Staff Type"
+    = f.label :staff_type_code, "Staff Type*"
     = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
   .field
     = f.label :staff_type_other, "Other staff type"
@@ -28,7 +28,6 @@
   .field
     = f.label :hourly_rate, "Hourly rate (in US Dollars per hour)"
     = f.text_field :hourly_rate, {:size => 6, :maxlength =>6} 
-    Note: Hourly Rate =  (Yearly Salary $)/(40 hrs * 52 weeks)
   .field
     = f.label :yob , "Year of birth"
     = f.text_field :yob, {:size =>4, :maxlength =>4}
@@ -68,7 +67,9 @@
           = link_to_add_fields "Add", :staff_languages
   .actions
     = f.submit 'Save'
-  
+    = link_to 'cancel', staff_path(params[:staff_id])
+  %p
+    Note: Fields mark as (*) are mandatory fields
   :javascript
     $(function () {
       var staffLanguagesTemplate = '#{@staffLanguagesTemplate }',

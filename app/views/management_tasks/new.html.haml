@@ -1,12 +1,7 @@
 - if permit?(:supervisor)
   = link_to "All staff time and expenses" ,staff_weekly_expenses_path
-- if (@staff.hourly_rate.blank?)
-  -if @staff.id == @current_staff
-    %h3 Please add your hourly rate in #{link_to 'My Information', edit_staff_path(@staff.id) } before reporting any tasks or expenses
-  - else
-    %h3 Please add an hourly rate for #{@staff.name} by #{link_to 'Clicking here', edit_staff_path(@staff.id)}
-- else 
-  %h3 Add new management task for #{@staff.name}
-  = render 'management_task'
+
+%h3 Add new management task for #{@staff.name}
+= render 'management_task'
 
 = render 'management_tasks'

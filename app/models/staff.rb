@@ -1,7 +1,6 @@
 class Staff < ActiveRecord::Base
   validates_presence_of :name, :netid, :study_center
   validates_presence_of :staff_type_code, :on => :update
-  validates_presence_of :hourly_rate, :on => :update
   validates_uniqueness_of :netid
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
   validates :yob, :numericality => { :only_integer => true, :greater_than => Time.now.year - 150, :less_than => Time.now.year, :allow_nil => true }

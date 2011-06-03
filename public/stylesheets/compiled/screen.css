@@ -688,7 +688,7 @@ body.ncs .current_form {
   overflow-x: hidden;
 }
 /* line 160, ../../../app/stylesheets/screen.scss */
-body.ncs .current_form label, body.ncs .current_form a, body.ncs .current_form .other_data {
+body.ncs .current_form label, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
 /* line 164, ../../../app/stylesheets/screen.scss */

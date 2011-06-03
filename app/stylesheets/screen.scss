@@ -157,7 +157,7 @@ body.ncs {
     @include column(22,true);
     @include append-bottom(1em);
     
-    label, a, .other_data{
+    label, .other_data{
       padding-left: 1em;
     }
     

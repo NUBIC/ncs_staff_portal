@@ -19,7 +19,11 @@
       = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"} 
     .task_expense
       %em Labor expenses:
-      .other_data Your Rate: $#{@staff.hourly_rate}/hr
+      .other_data 
+        - if @staff.hourly_rate.blank?
+          Your Rate: Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
+        - else
+          Your Rate: $#{@staff.hourly_rate}/hr
       = f.label :hours, "Hours spent"
       = f.text_field :hours, {:size =>4}
     .task_expense
