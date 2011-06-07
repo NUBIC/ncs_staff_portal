@@ -21,3 +21,4 @@
         = yield
       #footer
         = render("partials/footer")
+    = render('partials/include_google_analytics') if Rails.env.production?
