@@ -13,10 +13,11 @@
     = f.text_field :event_date, :class => "datepicker", :id => "pickdate"
   .field
     = label_tag "Outreach target(s). Check all that apply."
-    - NcsCode.ncs_code_lookup(:target_code).each do |code| 
-      .field   
-        = check_box_tag "outreach_event[target_attributes][][target_code]", code.second, @outreach_event.outreach_targets.map(&:target_code).include?(code.second)
-        = code.first
+    .scroll_checkboxes
+      - NcsCode.ncs_code_lookup(:target_code).each do |code| 
+        .field   
+          = check_box_tag "outreach_event[target_attributes][][target_code]", code.second, @outreach_event.outreach_targets.map(&:target_code).include?(code.second)
+          = code.first
   .field
     = f.label :mode_code, "Outreach mode:"
     = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), :prompt => "Select"
@@ -58,20 +59,21 @@
     = f.select :race_specific_code, NcsCode.ncs_code_lookup(:race_specific_code), :prompt => "Select"
   
   = label_tag "Targeted racial group(s). Check all that apply."
-  - NcsCode.ncs_code_lookup(:outreach_race_code).each do |code|
-    .field()
-      - if ((race = @outreach_event.outreach_races.detect {|outreach_race| outreach_race.race_code == code.second}) != nil)
-        = check_box_tag "outreach_event[race_attributes][][race_code]", code.second, true, :onclick => "check_for_destroy(this)", :id => "outreach_event[race_attributes][#{code.second}][race_code]"
-        = label_tag "", code.first, :for => "outreach_event[race_attributes][#{code.second}][race_code]"
-        - if (code.first.to_s == "Other")
-          = text_field_tag "outreach_event[race_attributes][][race_other]"
-        = hidden_field_tag "outreach_event[race_attributes][][id]", race.id
-        = hidden_field_tag "outreach_event[race_attributes][][should_destroy]", false, :class => "should_destroy"
-      - else
-        = check_box_tag "outreach_event[new_race_attributes][][race_code]", code.second, false, :id => "outreach_event[new_race_attributes][#{code.second}][race_code]"
-        = label_tag "", code.first, :for => "outreach_event[new_race_attributes][#{code.second}][race_code]"
-        - if (code.first.to_s == "Other")
-          = text_field_tag "outreach_event[new_race_attributes][][race_other]"
+  .scroll_checkboxes_temp
+    - NcsCode.ncs_code_lookup(:outreach_race_code).each do |code|
+      .race_checkboxes
+        - if ((race = @outreach_event.outreach_races.detect {|outreach_race| outreach_race.race_code == code.second}) != nil)
+          = check_box_tag "outreach_event[race_attributes][][race_code]", code.second, true, :onclick => "check_for_destroy(this)", :id => "outreach_event[race_attributes][#{code.second}][race_code]"
+          = label_tag "", code.first, :for => "outreach_event[race_attributes][#{code.second}][race_code]"
+          = hidden_field_tag "outreach_event[race_attributes][][id]", race.id
+          = hidden_field_tag "outreach_event[race_attributes][][should_destroy]", false, :class => "should_destroy"
+          - if (code.first.to_s == "Other")
+            = text_field_tag "outreach_event[race_attributes][][race_other]", race.race_other
+        - else
+          = check_box_tag "outreach_event[new_race_attributes][][race_code]", code.second, false, :id => "outreach_event[new_race_attributes][#{code.second}][race_code]"
+          = label_tag "", code.first, :for => "outreach_event[new_race_attributes][#{code.second}][race_code]"
+          - if (code.first.to_s == "Other")
+            = text_field_tag "outreach_event[new_race_attributes][][race_other]"
   .field
     = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
     = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), :prompt => "Select"

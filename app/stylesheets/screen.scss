@@ -39,7 +39,7 @@ body.ncs {
   
   #container {
     @include container; 
-    //@include showgrid(); //for debug and allignment purposes
+    @include showgrid(); //for debug and allignment purposes
 
   }
   
@@ -149,6 +149,25 @@ body.ncs {
     @include prepend(1);
     @include append(1); 
     background-color: $tab_nav_current_bg;
+    
+    .scroll_checkboxes {
+        @include column($blueprint-grid-columns - 2);
+        height: 100px;
+        @include column(6);
+        padding: 5px;
+        overflow: auto;
+        border: 1px solid #ccc
+    }
+    
+    .scroll_checkboxes_temp {
+       @include column($blueprint-grid-columns - 2);
+    }
+    
+    .race_checkboxes {
+       float: left;
+       @include column(10);
+       
+    }
   }
   
   .current_form {
@@ -182,6 +201,7 @@ body.ncs {
       @include prepend(3);
       @include column(4,true);
     }
+    
   }
 
   #footer {

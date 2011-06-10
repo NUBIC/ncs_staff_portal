@@ -4,7 +4,7 @@ class OutreachEvent < ActiveRecord::Base
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    has_many :outreach_targets, :dependent => :destroy
    has_many :outreach_evaluations, :dependent => :destroy
-   # after_update :save_races
+   after_update :save_races
    
    ATTRIBUTE_MAPPING = { 
      :mode_code => "OUTREACH_MODE_CL1",
@@ -29,8 +29,10 @@ class OutreachEvent < ActiveRecord::Base
    def race_attributes=(race_attributes) 
      race_attributes.each do |attributes|
        race = outreach_races.detect { |r| r.id == attributes[:id].to_i}
-       if !attributes[:should_destroy].blank? && attributes[:should_destroy].to_s == "true"
+       if !attributes[:should_destroy].blank? && attributes[:should_destroy] == true
          race.delete
+       else 
+         race.attributes = attributes
        end
      end
    end
@@ -55,7 +57,7 @@ class OutreachEvent < ActiveRecord::Base
    
    def save_races
      outreach_races.each do |race|
-       race.save(false)
+       race.save(:validate => false)
      end
    end
 end

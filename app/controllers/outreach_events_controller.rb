@@ -58,12 +58,10 @@ class OutreachEventsController < SecuredController
   # PUT /outreach_events/1
   # PUT /outreach_events/1.xml
   def update
-    Rails.logger.info(request.raw_post)
-    Rails.logger.info "=============================="
     @outreach_event = OutreachEvent.find(params[:id])
     if params[:outreach_event][:race_attributes].blank?
-      @outreach_event.outreach_races.delete_all
-    end
+        @outreach_event.outreach_races.delete_all
+      end
     if params[:outreach_event][:target_attributes].blank?
       @outreach_event.outreach_targets.delete_all
     end

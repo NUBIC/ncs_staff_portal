@@ -20,7 +20,7 @@
         = render('partials/current_user', :current_user => current_user)
         #tab_navigation
           -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
-            -#= tab.outreach_events 'Outreach Activities', outreach_events_path
+            = tab.outreach_events 'Outreach Activities', outreach_events_path
             -if current_user.permit?(:supervisor)
               = tab.time_and_expenses 'Time and Expense', staff_weekly_expenses_path 
             -else
