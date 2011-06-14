@@ -1,10 +1,12 @@
 class OutreachEvent < ActiveRecord::Base
    has_many :outreach_staff_members
    has_many :outreach_races, :dependent => :destroy
-   accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
-   accepts_nested_attributes_for :outreach_races, :allow_destroy => true
    has_many :outreach_targets, :dependent => :destroy
    has_many :outreach_evaluations, :dependent => :destroy
+   accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_races, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_targets, :allow_destroy => true
+
    
    ATTRIBUTE_MAPPING = { 
      :mode_code => "OUTREACH_MODE_CL1",

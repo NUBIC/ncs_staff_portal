@@ -6,7 +6,8 @@ NCSPortal.StaffLanguages = {};
 NestedAttributes = {};
 NCSPortal.ManagementTasks = {};
 NCSPortal.OutreachStaffMembers = {};
-NCSPortal.OutreachEvents = {};
+NCSPortal.OutreachRaces = {};
+NCSPortal.OutreachTargets = {};
 
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){
@@ -122,10 +123,9 @@ function make_cert_date_input_enable() {
   $("#cert_date_temp").css('background-color', '#EEF1C3')
 }
 
-function nested_attributes_manage_options() {
+/*function nested_attributes_manage_options() {
   wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-  disabled_selected_options(".nested_attribute_selector")
-}
+}*/
 
 function disabled_selected_options(select_class) {
   $(select_class).click(function(elt){

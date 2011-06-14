@@ -1,7 +1,7 @@
 NestedAttributes = function (config) {
   var that = this,
     defaultConfig = {
-      removeStyle: 'clear',
+      removeStyle: 'hide',
       undeleteOnChange: false,
       add: true,
       remove: true
@@ -21,7 +21,7 @@ NestedAttributes = function (config) {
   if (this.config.remove) {
     $(this.config.container).find('.delete_' + this.config.association).die('click');
     $(this.config.container).find('.delete_' + this.config.association).live('click', function () {
-      that.remove_fields(this, that.config.removeStyle);
+      that.remove_fields(this, that.config.association,that.config.removeStyle);
 
       if (that.config.removeHandler) {
         that.config.removeHandler.call(that.config.caller);
@@ -43,13 +43,21 @@ NestedAttributes = function (config) {
 };
 
 NestedAttributes.prototype = {
-  remove_fields: function (link, removeStyle) {
+  remove_fields: function (link, association, removeStyle) {
     $(link).prev("input[type=hidden]").val("1");
     if (removeStyle === 'hide' ) {
       $(link).closest(".fields").hide();
-    } else if (removeStyle === 'clear' ) {
-      $(link).closest(".fields").remove();
+      
     }
+    else if (removeStyle === 'clear' ) {
+      $(link).closest(".fields").find('input').clearFields();
+      $(link).closest(".fields").find('select').clearFields();
+      $(link).closest(".fields").find('textarea').clearFields();
+    }
+    var remove_selector_classname = association + "_selector"
+    var remove_selector = $(link).closest(".fields").find("." + remove_selector_classname)
+    remove_selector.removeClass(remove_selector_classname).addClass(remove_selector_classname +"_removed")
+    disabled_selected_options("."+ remove_selector_classname)
   },
 
   add_fields: function(link, association, content) {
@@ -61,6 +69,8 @@ NestedAttributes.prototype = {
     content = content.replace(regexp2, 'new_nested_record_' + new_id);
     $(link).closest("." + association).find('.nested_records_' + association).append(content);
     // TODO: find some place where below function can be called and be more generic 
-    nested_attributes_manage_options();
+   wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
+   disabled_selected_options("."+association+"_selector")
+  // nested_attributes_manage_options();
   }
 };

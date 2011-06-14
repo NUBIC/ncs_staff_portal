@@ -7,18 +7,28 @@
           %li= msg
   - @outreachStaffMembersTemplate = generate_nested_attributes_template(f, :outreach_staff_members, 'outreach_events/outreach_staff_members')
   - @outreachRacesTemplate = generate_nested_attributes_template(f, :outreach_races, 'outreach_events/outreach_races')
+  - @outreachTargetsTemplate = generate_nested_attributes_template(f, :outreach_targets, 'outreach_events/outreach_targets')
   
   = label_tag "Outreach Description"
   .field
     = f.label :event_date, "Date of outreach activity:"
     = f.text_field :event_date, :class => "datepicker", :id => "pickdate"
   .field
-    = label_tag "Outreach target(s). Check all that apply."
-    .scroll_checkboxes
-      - NcsCode.ncs_code_lookup(:target_code).each do |code| 
-        .each_scroll_checkbox   
-          = check_box_tag "outreach_event[target_attributes][][target_code]", code.second, @outreach_event.outreach_targets.map(&:target_code).include?(code.second)
-          = code.first
+    = f.label :name, "Name of outreach activity:"
+    = f.text_field :name
+  %table{ :class => 'records outreach_targets' }
+    %thead
+      %tr
+        %td
+          Outreach Targets
+        %td
+    %tbody.nested_records_outreach_targets
+      - f.fields_for :outreach_targets do |outreach_target|
+        = render :partial => 'outreach_events/outreach_targets', :locals => { :f => outreach_target }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add another target", :outreach_targets
   .field
     = f.label :mode_code, "Outreach mode:"
     = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), :prompt => "Select"
@@ -109,15 +119,16 @@
     = f.submit 'Save'
   :javascript
     $(document).ready(function(){
-      //wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-      //disabled_selected_options(".nested_attribute_selector")
-      nested_attributes_manage_options()
-      
-      var outreachStaffMembersTemplate = '#{@outreachStaffMembersTemplate}',
+      wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
+      disabled_selected_options(".outreach_races_selector")
+      disabled_selected_options(".outreach_targets_selector")
+      //nested_attributes_manage_options()
       outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
       
-      var outreachRacesTemplate = '#{@outreachRacesTemplate}',
-      outreachRacesTemplateUI = new NCSPortal.OutreachEvents.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
+      outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
+      
+      outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
+      
      })
 
     $(".datepicker").datepicker();
