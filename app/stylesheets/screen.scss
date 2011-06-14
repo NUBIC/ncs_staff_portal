@@ -150,23 +150,17 @@ body.ncs {
     @include append(1); 
     background-color: $tab_nav_current_bg;
     
-    .scroll_checkboxes {
-        @include column($blueprint-grid-columns - 2);
-        height: 100px;
-        @include column(6);
-        padding: 5px;
-        overflow: auto;
-        border: 1px solid #ccc
+    table {
+       border: 1px solid #ccc
     }
     
-    .scroll_checkboxes_temp {
+    .column_checkboxes {
        @include column($blueprint-grid-columns - 2);
     }
     
-    .race_checkboxes {
+    .each_scroll_checkbox {
        float: left;
        @include column(10);
-       
     }
   }
   

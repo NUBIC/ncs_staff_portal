@@ -1,7 +1,7 @@
 NestedAttributes = function (config) {
   var that = this,
     defaultConfig = {
-      removeStyle: 'hide',
+      removeStyle: 'clear',
       undeleteOnChange: false,
       add: true,
       remove: true
@@ -47,11 +47,8 @@ NestedAttributes.prototype = {
     $(link).prev("input[type=hidden]").val("1");
     if (removeStyle === 'hide' ) {
       $(link).closest(".fields").hide();
-    }
-    else if (removeStyle === 'clear' ) {
-      $(link).closest(".fields").find('input').clearFields();
-      $(link).closest(".fields").find('select').clearFields();
-      $(link).closest(".fields").find('textarea').clearFields();
+    } else if (removeStyle === 'clear' ) {
+      $(link).closest(".fields").remove();
     }
   },
 
@@ -64,6 +61,6 @@ NestedAttributes.prototype = {
     content = content.replace(regexp2, 'new_nested_record_' + new_id);
     $(link).closest("." + association).find('.nested_records_' + association).append(content);
     // TODO: find some place where below function can be called and be more generic 
-    wire_up_select_other_class(".lang", ".lang_other", ".lang_other_label");
+    nested_attributes_manage_options();
   }
 };

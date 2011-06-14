@@ -6,6 +6,7 @@
         - @outreach_event.errors.full_messages.each do |msg|
           %li= msg
   - @outreachStaffMembersTemplate = generate_nested_attributes_template(f, :outreach_staff_members, 'outreach_events/outreach_staff_members')
+  - @outreachRacesTemplate = generate_nested_attributes_template(f, :outreach_races, 'outreach_events/outreach_races')
   
   = label_tag "Outreach Description"
   .field
@@ -15,7 +16,7 @@
     = label_tag "Outreach target(s). Check all that apply."
     .scroll_checkboxes
       - NcsCode.ncs_code_lookup(:target_code).each do |code| 
-        .field   
+        .each_scroll_checkbox   
           = check_box_tag "outreach_event[target_attributes][][target_code]", code.second, @outreach_event.outreach_targets.map(&:target_code).include?(code.second)
           = code.first
   .field
@@ -57,23 +58,19 @@
   .field
     = f.label :race_specific_code, "Was the outreach targeted to a specific racial group?"
     = f.select :race_specific_code, NcsCode.ncs_code_lookup(:race_specific_code), :prompt => "Select"
-  
-  = label_tag "Targeted racial group(s). Check all that apply."
-  .scroll_checkboxes_temp
-    - NcsCode.ncs_code_lookup(:outreach_race_code).each do |code|
-      .race_checkboxes
-        - if ((race = @outreach_event.outreach_races.detect {|outreach_race| outreach_race.race_code == code.second}) != nil)
-          = check_box_tag "outreach_event[race_attributes][][race_code]", code.second, true, :onclick => "check_for_destroy(this)", :id => "outreach_event[race_attributes][#{code.second}][race_code]"
-          = label_tag "", code.first, :for => "outreach_event[race_attributes][#{code.second}][race_code]"
-          = hidden_field_tag "outreach_event[race_attributes][][id]", race.id
-          = hidden_field_tag "outreach_event[race_attributes][][should_destroy]", false, :class => "should_destroy"
-          - if (code.first.to_s == "Other")
-            = text_field_tag "outreach_event[race_attributes][][race_other]", race.race_other
-        - else
-          = check_box_tag "outreach_event[new_race_attributes][][race_code]", code.second, false, :id => "outreach_event[new_race_attributes][#{code.second}][race_code]"
-          = label_tag "", code.first, :for => "outreach_event[new_race_attributes][#{code.second}][race_code]"
-          - if (code.first.to_s == "Other")
-            = text_field_tag "outreach_event[new_race_attributes][][race_other]"
+  %table{ :class => 'records outreach_races' }
+    %thead
+      %tr
+        %td
+          Targeted racial groups
+        %td
+    %tbody.nested_records_outreach_races
+      - f.fields_for :outreach_races do |outreach_race|
+        = render :partial => 'outreach_events/outreach_races', :locals => { :f => outreach_race }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add another race", :outreach_races
   .field
     = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
     = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), :prompt => "Select"
@@ -111,40 +108,17 @@
   .actions
     = f.submit 'Save'
   :javascript
-    $(function () {
+    $(document).ready(function(){
+      //wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
+      //disabled_selected_options(".nested_attribute_selector")
+      nested_attributes_manage_options()
+      
       var outreachStaffMembersTemplate = '#{@outreachStaffMembersTemplate}',
-      outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: outreachStaffMembersTemplate });
-    });
-    var prev_sat_class = "unavailable"; 
-    $(".datepicker").datepicker({
-      dateFormat: 'yy-mm-dd',
-      beforeShowDay: checkAvailability,
-      firstDay: 1,
-    
-      maxDate: "31 December 2011",
-      prevText: "&lt;",
-      nextText: "&gt;",
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "0:+1",
-      onSelect:function(input,inst){prev_sat_class = "unavailable";},
-      onChangeMonthYear:function(input,inst){prev_sat_class = "unavailable";} 
-      });
+      outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
+      
+      var outreachRacesTemplate = '#{@outreachRacesTemplate}',
+      outreachRacesTemplateUI = new NCSPortal.OutreachEvents.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
+     })
 
-      function checkAvailability(showdate) {
-      var available = false; 
-      var return_class = "unavailable";
-      if (showdate.getDay() == 1) 
-        {
-        var checkdate = $.datepicker.formatDate('yy-mm-dd', showdate);
-        var datestatus = "available";
-        var return_class = datestatus;
-        if (datestatus == "available") available = true;
-        else available = false;
-        prev_sat_class = return_class;
-        }
-      else return_class = prev_sat_class;
-      return [available, return_class];
-      }
+    $(".datepicker").datepicker();
+    

@@ -59,15 +59,15 @@ class OutreachEventsController < SecuredController
   # PUT /outreach_events/1.xml
   def update
     @outreach_event = OutreachEvent.find(params[:id])
-    if params[:outreach_event][:race_attributes].blank?
-        @outreach_event.outreach_races.delete_all
-      end
-    if params[:outreach_event][:target_attributes].blank?
-      @outreach_event.outreach_targets.delete_all
-    end
-    if params[:outreach_event][:evaluation_attributes].blank?
-      @outreach_event.outreach_evaluations.delete_all
-    end
+    # if params[:outreach_event][:race_attributes].blank?
+    #     @outreach_event.outreach_races.delete_all
+    #   end
+    # if params[:outreach_event][:target_attributes].blank?
+    #   @outreach_event.outreach_targets.delete_all
+    # end
+    # if params[:outreach_event][:evaluation_attributes].blank?
+    #   @outreach_event.outreach_evaluations.delete_all
+    # end
     respond_to do |format|
       if @outreach_event.update_attributes(params[:outreach_event])
         format.html { redirect_to(@outreach_event, :notice => 'Outreach event was successfully updated.') }

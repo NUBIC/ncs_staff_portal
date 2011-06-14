@@ -6,12 +6,7 @@ NCSPortal.StaffLanguages = {};
 NestedAttributes = {};
 NCSPortal.ManagementTasks = {};
 NCSPortal.OutreachStaffMembers = {};
-
-function check_for_destroy(element) {
-	if (!$(element).attr('checked')) {
-		$(element).siblings('.should_destroy').val(true);
-	}
-}
+NCSPortal.OutreachEvents = {};
 
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){
@@ -47,9 +42,9 @@ function wire_up_select_other_class(select_class, other_class, other_label_class
     check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
   });
   $(select_class).each(function(){ 
-	$(this).change(function(){
+	  $(this).change(function(){
 	    check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
-	});
+	  });
   });
 }
 
@@ -62,11 +57,11 @@ function check_select_for_other_class(select_elt, other_elt, other_label_class){
     if(s.val() == "-5"){
 	    o.siblings(other_label_class).show();
 	    o.show()
-        o.css('background-color', '#EEF1C3'); //to make the change more visible
+      o.css('background-color', '#EEF1C3'); //to make the change more visible
     }
     else{
-        o.val(''); //clear the other field
-        o.siblings(other_label_class).hide();
+      o.val(''); //clear the other field
+      o.siblings(other_label_class).hide();
 	    o.hide()
     }
   }
@@ -123,6 +118,25 @@ function make_cert_date_input_disable() {
 }
 
 function make_cert_date_input_enable() {
-   $("#cert_date_temp").removeAttr('disabled');
-   $("#cert_date_temp").css('background-color', '#EEF1C3')
+  $("#cert_date_temp").removeAttr('disabled');
+  $("#cert_date_temp").css('background-color', '#EEF1C3')
+}
+
+function nested_attributes_manage_options() {
+  wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
+  disabled_selected_options(".nested_attribute_selector")
+}
+
+function disabled_selected_options(select_class) {
+  $(select_class).click(function(elt){
+    var current_selector = $(this)
+    var current_selector_id = "#" + current_selector.attr('id')
+    var all_selected_options = $(select_class).map(function(i, s){return $(this).val()}).get()
+    $(all_selected_options).each(function(){
+      if (this != current_selector.val()) {
+        $(current_selector_id +" option[value="+this+"]").attr('disabled', 'disabled')
+      }
+      $(current_selector_id +" option[value=-5]").removeAttr('disabled')
+    })
+  });
 }
