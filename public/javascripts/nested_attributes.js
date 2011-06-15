@@ -70,7 +70,6 @@ NestedAttributes.prototype = {
     $(link).closest("." + association).find('.nested_records_' + association).append(content);
     // TODO: find some place where below function can be called and be more generic 
    wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-   console.log("====association====" +association)
    disabled_selected_options("."+association+"_selector")
   // nested_attributes_manage_options();
   }
