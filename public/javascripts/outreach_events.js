@@ -34,3 +34,17 @@ NCSPortal.OutreachSsus.UI = function (config) {
       caller: this
   });
 };
+
+NCSPortal.OutreachStaffMembers.UI = function (config) {
+  var setupOutreachStaffAutocompleter = function () {
+      $(".outreach_staff_combobox_autocompleter").combobox({watermark:'staff'});
+   },
+  outreachStaffMemberNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_staff_members'),
+      association: 'outreach_staff_members',
+      content: config.outreachStaffMembersTemplate,
+      addHandler: setupOutreachStaffAutocompleter,
+      caller: this
+   });
+   setupOutreachStaffAutocompleter();
+};

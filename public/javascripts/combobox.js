@@ -8,7 +8,7 @@
    var input = $( "<input>" )
     .insertAfter( select )
     .val( value );
-    var watermark = ('Search for ' + this.options.watermark) , resetWatermark = function  () {
+    var watermark = ('Search ' + this.options.watermark) , resetWatermark = function  () {
           currentValue = input.val();
           if (currentValue == '' || currentValue == watermark) {
             input.val(watermark);
@@ -72,7 +72,7 @@
         }
        });
        if ( !valid ) {
-        // remove invalid value, as it didn't match anything
+        // remove invalid value, as it didnt match anything
         $( this ).val( "" );
         select.val( "" );
         return false;

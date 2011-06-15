@@ -37,6 +37,18 @@ body.ncs {
     color: #f0f0f0;
   }
   
+  /* jQuery UI - Override the jQuery CSS*/
+  .ui-widget {
+    font-family: inherit;
+    font-size: 100%;
+  }
+
+  ul.ui-autocomplete  {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    border-bottom: 1px solid #AAAAAA !important;
+  }
+  
   #container {
     @include container; 
     @include showgrid(); //for debug and allignment purposes
