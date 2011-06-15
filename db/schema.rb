@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614160956) do
+ActiveRecord::Schema.define(:version => 20110615044024) do
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -31,6 +31,24 @@ ActiveRecord::Schema.define(:version => 20110614160956) do
     t.string   "display_text"
     t.integer  "local_code"
     t.string   "global_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ncs_ssus", :force => true do |t|
+    t.integer  "psu_id"
+    t.string   "ssu_id"
+    t.string   "ssu_name"
+    t.string   "area"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ncs_tsus", :force => true do |t|
+    t.integer  "psu_id"
+    t.string   "tsu_id"
+    t.string   "tsu_name"
+    t.string   "area"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
