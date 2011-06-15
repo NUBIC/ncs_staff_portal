@@ -1,5 +1,8 @@
 - javascript 'nested_attributes', 'outreach_events', 'combobox'
-%h1 Editing outreach_event
+- if @outreach_event.event_date.blank?
+  %h3 Editing outreach event #{@outreach_event.name}
+- else
+  %h3 Editing outreach event #{@outreach_event.name}(#{@outreach_event.event_date})
 
 = render 'outreach_events'
 

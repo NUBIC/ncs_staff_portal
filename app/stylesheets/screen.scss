@@ -48,6 +48,15 @@ body.ncs {
     padding-left: 0 !important;
     border-bottom: 1px solid #AAAAAA !important;
   }
+  /* TODO: overiding of color in autocomeplete is not working */
+  .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
+    color: #f0f0f0 !important;
+  }
+  
+  .ui-menu .ui-menu-item a.ui-state-hover {
+    //background-color: $tab_nav_bg !important;
+    color: #f0f0f0 !important;
+  }
   
   #container {
     @include container; 
