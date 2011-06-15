@@ -24,3 +24,13 @@ NCSPortal.OutreachEvaluations.UI = function (config) {
       caller: this
   });
 };
+
+
+NCSPortal.OutreachSsus.UI = function (config) {
+  outreachSsusNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_ssus'),
+      association: 'outreach_ssus',
+      content: config.outreachSsusTemplate,
+      caller: this
+  });
+};

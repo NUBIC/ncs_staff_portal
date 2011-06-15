@@ -9,14 +9,28 @@
   - @outreachRacesTemplate = generate_nested_attributes_template(f, :outreach_races, 'outreach_events/outreach_races')
   - @outreachTargetsTemplate = generate_nested_attributes_template(f, :outreach_targets, 'outreach_events/outreach_targets')
   - @outreachEvaluationsTemplate = generate_nested_attributes_template(f, :outreach_evaluations, 'outreach_events/outreach_evaluations')
+  - @outreachSsusTemplate = generate_nested_attributes_template(f, :outreach_ssus, 'outreach_events/outreach_ssus')
   
   = label_tag "Outreach Description"
   .field
     = f.label :event_date, "Date of outreach activity:"
-    = f.text_field :event_date, :class => "datepicker", :id => "pickdate"
+    = f.text_field :event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
   .field
     = f.label :name, "Name of outreach activity:"
     = f.text_field :name
+  %table{ :class => 'records outreach_ssus' }
+    %thead
+      %tr
+        %td
+          Outreach Segments
+        %td
+    %tbody.nested_records_outreach_ssus
+      - f.fields_for :outreach_ssus do |outreach_ssu|
+        = render :partial => 'outreach_events/outreach_ssus', :locals => { :f => outreach_ssu }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add another segment", :outreach_ssus
   %table{ :class => 'records outreach_targets' }
     %thead
       %tr
@@ -131,11 +145,10 @@
       disabled_selected_options(".outreach_evaluations_selector")
       //nested_attributes_manage_options()
       outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
-      
       outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
-      
       outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
       outreachEvaluationsTemplateUI = new NCSPortal.OutreachEvaluations.UI({outreachEvaluationsTemplate: '#{@outreachEvaluationsTemplate}' });
+      outreachSsusTemplateUI = new NCSPortal.OutreachSsus.UI({outreachSsusTemplate: '#{@outreachSsusTemplate}' });
       
      })
 
