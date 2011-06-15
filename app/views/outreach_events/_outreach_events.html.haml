@@ -8,6 +8,7 @@
   - @outreachStaffMembersTemplate = generate_nested_attributes_template(f, :outreach_staff_members, 'outreach_events/outreach_staff_members')
   - @outreachRacesTemplate = generate_nested_attributes_template(f, :outreach_races, 'outreach_events/outreach_races')
   - @outreachTargetsTemplate = generate_nested_attributes_template(f, :outreach_targets, 'outreach_events/outreach_targets')
+  - @outreachEvaluationsTemplate = generate_nested_attributes_template(f, :outreach_evaluations, 'outreach_events/outreach_evaluations')
   
   = label_tag "Outreach Description"
   .field
@@ -90,14 +91,19 @@
   .field
     = f.label :culture_other, "Cultural group - other specify:"
     = f.text_field :culture_other
-  
-  = label_tag "Outreach Evaluation"
-  .field
-    = label_tag "How was the outreach evaluated? Check all that apply?"
-    - NcsCode.ncs_code_lookup(:evaluation_code).each do |code|
-      .field()      
-        = check_box_tag "outreach_event[evaluation_attributes][][evaluation_code]", code[1], @outreach_event.outreach_evaluations.map(&:evaluation_code).include?(code.second)
-        = code.first
+  %table{ :class => 'records outreach_evaluations' }
+    %thead
+      %tr
+        %td
+          Outreach Evaluations
+        %td
+    %tbody.nested_records_outreach_evaluations
+      - f.fields_for :outreach_evaluations do |outreach_evaluation|
+        = render :partial => 'outreach_events/outreach_evaluations', :locals => { :f => outreach_evaluation }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add another evaluation", :outreach_evaluations
   .field
     = f.label :evaluation_result_code, "Results of the outreach activity:"
     = f.select :evaluation_result_code, NcsCode.ncs_code_lookup(:evaluation_result_code), :prompt => "Select"
@@ -122,12 +128,14 @@
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
       disabled_selected_options(".outreach_races_selector")
       disabled_selected_options(".outreach_targets_selector")
+      disabled_selected_options(".outreach_evaluations_selector")
       //nested_attributes_manage_options()
       outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
       
       outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
       
       outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
+      outreachEvaluationsTemplateUI = new NCSPortal.OutreachEvaluations.UI({outreachEvaluationsTemplate: '#{@outreachEvaluationsTemplate}' });
       
      })
 

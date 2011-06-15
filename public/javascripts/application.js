@@ -8,6 +8,7 @@ NCSPortal.ManagementTasks = {};
 NCSPortal.OutreachStaffMembers = {};
 NCSPortal.OutreachRaces = {};
 NCSPortal.OutreachTargets = {};
+NCSPortal.OutreachEvaluations = {};
 
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){

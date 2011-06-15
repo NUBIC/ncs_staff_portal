@@ -6,6 +6,7 @@ class OutreachEvent < ActiveRecord::Base
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
    accepts_nested_attributes_for :outreach_targets, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_evaluations, :allow_destroy => true
 
    
    ATTRIBUTE_MAPPING = { 

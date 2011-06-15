@@ -15,3 +15,12 @@ NCSPortal.OutreachTargets.UI = function (config) {
       caller: this
   });
 };
+
+NCSPortal.OutreachEvaluations.UI = function (config) {
+  outreachEvaluationsNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_evaluations'),
+      association: 'outreach_evaluations',
+      content: config.outreachEvaluationsTemplate,
+      caller: this
+  });
+};
