@@ -506,6 +506,7 @@ form.bp textarea {
 /* line 33, ../../../app/stylesheets/screen.scss */
 body.ncs {
   /* jQuery UI - Override the jQuery CSS*/
+  /* TODO: overiding of color in autocomeplete is not working */
 }
 /* line 35, ../../../app/stylesheets/screen.scss */
 body.ncs a:hover {

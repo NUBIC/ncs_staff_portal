@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110615144424) do
+ActiveRecord::Schema.define(:version => 20110615215847) do
+
+  create_table "inventory_items", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -75,13 +81,14 @@ ActiveRecord::Schema.define(:version => 20110615144424) do
     t.integer  "culture_specific_code"
     t.integer  "culture_code"
     t.string   "culture_other"
-    t.integer  "quantity"
     t.decimal  "cost"
     t.integer  "no_of_staff"
     t.integer  "evaluation_result_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "letters_quantity"
+    t.integer  "attendees_quantity"
   end
 
   create_table "outreach_races", :force => true do |t|

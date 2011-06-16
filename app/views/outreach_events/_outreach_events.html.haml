@@ -59,8 +59,11 @@
   
   = label_tag "Outreach Details"
   .field
-    = f.label :quantity, "Number of letters mailed/attendance at meeting,etc:"
-    = f.text_field :quantity
+    = f.label :letters_quantity, "Number of letters:"
+    = f.text_field :letters_quantity
+  .field
+    = f.label :attendees_quantity, "Number of attendees:"
+    = f.text_field :attendees_quantity
   .field
     = f.label :cost, "Non-labor cost to conduct outreach:"
     = f.text_field :cost
