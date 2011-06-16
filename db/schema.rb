@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110616144000) do
+ActiveRecord::Schema.define(:version => 20110616152922) do
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -146,8 +146,10 @@ ActiveRecord::Schema.define(:version => 20110616144000) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "hourly_rate",        :precision => 5, :scale => 2
+    t.decimal  "hourly_rate",        :precision => 5,  :scale => 2
     t.date     "birth_date"
+    t.string   "pay_type"
+    t.decimal  "pay_amount",         :precision => 10, :scale => 2
   end
 
   create_table "staff_cert_trainings", :force => true do |t|

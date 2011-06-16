@@ -11,6 +11,18 @@ class Staff < ActiveRecord::Base
   has_many :management_tasks, :through => :staff_weekly_expenses
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
   
+  before_save :calculate_hourly_rate
+  
+  def calculate_hourly_rate
+    unless pay_type.blank? && pay_amount.blank?
+      if pay_type == "Hourly"
+        self.hourly_rate = pay_amount
+      elsif pay_type == "Yearly"
+        self.hourly_rate = pay_amount/2080
+      end
+    end
+  end
+  
   ATTRIBUTE_MAPPING = { 
     :staff_type_code => "STUDY_STAFF_TYPE_CL1",
     :age_range_code => "AGE_RANGE_CL1",

@@ -26,8 +26,9 @@
     = f.label :staff_type_other, "Other staff type"
     = f.text_field :staff_type_other, {:size =>20 ,:id => "staff_type_other"} 
   .field
-    = f.label :hourly_rate, "Default Hourly rate (in US Dollars per hour)"
-    = f.text_field :hourly_rate, {:size => 6, :maxlength =>6} 
+    = f.label :pay_amount, "Pay amount (in US Dollars)"
+    = f.select :pay_type, ["Hourly","Yearly"]
+    = f.text_field :pay_amount
   .field
     = f.label :birth_date , "Date of Birth (mm/dd/yyyy)"
     = f.text_field :birth_date , {:class => "datepicker", :size =>10, :maxlength =>10}
