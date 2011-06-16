@@ -48,3 +48,12 @@ NCSPortal.OutreachStaffMembers.UI = function (config) {
    });
    setupOutreachStaffAutocompleter();
 };
+
+NCSPortal.OutreachItems.UI = function (config) {
+  outreachItemsNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_items'),
+      association: 'outreach_items',
+      content: config.outreachItemsTemplate,
+      caller: this
+  });
+};

@@ -10,6 +10,7 @@ NCSPortal.OutreachRaces = {};
 NCSPortal.OutreachTargets = {};
 NCSPortal.OutreachEvaluations = {};
 NCSPortal.OutreachSsus = {};
+NCSPortal.OutreachItems = {};
 
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){
@@ -57,7 +58,7 @@ function check_select_for_other_class(select_elt, other_elt, other_label_class){
 
   if((o.size() > 0) && (s.size() > 0)){
     // 'Other' = -5
-    if(s.val() == "-5"){
+    if(s.val() == "-5" || s.val() == "Other"){
 	    o.siblings(other_label_class).show();
 	    o.show()
       o.css('background-color', '#EEF1C3'); //to make the change more visible
@@ -139,6 +140,7 @@ function disabled_selected_options(select_class) {
         $(current_selector_id +" option[value="+this+"]").attr('disabled', 'disabled')
       }
       $(current_selector_id +" option[value=-5]").removeAttr('disabled')
+      $(current_selector_id +" option[value=Other]").removeAttr('disabled')
     })
   });
 }

@@ -171,8 +171,9 @@ body.ncs {
     @include append(1); 
     background-color: $tab_nav_current_bg;
     
-    table {
-       border: 1px solid #ccc
+    table td{
+       //border: 1px solid #ccc
+       padding: 0.5em 0;
     }
     
     .column_checkboxes {
