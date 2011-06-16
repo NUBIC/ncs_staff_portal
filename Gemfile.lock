@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   remote: http://download.bioinformatics.northwestern.edu/gems/
+  remote: http://gemcutter.org/
   specs:
     abstract (1.0.0)
     actionmailer (3.0.5)
@@ -86,6 +87,8 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.15)
     database_cleaner (0.6.6)
+    date_validator (0.6.2)
+      activemodel (>= 3.0.0, < 3.2.0)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -184,6 +187,7 @@ DEPENDENCIES
   compass (~> 0.10.6)
   cucumber-rails (~> 0.3.2)
   database_cleaner (~> 0.6.6)
+  date_validator
   fastercsv
   haml (~> 3.0.25)
   haml-rails

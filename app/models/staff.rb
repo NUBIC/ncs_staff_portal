@@ -3,7 +3,7 @@ class Staff < ActiveRecord::Base
   validates_presence_of :staff_type_code, :on => :update
   validates_uniqueness_of :netid
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
-  validates :yob, :numericality => { :only_integer => true, :greater_than => Time.now.year - 150, :less_than => Time.now.year, :allow_nil => true }
+  validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year ,:allow_nil => true }
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
   has_many :staff_languages
   has_many :staff_cert_trainings

@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 source 'http://download.bioinformatics.northwestern.edu/gems'
+source 'http://gemcutter.org'
 
 gem 'rails', '3.0.5'
 
@@ -13,6 +14,7 @@ gem 'bcsec-rails', '~> 3.0.0'
 gem 'bcdatabase'
 gem 'fastercsv'
 gem 'tabs_on_rails'
+gem 'date_validator'
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'
