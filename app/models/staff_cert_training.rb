@@ -9,4 +9,12 @@ class StaffCertTraining < ActiveRecord::Base
     rel_name = key.to_s.gsub('_code', '')
     belongs_to rel_name, :conditions => "list_name = '#{value}'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => key
   end
+  
+  def formatted_expiration_date
+    expiration_date.nil? ? nil : expiration_date.to_s
+  end
+
+  def formatted_expiration_date=(expiration_date)
+    self.expiration_date = expiration_date
+  end
 end

@@ -19,6 +19,14 @@ class OutreachEvent < ActiveRecord::Base
    validates_presence_of :outreach_ssus, :message => "can't be blank. Please add one or more SSU for outreach event"
    validates :event_date, :date => { :before => Date.today, :allow_nil => true }
    
+   def formatted_event_date
+     event_date.nil? ? nil : event_date.to_s
+   end
+
+   def formatted_event_date=(event_date)
+     self.event_date = event_date
+   end
+   
    ATTRIBUTE_MAPPING = { 
      :mode_code => "OUTREACH_MODE_CL1",
      :outreach_type_code => "OUTREACH_TYPE_CL1",

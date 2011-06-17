@@ -23,6 +23,14 @@ class Staff < ActiveRecord::Base
     end
   end
   
+  def formatted_birth_date
+    birth_date.nil? ? nil : birth_date.to_s
+  end
+
+  def formatted_birth_date=(birth_date)
+    self.birth_date = birth_date
+  end
+  
   ATTRIBUTE_MAPPING = { 
     :staff_type_code => "STUDY_STAFF_TYPE_CL1",
     :age_range_code => "AGE_RANGE_CL1",

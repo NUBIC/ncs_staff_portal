@@ -30,8 +30,8 @@
     = f.select :pay_type, ["Hourly","Yearly"]
     = f.text_field :pay_amount
   .field
-    = f.label :birth_date , "Date of Birth (mm/dd/yyyy)"
-    = f.text_field :birth_date , {:class => "datepicker", :size =>10, :maxlength =>10}
+    = f.label :formatted_birth_date , "Date of Birth (mm/dd/yyyy)"
+    = f.text_field :formatted_birth_date , {:class => "datepicker", :size =>10, :maxlength =>10}
   .field
     = f.label :gender_code, "Gender"
     = f.select :gender_code, NcsCode.ncs_code_lookup(:gender_code), :prompt => 'Select Gender'
