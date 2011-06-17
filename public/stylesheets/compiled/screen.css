@@ -727,7 +727,13 @@ body.ncs #content .block .title {
   font-size: 125%;
   padding: 0.2em 0;
 }
-/* line 196, ../../../app/stylesheets/screen.scss */
+/* line 194, ../../../app/stylesheets/screen.scss */
+body.ncs #content em {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 125%;
+}
+/* line 202, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form {
   border: 1px solid #333;
   background-color: #e0e0e0;
@@ -741,20 +747,20 @@ body.ncs .current_form {
 * html body.ncs .current_form {
   overflow-x: hidden;
 }
-/* line 202, ../../../app/stylesheets/screen.scss */
+/* line 208, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form label, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
-/* line 206, ../../../app/stylesheets/screen.scss */
+/* line 212, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 211, ../../../app/stylesheets/screen.scss */
+/* line 217, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form div {
   padding: 0.5em;
 }
-/* line 214, ../../../app/stylesheets/screen.scss */
+/* line 220, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_info {
   display: inline;
   float: left;
@@ -765,7 +771,7 @@ body.ncs .current_form .task_info {
 * html body.ncs .current_form .task_info {
   overflow-x: hidden;
 }
-/* line 218, ../../../app/stylesheets/screen.scss */
+/* line 224, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_expense {
   padding-left: 40px;
   display: inline;
@@ -777,7 +783,7 @@ body.ncs .current_form .task_expense {
 * html body.ncs .current_form .task_expense {
   overflow-x: hidden;
 }
-/* line 223, ../../../app/stylesheets/screen.scss */
+/* line 229, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_actions {
   padding-left: 120px;
   display: inline;
@@ -789,12 +795,12 @@ body.ncs .current_form .task_actions {
 * html body.ncs .current_form .task_actions {
   overflow-x: hidden;
 }
-/* line 230, ../../../app/stylesheets/screen.scss */
+/* line 236, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 234, ../../../app/stylesheets/screen.scss */
+/* line 240, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_logo {
   display: inline;
   float: left;
@@ -805,7 +811,7 @@ body.ncs #footer .ncs_logo {
 * html body.ncs #footer .ncs_logo {
   overflow-x: hidden;
 }
-/* line 238, ../../../app/stylesheets/screen.scss */
+/* line 244, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -818,7 +824,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 244, ../../../app/stylesheets/screen.scss */
+/* line 250, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text {
   margin-top: 1em;
   display: inline;
@@ -830,11 +836,11 @@ body.ncs #footer .ncs_text {
 * html body.ncs #footer .ncs_text {
   overflow-x: hidden;
 }
-/* line 247, ../../../app/stylesheets/screen.scss */
+/* line 253, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text img {
   display: block;
 }
-/* line 252, ../../../app/stylesheets/screen.scss */
+/* line 258, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

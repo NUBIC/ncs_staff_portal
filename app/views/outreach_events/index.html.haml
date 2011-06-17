@@ -23,7 +23,7 @@
           - if outreach_event.mode_code.blank?
             %td
           - else
-            %td= outreach_event.mode.dislpay_text
+            %td= outreach_event.mode.display_text
           - if outreach_event.outreach_type_code.blank?
             %td
           - else
@@ -40,7 +40,7 @@
   
     function displayEventList() {
       var columnDefs = [
-          { key: "date", label: "Event Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
+          { key: "date", label: "Event Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
           { key: "name", label: "Event Name", sortable: true},
           { key: "result", label: "Result" },
           { key: "mode", label: "Mode" },
@@ -60,6 +60,6 @@
         ]
       };
       new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
-          sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_ASC }
+          sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_DESC }
       });
     }

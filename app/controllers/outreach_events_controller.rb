@@ -3,7 +3,7 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events
   # GET /outreach_events.xml
   def index
-    @outreach_events = OutreachEvent.all.sort_by(&:event_date)
+    @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,3 +1,9 @@
+
+%p
+  Note: Fields mark as (
+  %em *
+  ) are mandatory fields
+
 = form_for @outreach_event do |f|
   -if @outreach_event.errors.any?
     #error_explanation
@@ -23,7 +29,9 @@
     %table{ :class => 'records outreach_ssus row' }
       %tr.row
         %td
-          Outreach Segments
+          Outreach Segments 
+          %em * 
+          (Click the 'Add segment' link to add one or more segments for outreach event)
         %td
       %tbody.nested_records_outreach_ssus
         - f.fields_for :outreach_ssus do |outreach_ssu|
@@ -31,7 +39,7 @@
       %tfoot
         %tr.row
           %td.row{ :colspan => '3' }
-            = link_to_add_fields "Add another segment", :outreach_ssus
+            = link_to_add_fields "Add segment", :outreach_ssus
   .block
     .title
       Outreach Details
@@ -48,7 +56,7 @@
     %table{ :class => 'records outreach_targets row' }
       %tr.row
         %td
-          Outreach Targets
+          Primary outreach target (Click the 'Add target' link to add one or more targets for outreach event, if Applicable)
         %td
       %tbody.nested_records_outreach_targets
         - f.fields_for :outreach_targets do |outreach_target|
@@ -56,7 +64,7 @@
       %tfoot
         %tr.row
           %td.row{ :colspan => '3' }
-            = link_to_add_fields "Add another target", :outreach_targets
+            = link_to_add_fields "Add target", :outreach_targets
 
   .block
     .title
@@ -68,13 +76,17 @@
       = f.label :attendees_quantity, "Number of attendees"
       = f.text_field :attendees_quantity
     %table{ :class => 'records outreach_items' }
+      %tr.row
+        %td
+          Items used in outreach event (Click the 'Add item' link to add one or more items for outreach event, if Applicable)
+        %td
       %tbody.nested_records_outreach_items
         - f.fields_for :outreach_items do |outreach_item|
           = render :partial => 'outreach_events/outreach_items', :locals => { :f => outreach_item }
       %tfoot
         %tr
           %td{ :colspan => '3' }
-            = link_to_add_fields "Add another item", :outreach_items
+            = link_to_add_fields "Add item", :outreach_items
     .row
       = f.label :cost, "Non-labor cost to conduct outreach:"
       = f.text_field :cost
@@ -107,7 +119,7 @@
     %table{ :class => 'records outreach_races row' }
       %tr.row.tailored_all.racial_group_tr
         %td
-          Targeted racial groups
+          Targeted racial groups (Click the 'Add race' link to add one or more races for outreach event, if Applicable)
         %td
       %tbody.nested_records_outreach_races
         - f.fields_for :outreach_races do |outreach_race|
@@ -115,7 +127,7 @@
       %tfoot
         %tr.row.tailored_all.racial_group_tr
           %td{ :colspan => '3' }
-            = link_to_add_fields "Add another race", :outreach_races
+            = link_to_add_fields "Add race", :outreach_races
 
   .block
     .title
@@ -127,6 +139,8 @@
       %tr.row
         %td
           Outreach Evaluations
+          %em * 
+          (Click the 'Add evaluation' link to add one or more evaluations for outreach effort)
         %td
       %tbody.nested_records_outreach_evaluations
         - f.fields_for :outreach_evaluations do |outreach_evaluation|
@@ -134,7 +148,7 @@
       %tfoot
         %tr.row
           %td{ :colspan => '3' }
-            = link_to_add_fields "Add another evaluation", :outreach_evaluations
+            = link_to_add_fields "Add evaluation", :outreach_evaluations
 
   .block
     .title
@@ -145,17 +159,24 @@
     %table{ :class => 'records outreach_staff_members row' }
       %tr.row
         %td
-          Staff Members Participating in Outreach Event
+          Staff Members participating in Outreach Event 
+          %em * 
+          (Click the 'Add staff member' link to add one or more staff members for outreach event)
       %tbody.nested_records_outreach_staff_members
         - f.fields_for :outreach_staff_members do |outreach_staff_member|
           = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
       %tfoot
         %tr.row
           %td{ :colspan => '3' }
-            = link_to_add_fields "Add", :outreach_staff_members
+            = link_to_add_fields "Add staff member", :outreach_staff_members
   .row
     = f.submit 'Save'
     = link_to 'All outreach events', outreach_events_path
+  %br
+  %p
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields
   :javascript
     $(document).ready(function(){
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
