@@ -3,22 +3,11 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events
   # GET /outreach_events.xml
   def index
-    @outreach_events = OutreachEvent.all
+    @outreach_events = OutreachEvent.all.sort_by(&:event_date)
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @outreach_events }
-    end
-  end
-
-  # GET /outreach_events/1
-  # GET /outreach_events/1.xml
-  def show
-    @outreach_event = OutreachEvent.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @outreach_event }
     end
   end
 
@@ -48,8 +37,8 @@ class OutreachEventsController < SecuredController
 
     respond_to do |format|
       if @outreach_event.save
-        format.html { redirect_to(@outreach_event, :notice => 'Outreach event was successfully created.') }
-        format.xml  { render :xml => @outreach_event, :status => :created, :location => @outreach_event }
+        format.html { redirect_to(outreach_events_path, :notice => 'Outreach event was successfully created.') }
+        format.xml  { render :xml => outreach_events_path, :status => :created, :location => @outreach_event }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @outreach_event.errors, :status => :unprocessable_entity }
@@ -63,7 +52,7 @@ class OutreachEventsController < SecuredController
     @outreach_event = OutreachEvent.find(params[:id])
     respond_to do |format|
       if @outreach_event.update_attributes(params[:outreach_event])
-        format.html { redirect_to(@outreach_event, :notice => 'Outreach event was successfully updated.') }
+        format.html { redirect_to(outreach_events_path, :notice => 'Outreach event was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -155,6 +155,7 @@
             = link_to_add_fields "Add", :outreach_staff_members
   .row
     = f.submit 'Save'
+    = link_to 'All outreach events', outreach_events_path
   :javascript
     $(document).ready(function(){
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
@@ -179,7 +180,6 @@
       outreachEvaluationsTemplateUI = new NCSPortal.OutreachEvaluations.UI({outreachEvaluationsTemplate: '#{@outreachEvaluationsTemplate}' });
       outreachSsusTemplateUI = new NCSPortal.OutreachSsus.UI({outreachSsusTemplate: '#{@outreachSsusTemplate}' });
       outreachItemsTemplateUI = new NCSPortal.OutreachItems.UI({outreachItemsTemplate: '#{@outreachItemsTemplate}' });
-      
      })
 
     $(".datepicker").datepicker();

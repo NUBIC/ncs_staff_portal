@@ -12,6 +12,8 @@ class OutreachEvent < ActiveRecord::Base
    accepts_nested_attributes_for :outreach_ssus, :allow_destroy => true
    accepts_nested_attributes_for :outreach_items, :allow_destroy => true
    
+   validates :event_date, :date => { :before => Date.today, :allow_nil => true }
+   
    ATTRIBUTE_MAPPING = { 
      :mode_code => "OUTREACH_MODE_CL1",
      :outreach_type_code => "OUTREACH_TYPE_CL1",

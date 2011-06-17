@@ -1,23 +1,65 @@
-%h1 Listing outreach_events
-
-%table
-  %tr
-    %th Outreach Event date
-    %th Outreach target(s)
-    %th Result of outreach activity
-    %th
-    %th
-    %th
-
-  - @outreach_events.each do |outreach_event|
-    %tr
-      %td= outreach_event.event_date
-      %td= outreach_event.outreach_targets.map{|target| target.target.display_text}.join(', ')
-      %td= outreach_event.evaluation_result.display_text unless outreach_event.evaluation_result_code.blank?
-      %td= link_to 'Show', outreach_event
-      %td= link_to 'Edit', edit_outreach_event_path(outreach_event)
-      %td= link_to 'Destroy', outreach_event, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
+%h3 List of outreach events
 = link_to 'New Outreach event', new_outreach_event_path
+
+%div.yui-skin-sam
+  %div#event-list
+    %table#event-list-tbl
+      - @outreach_events.each do |outreach_event|
+        %tr
+          - if outreach_event.event_date.blank?
+            %td
+          - else
+            %td= link_to outreach_event.event_date, edit_outreach_event_path(outreach_event)
+            
+          - if outreach_event.name.blank?
+            %td
+          - else
+            %td= outreach_event.name
+            
+          - if outreach_event.evaluation_result_code.blank?
+            %td
+          - else
+            %td= outreach_event.evaluation_result.display_text
+          - if outreach_event.mode_code.blank?
+            %td
+          - else
+            %td= outreach_event.mode.dislpay_text
+          - if outreach_event.outreach_type_code.blank?
+            %td
+          - else
+            %td= outreach_event.outreach_type.display_text
+          -#- if permit?(:supervisor)
+          %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:confirm => "Are you sure?", :method => :delete
+          -#- else
+            -#%td
+
+:javascript
+    $(document).ready(function() {
+      displayEventList()
+    });
+  
+    function displayEventList() {
+      var columnDefs = [
+          { key: "date", label: "Event Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
+          { key: "name", label: "Event Name", sortable: true},
+          { key: "result", label: "Result" },
+          { key: "mode", label: "Mode" },
+          { key: "type", label: "Type" },
+          { key: "controls", label: "Controls" }
+      ];
+      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("event-list-tbl"));
+      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+      dataSource.responseSchema = {
+        fields: [
+          { key: "date" },
+          { key: "name" },
+          { key: "result" },
+          { key: "mode" },
+          { key: "type" },
+          { key: "controls" }
+        ]
+      };
+      new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
+          sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_ASC }
+      });
+    }
