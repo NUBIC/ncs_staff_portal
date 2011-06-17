@@ -20,7 +20,8 @@
     = text_field_tag "study_center", "Northwestern University", :readonly => true
     = f.hidden_field :study_center, :value => 20000029
   .field
-    = f.label :staff_type_code, "Staff Type*"
+    = f.label :staff_type_code, "Staff Type" 
+    %em * 
     = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
   .field
     = f.label :staff_type_other, "Other staff type"
@@ -67,7 +68,9 @@
     = f.submit 'Save'
     = link_to 'cancel', staff_path(params[:staff_id])
   %p
-    Note: Fields mark as (*) are mandatory fields
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields
   :javascript
     $(".datepicker").datepicker();
     $(function () {
