@@ -89,10 +89,10 @@
       Outreach Quantity
     .row
       = f.label :letters_quantity, "Number of letters"
-      = f.text_field :letters_quantity
+      = f.text_field :letters_quantity, {:size => 5}
     .row
       = f.label :attendees_quantity, "Number of attendees"
-      = f.text_field :attendees_quantity
+      = f.text_field :attendees_quantity, {:size => 5}
     %table{ :class => 'records outreach_items' }
       %tr.row
         %td
@@ -129,7 +129,7 @@
     .row
       = f.label :culture_code, "Targerted cultural group"
       = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), {:prompt => "Select"}, {:class => "targerted_cultural outreach_tailored_all", :id => "targerted_cultural"}  
-      = f.label :culture_other, "Cultural group - other specify:"
+      = f.label :culture_other, "Cultural group - other specify"
       = f.text_field :culture_other, {:class => "tailored_all targerted_cultural_specific_all", :id => "targerted_cultural_other"}
     .row
       = f.label :race_specific_code, "Was the outreach targeted to a specific racial group?"
@@ -173,7 +173,7 @@
       Outreach Staff Information
     .row
       = f.label :no_of_staff, "Number of staff required for activity"
-      = f.text_field :no_of_staff
+      = f.text_field :no_of_staff, {:size => 5}
     %table{ :class => 'records outreach_staff_members row' }
       %tr.row
         %td

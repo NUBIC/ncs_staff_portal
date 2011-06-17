@@ -1,4 +1,4 @@
-%tr{ :class => "outreach_evaluation fields" }
+%tr{ :class => "outreach_evaluation fields row" }
   %td.col1
     = f.label :evaluation_code, "Evaluation"
     = f.select :evaluation_code, NcsCode.ncs_code_lookup(:outreach_evaluation_code), {:prompt => 'Select evaluation'} , {:class => "nested_attribute_selector outreach_evaluations_selector"}
