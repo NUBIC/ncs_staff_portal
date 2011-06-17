@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110616152922) do
+ActiveRecord::Schema.define(:version => 20110617154110) do
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -126,6 +126,13 @@ ActiveRecord::Schema.define(:version => 20110616152922) do
     t.integer  "outreach_event_id"
     t.integer  "target_code"
     t.string   "target_other"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "outreach_tsus", :force => true do |t|
+    t.integer  "outreach_event_id"
+    t.string   "tsu_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

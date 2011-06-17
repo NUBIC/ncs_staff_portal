@@ -16,6 +16,7 @@
   - @outreachTargetsTemplate = generate_nested_attributes_template(f, :outreach_targets, 'outreach_events/outreach_targets')
   - @outreachEvaluationsTemplate = generate_nested_attributes_template(f, :outreach_evaluations, 'outreach_events/outreach_evaluations')
   - @outreachSsusTemplate = generate_nested_attributes_template(f, :outreach_ssus, 'outreach_events/outreach_ssus')
+  - @outreachTsusTemplate = generate_nested_attributes_template(f, :outreach_tsus, 'outreach_events/outreach_tsus')
   - @outreachItemsTemplate = generate_nested_attributes_template(f, :outreach_items, 'outreach_events/outreach_items')
   
   .block
@@ -26,6 +27,9 @@
       = f.text_field :event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
       = f.label :name, "Event Name"
       = f.text_field :name
+    .row
+      PSU
+      = text_field_tag "", "Cook County, IL (Wave 1)", :readonly => true
     %table{ :class => 'records outreach_ssus row' }
       %tr.row
         %td
@@ -40,6 +44,20 @@
         %tr.row
           %td.row{ :colspan => '3' }
             = link_to_add_fields "Add segment", :outreach_ssus
+    %table{ :class => 'records outreach_tsus row' }
+      %tr.row
+        %td
+          Outreach TSU 
+          %em * 
+          (Click the 'Add TSU' link to add one or more TSUs for outreach event, if Applicable)
+        %td
+      %tbody.nested_records_outreach_tsus
+        - f.fields_for :outreach_tsus do |outreach_tsu|
+          = render :partial => 'outreach_events/outreach_tsus', :locals => { :f => outreach_tsu }
+      %tfoot
+        %tr.row
+          %td.row{ :colspan => '3' }
+            = link_to_add_fields "Add TSU", :outreach_tsus
   .block
     .title
       Outreach Details
@@ -200,6 +218,7 @@
       outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
       outreachEvaluationsTemplateUI = new NCSPortal.OutreachEvaluations.UI({outreachEvaluationsTemplate: '#{@outreachEvaluationsTemplate}' });
       outreachSsusTemplateUI = new NCSPortal.OutreachSsus.UI({outreachSsusTemplate: '#{@outreachSsusTemplate}' });
+      outreachTsusTemplateUI = new NCSPortal.OutreachTsus.UI({outreachTsusTemplate: '#{@outreachTsusTemplate}' });
       outreachItemsTemplateUI = new NCSPortal.OutreachItems.UI({outreachItemsTemplate: '#{@outreachItemsTemplate}' });
      })
 

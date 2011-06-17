@@ -4,13 +4,15 @@ class OutreachEvent < ActiveRecord::Base
    has_many :outreach_targets, :dependent => :destroy
    has_many :outreach_evaluations, :dependent => :destroy
    has_many :outreach_ssus, :dependent => :destroy
+   has_many :outreach_tsus, :dependent => :destroy
    has_many :outreach_items, :dependent => :destroy
-   accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_staff_members, :reject_if => :all_blank, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
    accepts_nested_attributes_for :outreach_targets, :allow_destroy => true
-   accepts_nested_attributes_for :outreach_evaluations, :allow_destroy => true
-   accepts_nested_attributes_for :outreach_ssus, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_evaluations, :reject_if => :all_blank, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_ssus, :reject_if => :all_blank, :allow_destroy => true
    accepts_nested_attributes_for :outreach_items, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_tsus, :allow_destroy => true
    
    validates :event_date, :date => { :before => Date.today, :allow_nil => true }
    

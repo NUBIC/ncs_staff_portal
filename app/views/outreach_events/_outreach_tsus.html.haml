@@ -1,0 +1,6 @@
+%tr{ :class => "outreach_tsu fields row" }
+  %td.col1
+    = f.label :tsu_code, "TSU"
+    = f.select :tsu_code, NcsTsu.tsu_code_lookup, {:prompt => 'Select TSU'} , {:class => "nested_attribute_selector outreach_tsus_selector"}
+  %td.col2
+    = link_to_remove_fields 'Remove', f, :outreach_tsus
