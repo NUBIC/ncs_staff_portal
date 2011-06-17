@@ -506,7 +506,6 @@ form.bp textarea {
 /* line 33, ../../../app/stylesheets/screen.scss */
 body.ncs {
   /* jQuery UI - Override the jQuery CSS*/
-  /* TODO: overiding of color in autocomeplete is not working */
 }
 /* line 35, ../../../app/stylesheets/screen.scss */
 body.ncs a:hover {
@@ -525,14 +524,6 @@ body.ncs ul.ui-autocomplete {
   border-bottom: 1px solid #AAAAAA !important;
 }
 /* line 52, ../../../app/stylesheets/screen.scss */
-body.ncs .ui-state-hover, body.ncs .ui-widget-content .ui-state-hover, body.ncs .ui-widget-header .ui-state-hover, body.ncs .ui-state-focus, body.ncs .ui-widget-content .ui-state-focus, body.ncs .ui-widget-header .ui-state-focus {
-  color: #f0f0f0 !important;
-}
-/* line 56, ../../../app/stylesheets/screen.scss */
-body.ncs .ui-menu .ui-menu-item a.ui-state-hover {
-  color: #f0f0f0 !important;
-}
-/* line 61, ../../../app/stylesheets/screen.scss */
 body.ncs #container {
   width: 950px;
   margin: 0 auto;
@@ -540,7 +531,7 @@ body.ncs #container {
   *zoom: 1;
   background: url('/images/grid.png?1306187953');
 }
-/* line 67, ../../../app/stylesheets/screen.scss */
+/* line 58, ../../../app/stylesheets/screen.scss */
 body.ncs #header, body.ncs #footer {
   display: inline;
   float: left;
@@ -551,11 +542,11 @@ body.ncs #header, body.ncs #footer {
 * html body.ncs #header, * html body.ncs #footer {
   overflow-x: hidden;
 }
-/* line 71, ../../../app/stylesheets/screen.scss */
+/* line 62, ../../../app/stylesheets/screen.scss */
 body.ncs #header {
   background-color: #ccd3e8;
 }
-/* line 73, ../../../app/stylesheets/screen.scss */
+/* line 64, ../../../app/stylesheets/screen.scss */
 body.ncs #header #app_name {
   padding-left: 40px;
   font-size: 2.0em;
@@ -568,7 +559,7 @@ body.ncs #header #app_name {
 * html body.ncs #header #app_name {
   overflow-x: hidden;
 }
-/* line 79, ../../../app/stylesheets/screen.scss */
+/* line 70, ../../../app/stylesheets/screen.scss */
 body.ncs #header #current_user {
   margin-top: 0.5em;
   display: inline;
@@ -582,7 +573,7 @@ body.ncs #header #current_user {
 * html body.ncs #header #current_user {
   overflow-x: hidden;
 }
-/* line 86, ../../../app/stylesheets/screen.scss */
+/* line 77, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation {
   display: inline;
   float: left;
@@ -593,17 +584,17 @@ body.ncs #header #tab_navigation {
 * html body.ncs #header #tab_navigation {
   overflow-x: hidden;
 }
-/* line 88, ../../../app/stylesheets/screen.scss */
+/* line 79, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul {
   list-style-type: none;
 }
-/* line 92, ../../../app/stylesheets/screen.scss */
+/* line 83, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul li {
   display: inline;
   float: left;
   padding: 1em 0.5em 0 0.5em;
 }
-/* line 98, ../../../app/stylesheets/screen.scss */
+/* line 89, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li a {
   display: block;
   width: 12em;
@@ -615,7 +606,7 @@ body.ncs #header #tab_navigation li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 110, ../../../app/stylesheets/screen.scss */
+/* line 101, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li.current a {
   display: block;
   width: 12em;
@@ -627,7 +618,7 @@ body.ncs #header #tab_navigation li.current a {
   text-align: center;
   color: #333333;
 }
-/* line 126, ../../../app/stylesheets/screen.scss */
+/* line 117, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical {
   display: inline;
   float: left;
@@ -639,17 +630,17 @@ body.ncs #tab_vertical {
 * html body.ncs #tab_vertical {
   overflow-x: hidden;
 }
-/* line 129, ../../../app/stylesheets/screen.scss */
+/* line 120, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-/* line 135, ../../../app/stylesheets/screen.scss */
+/* line 126, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical ul li {
   padding: 0.5em;
 }
-/* line 139, ../../../app/stylesheets/screen.scss */
+/* line 130, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical li a {
   display: block;
   width: 12em;
@@ -660,7 +651,7 @@ body.ncs #tab_vertical li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 150, ../../../app/stylesheets/screen.scss */
+/* line 141, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical li.current span {
   display: block;
   width: 12em;
@@ -671,7 +662,7 @@ body.ncs #tab_vertical li.current span {
   text-align: center;
   color: #333333;
 }
-/* line 162, ../../../app/stylesheets/screen.scss */
+/* line 153, ../../../app/stylesheets/screen.scss */
 body.ncs #content_vertical {
   display: inline;
   float: left;
@@ -683,7 +674,7 @@ body.ncs #content_vertical {
 * html body.ncs #content_vertical {
   overflow-x: hidden;
 }
-/* line 167, ../../../app/stylesheets/screen.scss */
+/* line 158, ../../../app/stylesheets/screen.scss */
 body.ncs #content {
   display: inline;
   float: left;
@@ -698,34 +689,45 @@ body.ncs #content {
 * html body.ncs #content {
   overflow-x: hidden;
 }
+/* line 169, ../../../app/stylesheets/screen.scss */
+body.ncs #content table tr, body.ncs #content table td, body.ncs #content .row {
+  padding: 0.2em 0;
+}
 /* line 174, ../../../app/stylesheets/screen.scss */
-body.ncs #content table td {
-  padding: 0.5em 0;
-}
-/* line 179, ../../../app/stylesheets/screen.scss */
-body.ncs #content .column_checkboxes {
+body.ncs #content table td.col1 {
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 870px;
+  width: 750px;
 }
 /* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
-* html body.ncs #content .column_checkboxes {
+* html body.ncs #content table td.col1 {
   overflow-x: hidden;
 }
-/* line 183, ../../../app/stylesheets/screen.scss */
-body.ncs #content .each_scroll_checkbox {
-  float: left;
+/* line 178, ../../../app/stylesheets/screen.scss */
+body.ncs #content table td.col2 {
   display: inline;
   float: left;
-  margin-right: 10px;
-  width: 390px;
+  margin-right: 0;
+  width: 110px;
 }
 /* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
-* html body.ncs #content .each_scroll_checkbox {
+* html body.ncs #content table td.col2 {
   overflow-x: hidden;
 }
-/* line 189, ../../../app/stylesheets/screen.scss */
+/* line 182, ../../../app/stylesheets/screen.scss */
+body.ncs #content .block {
+  background-color: #e8e8e8;
+  margin-bottom: 1em;
+}
+/* line 187, ../../../app/stylesheets/screen.scss */
+body.ncs #content .block .title {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 125%;
+  padding: 0.2em 0;
+}
+/* line 196, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form {
   border: 1px solid #333;
   background-color: #e0e0e0;
@@ -739,20 +741,20 @@ body.ncs .current_form {
 * html body.ncs .current_form {
   overflow-x: hidden;
 }
-/* line 195, ../../../app/stylesheets/screen.scss */
+/* line 202, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form label, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
-/* line 199, ../../../app/stylesheets/screen.scss */
+/* line 206, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 204, ../../../app/stylesheets/screen.scss */
+/* line 211, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form div {
   padding: 0.5em;
 }
-/* line 207, ../../../app/stylesheets/screen.scss */
+/* line 214, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_info {
   display: inline;
   float: left;
@@ -763,7 +765,7 @@ body.ncs .current_form .task_info {
 * html body.ncs .current_form .task_info {
   overflow-x: hidden;
 }
-/* line 211, ../../../app/stylesheets/screen.scss */
+/* line 218, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_expense {
   padding-left: 40px;
   display: inline;
@@ -775,7 +777,7 @@ body.ncs .current_form .task_expense {
 * html body.ncs .current_form .task_expense {
   overflow-x: hidden;
 }
-/* line 216, ../../../app/stylesheets/screen.scss */
+/* line 223, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_actions {
   padding-left: 120px;
   display: inline;
@@ -787,12 +789,12 @@ body.ncs .current_form .task_actions {
 * html body.ncs .current_form .task_actions {
   overflow-x: hidden;
 }
-/* line 223, ../../../app/stylesheets/screen.scss */
+/* line 230, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 227, ../../../app/stylesheets/screen.scss */
+/* line 234, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_logo {
   display: inline;
   float: left;
@@ -803,7 +805,7 @@ body.ncs #footer .ncs_logo {
 * html body.ncs #footer .ncs_logo {
   overflow-x: hidden;
 }
-/* line 231, ../../../app/stylesheets/screen.scss */
+/* line 238, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -816,7 +818,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 237, ../../../app/stylesheets/screen.scss */
+/* line 244, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text {
   margin-top: 1em;
   display: inline;
@@ -828,11 +830,11 @@ body.ncs #footer .ncs_text {
 * html body.ncs #footer .ncs_text {
   overflow-x: hidden;
 }
-/* line 240, ../../../app/stylesheets/screen.scss */
+/* line 247, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .ncs_text img {
   display: block;
 }
-/* line 245, ../../../app/stylesheets/screen.scss */
+/* line 252, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

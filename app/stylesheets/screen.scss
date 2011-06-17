@@ -48,15 +48,6 @@ body.ncs {
     padding-left: 0 !important;
     border-bottom: 1px solid #AAAAAA !important;
   }
-  /* TODO: overiding of color in autocomeplete is not working */
-  .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { 
-    color: #f0f0f0 !important;
-  }
-  
-  .ui-menu .ui-menu-item a.ui-state-hover {
-    //background-color: $tab_nav_bg !important;
-    color: #f0f0f0 !important;
-  }
   
   #container {
     @include container; 
@@ -170,20 +161,36 @@ body.ncs {
     @include prepend(1);
     @include append(1); 
     background-color: $tab_nav_current_bg;
-    
-    table td{
-       //border: 1px solid #ccc
-       padding: 0.5em 0;
+    table {
+      //border: 0.1px solid #333;
+      //background-color:  $current_form_bg
     }
     
-    .column_checkboxes {
-       @include column($blueprint-grid-columns - 2);
+    table tr, table td, .row {
+       padding: 0.2em 0;
     }
     
-    .each_scroll_checkbox {
-       float: left;
-       @include column(10);
+    
+    table td.col1{
+      @include column(19)
     }
+    
+    table td.col2{
+      @include column(3,true)
+    }
+    
+    .block {
+      background-color: $form_table_bg;
+      @include append-bottom(1em);
+    }
+    
+    .block .title {
+      font-weight: bold;
+      font-style: normal;
+      font-size: 125%;
+      padding: 0.2em 0;
+    }
+    
   }
   
   .current_form {

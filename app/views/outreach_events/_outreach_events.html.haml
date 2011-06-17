@@ -12,147 +12,148 @@
   - @outreachSsusTemplate = generate_nested_attributes_template(f, :outreach_ssus, 'outreach_events/outreach_ssus')
   - @outreachItemsTemplate = generate_nested_attributes_template(f, :outreach_items, 'outreach_events/outreach_items')
   
-  = label_tag "Outreach Description"
-  .field
-    = f.label :event_date, "Date of outreach activity:"
-    = f.text_field :event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
-  .field
-    = f.label :name, "Name of outreach activity:"
-    = f.text_field :name
-  %table{ :class => 'records outreach_ssus' }
-    %thead
-      %tr
+  .block
+    .title
+      Outreach Description
+    .row
+      = f.label :event_date, "Event Date"
+      = f.text_field :event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
+      = f.label :name, "Event Name"
+      = f.text_field :name
+    %table{ :class => 'records outreach_ssus row' }
+      %tr.row
         %td
           Outreach Segments
         %td
-    %tbody.nested_records_outreach_ssus
-      - f.fields_for :outreach_ssus do |outreach_ssu|
-        = render :partial => 'outreach_events/outreach_ssus', :locals => { :f => outreach_ssu }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add another segment", :outreach_ssus
-  %table{ :class => 'records outreach_targets' }
-    %thead
-      %tr
+      %tbody.nested_records_outreach_ssus
+        - f.fields_for :outreach_ssus do |outreach_ssu|
+          = render :partial => 'outreach_events/outreach_ssus', :locals => { :f => outreach_ssu }
+      %tfoot
+        %tr.row
+          %td.row{ :colspan => '3' }
+            = link_to_add_fields "Add another segment", :outreach_ssus
+  .block
+    .title
+      Outreach Details
+    .row
+      = f.label :mode_code, "Outreach mode"
+      = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), {:prompt => "Select"}, {:id => "outreach_mode"}
+      = f.label :mode_other, "Other mode"
+      = f.text_field :mode_other, {:id => "outreach_mode_other"}
+    .row
+      = f.label :outreach_type_code, "Outreach type"
+      = f.select :outreach_type_code, NcsCode.ncs_code_lookup(:outreach_type_code), {:prompt => "Select"}, {:id => "outreach_type"}
+      = f.label :outreach_type_other, "Outreach type - other specify"
+      = f.text_field :outreach_type_other, {:id => "outreach_type_other"}
+    %table{ :class => 'records outreach_targets row' }
+      %tr.row
         %td
           Outreach Targets
         %td
-    %tbody.nested_records_outreach_targets
-      - f.fields_for :outreach_targets do |outreach_target|
-        = render :partial => 'outreach_events/outreach_targets', :locals => { :f => outreach_target }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add another target", :outreach_targets
-  .field
-    = f.label :mode_code, "Outreach mode:"
-    = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), :prompt => "Select"
-  .field
-    = f.label :mode_other, "Outreach mode - other specify:"
-    = f.text_field :mode_other
-  .field
-    = f.label :outreach_type_code, "Outreach type:"
-    = f.select :outreach_type_code, NcsCode.ncs_code_lookup(:outreach_type_code), :prompt => "Select"
-  .field
-    = f.label :outreach_type_other, "Outreach type - other specify:"
-    = f.text_field :outreach_type_other
-  
-  = label_tag "Outreach Details"
-  .field
-    = f.label :letters_quantity, "Number of letters:"
-    = f.text_field :letters_quantity
-  .field
-    = f.label :attendees_quantity, "Number of attendees:"
-    = f.text_field :attendees_quantity
-  %table{ :class => 'records outreach_items' }
-    %thead
-      %tr
-        %td
-          
-        %td
-    %tbody.nested_records_outreach_items
-      - f.fields_for :outreach_items do |outreach_item|
-        = render :partial => 'outreach_events/outreach_items', :locals => { :f => outreach_item }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add another item", :outreach_items
-  .field
-    = f.label :cost, "Non-labor cost to conduct outreach:"
-    = f.text_field :cost
-  .field
-    = f.label :no_of_staff, "Number of staff required for activity:"
-    = f.text_field :no_of_staff
-  = label_tag "Outreach Targets"
-  .field
-    = f.label :tailored_code, "Was outreach effort tailored to a specific group?"
-    = f.select :tailored_code, NcsCode.ncs_code_lookup(:tailored_code), :prompt => "Select"
-  .field
-    = f.label :language_specific_code, "Was the outreach language specific?"
-    = f.select :language_specific_code, NcsCode.ncs_code_lookup(:language_specific_code), :prompt => "Select"
-  .field
-    = f.label :language_code, "Specific Language target:"
-    = f.select :language_code, NcsCode.ncs_code_lookup(:language_code), :prompt => "Select"
-  .field
-    = f.label :language_other, "Language target - other specify:"
-    = f.text_field :language_other
-  .field
-    = f.label :race_specific_code, "Was the outreach targeted to a specific racial group?"
-    = f.select :race_specific_code, NcsCode.ncs_code_lookup(:race_specific_code), :prompt => "Select"
-  %table{ :class => 'records outreach_races' }
-    %thead
-      %tr
+      %tbody.nested_records_outreach_targets
+        - f.fields_for :outreach_targets do |outreach_target|
+          = render :partial => 'outreach_events/outreach_targets', :locals => { :f => outreach_target }
+      %tfoot
+        %tr.row
+          %td.row{ :colspan => '3' }
+            = link_to_add_fields "Add another target", :outreach_targets
+
+  .block
+    .title
+      Outreach Quantity
+    .row
+      = f.label :letters_quantity, "Number of letters"
+      = f.text_field :letters_quantity
+    .row
+      = f.label :attendees_quantity, "Number of attendees"
+      = f.text_field :attendees_quantity
+    %table{ :class => 'records outreach_items' }
+      %tbody.nested_records_outreach_items
+        - f.fields_for :outreach_items do |outreach_item|
+          = render :partial => 'outreach_events/outreach_items', :locals => { :f => outreach_item }
+      %tfoot
+        %tr
+          %td{ :colspan => '3' }
+            = link_to_add_fields "Add another item", :outreach_items
+    .row
+      = f.label :cost, "Non-labor cost to conduct outreach:"
+      = f.text_field :cost
+
+  .block
+    .title
+      Outreach Targets
+    .row
+      = f.label :tailored_code, "Was outreach effort tailored to a specific group?"
+      = f.select :tailored_code, NcsCode.ncs_code_lookup(:tailored_code), {:prompt => "Select"}, {:id => "tailored"}
+    .row
+      = f.label :language_specific_code, "Was the outreach language specific?"
+      = f.select :language_specific_code, NcsCode.ncs_code_lookup(:language_specific_code), {:prompt => "Select"}, {:class => "tailored_specific", :id => "language_specific"} 
+    .row
+      = f.label :language_code, "Specific Language target"
+      = f.select :language_code, NcsCode.ncs_code_lookup(:language_code), {:prompt => "Select"}, {:class => "language_specific_target tailored_all", :id => "language_specific_target"} 
+      = f.label :language_other, "Language target - other specify"
+      = f.text_field :language_other, {:class => "tailored_all language_specific_all", :id => "language_specific_target_other"} 
+    .row
+      = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
+      = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), {:prompt => "Select"}, {:class => "tailored_specific", :id => "targerted_cultural_specific"} 
+    .row
+      = f.label :culture_code, "Targerted cultural group"
+      = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), {:prompt => "Select"}, {:class => "targerted_cultural outreach_tailored_all", :id => "targerted_cultural"}  
+      = f.label :culture_other, "Cultural group - other specify:"
+      = f.text_field :culture_other, {:class => "tailored_all targerted_cultural_specific_all", :id => "targerted_cultural_other"}
+    .row
+      = f.label :race_specific_code, "Was the outreach targeted to a specific racial group?"
+      = f.select :race_specific_code, NcsCode.ncs_code_lookup(:race_specific_code), {:prompt => "Select"}, {:class => "tailored_specific", :id => "racial_group"}
+    %table{ :class => 'records outreach_races row' }
+      %tr.row.tailored_all.racial_group_tr
         %td
           Targeted racial groups
         %td
-    %tbody.nested_records_outreach_races
-      - f.fields_for :outreach_races do |outreach_race|
-        = render :partial => 'outreach_events/outreach_races', :locals => { :f => outreach_race }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add another race", :outreach_races
-  .field
-    = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
-    = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), :prompt => "Select"
-  .field
-    = f.label :culture_code, "Targerted cultural group:"
-    = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), :prompt => "Select"
-  .field
-    = f.label :culture_other, "Cultural group - other specify:"
-    = f.text_field :culture_other
-  %table{ :class => 'records outreach_evaluations' }
-    %thead
-      %tr
+      %tbody.nested_records_outreach_races
+        - f.fields_for :outreach_races do |outreach_race|
+          = render :partial => 'outreach_events/outreach_races', :locals => { :f => outreach_race }
+      %tfoot
+        %tr.row.tailored_all.racial_group_tr
+          %td{ :colspan => '3' }
+            = link_to_add_fields "Add another race", :outreach_races
+
+  .block
+    .title
+      Outreach Evaluation
+    .row
+      = f.label :evaluation_result_code, "Results of the outreach activity"
+      = f.select :evaluation_result_code, NcsCode.ncs_code_lookup(:evaluation_result_code), :prompt => "Select"
+    %table{ :class => 'records outreach_evaluations row' }
+      %tr.row
         %td
           Outreach Evaluations
         %td
-    %tbody.nested_records_outreach_evaluations
-      - f.fields_for :outreach_evaluations do |outreach_evaluation|
-        = render :partial => 'outreach_events/outreach_evaluations', :locals => { :f => outreach_evaluation }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add another evaluation", :outreach_evaluations
-  .field
-    = f.label :evaluation_result_code, "Results of the outreach activity:"
-    = f.select :evaluation_result_code, NcsCode.ncs_code_lookup(:evaluation_result_code), :prompt => "Select"
-  
-  %table{ :class => 'records outreach_staff_members' }
-    %thead
-      %tr
-        %th
+      %tbody.nested_records_outreach_evaluations
+        - f.fields_for :outreach_evaluations do |outreach_evaluation|
+          = render :partial => 'outreach_events/outreach_evaluations', :locals => { :f => outreach_evaluation }
+      %tfoot
+        %tr.row
+          %td{ :colspan => '3' }
+            = link_to_add_fields "Add another evaluation", :outreach_evaluations
+
+  .block
+    .title
+      Outreach Staff Information
+    .row
+      = f.label :no_of_staff, "Number of staff required for activity"
+      = f.text_field :no_of_staff
+    %table{ :class => 'records outreach_staff_members row' }
+      %tr.row
+        %td
           Staff Members Participating in Outreach Event
-        %th
-    %tbody.nested_records_outreach_staff_members
-      - f.fields_for :outreach_staff_members do |outreach_staff_member|
-        = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
-    %tfoot
-      %tr
-        %td{ :colspan => '3' }
-          = link_to_add_fields "Add", :outreach_staff_members
-  .actions
+      %tbody.nested_records_outreach_staff_members
+        - f.fields_for :outreach_staff_members do |outreach_staff_member|
+          = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
+      %tfoot
+        %tr.row
+          %td{ :colspan => '3' }
+            = link_to_add_fields "Add", :outreach_staff_members
+  .row
     = f.submit 'Save'
   :javascript
     $(document).ready(function(){
@@ -162,6 +163,15 @@
       disabled_selected_options(".outreach_evaluations_selector")
       disabled_selected_options(".outreach_ssus_selector")
       disabled_selected_options(".outreach_items_selector")
+      
+      wire_up_select_other("#outreach_mode","#outreach_mode_other");
+      wire_up_select_other("#outreach_type","#outreach_type_other");
+      wire_up_select_other("#language_specific_target","#language_specific_target_other");
+      wire_up_select_other("#targerted_cultural","#targerted_cultural_other");
+      wire_up_select_yes_selector("#tailored", ".tailored_specific", ".tailored_all")
+      wire_up_select_yes_selector("#language_specific", ".language_specific_target", ".language_specific_all")
+      wire_up_select_yes_selector("#targerted_cultural_specific", ".targerted_cultural", ".targerted_cultural_specific_all")
+      wire_up_select_yes_nested_attribute("#racial_group", ".racial_group_tr")
       //nested_attributes_manage_options()
       outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
       outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });

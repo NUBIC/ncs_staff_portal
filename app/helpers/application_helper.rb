@@ -36,8 +36,8 @@ module ApplicationHelper
     escape_javascript(fields)
   end
 
-  def link_to_add_fields(name, association)
-    link_to(name, 'javascript:void(0);', :class => "add_#{association.to_s} add add_link icon_link")
+  def link_to_add_fields(name, association, additional_class = nil)
+    link_to(name, 'javascript:void(0);', :class => "add_#{association.to_s} add add_link icon_link #{additional_class}")
   end
 
   def link_to_remove_fields(name, f, association)

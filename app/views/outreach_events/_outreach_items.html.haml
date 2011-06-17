@@ -1,10 +1,10 @@
 %tr{ :class => "outreach_item fields" }
-  %td
+  %td.col1
     = f.label :item_name, "Item"
     = f.select :item_name, InventoryItem.all.map {|i| [i.name, i.name]}, {:prompt => 'Select item'} , {:class => "nested_attribute_selector outreach_items_selector"}
     = f.label :item_quantity, "Quantity"
     = f.text_field :item_quantity
     = f.label :item_other, "Other item", {:class => "nested_attribute_other_label"}
     = f.text_field :item_other, {:size =>20 ,:class => "nested_attribute_other"}
-  %td
+  %td.col2
     = link_to_remove_fields 'Remove', f, :outreach_items

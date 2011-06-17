@@ -41,6 +41,44 @@ function check_select_for_other(select_id, other_id){
   }
 }
 
+function wire_up_select_yes_selector(select_id, yes_class, disabled_class){
+  check_select_for_yes_selector(select_id, yes_class, disabled_class);
+  // Check on item change
+  $(select_id).change(function(){
+    check_select_for_yes_selector(select_id, yes_class, disabled_class);
+  });
+}
+
+// Used to enable/disable 'other' input type text field
+function check_select_for_yes_selector(select_id, yes_class, disabled_class){
+  var s = $(select_id+" option:selected");
+
+    // 'Yes' = 1
+    if(s.val() == "1" || s.val() == "Yes") {
+	    $(yes_class).each(function(){
+	      $(this).removeAttr('disabled');
+	    })
+    }
+    else{
+      $(yes_class).each(function(){
+	      $(this).val('');
+	      $(this).attr('disabled', 'disabled');
+	    })
+	    
+	    $(disabled_class).each(function(){
+	      $(this).val('');
+	      $(this).attr('disabled', 'disabled');
+	      if ($(this).get(0).tagName == "INPUT") {
+	        $(this).css('background-color', '#d0d0d0');
+	      }
+	      if ($(this).get(0).tagName == "A" || $(this).get(0).tagName == "TR") {
+	        $(this).hide();
+	        //$(this).click(function(){ return false; })
+	      }
+	    })
+    }
+}
+
 function wire_up_select_other_class(select_class, other_class, other_label_class){
   $(select_class).each(function(){ 
     check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
@@ -126,10 +164,6 @@ function make_cert_date_input_enable() {
   $("#cert_date_temp").css('background-color', '#EEF1C3')
 }
 
-/*function nested_attributes_manage_options() {
-  wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-}*/
-
 function disabled_selected_options(select_class) {
   $(select_class).click(function(elt){
     var current_selector = $(this)
@@ -143,4 +177,32 @@ function disabled_selected_options(select_class) {
       $(current_selector_id +" option[value=Other]").removeAttr('disabled')
     })
   });
+}
+
+function wire_up_select_yes_nested_attribute(select_id, nested_attribute_class) {
+  check_select_for_yes_nested_attribute(select_id, nested_attribute_class);
+  // Check on item change
+  $(select_id).change(function(){
+    check_select_for_yes_nested_attribute(select_id, nested_attribute_class);
+  });
+}
+
+function check_select_for_yes_nested_attribute(select_id, nested_attribute_class) {
+  var s = $(select_id+" option:selected");
+
+  // 'Yes' = 1
+  if(s.val() == "1" || s.val() == "Yes") {
+    $(nested_attribute_class).each(function(){
+      $(this).show();
+    })
+  } else{
+    $(nested_attribute_class).each(function(){
+      $(this).val('');
+      $(this).hide();
+    })
+    var hidden_fields = nested_attribute_class + " :input[type=hidden]"
+    $(hidden_fields).each(function() {
+      $(this).val("1")
+    })
+  }
 }
