@@ -10,7 +10,6 @@ NCSPortal.OutreachRaces = {};
 NCSPortal.OutreachTargets = {};
 NCSPortal.OutreachEvaluations = {};
 NCSPortal.OutreachSsus = {};
-NCSPortal.OutreachTsus = {};
 NCSPortal.OutreachItems = {};
 
 // Used inside document ready method call to wire up selects with other fields

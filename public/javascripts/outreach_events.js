@@ -35,14 +35,6 @@ NCSPortal.OutreachSsus.UI = function (config) {
   });
 };
 
-NCSPortal.OutreachTsus.UI = function (config) {
-  outreachTsusNestedAttributesForm = new NestedAttributes({
-      container: $('.outreach_tsus'),
-      association: 'outreach_tsus',
-      content: config.outreachTsusTemplate,
-      caller: this
-  });
-};
 
 NCSPortal.OutreachStaffMembers.UI = function (config) {
   var setupOutreachStaffAutocompleter = function () {
