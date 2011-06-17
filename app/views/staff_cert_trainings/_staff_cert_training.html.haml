@@ -15,7 +15,7 @@
   .field
     - if (@staff_cert_training.cert_date != "-2" && @staff_cert_training.cert_date != "-7")
       = radio_button_tag 'cert_date', 'date', true, :class => "cert_date"
-      = label_tag "Date staff member was certified: (YYYY-MM-DD) "
+      = label_tag "Date staff member was certified: (mm/dd/yyyy) "
       = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker', :id => "cert_date_temp"
     - else
       = radio_button_tag 'cert_date', 'date', false, :class => "cert_date"
