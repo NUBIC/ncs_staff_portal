@@ -28,10 +28,10 @@
             %td
           - else
             %td= outreach_event.outreach_type.display_text
-          -#- if permit?(:supervisor)
-          %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:confirm => "Are you sure?", :method => :delete
-          -#- else
-            -#%td
+          - if permit?(:supervisor)
+            %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:confirm => "Are you sure?", :method => :delete
+          - else
+            %td
 
 :javascript
     $(document).ready(function() {
