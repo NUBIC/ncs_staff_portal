@@ -529,7 +529,6 @@ body.ncs #container {
   margin: 0 auto;
   overflow: hidden;
   *zoom: 1;
-  background: url('/images/grid.png?1306187953');
 }
 /* line 58, ../../../app/stylesheets/screen.scss */
 body.ncs #header, body.ncs #footer {

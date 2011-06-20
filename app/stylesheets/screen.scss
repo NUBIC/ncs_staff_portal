@@ -51,7 +51,7 @@ body.ncs {
   
   #container {
     @include container; 
-    @include showgrid(); //for debug and allignment purposes
+   // @include showgrid(); //for debug and allignment purposes
 
   }
   
