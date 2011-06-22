@@ -1,5 +1,9 @@
 @import "blueprint";
-
+// If Browser is < IE 8, add following code in layout header
+//[if lt IE 8]
+  // = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
+  
+  
 // To generate css equivalent to the blueprint css but with your configuration applied, uncomment:
 // @include blueprint-ie
 
