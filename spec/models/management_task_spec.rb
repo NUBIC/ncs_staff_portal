@@ -11,10 +11,6 @@ describe ManagementTask do
         @task.should_not be_valid
         @task.should have(1).error_on(:task_date)
       end
-      it "should accept the string with date as date" do
-        @task.task_date = "06/30/2011"
-        @task.should be_valid
-      end
     end
     it "tasktype_code shoud be invalid if nil" do
       @task.task_type_code = nil
@@ -27,8 +23,8 @@ describe ManagementTask do
         @task.should_not be_valid
         @task.should have(1).error_on(:hours)
       end
-      it "should not be greater than 24 hours" do
-        @task.hours = 25.00
+      it "should not be greater than 99 hours" do
+        @task.hours = 100.00
         @task.should_not be_valid
         @task.should have(1).error_on(:hours)
       end
