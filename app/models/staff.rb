@@ -18,7 +18,7 @@ class Staff < ActiveRecord::Base
       if pay_type == "Hourly"
         self.hourly_rate = pay_amount
       elsif pay_type == "Yearly"
-        self.hourly_rate = pay_amount/2080
+        self.hourly_rate = (pay_amount/1750).round(2)
       end
     end
   end

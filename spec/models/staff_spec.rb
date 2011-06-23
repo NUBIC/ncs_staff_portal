@@ -21,11 +21,18 @@ describe Staff do
   end
   
   describe "calculate_hourly_rate" do
-    it "should put pay_amount as it is as hourly_rate if pay_type is 'hourly'" do
+    it "should put pay_amount as it is as hourly_rate if pay_type is 'Hourly'" do
       @staff.pay_type = "Hourly"
       @staff.pay_amount = 25.00
       @staff.save
       @staff.hourly_rate.should == 25.00
+    end
+    
+    it "should put pay_amount as 'amount/no.of hours worked in year' if pay_type is 'Yearly'" do
+      @staff.pay_type = "Yearly"
+      @staff.pay_amount = 50000
+      @staff.save
+      @staff.hourly_rate.should == 28.57
     end
   end
 end
