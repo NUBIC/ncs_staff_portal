@@ -6,3 +6,4 @@ vendor/cache
 *.swp
 *.swo
 .DS_Store
+.idea
