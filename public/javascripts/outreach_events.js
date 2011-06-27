@@ -26,11 +26,11 @@ NCSPortal.OutreachEvaluations.UI = function (config) {
 };
 
 
-NCSPortal.OutreachSsus.UI = function (config) {
-  outreachSsusNestedAttributesForm = new NestedAttributes({
-      container: $('.outreach_ssus'),
-      association: 'outreach_ssus',
-      content: config.outreachSsusTemplate,
+NCSPortal.OutreachSegments.UI = function (config) {
+  outreachSegmentsNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_segments'),
+      association: 'outreach_segments',
+      content: config.outreachSegmentsTemplate,
       caller: this
   });
 };

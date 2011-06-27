@@ -1,6 +1,0 @@
-%tr{ :class => "outreach_ssu fields row" }
-  %td.col1
-    = f.label :ssu_code, "Segment"
-    = f.select :ssu_code, NcsSsu.ssu_code_lookup, {:prompt => 'Select segment'} , {:class => "nested_attribute_selector outreach_ssus_selector"}
-  %td.col2
-    = link_to_remove_fields 'Remove', f, :outreach_ssus

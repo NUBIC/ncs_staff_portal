@@ -1,33 +1,24 @@
 require 'fastercsv'
-
 namespace :psu do
-  desc "Loads the all SSU information for PSU.Please pass the path to file to load.e.g 'rake psu:load_ssu[path_to_file]'"
-  task :load_ssu, :file, :needs=> :environment do |t, args|
+  desc "Loads the all areas for PSU and all SSUs for areas.Please pass the path to file to load.e.g 'rake psu:load_ncs_area_ssus[path_to_file]'"
+  task :load_ncs_area_ssus, :file, :needs => :environment do |t, args|
     FILE = args[:file]
-    raise "Please pass the absolute path to file with csv extension.e.g 'rake psu:load_ssu[path_to_file.csv]'" unless FILE
+    raise "Please pass the absolute path to file with csv extension.e.g 'rake psu:load_ncs_area_ssus[path_to_file]'" unless FILE
     FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
-      unless NcsSsu.find(:first, :conditions => {:psu_id  => csv["PSU_ID"], :ssu_id => csv["SSU_ID"], :ssu_name => csv["SSU_NAME"]})
-        NcsSsu.create(:psu_id => csv["PSU_ID"], 
-                      :ssu_id => csv["SSU_ID"],
-                      :ssu_name => csv["SSU_NAME"],
-                      :area => csv["AREA"])
+      unless NcsArea.find(:first, :conditions => {:psu_id  => csv["PSU_ID"], :name => csv["AREA"]})
+        NcsArea.create(:psu_id => csv["PSU_ID"], 
+                       :name => csv["AREA"])
+      end
+    end
+    NcsArea.all.each do |area|
+      FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
+        unless csv["AREA"] != area.name
+          NcsAreaSsu.create(:ssu_id => csv["SSU_ID"], 
+                       :ssu_name => csv["SSU_NAME"],
+                       :ncs_area => area)
+        end
       end
     end
   end
   
-  desc "Loads the all TSU information for PSU.Please pass the path to file to load.e.g 'rake psu:load_tsu[path_to_file]'"
-  task :load_tsu, :file, :needs=> :environment do |t, args|
-    FILE = args[:file]
-    raise "Please pass the absolute path to file with csv extension.e.g 'rake psu:load_tsu[path_to_file.csv]'" unless FILE
-    FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
-      unless csv["TSU_ID"] == "."
-        unless NcsTsu.find(:first, :conditions => {:psu_id  => csv["PSU_ID"], :tsu_id => csv["TSU_ID"], :tsu_name => csv["TSU_NAME"]})
-           NcsTsu.create(:psu_id => csv["PSU_ID"], 
-                         :tsu_id => csv["TSU_ID"],
-                         :tsu_name => csv["TSU_NAME"],
-                         :area => csv["AREA"])
-         end
-      end
-    end
-  end
 end

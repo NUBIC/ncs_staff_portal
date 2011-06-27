@@ -3,21 +3,19 @@ class OutreachEvent < ActiveRecord::Base
    has_many :outreach_races, :dependent => :destroy
    has_many :outreach_targets, :dependent => :destroy
    has_many :outreach_evaluations, :dependent => :destroy
-   has_many :outreach_ssus, :dependent => :destroy
-   has_many :outreach_tsus, :dependent => :destroy
+   has_many :outreach_segments, :dependent => :destroy
    has_many :outreach_items, :dependent => :destroy
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
    accepts_nested_attributes_for :outreach_targets, :allow_destroy => true
    accepts_nested_attributes_for :outreach_evaluations, :allow_destroy => true
-   accepts_nested_attributes_for :outreach_ssus, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_segments, :allow_destroy => true
    accepts_nested_attributes_for :outreach_items, :allow_destroy => true
-   accepts_nested_attributes_for :outreach_tsus, :allow_destroy => true
    
    validates_presence_of :outreach_staff_members, :message => "can't be blank. Please add one or more staff member for outreach event"
-   validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluation for outreach event"
-   validates_presence_of :outreach_ssus, :message => "can't be blank. Please add one or more SSU for outreach event"
-   validates :event_date, :date => { :before => Date.today, :allow_nil => true }
+   validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluations for outreach event"
+   validates_presence_of :outreach_segments, :message => "can't be blank. Please add one or more segments for outreach event"
+   validates :event_date, :date => { :before => Date.today + 1.day}
    
    def formatted_event_date
      event_date.nil? ? nil : event_date.to_s

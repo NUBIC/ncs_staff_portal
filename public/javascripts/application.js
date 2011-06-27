@@ -9,7 +9,7 @@ NCSPortal.OutreachStaffMembers = {};
 NCSPortal.OutreachRaces = {};
 NCSPortal.OutreachTargets = {};
 NCSPortal.OutreachEvaluations = {};
-NCSPortal.OutreachSsus = {};
+NCSPortal.OutreachSegments = {};
 NCSPortal.OutreachItems = {};
 
 // Used inside document ready method call to wire up selects with other fields

@@ -1,0 +1,6 @@
+%tr{ :class => "outreach_segment fields row" }
+  %td.col1
+    = label_tag "Segment"
+    = f.select :ncs_area_id, NcsArea.all.sort_by(&:name).map {|a| [a.name, a.id]}, {:prompt => 'Select segment'} , {:class => "nested_attribute_selector outreach_segments_selector"}
+  %td.col2
+    = link_to_remove_fields 'Remove', f, :outreach_segments

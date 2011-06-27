@@ -16,7 +16,7 @@ class OutreachEventsController < SecuredController
   def new
     @outreach_event = OutreachEvent.new
     @outreach_event.outreach_staff_members.build
-    @outreach_event.outreach_ssus.build
+    @outreach_event.outreach_segments.build
     @outreach_event.outreach_evaluations.build
 
     respond_to do |format|
