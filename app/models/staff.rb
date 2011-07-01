@@ -25,10 +25,10 @@
 
 class Staff < ActiveRecord::Base
   validates_presence_of :name, :netid, :study_center
-  validates_presence_of :staff_type_code, :zipcode, :on => :update
+  validates_presence_of :staff_type_code, :zipcode, :subcontractor_code, :birth_date, :gender_code, :race_code, :ethnicity_code, :experience_code, :on => :update
   validates_uniqueness_of :netid
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
-  validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year ,:allow_nil => true }
+  validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year}
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
   has_many :staff_languages
   has_many :staff_cert_trainings
