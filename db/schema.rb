@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110617154110) do
+ActiveRecord::Schema.define(:version => 20110701162303) do
+
+  create_table "inventory_items", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -23,6 +29,17 @@ ActiveRecord::Schema.define(:version => 20110617154110) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "ncs_area_ssus", :force => true do |t|
+    t.integer "ncs_area_id"
+    t.string  "ssu_id"
+    t.string  "ssu_name"
+  end
+
+  create_table "ncs_areas", :force => true do |t|
+    t.string "psu_id"
+    t.string "name"
   end
 
   create_table "ncs_codes", :force => true do |t|
@@ -81,13 +98,30 @@ ActiveRecord::Schema.define(:version => 20110617154110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.integer  "quantity"
+    t.integer  "letters_quantity"
+    t.integer  "attendees_quantity"
+  end
+
+  create_table "outreach_items", :force => true do |t|
+    t.integer  "outreach_event_id"
+    t.string   "item_name"
+    t.string   "item_other"
+    t.integer  "item_quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "outreach_races", :force => true do |t|
     t.integer  "outreach_event_id"
     t.integer  "race_code"
     t.string   "race_other"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "outreach_segments", :force => true do |t|
+    t.integer  "outreach_event_id"
+    t.integer  "ncs_area_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -137,9 +171,11 @@ ActiveRecord::Schema.define(:version => 20110617154110) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "hourly_rate",        :precision => 5, :scale => 2
-    t.integer  "age_range_code"
-    t.integer  "yob"
+    t.decimal  "hourly_rate",        :precision => 5,  :scale => 2
+    t.date     "birth_date"
+    t.string   "pay_type"
+    t.decimal  "pay_amount",         :precision => 10, :scale => 2
+    t.integer  "zip"
   end
 
   create_table "staff_cert_trainings", :force => true do |t|

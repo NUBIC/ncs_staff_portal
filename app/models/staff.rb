@@ -1,6 +1,6 @@
 class Staff < ActiveRecord::Base
   validates_presence_of :name, :netid, :study_center
-  validates_presence_of :staff_type_code, :on => :update
+  validates_presence_of :staff_type_code, :zip, :on => :update
   validates_uniqueness_of :netid
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
   validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year ,:allow_nil => true }

@@ -25,7 +25,7 @@
     = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
   .field
     = f.label :staff_type_other, "Other staff type"
-    = f.text_field :staff_type_other, {:size =>20 ,:id => "staff_type_other"} 
+    = f.text_field :staff_type_other, {:size => 20 ,:id => "staff_type_other"} 
   .field
     = f.label :pay_amount, "Pay amount (in US Dollars)"
     = f.select :pay_type, ["Hourly","Yearly"]
@@ -45,6 +45,9 @@
   .field
     = f.label :ethnicity_code, "Ethnicity"
     = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
+  .field
+    = f.label :zip, "Zip Code of permanent residence of staff member"
+    = f.text_field :zip, {:size => 5, :maxLength => 5}
   .field
     = f.label :subcontractor_code, "Does staff member work for subcontrator"
     = f.select :subcontractor_code, NcsCode.ncs_code_lookup(:subcontractor_code), :prompt => 'Select'
