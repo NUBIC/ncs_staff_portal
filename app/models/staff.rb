@@ -1,6 +1,31 @@
+# Schema Information
+# Schema version: 20110406152435
+#
+# Table name: staff
+#
+# name                  :string
+# email                 :string
+# netid                 :string
+# study_center          :integer
+# staff_type_code       :integer
+# staff_type_other      :string
+# subcontractor_code    :integer
+# birth_date            :date
+# hourly_rate           :decimal
+# pay_type              :string
+# pay_hour              :decimal
+# gender_code           :integer
+# race_code             :integer
+# race_other            :string
+# zipcode               :integer
+# ethnicity_code        :integer
+# experience_code       :integer
+# comment               :text
+
+
 class Staff < ActiveRecord::Base
   validates_presence_of :name, :netid, :study_center
-  validates_presence_of :staff_type_code, :zip, :on => :update
+  validates_presence_of :staff_type_code, :zipcode, :on => :update
   validates_uniqueness_of :netid
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
   validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year ,:allow_nil => true }

@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(:version => 20110701162303) do
     t.date     "birth_date"
     t.string   "pay_type"
     t.decimal  "pay_amount",         :precision => 10, :scale => 2
-    t.integer  "zip"
+    t.integer  "zipcode"
   end
 
   create_table "staff_cert_trainings", :force => true do |t|
