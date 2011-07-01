@@ -1,26 +1,25 @@
-require 'csv'
+require 'mdes_data_loader'
 
 namespace :mdes do
-  # MDES Version 1.2
-  LOAD_FILE = 'MDES_V1.2-Specific_Code_Lists.csv'
+  desc 'loads 2.0 MDES codes from xsd'
+  task :load_codes_from_schema_20 => :environment do
+    MdesDataLoader::load_codes_from_schema('2.0')
+  end
   
-  # MDES Version 2.0
-  # LOAD_FILE = 'MDES_V2.0-Specific_Code_Lists.csv'
-
-  desc 'loads MDES codes into the NcsCodes table'
-  task :load_codes => :environment do
-    # MDES Version 1.2
-    require 'mdes_data_loader'
-    MdesDataLoader::load_codes(LOAD_FILE)
-    
-    # MDES Version 2.0
-    # require 'mdes_data_loader_2'
-    # MdesDataLoader2::load_codes(LOAD_FILE)
+  desc 'Delete all existing codes and reloads 2.0 MDES codes from xsd'
+  task :reload_codes_from_schema_20 => :environment do
+    NcsCode.delete_all
+    MdesDataLoader::load_codes_from_schema('2.0')
   end
 
   desc 'outputs the count of ncs data elements'
   task :count_codes => :environment do 
     puts "There are #{NcsCode.count} codes"
+  end
+  
+  desc 'loads 1.2 MDES codes from xsd'
+  task :load_codes_from_schema_12 => :environment do
+    MdesDataLoader::load_codes_from_schema('1.2')
   end
 
 end
