@@ -18,6 +18,7 @@ class OutreachEventsController < SecuredController
     @outreach_event.outreach_staff_members.build
     @outreach_event.outreach_segments.build
     @outreach_event.outreach_evaluations.build
+    @outreach_event.outreach_targets.build
 
     respond_to do |format|
       format.html # new.html.erb
