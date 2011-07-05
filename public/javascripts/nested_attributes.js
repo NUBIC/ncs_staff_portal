@@ -57,7 +57,6 @@ NestedAttributes.prototype = {
     var remove_selector_classname = association + "_selector"
     var remove_selector = $(link).closest(".fields").find("." + remove_selector_classname)
     remove_selector.removeClass(remove_selector_classname).addClass(remove_selector_classname +"_removed")
-    //disabled_selected_options("."+ remove_selector_classname)
   },
 
   add_fields: function(link, association, content) {
@@ -70,7 +69,12 @@ NestedAttributes.prototype = {
     $(link).closest("." + association).find('.nested_records_' + association).append(content);
     // TODO: find some place where below function can be called and be more generic 
    wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-   disabled_selected_options("."+association+"_selector")
-  // nested_attributes_manage_options();
+   
+   //TODO: When MDES has outreach_language other field in languages table, remove flag to enable other field. 
+   var other_flag = true;
+   if (association == "outreach_languages") {
+     other_flag = false
+   }
+   disabled_selected_options("."+association+"_selector", other_flag)
   }
 };

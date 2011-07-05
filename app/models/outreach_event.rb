@@ -29,12 +29,15 @@ class OutreachEvent < ActiveRecord::Base
    has_many :outreach_evaluations, :dependent => :destroy
    has_many :outreach_segments, :dependent => :destroy
    has_many :outreach_items, :dependent => :destroy
+   has_many :outreach_languages, :dependent => :destroy
+   
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
    accepts_nested_attributes_for :outreach_targets, :allow_destroy => true
    accepts_nested_attributes_for :outreach_evaluations, :allow_destroy => true
    accepts_nested_attributes_for :outreach_segments, :allow_destroy => true
    accepts_nested_attributes_for :outreach_items, :allow_destroy => true
+   accepts_nested_attributes_for :outreach_languages, :allow_destroy => true
    
    validates_presence_of :outreach_staff_members, :message => "can't be blank. Please add one or more staff members"
    validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluations"

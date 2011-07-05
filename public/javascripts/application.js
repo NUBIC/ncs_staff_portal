@@ -11,6 +11,7 @@ NCSPortal.OutreachTargets = {};
 NCSPortal.OutreachEvaluations = {};
 NCSPortal.OutreachSegments = {};
 NCSPortal.OutreachItems = {};
+NCSPortal.OutreachLanguages = {};
 
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){
@@ -164,7 +165,7 @@ function make_cert_date_input_enable() {
   $("#cert_date_temp").css('background-color', '#EEF1C3')
 }
 
-function disabled_selected_options(select_class) {
+function disabled_selected_options(select_class, other_flag) {
   $(select_class).click(function(elt){
     var current_selector = $(this)
     var current_selector_id = "#" + current_selector.attr('id')
@@ -173,8 +174,10 @@ function disabled_selected_options(select_class) {
       if (this != current_selector.val()) {
         $(current_selector_id +" option[value="+this+"]").attr('disabled', 'disabled')
       }
-      $(current_selector_id +" option[value=-5]").removeAttr('disabled')
-      $(current_selector_id +" option[value=Other]").removeAttr('disabled')
+      if (other_flag == true) {
+        $(current_selector_id +" option[value=-5]").removeAttr('disabled')
+        $(current_selector_id +" option[value=Other]").removeAttr('disabled')
+      }
     })
   });
 }

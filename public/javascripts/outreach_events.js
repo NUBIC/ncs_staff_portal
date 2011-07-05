@@ -58,3 +58,12 @@ NCSPortal.OutreachItems.UI = function (config) {
       caller: this
   });
 };
+
+NCSPortal.OutreachLanguages.UI = function (config) {
+  outreachLanguagesNestedAttributesForm = new NestedAttributes({
+      container: $('.outreach_languages'),
+      association: 'outreach_languages',
+      content: config.outreachLanguagesTemplate,
+      caller: this
+  });
+};

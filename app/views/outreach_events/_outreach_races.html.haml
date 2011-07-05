@@ -1,4 +1,4 @@
-%tr{ :class => "outreach_race fields tailored_all racial_group_tr row"}
+%tr{ :class => "outreach_race fields tailored_group_other race_group row"}
   %td.col1
     = f.label :race_code, "Race"
     = f.select :race_code, NcsCode.ncs_code_lookup(:outreach_race_code), {:prompt => 'Select race'} , {:class => "nested_attribute_selector outreach_races_selector"}

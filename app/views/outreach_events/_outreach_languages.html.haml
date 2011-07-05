@@ -1,0 +1,8 @@
+%tr{ :class => "outreach_language fields tailored_group_other language_group row"}
+  %td.col1
+    = f.label :language_code, "Language"
+    = f.select :language_code, NcsCode.ncs_code_lookup(:language_code), {:prompt => 'Select Language'} , {:class => "nested_attribute_selector outreach_languages_selector"}
+    = f.label :language_other, "Other Language", {:class => "nested_attribute_other_label"}
+    = f.text_field :language_other, {:size =>20 ,:class => "nested_attribute_other"}
+  %td.col2
+    = link_to_remove_fields 'Remove', f, :outreach_languages
