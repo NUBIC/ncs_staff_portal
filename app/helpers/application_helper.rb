@@ -17,6 +17,13 @@ module ApplicationHelper
     list.join(', ')
   end
   
+  def display_segments(segments)
+    list = segments.map do |segment|
+        segment.ncs_area.name
+    end
+    list.join(', ')
+  end
+  
   def javascript(*files)
     content_for(:head) { javascript_include_tag(*files) }
   end

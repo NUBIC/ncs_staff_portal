@@ -1,5 +1,5 @@
-%h3 List of outreach events
-= link_to 'New Outreach event', new_outreach_event_path
+%h3 List of outreach events/activities
+= link_to 'New outreach activity', new_outreach_event_path
 
 %div.yui-skin-sam
   %div#event-list
@@ -10,22 +10,18 @@
             %td
           - else
             %td= link_to outreach_event.event_date, edit_outreach_event_path(outreach_event)
-            
           - if outreach_event.name.blank?
             %td
           - else
             %td= outreach_event.name
-            
-          - if outreach_event.evaluation_result_code.blank?
-            %td
-          - else
-            %td= outreach_event.evaluation_result.display_text
-          - if outreach_event.mode_code.blank?
-            %td
+          %td= display_segments(outreach_event.outreach_segments)
+          %td= outreach_event.evaluation_result.display_text
+          - if outreach_event.mode.display_text == "Other"
+            %td=outreach_event.mode_other
           - else
             %td= outreach_event.mode.display_text
-          - if outreach_event.outreach_type_code.blank?
-            %td
+          - if outreach_event.outreach_type.display_text == "Other"
+            %td=outreach_event.outreach_type_other
           - else
             %td= outreach_event.outreach_type.display_text
           - if permit?(:supervisor)
@@ -40,8 +36,9 @@
   
     function displayEventList() {
       var columnDefs = [
-          { key: "date", label: "Event Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-          { key: "name", label: "Event Name", sortable: true},
+          { key: "date", label: "Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+          { key: "name", label: "Name", sortable: true},
+          { key: "segment", label: "Segments"},
           { key: "result", label: "Result" },
           { key: "mode", label: "Mode" },
           { key: "type", label: "Type" },
@@ -53,6 +50,7 @@
         fields: [
           { key: "date" },
           { key: "name" },
+          { key: "segment" },
           { key: "result" },
           { key: "mode" },
           { key: "type" },
