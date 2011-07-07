@@ -35,7 +35,7 @@
         %td
           Outreach Segments 
           %em * 
-          (Click the 'Add segment' link to add one or more segments for outreach event)
+          (Click the 'Add segment' link to add one or more segments)
         %td
       %tbody.nested_records_outreach_segments
         - f.fields_for :outreach_segments do |outreach_segment|
@@ -64,7 +64,7 @@
         %td
           Primary outreach target 
           %em * 
-          (Click the 'Add target' link to add one or more targets for outreach event)
+          (Click the 'Add target' link to add one or more targets)
         %td
       %tbody.nested_records_outreach_targets
         - f.fields_for :outreach_targets do |outreach_target|
@@ -78,7 +78,7 @@
     .title
       Outreach Quantity
     .row
-      = f.label :letters_quantity, "Number of letters"
+      = f.label :letters_quantity, "Number of printed material"
       = f.text_field :letters_quantity, {:size => 5}
     .row
       = f.label :attendees_quantity, "Number of attendees"
@@ -86,7 +86,7 @@
     %table{ :class => 'records outreach_items' }
       %tr.row
         %td
-          Items used in outreach event (Click the 'Add item' link to add one or more items for outreach event, if Applicable)
+          Giveaway items for outreach event (Click the 'Add giveaway item' link to add one or more giveaway items, if Applicable)
         %td
       %tbody.nested_records_outreach_items
         - f.fields_for :outreach_items do |outreach_item|
@@ -94,7 +94,7 @@
       %tfoot
         %tr
           %td{ :colspan => '3' }
-            = link_to_add_fields "Add item", :outreach_items
+            = link_to_add_fields "Add giveaway item", :outreach_items
     .row
       = f.label :cost, "Non-labor cost to conduct outreach:"
       = f.text_field :cost
@@ -112,7 +112,7 @@
     %table{ :class => 'records outreach_languages row' }
       %tr.row.tailored_group_other.language_group
         %td
-          Targeted language group (Click the 'Add language' link to add one or more languages for outreach event, if Applicable)
+          Targeted language group (Click the 'Add language' link to add one or more languages, if Applicable)
         %td
       %tbody.nested_records_outreach_languages
         - f.fields_for :outreach_languages do |outreach_language|
@@ -135,7 +135,7 @@
     %table{ :class => 'records outreach_races row' }
       %tr.row.tailored_group_other.race_group
         %td
-          Targeted racial groups (Click the 'Add race' link to add one or more races for outreach event, if Applicable)
+          Targeted racial groups (Click the 'Add race' link to add one or more races, if Applicable)
         %td
       %tbody.nested_records_outreach_races
         - f.fields_for :outreach_races do |outreach_race|
@@ -157,7 +157,7 @@
         %td
           Outreach Evaluations
           %em * 
-          (Click the 'Add evaluation' link to add one or more evaluations for outreach effort)
+          (Click the 'Add evaluation' link to add one or more evaluations)
         %td
       %tbody.nested_records_outreach_evaluations
         - f.fields_for :outreach_evaluations do |outreach_evaluation|
@@ -178,7 +178,7 @@
         %td
           Staff Members participating in Outreach Event 
           %em * 
-          (Click the 'Add staff member' link to add one or more staff members for outreach event)
+          (Click the 'Add staff member' link to add one or more staff members)
       %tbody.nested_records_outreach_staff_members
         - f.fields_for :outreach_staff_members do |outreach_staff_member|
           = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
