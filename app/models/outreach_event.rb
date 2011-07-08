@@ -61,8 +61,8 @@ class OutreachEvent < ActiveRecord::Base
      :outreach_type_code => "OUTREACH_TYPE_CL1",
      :tailored_code => "CONFIRM_TYPE_CL2",
      :language_specific_code => "CONFIRM_TYPE_CL2",
-     :race_specific_code => "CONFIRM_TYPE_CL2",
-     :culture_specific_code => "CONFIRM_TYPE_CL2",
+     :race_specific_code => "CONFIRM_TYPE_CL6",
+     :culture_specific_code => "CONFIRM_TYPE_CL6",
      :culture_code => "CULTURE_CL1",
      :evaluation_result_code => "SUCCESS_LEVEL_CL1"
      }

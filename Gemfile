@@ -15,7 +15,7 @@ gem 'bcdatabase'
 gem 'fastercsv'
 gem 'tabs_on_rails'
 gem 'date_validator'
-gem 'ncs-mdes', '0.1.0'
+gem 'ncs_mdes', '0.2.0'
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'

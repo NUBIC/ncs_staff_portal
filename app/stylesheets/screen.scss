@@ -151,7 +151,7 @@ body.ncs {
 
     }
   #content_vertical{
-   @include column(15,true);
+   @include column(17,true);
    @include prepend-top(1em); 
   }
   

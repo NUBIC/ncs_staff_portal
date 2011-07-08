@@ -381,7 +381,7 @@ body.bp .bottom {
 }
 /* line 8, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_debug.scss */
 body.bp .showgrid {
-  background: url('/images/grid.png?1306187953');
+  background: url('/images/grid.png?1308672528');
 }
 /* line 4, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_interaction.scss */
 body.bp .error {
@@ -666,7 +666,7 @@ body.ncs #content_vertical {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 590px;
+  width: 670px;
   margin-top: 1em;
 }
 /* line 138, ../../../../.rvm/gems/ree-1.8.7-2011.03@ncs_staff_portal/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
