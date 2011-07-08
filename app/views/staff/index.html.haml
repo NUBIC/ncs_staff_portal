@@ -11,7 +11,10 @@
             - if staff.staff_type_code.blank?
               %td= ""
             - else
-              %td= staff.staff_type.display_text
+              - if staff.staff_type.display_text == "Other"
+                %td= staff.staff_type_other
+              - else
+                %td= staff.staff_type.display_text
             %td= button_to "Delete", { :action => "destroy", :id => staff.id },:confirm => "Are you sure?", :method => :delete
 
   :javascript
