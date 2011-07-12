@@ -5,7 +5,8 @@ describe Staff do
     @staff = Staff.new(:name => "Testing", 
                  :netid => "test123",
                  :email => "test@test.com",
-                 :study_center => 123456)
+                 :study_center => 123456,
+                 :birth_date => Date.today - 7.day)
   end
   describe "hourly_rate validations" do
     it "should not contain other than decimal value" do
