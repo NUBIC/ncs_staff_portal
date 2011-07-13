@@ -22,6 +22,8 @@ group :development, :test do
   gem 'capybara', '~> 0.4.1.2'
   gem 'cucumber-rails', '~>0.3.2'
   gem 'database_cleaner', '~>0.6.6'
+  gem 'factory_girl_rails', '~> 1.1.rc1'
+  gem 'shoulda'
 end
 
 gem "haml-rails"

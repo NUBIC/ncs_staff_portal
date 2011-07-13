@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe StaffCertTrainingsController do
-
+  before(:each) do
+    login_as("superuser")
+  end
   def mock_staff_cert_training(stubs={})
     @mock_staff_cert_training ||= mock_model(StaffCertTraining, stubs).as_null_object
     @mock_staff ||= mock_model(Staff, stubs).as_null_object

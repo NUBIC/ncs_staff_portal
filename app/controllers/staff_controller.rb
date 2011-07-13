@@ -8,6 +8,8 @@ class StaffController < SecuredController
   def index
     set_tab :staff
     @staff_list = Staff.all.sort_by(&:netid)
+    puts "----"
+    puts @staff_list
     
     respond_to do |format|
       format.html  { render :layout => "application"}

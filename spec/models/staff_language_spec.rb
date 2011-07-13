@@ -1,5 +1,6 @@
 require 'spec_helper'
 
 describe StaffLanguage do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to(:lang) }
+  it { should validate_presence_of(:lang) }
 end

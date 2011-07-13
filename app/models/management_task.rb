@@ -1,5 +1,5 @@
 class ManagementTask < ActiveRecord::Base
-  validates_presence_of :task_type_code, :task_date
+  validates_presence_of :task_type, :task_date
   validates :hours, :numericality => {:less_than => 100.00, :greater_than => 0, :allow_nil => true }
   validates :expenses, :numericality => {:less_than => 99999999.99, :greater_than => 0, :allow_nil => true }
   validates :miles, :numericality => {:less_than => 999.99, :greater_than => 0,:allow_nil => true }

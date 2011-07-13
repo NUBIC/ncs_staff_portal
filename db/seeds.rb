@@ -12,6 +12,6 @@
 # MdesDataLoader::load_codes('MDES_V1.2-Specific_Code_Lists.csv')
 
 #MDES Version 2.0
-require 'mdes_data_loader_2'
+require 'mdes_data_loader'
 # Our custom data seed loader 
-MdesDataLoader2::load_codes('MDES_V2.0-Specific_Code_Lists.csv')
+MdesDataLoader::load_codes_from_schema('2.0')

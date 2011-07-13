@@ -92,6 +92,10 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    factory_girl (2.0.0.rc4)
+    factory_girl_rails (1.1.rc1)
+      factory_girl (~> 2.0.0.rc)
+      railties (>= 3.0.0)
     fastercsv (1.5.4)
     ffi (1.0.7)
       rake (>= 0.8.7)
@@ -167,6 +171,7 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    shoulda (2.11.3)
     tabs_on_rails (2.0.1)
     term-ansicolor (1.0.5)
     thor (0.14.6)
@@ -190,6 +195,7 @@ DEPENDENCIES
   cucumber-rails (~> 0.3.2)
   database_cleaner (~> 0.6.6)
   date_validator
+  factory_girl_rails (~> 1.1.rc1)
   fastercsv
   haml (~> 3.0.25)
   haml-rails
@@ -197,4 +203,5 @@ DEPENDENCIES
   pg
   rails (= 3.0.5)
   rspec-rails (~> 2.5.0)
+  shoulda
   tabs_on_rails
