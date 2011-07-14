@@ -17,8 +17,8 @@
     = f.text_field :netid,:readonly => true
   .field
     = label_tag "Study center"
-    = text_field_tag "study_center", "Northwestern University", :readonly => true
-    = f.hidden_field :study_center, :value => 20000029
+    = text_field_tag "study_center", STUDY_CENTER["name"], :readonly => true
+    = f.hidden_field :study_center, :value => STUDY_CENTER["id"]
   .field
     = f.label :staff_type_code, "Staff Type" 
     %em * 
