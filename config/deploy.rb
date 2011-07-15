@@ -1,8 +1,7 @@
+# developer machine will log in with username(netID) to server (either staging or production)
+# developer machine will also log in with username(netID) to code repositary to do a git ls-remote to resolve branch/tag to commit hash
+# server will log in with the same username(netID) and check out application from code repositary
 
-
-
-
-# add the following lines to your ~/.ssh/config, replacing xyz123 with your netid
 require 'bundler/capistrano'
 require 'bcdatabase'
 
@@ -70,7 +69,7 @@ namespace :deploy do
 end
 
 # backup the database before migrating
-#before 'deploy:migrate', 'db:backup'
+# before 'deploy:migrate', 'db:backup'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
 after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions'
