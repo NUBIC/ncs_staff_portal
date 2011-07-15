@@ -4,6 +4,7 @@ namespace :users do
   desc "loads the users from static auth file to application"
   task :load_to_portal => :environment do
     hash = YAML.load_file("/etc/nubic/ncs/staff_portal_users.yml")
+    counter = 0
     hash['users'].each do |username, value| 
       unless Staff.find(:first, :conditions => {:netid => username})
         name = value['first_name']
@@ -14,6 +15,14 @@ namespace :users do
                       :netid => username,
                       :email => value['email'],
                       :study_center => STUDY_CENTER["id"])
+        counter += 1
+      end
+    end
+    unless counter == 0
+      if counter == 1 
+        puts "#{counter} user is added to the portal"
+      elsif
+        puts "#{counter} users are added to the portal"
       end
     end
   end
