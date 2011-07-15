@@ -30,9 +30,9 @@ class Staff < ActiveRecord::Base
   validates :hourly_rate, :numericality => {:greater_than => 0, :allow_nil => true }
   validates :birth_date, :date => { :before => Date.today, :after => Date.today - 100.year, :allow_nil => true}
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
-  has_many :staff_languages
-  has_many :staff_cert_trainings
-  has_many :staff_weekly_expenses
+  has_many :staff_languages, :dependent => :destroy
+  has_many :staff_cert_trainings, :dependent => :destroy
+  has_many :staff_weekly_expenses, :dependent => :destroy
   has_many :management_tasks, :through => :staff_weekly_expenses
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
   

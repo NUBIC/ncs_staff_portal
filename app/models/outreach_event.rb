@@ -23,7 +23,7 @@
 # attendees_quantity          :integer
 
 class OutreachEvent < ActiveRecord::Base
-   has_many :outreach_staff_members
+   has_many :outreach_staff_members, :dependent => :destroy
    has_many :outreach_races, :dependent => :destroy
    has_many :outreach_targets, :dependent => :destroy
    has_many :outreach_evaluations, :dependent => :destroy
