@@ -1,50 +1,39 @@
 require 'fastercsv'
 
 namespace :users do
-  desc 'Loads the application developers'
-  task :load_devs => :environment do
-    user_list = [
-
-
-    ]
-    staff_type = 13 # Informatics managment code as of MDES v1.2
-    study_center = 20000029 # The NU study center ID as per MDES v1.2
-    user_list.each do |u|
-      Staff.create(:name => "#{u[0]} #{u[1]}", 
-                   :netid => u[2],
-                   :email => u[3],
-                   :study_center => study_center,
-                   :staff_type_code => staff_type)
+  desc "loads the users from static auth file to application"
+  task :load_to_portal => :environment do
+    hash = YAML.load_file("/etc/nubic/ncs/staff_portal_users.yml")
+    hash['users'].each do |username, value| 
+      unless Staff.find(:first, :conditions => {:netid => username})
+        name = value['first_name']
+        if value['last_name']
+          name << " " << value['last_name']
+        end
+        Staff.create( :name => name, 
+                      :netid => username,
+                      :email => value['email'],
+                      :study_center => STUDY_CENTER["id"])
+      end
     end
   end
   
-  desc 'Loads the application users'
-  task :load_users => :environment do
-    FILE = 'NCS_initial_users.csv'
-    raise "Please have FILE=<file_name>" unless FILE
-    study_center = 20000029 # The NU study center ID as per MDES v1.2
-    
-    FasterCSV.foreach("#{RAILS_ROOT}/lib/#{FILE}", :headers => true) do |csv|
-      Staff.create(:name => csv["NAME"], 
-                   :netid => csv["NetID"],
-                   :email => csv["EMAIL"],
-                   :study_center => study_center)
-     end
-   end
-   
-   desc 'Loads the users into static auth file and assign default staff role'
-   task :load_users_auth => :environment do
-      users = {} 
-      users_list = {}
-      Staff.all.sort_by(&:netid).each do |s|
-        users[s.netid] = {"portals" => [{"StaffPortal" => ["staff"]}]}
-      end
-      users_list["groups"] = {"StaffPortal" => ["staff","supervisor"]}
-      users_list["users"] = users
-
-      AUTH_FILE = 'static-auth.yml'
-      File.open("#{RAILS_ROOT}/lib/#{AUTH_FILE}", 'w') {|f| f.write(users_list.to_yaml) }
-      
-   end
-  
+  desc "loads the users from csv file to static auth file"
+  task :load_to_file, :file, :needs => :environment do |t, args|
+    FILE = args[:file]
+    raise "Please pass the path to file with csv extension.e.g 'rake users:load_to_file[path_to_file]'" unless FILE
+    users = {} 
+    users_list = {}
+    FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
+      first_name, last_name = csv["NAME"].split ' '
+      users[csv["NetID"]] = { "portals" => [{"StaffPortal" => ["staff"]}],
+                              "first_name" => first_name, 
+                              "last_name" => last_name, 
+                              "email" => csv["EMAIL"]
+                            }
+    end
+    users_list["groups"] = {"StaffPortal" => ["staff","supervisor"]}
+    users_list["users"] = users
+    File.open("#{RAILS_ROOT}/tmp/staff_portal_users.yml", 'w') {|f| f.write(users_list.to_yaml) }
+  end
 end
