@@ -32,27 +32,34 @@
     = f.text_field :pay_amount
   .field
     = f.label :formatted_birth_date , "Date of Birth (mm/dd/yyyy)"
+    %em *
     = f.text_field :formatted_birth_date , {:class => "datepicker", :size =>10, :maxlength =>10}
   .field
     = f.label :gender_code, "Gender"
+    %em *
     = f.select :gender_code, NcsCode.ncs_code_lookup(:gender_code), :prompt => 'Select Gender'
   .field
     = f.label :race_code, "Race"
+    %em *
     = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), {:prompt => 'Select Race'}, {:id => "race"}
   .field
     = f.label :race_other, "Other race type"
     = f.text_field :race_other, {:size =>20 ,:id => "race_other"} 
   .field
     = f.label :ethnicity_code, "Ethnicity"
+    %em *
     = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
   .field
     = f.label :zipcode, "Zip Code of permanent residence of staff member"
+    %em *
     = f.text_field :zipcode, {:size => 5, :maxLength => 5}
   .field
     = f.label :subcontractor_code, "Does staff member work for subcontrator"
+    %em *
     = f.select :subcontractor_code, NcsCode.ncs_code_lookup(:subcontractor_code), :prompt => 'Select'
   .field
     = f.label :experience_code, "Direct experience conducting population based, household field interviewing"
+    %em *
     = f.select :experience_code, NcsCode.ncs_code_lookup(:experience_code), :prompt => 'Select Experience'
   %table{ :class => 'records staff_languages' }
     %thead
