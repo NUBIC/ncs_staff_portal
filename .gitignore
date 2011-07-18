@@ -7,3 +7,5 @@ vendor/cache
 *.swo
 .DS_Store
 .idea
+public/images/config
+
