@@ -7,8 +7,7 @@ class StaffController < SecuredController
   # GET /staff.xml
   def index
     set_tab :staff
-    @staff_list = Staff.all.sort_by(&:netid)
-    puts "----"
+    @staff_list = Staff.all.sort_by(&:username)
     puts @staff_list
     
     respond_to do |format|

@@ -29,7 +29,7 @@
       = f.text_field :name
     .row
       PSU
-      = text_field_tag "", PSU["name"], :readonly => true
+      = text_field_tag "", StaffPortal.psu_name, :readonly => true
     %table{ :class => 'records outreach_segments row' }
       %tr.row
         %td

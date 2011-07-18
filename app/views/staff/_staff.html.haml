@@ -13,12 +13,12 @@
     = f.label :email
     = f.text_field :email,:readonly => true
   .field
-    = f.label :netid, "netID"
-    = f.text_field :netid,:readonly => true
+    = f.label :username, StaffPortal.display_username
+    = f.text_field :username,:readonly => true
   .field
     = label_tag "Study center"
-    = text_field_tag "study_center", STUDY_CENTER["name"], :readonly => true
-    = f.hidden_field :study_center, :value => STUDY_CENTER["id"]
+    = text_field_tag "study_center", StaffPortal.study_center_name, :readonly => true
+    = f.hidden_field :study_center, :value => StaffPortal.study_center_id
   .field
     = f.label :staff_type_code, "Staff Type" 
     %em * 

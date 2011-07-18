@@ -2,8 +2,8 @@
 %p#notice= notice
 -display_content(@staff.name, "Name:")
 -display_content(@staff.email, "Email:")
--display_content(@staff.netid, "NetID:")
--display_content(STUDY_CENTER["name"], "Study center:")
+-display_content(@staff.username, StaffPortal.display_username + ":")
+-display_content(StaffPortal.study_center_name, "Study center:")
 - if @staff.staff_type_other.blank?
   -display_content(@staff.staff_type, "Staff Type:", true)
 - else
@@ -22,6 +22,4 @@
 %p
   %b Language(s) spoken:
   = display_languages(@staff.staff_languages)
-  -# @staff.staff_languages.map{|language| language.lang.display_text unless language.lang != "Other"}.join(', ')
-  -# @staff.staff_languages.map{|language| language.lang_other unless language.lang_other.blank?}.join(', ')
 = link_to 'Edit', edit_staff_path(@staff)

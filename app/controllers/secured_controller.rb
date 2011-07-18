@@ -13,7 +13,7 @@ class SecuredController < ApplicationController
   end
 
   def set_current_staff
-   @current_staff = Staff.find_by_netid(current_user.username)
+   @current_staff = Staff.find_by_username(current_user.username)
   end
   
   def check_user_access(requested_staff)
