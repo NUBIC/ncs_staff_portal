@@ -37,6 +37,28 @@ module StaffPortal
     def display_footer_text
       configuration('display')['footer_text']
     end
+  
+    def footer_logo_front
+      configuration('display')['footer_logo_front']
+    end
+    
+    def footer_logo_back
+      configuration('display')['footer_logo_back']
+    end
+    
+    def footer_logo_front_path
+      unless footer_logo_front.blank?
+        @footer_logo_front_path = "config/"
+        @footer_logo_front_path << footer_logo_front.split("/").last
+     end
+    end
+    
+    def footer_logo_back_path
+      unless footer_logo_back.blank?
+        @footer_logo_back_path = "config/"
+        @footer_logo_back_path << footer_logo_back.split("/").last 
+      end
+    end
     
     def mdes_label(list_name, id)
       mdes.types.find { |t| t.name == list_name }.code_list.find { |list| list.value == id.to_s }.label 

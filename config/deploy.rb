@@ -81,3 +81,14 @@ namespace :db do
     run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:backup"
   end
 end
+
+namespace :config do
+  desc "Copy configurable images to /public/images/config folder"
+  task :images,  :roles => :app do
+    unless StaffPortal.footer_logo_front.blank? || StaffPortal.footer_logo_back.blank?
+      run "mkdir -p #{current_path}/public/images/config"
+      run "cp #{StaffPortal.footer_logo_front} #{current_path}/public/images/config" unless StaffPortal.footer_logo_front.blank?
+      run "cp #{StaffPortal.footer_logo_back} #{current_path}/public/images/config" unless StaffPortal.footer_logo_back.blank?
+    end
+  end
+end
