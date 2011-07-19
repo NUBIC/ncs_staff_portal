@@ -86,10 +86,10 @@ namespace :config do
   config = YAML.load_file("/etc/nubic/ncs/staff_portal_config.yml")
   desc "Copy configurable images to /public/images/config folder"
   task :images,  :roles => :app do
-    unless config['display']['footer_logo_front'].blank? || config['display']['footer_logo_back'].blank?
+    if config['display']['footer_logo_front'] || config['display']['footer_logo_back']
       run "mkdir -p #{current_path}/public/images/config"
-      run "cp #{config['display']['footer_logo_front']} #{current_path}/public/images/config" unless config['display']['footer_logo_front'].blank?
-      run "cp #{config['display']['footer_logo_back']} #{current_path}/public/images/config" unless config['display']['footer_logo_back'].blank?
+      run "cp #{config['display']['footer_logo_front']} #{current_path}/public/images/config" if config['display']['footer_logo_front']
+      run "cp #{config['display']['footer_logo_back']} #{current_path}/public/images/config" if config['display']['footer_logo_back']
     end
   end
 end
