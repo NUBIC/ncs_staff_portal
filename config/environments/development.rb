@@ -24,10 +24,10 @@ OMA::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   config.after_initialize do
-    Bcsec.configure do
-      static = Bcsec::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
+    Aker.configure do
+      static = Aker::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
       authorities :cas, static
-      central '/etc/nubic/bcsec-local.yml'
+      central '/etc/nubic/aker-local.yml'
     end
   end
 end

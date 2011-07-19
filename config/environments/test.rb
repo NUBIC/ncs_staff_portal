@@ -33,8 +33,8 @@ OMA::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   config.after_initialize do
-    Bcsec.configure do
-      authority Bcsec::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
+    Aker.configure do
+      authority Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
     end
   end
 end

@@ -4,3 +4,10 @@
   Please login here:
 
   = link_to "Login", dashboard_url
+
+%pre
+  UI Mode: #{request.env['aker.configuration'].ui_mode.inspect}
+  - Rails.configuration.middleware.each do |middleware|
+    use #{middleware.inspect}
+    klass: #{middleware.try(:klass).inspect}
+    args: #{middleware.try(:args).inspect}

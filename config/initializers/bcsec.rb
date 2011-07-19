@@ -1,4 +1,4 @@
-Bcsec.configure do
+Aker.configure do
   # The authentication protocol to use for interactive access.
   # `:form` is the default.
   ui_mode :cas

@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-source 'http://download.bioinformatics.northwestern.edu/gems'
 source 'http://gemcutter.org'
 
 gem 'rails', '3.0.5'
@@ -10,12 +9,13 @@ gem 'rails', '3.0.5'
 gem 'pg'
 gem 'haml', '~>3.0.25'
 gem 'compass', '~>0.10.6'
-gem 'bcsec-rails', '~> 3.0.0'
 gem 'bcdatabase'
 gem 'fastercsv'
 gem 'tabs_on_rails'
 gem 'date_validator'
 gem 'ncs_mdes', '0.2.0'
+gem 'aker-rails', :git => 'git://github.com/NUBIC/aker-rails.git', :branch => 'rails3'
+gem 'aker', :git => 'git://github.com/NUBIC/aker.git'
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'

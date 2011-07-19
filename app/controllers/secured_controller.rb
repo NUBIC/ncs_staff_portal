@@ -1,6 +1,6 @@
 class SecuredController < ApplicationController
   protect_from_forgery
-  include Bcsec::Rails::SecuredController 
+  include Aker::Rails::SecuredController 
   
   before_filter :set_current_staff
 

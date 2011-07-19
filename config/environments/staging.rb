@@ -48,10 +48,10 @@ OMA::Application.configure do
   config.active_support.deprecation = :notify
 
     config.after_initialize do
-    Bcsec.configure do
-      static = Bcsec::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
+    Aker.configure do
+      static = Aker::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
       authorities :cas, static
-      central '/etc/nubic/bcsec-staging.yml'
+      central '/etc/nubic/aker-staging.yml'
     end
   end
 
