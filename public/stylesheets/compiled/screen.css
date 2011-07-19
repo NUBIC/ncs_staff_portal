@@ -800,6 +800,10 @@ body.ncs #footer {
   font-size: 1.1em;
 }
 /* line 240, ../../../app/stylesheets/screen.scss */
+body.ncs #footer div {
+  min-height: 1px;
+}
+/* line 244, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_front {
   display: inline;
   float: left;
@@ -810,7 +814,7 @@ body.ncs #footer .footer_logo_front {
 * html body.ncs #footer .footer_logo_front {
   overflow-x: hidden;
 }
-/* line 244, ../../../app/stylesheets/screen.scss */
+/* line 248, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -823,7 +827,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 250, ../../../app/stylesheets/screen.scss */
+/* line 254, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_back {
   margin-top: 1em;
   display: inline;
@@ -835,11 +839,7 @@ body.ncs #footer .footer_logo_back {
 * html body.ncs #footer .footer_logo_back {
   overflow-x: hidden;
 }
-/* line 253, ../../../app/stylesheets/screen.scss */
-body.ncs #footer .footer_logo_back img {
-  display: block;
-}
-/* line 258, ../../../app/stylesheets/screen.scss */
+/* line 259, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

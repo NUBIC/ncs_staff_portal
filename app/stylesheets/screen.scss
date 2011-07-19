@@ -236,7 +236,11 @@ body.ncs {
   #footer {
     background-color: $footer_bg;
     font-size: 1.1em;
-  
+    
+    div {
+      min-height: 1px;      
+    }
+    
     .footer_logo_front {
       @include column(6);
     }
@@ -250,9 +254,6 @@ body.ncs {
     .footer_logo_back{
       @include prepend-top(1em);
       @include column(3,true); 
-      img{
-        display: block;
-      }
     }
 
     .app_version{

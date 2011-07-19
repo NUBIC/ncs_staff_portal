@@ -1,13 +1,11 @@
 .footer_logo_front
-  - unless StaffPortal.footer_logo_front_path.blank?
-    = image_tag(StaffPortal.footer_logo_front_path)
+  = image_tag(StaffPortal.footer_logo_front_path) if StaffPortal.footer_logo_front_path
   
 .contact_info
   = StaffPortal.display_footer_text.split("\n").join("<br>\n").html_safe
   
 .footer_logo_back
-  - unless StaffPortal.footer_logo_back_path.blank?
-    = image_tag(StaffPortal.footer_logo_back_path)
+  = image_tag(StaffPortal.footer_logo_back_path) if StaffPortal.footer_logo_back_path
 
 .app_version
   = app_version_helper
