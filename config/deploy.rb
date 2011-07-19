@@ -72,7 +72,7 @@ end
 # before 'deploy:migrate', 'db:backup'
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
-after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions'
+after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions', 'config:images'
 
 # Database
 namespace :db do
