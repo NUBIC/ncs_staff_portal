@@ -14,8 +14,8 @@ gem 'fastercsv'
 gem 'tabs_on_rails'
 gem 'date_validator'
 gem 'ncs_mdes', '0.2.0'
-gem 'aker-rails', :git => 'git://github.com/NUBIC/aker-rails.git', :branch => 'rails3'
-gem 'aker', :git => 'git://github.com/NUBIC/aker.git'
+gem 'aker-rails'
+gem 'aker'
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'
