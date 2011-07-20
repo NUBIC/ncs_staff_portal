@@ -35,7 +35,7 @@ describe Staff do
   end
   
   it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:netid) }
+  it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:study_center) }
 end

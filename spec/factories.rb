@@ -9,7 +9,7 @@ FactoryGirl.define do
   
   factory :staff do |s|
     s.name "Testing Staff"  
-    s.netid "test123"
+    s.username "test123"
     s.email "test123@test.com"
     s.study_center 123456
   end
