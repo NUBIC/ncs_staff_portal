@@ -50,7 +50,7 @@ OMA::Application.configure do
     Aker.configure do
       static = Aker::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
       authorities :cas, static
-      central '/etc/nubic/aker-prod.yml'
+      central '/etc/nubic/ncs/aker-prod.yml'
     end
   end
 end
