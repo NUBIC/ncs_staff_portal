@@ -113,7 +113,7 @@ There are many rake tasks which will load data into application.
 
 3.    `rake psu:load_ncs_area_ssus[path_to_ssu_file]`
 
-      This will load the all the areas and ssus of the psu into Staff Portal. File should be csv file with columns name as `PSU_ID`, `AREA`, `SSU_ID`, `SSU_NAME`.
+      This will load the all the areas and ssus of the psu into Staff Portal. File should be csv file with columns name as `AREA`, `SSU_ID`, `SSU_NAME` for the `psu:id` specified in `/etc/nubic/ncs/staff_portal_config.yml`
 
       The list defined in `AREA` will be displayed in Staff Portal and `SSU_NAME` will be used internally. If you want `SSU_NAME` being display in Staff Portal, please have `SSU_NAME` and `AREA` same.
       

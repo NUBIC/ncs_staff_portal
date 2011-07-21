@@ -5,8 +5,8 @@ namespace :psu do
     FILE = args[:file]
     raise "Please pass the absolute path to file with csv extension.e.g 'rake psu:load_ncs_area_ssus[path_to_file]'" unless FILE
     FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
-      unless NcsArea.find(:first, :conditions => {:psu_id  => csv["PSU_ID"], :name => csv["AREA"]})
-        NcsArea.create(:psu_id => csv["PSU_ID"], 
+      unless NcsArea.find(:first, :conditions => {:psu_id  => StaffPortal.psu_id.to_s, :name => csv["AREA"]})
+        NcsArea.create(:psu_id => StaffPortal.psu_id.to_s, 
                        :name => csv["AREA"])
       end
     end
