@@ -1,13 +1,12 @@
-require 'bcdatabase'
-
-bcconf = Bcdatabase.load[:ncs_conf,:ncs_staff_portal] # Using the bcdatabase gem for server config
+@config = YAML.load_file("/etc/nubic/ncs/staff_portal_config.yml")
 
 ActionMailer::Base.smtp_settings = {
-
-  :port => 25,
-  :domain => "northwestern.edu"
+  :address => @config['mail']['smtp']['address'],
+  :port => @config['mail']['smtp']['port'],
+  :domain => @config['mail']['smtp']['domain']
 }
-ActionMailer::Base.default_url_options[:host] = bcconf["host"]
-ActionMailer::Base.default :from => bcconf["from"]
+
+ActionMailer::Base.default_url_options[:host] = @config['mail']['host']
+ActionMailer::Base.default :from => @config['mail']['from']
 
 Mail.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?

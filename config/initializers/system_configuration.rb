@@ -46,6 +46,10 @@ module StaffPortal
       "config/" << footer_logo_back.split("/").last unless footer_logo_back.blank?
     end
     
+    def development_email
+      configuration('mail')['development']['email']
+    end
+    
     private
     
     def footer_logo_front
