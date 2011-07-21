@@ -39,6 +39,7 @@ FactoryGirl.define do
   end
   
   factory :outreach_event do |event|
+    event.name "test"
     event.mode {|a| a.association(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "NCS Management", :local_code => 1) }
     event.outreach_type {|a| a.association(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "NCS Management", :local_code => 1) } 
     event.tailored {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "NCS Management", :local_code => 1) } 

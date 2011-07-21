@@ -6,6 +6,8 @@ describe OutreachEvent do
     event.should_not be_nil
   end
   
+  it { should validate_presence_of(:name) }
+  
   it { should validate_presence_of(:mode) }
   
   it { should validate_presence_of(:outreach_type) }

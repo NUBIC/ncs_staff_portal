@@ -24,8 +24,10 @@
       Outreach Description
     .row
       = f.label :formatted_event_date, "Event Date"
+      %em *
       = f.text_field :formatted_event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
       = f.label :name, "Event Name"
+      %em *
       = f.text_field :name
     .row
       PSU

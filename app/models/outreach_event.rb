@@ -44,7 +44,7 @@ class OutreachEvent < ActiveRecord::Base
    validates_presence_of :outreach_segments, :message => "can't be blank. Please add one or more segments"
    validates_presence_of :outreach_targets, :message => "can't be blank. Please add one or more targets"
    
-   validates_presence_of :mode, :outreach_type, :tailored, :evaluation_result
+   validates_presence_of :name, :mode, :outreach_type, :tailored, :evaluation_result 
    validates :event_date, :date => { :before => Date.today + 1.day}
    
    def formatted_event_date
