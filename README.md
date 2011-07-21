@@ -117,7 +117,7 @@ There are many rake tasks which will load data into application.
 
       The list defined in `AREA` will be displayed in Staff Portal and `SSU_NAME` will be used internally. If you want `SSU_NAME` being display in Staff Portal, please have `SSU_NAME` and `AREA` same.
       
-4.    `giveaway_items:load_all[path_to_item_file]`
+4.    `rake giveaway_items:load_all[path_to_item_file]`
 
       This will load all the giveaway items for the outreach activities in the Staff Portal. File should be csv file with all items are listed under column `NAME`.
         
