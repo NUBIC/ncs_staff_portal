@@ -5,7 +5,7 @@ class OutreachMailer < ActionMailer::Base
     @outreach_event = outreach_event
     @update = update
     
-    subject = "An outreach event(#{outreach_event.event_date}) is "
+    subject = "An outreach event(#{outreach_event.name}) is "
     if @update
       subject << "updated"
     else 

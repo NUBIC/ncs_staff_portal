@@ -1,7 +1,9 @@
 Dear <%= @staff.name%>
+
 <% if @update %>
-An outreach event 
+An outreach event, <%= @outreach_event.name%>, has been updated by <%= @current_user.full_name%>.
 <% else %>
-You are now added to the Outreach Activity, <%= @outreach_eventname%> with date <%= @outreach_event.event_date%>, created by <%= @current_user.full_name%>.
+You are now added to the outreach activity, <%= @outreach_event.name%>, which is created by <%= @current_user.full_name%>.
 <% end %>
-Please confirm and avoid creating a duplicate outreach activity by clicking the link <%= edit_outreach_event_url(@outreach_event)%> to view/edit the activity.
+
+Please confirm and avoid duplicate entries for outreach activity by clicking the link <%= edit_outreach_event_url(@outreach_event)%> to view/edit the activity.

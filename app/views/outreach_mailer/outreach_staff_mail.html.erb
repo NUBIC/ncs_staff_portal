@@ -1,0 +1,9 @@
+<p>Dear <%= @staff.name%></p>
+
+<% if @update %>
+<p>An outreach event, <%= @outreach_event.name%>, has been updated by <%= @current_user.full_name%>.</p>
+<% else %>
+<p>You are now added to the outreach activity, <%= @outreach_event.name%>, which is created by <%= @current_user.full_name%>.</p>
+<% end %>
+
+<p>Please confirm and avoid duplicate entries for outreach activity by clicking the link to <%= link_to "view/edit the activity.", edit_outreach_event_url(@outreach_event) %> </p>
