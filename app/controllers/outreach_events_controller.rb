@@ -38,6 +38,9 @@ class OutreachEventsController < SecuredController
 
     respond_to do |format|
       if @outreach_event.save
+        @outreach_event.outreach_staff_members.each do |s|
+          OutreachMailer.outreach_staff_mail(s.staff, @outreach_event, current_user).deliver
+        end
         format.html { redirect_to(outreach_events_path, :notice => 'Outreach event was successfully created.') }
         format.xml  { render :xml => outreach_events_path, :status => :created, :location => @outreach_event }
       else
@@ -53,6 +56,9 @@ class OutreachEventsController < SecuredController
     @outreach_event = OutreachEvent.find(params[:id])
     respond_to do |format|
       if @outreach_event.update_attributes(params[:outreach_event])
+        @outreach_event.outreach_staff_members.each do |s|
+          OutreachMailer.outreach_staff_mail(s.staff, @outreach_event, current_user, "true").deliver
+        end
         format.html { redirect_to(outreach_events_path, :notice => 'Outreach event was successfully updated.') }
         format.xml  { head :ok }
       else
