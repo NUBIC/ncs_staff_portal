@@ -151,7 +151,7 @@
     .title
       Outreach Evaluation
     .row
-      = f.label :evaluation_result_code, "Results of the outreach activity"
+      = f.label :evaluation_result_code, "Results of the outreach event"
       %em *
       = f.select :evaluation_result_code, NcsCode.ncs_code_lookup(:evaluation_result_code), :prompt => "Select"
     %table{ :class => 'records outreach_evaluations row' }
@@ -173,7 +173,7 @@
     .title
       Outreach Staff Information
     .row
-      = f.label :no_of_staff, "Number of staff required for activity"
+      = f.label :no_of_staff, "Number of staff required for event"
       = f.text_field :no_of_staff, {:size => 5}
     %table{ :class => 'records outreach_staff_members row' }
       %tr.row
@@ -190,7 +190,7 @@
             = link_to_add_fields "Add staff member", :outreach_staff_members
   .row
     = f.submit 'Save'
-    = link_to 'All outreach events', outreach_events_path
+    = link_to 'All outreach activities/events', outreach_events_path
   %br
   %p
     Note: Fields mark as (
