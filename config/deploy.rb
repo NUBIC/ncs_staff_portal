@@ -5,6 +5,9 @@
 require 'bundler/capistrano'
 require 'bcdatabase'
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 bcconf = Bcdatabase.load[:ncs_conf,:ncs_staff_portal] # Using the bcdatabase gem for server config
 set :application, "ncs_staff_portal"
 
@@ -41,6 +44,7 @@ desc "Deploy to staging"
 task :staging do
   set :app_server, bcconf["staging_app_server"]
   set :rails_env, "staging"
+  set :whenever_environment, fetch(:rails_env)
   set_roles
 end
 
@@ -49,6 +53,7 @@ desc "Deploy to production"
 task :production do
   set :app_server, bcconf["production_app_server"]
   set :rails_env, "production"
+  set :whenever_environment, fetch(:rails_env)
   set_roles
 end
 

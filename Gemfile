@@ -16,7 +16,8 @@ gem 'date_validator'
 gem 'ncs_mdes', '0.2.0'
 gem 'aker-rails'
 gem 'aker'
-gem "mail", "2.2.19"
+gem 'mail', '2.2.19'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'
