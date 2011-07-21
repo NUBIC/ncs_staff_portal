@@ -38,4 +38,30 @@ describe Staff do
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:study_center) }
+  
+  describe "weekly_task_reminder" do
+    before(:each) do
+      @staff1 = FactoryGirl.create(:staff, :name => "test1", :username => "test1", :email => "test1@test.com")
+      @staff2 = FactoryGirl.create(:staff, :name => "test2", :username => "test2", :email => "test2@test.com")
+      @staff3 = FactoryGirl.create(:staff, :name => "test3", :username => "test3", :email => "test3@test.com")
+      @staff4 = FactoryGirl.create(:staff, :name => "test4", :username => "test4", :email => "test4@test.com")
+    
+      @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.monday)
+      @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
+      @staff1.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
+    end
+    it "should return all the staff with no weekly task entry for the current week" do
+      expected_staff = Staff.by_task_reminder(Date.today)
+      expected_staff[0].should == @staff1
+      expected_staff[1].should == @staff2
+      expected_staff[2].should == @staff4
+    end
+    
+    it "should return all the staff with no weekly task entry for the previous week" do
+      expected_staff = Staff.by_task_reminder(Date.today - 1.week)
+      expected_staff[0].should == @staff3
+      expected_staff[1].should == @staff4
+    end
+  end
+  
 end

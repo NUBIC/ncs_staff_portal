@@ -56,6 +56,16 @@ class Staff < ActiveRecord::Base
     self.birth_date = birth_date
   end
   
+  def self.by_task_reminder(by_date)
+    reminder_staff = []
+    Staff.all.each do |s| 
+      if (s.staff_weekly_expenses.blank? || !s.staff_weekly_expenses.detect {|expense| expense.week_start_date == by_date.monday})
+        reminder_staff << s
+      end
+    end
+    reminder_staff
+  end
+  
   ATTRIBUTE_MAPPING = { 
     :staff_type_code => "STUDY_STAFF_TYPE_CL1",
     :age_range_code => "AGE_RANGE_CL1",
