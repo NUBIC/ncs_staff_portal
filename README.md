@@ -1,7 +1,9 @@
 Staff Portal
 ============
 
-Staff Portal keeps track of the staff information including demographic information, time, hours, expenses. It also keeps track of all the outreach activities for the study center. Staff Portal is designed based of MDES documents of the National Children Study and currently pointing to the MDES version 2.0
+Staff Portal keeps track of the staff information including demographic information, time, hours, expenses. It also keeps track of all the outreach activities for the study center. Staff Portal is designed based of MDES documents of the National Children Study and currently pointing to the MDES version 2.0.
+
+It is a Ruby on Rails application which uses Rails 3 and a PostgreSQL database.
 
 Setup
 -----
@@ -103,6 +105,15 @@ File should looks like, e.g
         
       footer_logo_front: "/staff_portal_images/footer_logo_front.png" # any footer logo you want to include before footer text
       footer_logo_back: "/staff_portal_images/footer_logo_back.png"   # any footer logo you want to include after footer text
+    mail:
+      smtp:                                      # smtp configuration for mail setup
+          address: "example.smtp.com"
+          port: 25
+          domain: "example.com"
+      host: "staging server/production server"   # host name 
+      from: "NCS_Staff_Portal@example.com"       # from address to be included in email
+      development:                               # if any development will be done,
+          email: "user@example.com"              # developer's email address for development testing email
             
 ### Rake tasks
 There are many rake tasks which will load data into application.
