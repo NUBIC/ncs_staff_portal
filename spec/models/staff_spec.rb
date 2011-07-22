@@ -64,4 +64,20 @@ describe Staff do
     end
   end
   
+  describe "pay_amount" do
+    it "should not contain other than decimal value" do
+      staff= FactoryGirl.build(:staff)
+      staff.pay_amount = "25,00"
+      staff.should_not be_valid
+      staff.should have(1).error_on(:pay_amount)
+    end
+    
+    it "should be greater than 0 dollar" do
+      staff= FactoryGirl.build(:staff)
+      staff.pay_amount = -3
+      staff.should_not be_valid
+      staff.should have(1).error_on(:pay_amount)
+    end
+  end 
+  
 end
