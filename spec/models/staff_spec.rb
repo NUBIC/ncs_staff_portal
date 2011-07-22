@@ -1,20 +1,6 @@
 require 'spec_helper'
 
 describe Staff do
-  describe "hourly_rate validations" do
-    it "should not contain other than decimal value" do
-      staff= FactoryGirl.build(:staff)
-      staff.hourly_rate = "test"
-      staff.should_not be_valid
-      staff.should have(1).error_on(:hourly_rate)
-    end
-    it "should be greater than 0 dollar" do
-      staff= FactoryGirl.build(:staff)
-      staff.hourly_rate = -3
-      staff.should_not be_valid
-      staff.should have(1).error_on(:hourly_rate)
-    end
-  end
   
   describe "calculate_hourly_rate" do
     it "should put pay_amount as it is as hourly_rate if pay_type is 'Hourly'" do
