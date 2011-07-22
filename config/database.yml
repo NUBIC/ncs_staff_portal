@@ -3,12 +3,6 @@
   bcdb = Bcdatabase.load
 %>
 
-development:
-  adapter: postgresql 
-  database: ncs_staff_portal_development
-  username: ncs_user
-  password: childr3n!
-  encoding: utf8
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -22,6 +16,8 @@ test: &test
 
 cucumber:
   <<: *test
+  
+<%= bcdb.development :local_postgresql, :ncs_staff_portal %>
 
 <%= bcdb.staging :ncsdb_staging, :ncs_staff_portal %>
 
