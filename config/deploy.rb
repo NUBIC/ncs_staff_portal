@@ -30,7 +30,7 @@ set :branch do
   ref.empty? ? "master" : ref
 end
 set :deploy_to, bcconf["deploy_to"]
-# set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 # Roles
 task :set_roles do
