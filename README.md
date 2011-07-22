@@ -114,9 +114,28 @@ File should looks like, e.g
       from: "NCS_Staff_Portal@example.com"       # from address to be included in email
       development:                               # if any development will be done,
           email: "user@example.com"              # developer's email address for development testing email
+          
+### Deployment
+To deploy Staff Portal on server, machine(which will be used to deploy staff portal to server) should have its own configuration file for deploy.
+    
+You need to create configuration file `deploy_config.yml` under `/etc/nubic/db/`
+
+File should looks like, e.g
+
+    ncs_staff_portal:                                       
+        repo: "git://github.com/NUBIC/ncs_staff_portal.git"            # github url for staff portal. This will be same all the time.
+        deploy_to: "www/ncs_apps/"                                     # path on the server where application will be deploy   
+        staging_app_server: "staging.server"                           # staging server name 
+        production_app_server: "production.server"                     # production server name
+        
+After you check out the code, you need to deploy application on server.
+
+    cap production deploy:migrations  # This will deploy application on production server. if deploying to staging, use 'cap staging deploy:migrations' instead.
             
 ### Rake tasks
-There are many rake tasks which will load data into application.
+There are many rake tasks which will load data into application. 
+
+All the tasks should be executed from the application root on deploy server.
 
 1.    `rake mdes:load_codes_from_schema_20` (This will load all the mdes codes into Staff Portal.)
 
