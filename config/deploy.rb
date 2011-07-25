@@ -44,7 +44,6 @@ desc "Deploy to staging"
 task :staging do
   set :app_server, bcconf["staging_app_server"]
   set :rails_env, "staging"
-  set :whenever_environment, fetch(:rails_env)
   set_roles
 end
 
