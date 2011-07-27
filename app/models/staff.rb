@@ -39,7 +39,7 @@ class Staff < ActiveRecord::Base
   before_save :calculate_hourly_rate
   
   def calculate_hourly_rate
-    unless pay_type.blank? && pay_amount.blank?
+    if !pay_type.blank? && !pay_amount.blank?
       if pay_type == "Hourly"
         self.hourly_rate = pay_amount
       elsif pay_type == "Yearly"

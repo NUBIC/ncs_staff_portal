@@ -18,6 +18,20 @@ describe Staff do
       staff.save
       staff.hourly_rate.should == 28.57
     end
+    
+    it "should not calculate the hourly_rate if pay_amount is nil" do
+      staff= FactoryGirl.build(:staff)
+      staff.pay_type = "Yearly"
+      staff.save
+      staff.hourly_rate.should be_nil
+    end
+    
+    it "should not calculate the hourly_rate if pay_amount is nil" do
+      staff= FactoryGirl.build(:staff)
+      staff.pay_amount = 50000
+      staff.save
+      staff.hourly_rate.should be_nil
+    end
   end
   
   it { should validate_presence_of(:name) }
