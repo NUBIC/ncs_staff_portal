@@ -20,7 +20,7 @@
     .task_expense
       %em Labor expenses:
       .other_data 
-        - if @staff.hourly_rate.blank?
+        - if (@staff.hourly_rate.blank? || @staff.hourly_rate == 0)
           Your Rate: Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
         - else
           Your Rate: $#{@staff.hourly_rate}/hr

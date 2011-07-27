@@ -23,14 +23,14 @@ describe Staff do
       staff= FactoryGirl.build(:staff)
       staff.pay_type = "Yearly"
       staff.save
-      staff.hourly_rate.should be_nil
+      staff.hourly_rate.should == 0
     end
     
     it "should not calculate the hourly_rate if pay_amount is nil" do
       staff= FactoryGirl.build(:staff)
       staff.pay_amount = 50000
       staff.save
-      staff.hourly_rate.should be_nil
+      staff.hourly_rate.should == 0
     end
   end
   
