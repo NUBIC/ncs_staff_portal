@@ -52,24 +52,6 @@ ActiveRecord::Schema.define(:version => 20110715175213) do
     t.datetime "updated_at"
   end
 
-  create_table "ncs_ssus", :force => true do |t|
-    t.integer  "psu_id"
-    t.string   "ssu_id"
-    t.string   "ssu_name"
-    t.string   "area"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "ncs_tsus", :force => true do |t|
-    t.integer  "psu_id"
-    t.string   "tsu_id"
-    t.string   "tsu_name"
-    t.string   "area"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "outreach_evaluations", :force => true do |t|
     t.integer  "outreach_event_id"
     t.integer  "evaluation_code"
@@ -134,13 +116,6 @@ ActiveRecord::Schema.define(:version => 20110715175213) do
     t.datetime "updated_at"
   end
 
-  create_table "outreach_ssus", :force => true do |t|
-    t.integer  "outreach_event_id"
-    t.string   "ssu_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "outreach_staff_members", :force => true do |t|
     t.integer  "staff_id"
     t.integer  "outreach_event_id"
@@ -152,13 +127,6 @@ ActiveRecord::Schema.define(:version => 20110715175213) do
     t.integer  "outreach_event_id"
     t.integer  "target_code"
     t.string   "target_other"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "outreach_tsus", :force => true do |t|
-    t.integer  "outreach_event_id"
-    t.string   "tsu_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
