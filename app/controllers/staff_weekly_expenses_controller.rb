@@ -4,7 +4,8 @@ class StaffWeeklyExpensesController < SecuredController
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
   def index
-    @staff_weekly_expenses = StaffWeeklyExpense.all.sort_by(&:week_start_date).reverse
+    params[:page] ||= 1
+    @staff_weekly_expenses = StaffWeeklyExpense.all.sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @staff_weekly_expenses }

@@ -18,6 +18,7 @@ gem 'aker-rails'
 gem 'aker'
 gem 'mail', '2.2.19'
 gem 'whenever', :require => false
+gem "will_paginate", "~> 3.0.pre4"
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'

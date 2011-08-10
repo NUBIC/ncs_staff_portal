@@ -7,7 +7,8 @@ class StaffController < SecuredController
   # GET /staff.xml
   def index
     set_tab :staff
-    @staff_list = Staff.all.sort_by(&:username)
+    params[:page] ||= 1
+    @staff_list = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
     
     respond_to do |format|
       format.html  { render :layout => "application"}

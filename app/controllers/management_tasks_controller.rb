@@ -4,7 +4,8 @@ class ManagementTasksController < SecuredController
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new
-    @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse
+    params[:page] ||= 1
+    @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
 
@@ -17,7 +18,8 @@ class ManagementTasksController < SecuredController
   # GET /management_tasks/1/edit
   def edit
     @staff = Staff.find(params[:staff_id])
-    @management_tasks = @staff.management_tasks
+    params[:page] ||= 1
+    @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.find(params[:id])
   end
 
