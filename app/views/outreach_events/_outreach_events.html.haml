@@ -27,7 +27,7 @@
       = f.text_field :formatted_event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
       = f.label :name, "Event Name"
       %em *
-      = f.text_field :name
+      = f.text_field :name, {:size => 50}
     .row
       PSU
       = text_field_tag "", StaffPortal.psu_name, :readonly => true
@@ -88,7 +88,7 @@
             = link_to_add_fields "Add giveaway item", :outreach_items
     .row
       = f.label :cost, "Non-labor cost to conduct outreach:"
-      = f.text_field :cost
+      = f.text_field :cost, {:size => 5}
 
   .block
     .title
