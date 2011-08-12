@@ -49,6 +49,17 @@ body.ncs {
     border-bottom: 1px solid #AAAAAA !important;
   }
   
+  ul.ui-helper-reset, ul.ui-multiselect-checkboxes {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    font-family: inherit;
+    font-size: 100%;
+  }
+  
+  .ui-datepicker {
+      width: auto !important;
+  }
+  
   #container {
     @include container; 
    // @include showgrid(); //for debug and allignment purposes
