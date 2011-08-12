@@ -30,6 +30,7 @@ class OutreachEvent < ActiveRecord::Base
    has_many :outreach_segments, :dependent => :destroy
    has_many :outreach_items, :dependent => :destroy
    has_many :outreach_languages, :dependent => :destroy
+   has_many :ncs_areas, :through => :outreach_segments
    
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
@@ -41,11 +42,14 @@ class OutreachEvent < ActiveRecord::Base
    
    validates_presence_of :outreach_staff_members, :message => "can't be blank. Please add one or more staff members"
    validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluations"
-   validates_presence_of :outreach_segments, :message => "can't be blank. Please add one or more segments"
    validates_presence_of :outreach_targets, :message => "can't be blank. Please add one or more targets"
-   
    validates_presence_of :name, :mode, :outreach_type, :tailored, :evaluation_result 
    validates :event_date, :date => { :before => Date.today + 1.day}
+   validate :has_segments
+   def has_segments
+     errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_areas.blank?
+   end
+   
    
    def formatted_event_date
      event_date.nil? ? nil : event_date.to_s

@@ -16,7 +16,6 @@ class OutreachEventsController < SecuredController
   def new
     @outreach_event = OutreachEvent.new
     @outreach_event.outreach_staff_members.build
-    @outreach_event.outreach_segments.build
     @outreach_event.outreach_evaluations.build
     @outreach_event.outreach_targets.build
 
@@ -35,7 +34,6 @@ class OutreachEventsController < SecuredController
   # POST /outreach_events.xml
   def create
     @outreach_event = OutreachEvent.new(params[:outreach_event])
-
     respond_to do |format|
       if @outreach_event.save
         @outreach_event.outreach_staff_members.each do |s|

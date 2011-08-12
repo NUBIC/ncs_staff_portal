@@ -25,17 +25,6 @@ NCSPortal.OutreachEvaluations.UI = function (config) {
   });
 };
 
-
-NCSPortal.OutreachSegments.UI = function (config) {
-  outreachSegmentsNestedAttributesForm = new NestedAttributes({
-      container: $('.outreach_segments'),
-      association: 'outreach_segments',
-      content: config.outreachSegmentsTemplate,
-      caller: this
-  });
-};
-
-
 NCSPortal.OutreachStaffMembers.UI = function (config) {
   var setupOutreachStaffAutocompleter = function () {
       $(".outreach_staff_combobox_autocompleter").combobox({watermark:'staff'});

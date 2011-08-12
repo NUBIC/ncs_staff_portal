@@ -9,8 +9,8 @@ FactoryGirl.define do
   
   factory :staff do |s|
     s.name "Testing Staff"  
-    s.username "test123"
-    s.email "test123@test.com"
+    s.username {Factory.next(:user_name)}
+    s.email {Factory.next(:email)}
     s.study_center 123456
   end
   
@@ -49,6 +49,7 @@ FactoryGirl.define do
     event.outreach_evaluations {|a| [a.association(:outreach_evaluation)]}
     event.outreach_targets {|a| [a.association(:outreach_target)]}
     event.outreach_segments {|a| [a.association(:outreach_segment)]}
+    event.ncs_areas {|a| [a.association(:ncs_area)]}
   end
   
   factory :outreach_staff_member do |member|
@@ -81,7 +82,7 @@ FactoryGirl.define do
   
   factory :ncs_area do |area|
     area.psu_id "0012345"
-    area.name "testing"
+    area.name {Factory.next(:area_name)}
   end
   
   factory :ncs_area_ssu do |ssu|
@@ -93,4 +94,17 @@ FactoryGirl.define do
   factory :outreach_segment do |segment|
     segment.association :ncs_area, :factory => :ncs_area
   end
+  
+  sequence :area_name do |n|
+    "area_name#{n}"
+  end
+  
+  sequence :user_name do |n|
+    "user_name#{n}"
+  end
+  
+  sequence :email do |n|
+    "email#{n}@test.com"
+  end
+
 end

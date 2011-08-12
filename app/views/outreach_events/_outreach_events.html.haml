@@ -15,7 +15,6 @@
   - @outreachRacesTemplate = generate_nested_attributes_template(f, :outreach_races, 'outreach_events/outreach_races')
   - @outreachTargetsTemplate = generate_nested_attributes_template(f, :outreach_targets, 'outreach_events/outreach_targets')
   - @outreachEvaluationsTemplate = generate_nested_attributes_template(f, :outreach_evaluations, 'outreach_events/outreach_evaluations')
-  - @outreachSegmentsTemplate = generate_nested_attributes_template(f, :outreach_segments, 'outreach_events/outreach_segments')
   - @outreachItemsTemplate = generate_nested_attributes_template(f, :outreach_items, 'outreach_events/outreach_items')
   - @outreachLanguagesTemplate = generate_nested_attributes_template(f, :outreach_languages, 'outreach_events/outreach_languages')
   
@@ -32,20 +31,10 @@
     .row
       PSU
       = text_field_tag "", StaffPortal.psu_name, :readonly => true
-    %table{ :class => 'records outreach_segments row' }
-      %tr.row
-        %td
-          Outreach Segments 
-          %em * 
-          (Click the 'Add segment' link to add one or more segments)
-        %td
-      %tbody.nested_records_outreach_segments
-        - f.fields_for :outreach_segments do |outreach_segment|
-          = render :partial => 'outreach_events/outreach_segments', :locals => { :f => outreach_segment }
-      %tfoot
-        %tr.row
-          %td.row{ :colspan => '3' }
-            = link_to_add_fields "Add segment", :outreach_segments
+    .row
+      Outreach Segments
+      = select_tag("outreach_event[ncs_area_ids][]", options_for_select(NcsArea.all.sort_by(&:name).map {|a| [a.name, a.id]}, @outreach_event.outreach_segments.collect { |os| os.ncs_area_id }),
+                        {:multiple=>true, :id => "outreach_segments", :class => "outreach_segments"})
   .block
     .title
       Outreach Details
@@ -198,6 +187,7 @@
     ) are mandatory fields
   :javascript
     $(document).ready(function(){
+      $("#outreach_segments").multiselect({noneSelectedText: 'Select one or more segments', selectedList: 20, minWidth: 500 });
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
       disabled_selected_options(".outreach_races_selector", true)
       disabled_selected_options(".outreach_targets_selector", true)
@@ -219,7 +209,6 @@
       outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
       outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
       outreachEvaluationsTemplateUI = new NCSPortal.OutreachEvaluations.UI({outreachEvaluationsTemplate: '#{@outreachEvaluationsTemplate}' });
-      outreachSegmentsTemplateUI = new NCSPortal.OutreachSegments.UI({outreachSegmentsTemplate: '#{@outreachSegmentsTemplate}' });
       outreachItemsTemplateUI = new NCSPortal.OutreachItems.UI({outreachItemsTemplate: '#{@outreachItemsTemplate}' });
       outreachLanguagesTemplateUI = new NCSPortal.OutreachLanguages.UI({outreachLanguagesTemplate: '#{@outreachLanguagesTemplate}' });
      })

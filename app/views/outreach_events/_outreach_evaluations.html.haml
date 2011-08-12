@@ -3,6 +3,6 @@
     = f.label :evaluation_code, "Evaluation"
     = f.select :evaluation_code, NcsCode.ncs_code_lookup(:outreach_evaluation_code), {:prompt => 'Select evaluation'} , {:class => "nested_attribute_selector outreach_evaluations_selector"}
     = f.label :evaluation_other, "Other evaluation", {:class => "nested_attribute_other_label"}
-    = f.text_field :evaluation_other, {:size =>20 ,:class => "nested_attribute_other"}
+    = f.text_field :evaluation_other, {:class => "nested_attribute_other"}
   %td.col2
     = link_to_remove_fields 'Remove', f, :outreach_evaluations
