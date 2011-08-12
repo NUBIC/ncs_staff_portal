@@ -558,11 +558,11 @@ body.ncs #header, body.ncs #footer {
 * html body.ncs #header, * html body.ncs #footer {
   overflow-x: hidden;
 }
-/* line 79, ../../../app/stylesheets/screen.scss */
+/* line 73, ../../../app/stylesheets/screen.scss */
 body.ncs #header {
   background-color: #ccd3e8;
 }
-/* line 81, ../../../app/stylesheets/screen.scss */
+/* line 75, ../../../app/stylesheets/screen.scss */
 body.ncs #header #app_name {
   padding-left: 40px;
   font-size: 2.0em;
@@ -575,7 +575,7 @@ body.ncs #header #app_name {
 * html body.ncs #header #app_name {
   overflow-x: hidden;
 }
-/* line 87, ../../../app/stylesheets/screen.scss */
+/* line 81, ../../../app/stylesheets/screen.scss */
 body.ncs #header #current_user {
   margin-top: 0.5em;
   display: inline;
@@ -589,7 +589,7 @@ body.ncs #header #current_user {
 * html body.ncs #header #current_user {
   overflow-x: hidden;
 }
-/* line 94, ../../../app/stylesheets/screen.scss */
+/* line 88, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation {
   display: inline;
   float: left;
@@ -600,17 +600,17 @@ body.ncs #header #tab_navigation {
 * html body.ncs #header #tab_navigation {
   overflow-x: hidden;
 }
-/* line 96, ../../../app/stylesheets/screen.scss */
+/* line 90, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul {
   list-style-type: none;
 }
-/* line 100, ../../../app/stylesheets/screen.scss */
+/* line 94, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation ul li {
   display: inline;
   float: left;
   padding: 1em 0.5em 0 0.5em;
 }
-/* line 106, ../../../app/stylesheets/screen.scss */
+/* line 100, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li a {
   display: block;
   width: 12em;
@@ -622,7 +622,7 @@ body.ncs #header #tab_navigation li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 118, ../../../app/stylesheets/screen.scss */
+/* line 112, ../../../app/stylesheets/screen.scss */
 body.ncs #header #tab_navigation li.current a {
   display: block;
   width: 12em;
@@ -634,7 +634,7 @@ body.ncs #header #tab_navigation li.current a {
   text-align: center;
   color: #333333;
 }
-/* line 134, ../../../app/stylesheets/screen.scss */
+/* line 128, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical {
   display: inline;
   float: left;
@@ -646,17 +646,17 @@ body.ncs #tab_vertical {
 * html body.ncs #tab_vertical {
   overflow-x: hidden;
 }
-/* line 137, ../../../app/stylesheets/screen.scss */
+/* line 131, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-/* line 143, ../../../app/stylesheets/screen.scss */
+/* line 137, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical ul li {
   padding: 0.5em;
 }
-/* line 147, ../../../app/stylesheets/screen.scss */
+/* line 141, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical li a {
   display: block;
   width: 12em;
@@ -667,7 +667,7 @@ body.ncs #tab_vertical li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 158, ../../../app/stylesheets/screen.scss */
+/* line 152, ../../../app/stylesheets/screen.scss */
 body.ncs #tab_vertical li.current span {
   display: block;
   width: 12em;
@@ -678,7 +678,7 @@ body.ncs #tab_vertical li.current span {
   text-align: center;
   color: #333333;
 }
-/* line 170, ../../../app/stylesheets/screen.scss */
+/* line 164, ../../../app/stylesheets/screen.scss */
 body.ncs #content_vertical {
   display: inline;
   float: left;
@@ -690,7 +690,7 @@ body.ncs #content_vertical {
 * html body.ncs #content_vertical {
   overflow-x: hidden;
 }
-/* line 175, ../../../app/stylesheets/screen.scss */
+/* line 169, ../../../app/stylesheets/screen.scss */
 body.ncs #content {
   display: inline;
   float: left;
@@ -705,11 +705,11 @@ body.ncs #content {
 * html body.ncs #content {
   overflow-x: hidden;
 }
-/* line 186, ../../../app/stylesheets/screen.scss */
+/* line 180, ../../../app/stylesheets/screen.scss */
 body.ncs #content table tr, body.ncs #content table td, body.ncs #content .row {
   padding: 0.2em 0;
 }
-/* line 191, ../../../app/stylesheets/screen.scss */
+/* line 185, ../../../app/stylesheets/screen.scss */
 body.ncs #content table td.col1 {
   display: inline;
   float: left;
@@ -720,7 +720,7 @@ body.ncs #content table td.col1 {
 * html body.ncs #content table td.col1 {
   overflow-x: hidden;
 }
-/* line 195, ../../../app/stylesheets/screen.scss */
+/* line 189, ../../../app/stylesheets/screen.scss */
 body.ncs #content table td.col2 {
   display: inline;
   float: left;
@@ -731,25 +731,25 @@ body.ncs #content table td.col2 {
 * html body.ncs #content table td.col2 {
   overflow-x: hidden;
 }
-/* line 199, ../../../app/stylesheets/screen.scss */
+/* line 193, ../../../app/stylesheets/screen.scss */
 body.ncs #content .block {
   background-color: #e8e8e8;
   margin-bottom: 1em;
 }
-/* line 204, ../../../app/stylesheets/screen.scss */
+/* line 198, ../../../app/stylesheets/screen.scss */
 body.ncs #content .block .title {
   font-weight: bold;
   font-style: normal;
   font-size: 125%;
   padding: 0.2em 0;
 }
-/* line 211, ../../../app/stylesheets/screen.scss */
+/* line 205, ../../../app/stylesheets/screen.scss */
 body.ncs #content em {
   font-weight: bold;
   font-style: normal;
   font-size: 125%;
 }
-/* line 219, ../../../app/stylesheets/screen.scss */
+/* line 213, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form {
   border: 1px solid #333;
   background-color: #e0e0e0;
@@ -763,20 +763,20 @@ body.ncs .current_form {
 * html body.ncs .current_form {
   overflow-x: hidden;
 }
-/* line 225, ../../../app/stylesheets/screen.scss */
+/* line 219, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form label, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
-/* line 229, ../../../app/stylesheets/screen.scss */
+/* line 223, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 234, ../../../app/stylesheets/screen.scss */
+/* line 228, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form div {
   padding: 0.5em;
 }
-/* line 237, ../../../app/stylesheets/screen.scss */
+/* line 231, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_info {
   display: inline;
   float: left;
@@ -787,7 +787,7 @@ body.ncs .current_form .task_info {
 * html body.ncs .current_form .task_info {
   overflow-x: hidden;
 }
-/* line 241, ../../../app/stylesheets/screen.scss */
+/* line 235, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_expense {
   padding-left: 40px;
   display: inline;
@@ -799,7 +799,7 @@ body.ncs .current_form .task_expense {
 * html body.ncs .current_form .task_expense {
   overflow-x: hidden;
 }
-/* line 246, ../../../app/stylesheets/screen.scss */
+/* line 240, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_actions {
   padding-left: 120px;
   display: inline;
@@ -811,16 +811,16 @@ body.ncs .current_form .task_actions {
 * html body.ncs .current_form .task_actions {
   overflow-x: hidden;
 }
-/* line 253, ../../../app/stylesheets/screen.scss */
+/* line 247, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 257, ../../../app/stylesheets/screen.scss */
+/* line 251, ../../../app/stylesheets/screen.scss */
 body.ncs #footer div {
   min-height: 1px;
 }
-/* line 261, ../../../app/stylesheets/screen.scss */
+/* line 255, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_front {
   display: inline;
   float: left;
@@ -831,7 +831,7 @@ body.ncs #footer .footer_logo_front {
 * html body.ncs #footer .footer_logo_front {
   overflow-x: hidden;
 }
-/* line 265, ../../../app/stylesheets/screen.scss */
+/* line 259, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -844,7 +844,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 271, ../../../app/stylesheets/screen.scss */
+/* line 265, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_back {
   margin-top: 1em;
   display: inline;
@@ -856,7 +856,7 @@ body.ncs #footer .footer_logo_back {
 * html body.ncs #footer .footer_logo_back {
   overflow-x: hidden;
 }
-/* line 276, ../../../app/stylesheets/screen.scss */
+/* line 270, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;
