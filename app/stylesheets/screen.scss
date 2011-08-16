@@ -208,10 +208,14 @@ body.ncs {
       padding: 0.2em 0;
     }
     
-    em{ 
-    font-weight: bold;
-    font-style: normal;
-    font-size: 125%;
+    em { 
+      font-weight: bold;
+      font-style: normal;
+      font-size: 125%;
+    }
+    
+    .text_search {
+      padding: 1em 0;
     }
     
   }

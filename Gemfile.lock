@@ -153,6 +153,8 @@ GEM
       rspec (~> 2.5.0)
     rubytree (0.7.0)
     rubyzip (0.9.4)
+    scoped_search (2.3.1)
+      activerecord (>= 2.1.0)
     selenium-webdriver (0.1.4)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
@@ -196,6 +198,7 @@ DEPENDENCIES
   pg
   rails (= 3.0.5)
   rspec-rails (~> 2.5.0)
+  scoped_search
   shoulda
   tabs_on_rails
   whenever

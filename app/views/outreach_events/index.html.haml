@@ -1,6 +1,11 @@
 %h3 List of outreach activities/events
 = link_to 'New outreach activity/event', new_outreach_event_path
 
+%div.text_search
+  = form_tag outreach_events_path, :method => :get do 
+    = text_field_tag "search", params[:search]
+    = submit_tag "Search", :class => "control_button"
+    = label_tag "(Search by 'event name' or 'segment' or 'staff member')"
 %div.yui-skin-sam
   %div#event-list
     %table#event-list-tbl

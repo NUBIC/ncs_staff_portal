@@ -4,7 +4,8 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events.xml
   def index
     params[:page] ||= 1
-    @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    # @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    @outreach_events =  OutreachEvent.search_for(params[:search]).all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @outreach_events }

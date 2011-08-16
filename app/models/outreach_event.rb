@@ -31,6 +31,7 @@ class OutreachEvent < ActiveRecord::Base
    has_many :outreach_items, :dependent => :destroy
    has_many :outreach_languages, :dependent => :destroy
    has_many :ncs_areas, :through => :outreach_segments
+   has_many :staff, :through => :outreach_staff_members
    
    accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
    accepts_nested_attributes_for :outreach_races, :allow_destroy => true
@@ -50,6 +51,9 @@ class OutreachEvent < ActiveRecord::Base
      errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_areas.blank?
    end
    
+   scoped_search :on => [:name, :event_date]
+   scoped_search :in => :ncs_areas, :on => :name
+   scoped_search :in => :staff, :on => :name
    
    def formatted_event_date
      event_date.nil? ? nil : event_date.to_s
