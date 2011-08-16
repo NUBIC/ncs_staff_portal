@@ -178,8 +178,8 @@
           %td{ :colspan => '3' }
             = link_to_add_fields "Add staff member", :outreach_staff_members
   .row
-    = f.submit 'Save'
-    = link_to 'All outreach activities/events', outreach_events_path
+    = f.submit 'Save', :class => "control_button"
+    = link_to 'Exit without save', outreach_events_path
   %br
   %p
     Note: Fields mark as (

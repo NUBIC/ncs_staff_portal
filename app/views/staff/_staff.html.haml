@@ -75,7 +75,7 @@
         %td{ :colspan => '3' }
           = link_to_add_fields "Add", :staff_languages
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class => "control_button"
     = link_to 'cancel', staff_path(params[:staff_id])
   %p
     Note: Fields mark as (

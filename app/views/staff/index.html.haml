@@ -15,7 +15,7 @@
                 %td= staff.staff_type_other
               - else
                 %td= staff.staff_type.display_text
-            %td= button_to "Delete", { :action => "destroy", :id => staff.id },:confirm => "Are you sure?", :method => :delete
+            %td= button_to "Delete", { :action => "destroy", :id => staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
 
   :javascript
       $(document).ready(function() {

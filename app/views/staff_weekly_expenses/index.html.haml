@@ -14,7 +14,7 @@
             %td= staff_weekly_expense.management_tasks.map(&:expenses).compact.inject(0){ |total, expenses| total + expenses }
             %td= staff_weekly_expense.management_tasks.map(&:miles).compact.inject(0){ |total, miles| total + miles}
             %td= staff_weekly_expense.management_tasks.length
-            %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id },:confirm => "Are you sure?", :method => :delete 
+            %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
   :javascript
       $(document).ready(function() {
         displayWeeklyExpenseList()

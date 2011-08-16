@@ -25,7 +25,7 @@
           - else
             %td= outreach_event.outreach_type.display_text
           - if permit?(:supervisor)
-            %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:confirm => "Are you sure?", :method => :delete
+            %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
           - else
             %td
 

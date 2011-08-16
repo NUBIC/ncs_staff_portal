@@ -31,11 +31,11 @@ form.bp {
 
 // Page layout can be done using mixins applied to your semantic classes and IDs:
 body.ncs {
-
   a:hover {
     background-color: $tab_nav_bg;
     color: #f0f0f0;
   }
+  
   
   /* jQuery UI - Override the jQuery CSS*/
   .ui-widget {
@@ -58,6 +58,12 @@ body.ncs {
   
   .ui-datepicker {
       width: auto !important;
+  }
+  
+  .control_button {
+     background-color: #e0dcdc;
+     border:1px solid;
+     border-radius:10px;
   }
   
   #container {
@@ -212,7 +218,7 @@ body.ncs {
   
   .current_form {
     border: 1px solid #333;
-    background-color: $current_form_bg;
+    background-color:  $form_table_bg;
     @include column(22,true);
     @include append-bottom(1em);
     

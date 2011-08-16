@@ -35,7 +35,7 @@
         = f.label :miles, "Miles driven"
         = f.text_field :miles, {:size =>4}
     .task_actions
-      = f.submit 'Save'
+      = f.submit 'Save', :class => "control_button"
       = link_to 'Cancel', new_staff_management_task_path(params[:staff_id])
     
     :javascript
