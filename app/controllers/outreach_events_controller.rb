@@ -6,6 +6,10 @@ class OutreachEventsController < SecuredController
     params[:page] ||= 1
     # @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @outreach_events =  OutreachEvent.search_for(params[:search]).all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    @can_delete = false
+    if permit?(:supervisor)
+      @can_delete = true
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @outreach_events }
@@ -35,6 +39,7 @@ class OutreachEventsController < SecuredController
   # POST /outreach_events.xml
   def create
     @outreach_event = OutreachEvent.new(params[:outreach_event])
+    @outreach_event.created_by = @current_staff.id
     respond_to do |format|
       if @outreach_event.save
         @outreach_event.outreach_staff_members.each do |s|

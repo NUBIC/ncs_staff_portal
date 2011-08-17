@@ -29,7 +29,11 @@
             %td=outreach_event.outreach_type_other
           - else
             %td= outreach_event.outreach_type.display_text
-          - if permit?(:supervisor)
+          - if outreach_event.created_by.blank?
+            %td
+          - else
+            %td= outreach_event.created_by_user.name
+          - if @can_delete
             %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
           - else
             %td
@@ -47,6 +51,7 @@
           { key: "result", label: "Result" },
           { key: "mode", label: "Mode" },
           { key: "type", label: "Type" },
+          { key: "created_by", label: "Created By" },
           { key: "controls", label: "Controls" }
       ];
       var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("event-list-tbl"));
@@ -59,11 +64,19 @@
           { key: "result" },
           { key: "mode" },
           { key: "type" },
+          { key: "created_by"},
           { key: "controls" }
         ]
       };
-      new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
+      var dataTable = new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
           sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_DESC }
       });
+      
+      var canDelete = #{@can_delete}
+      if (canDelete) {
+        dataTable.showColumn("controls"); 
+      } else {
+        dataTable.hideColumn("controls"); 
+      }
     }
 = will_paginate @outreach_events, :previous_label => "Previous", :next_label => "Next"

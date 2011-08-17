@@ -55,6 +55,8 @@ class OutreachEvent < ActiveRecord::Base
    scoped_search :in => :ncs_areas, :on => :name
    scoped_search :in => :staff, :on => :name
    
+   belongs_to :created_by_user, :class_name => 'Staff', :foreign_key => :created_by
+   
    def formatted_event_date
      event_date.nil? ? nil : event_date.to_s
    end
