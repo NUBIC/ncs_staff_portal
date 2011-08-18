@@ -53,6 +53,7 @@ class StaffCertTrainingsController < SecuredController
         format.html { redirect_to(new_staff_staff_cert_training_path(@staff), :notice => 'Staff cert training was successfully updated.') }
         format.xml  { head :ok }
       else
+        @staff_cert_trainings = @staff.staff_cert_trainings
         format.html { render :action => "edit" }
         format.xml  { render :xml => @staff_cert_training.errors, :status => :unprocessable_entity }
       end

@@ -144,11 +144,11 @@ function get_cert_date_value() {
   $("input:radio[name=cert_date]").click(function() {
     if ( $(this).val() == 'date' ) {
       make_cert_date_input_enable();
-    } else if ($(this).val() == '-2' ) {
-      $("#cert_date_value").val('-2')
+    } else if ($(this).val() == '96/96/9666' ) {
+      $("#cert_date_value").val('96/96/9666')
 	  make_cert_date_input_disable();
-    } else if ($(this).val() == '-7' ) {
-      $("#cert_date_value").val('-7')
+    } else if ($(this).val() == '97/97/9777' ) {
+      $("#cert_date_value").val('97/97/9777')
 	  make_cert_date_input_disable();
     }
   });
