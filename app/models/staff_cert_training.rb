@@ -1,5 +1,5 @@
 class StaffCertTraining < ActiveRecord::Base
-  validates_presence_of :certificate_type
+  validates_presence_of :certificate_type, :complete, :background_check
   belongs_to :staff
   validates_date :expiration_date, :allow_blank => true
   validate :valid_cert_date

@@ -8,9 +8,11 @@
 
   .field
     = f.label :certificate_type_code, "Certification/Training Type"
+    %em *
     = f.select :certificate_type_code, NcsCode.ncs_code_lookup(:certificate_type_code), :prompt => 'Select Certification/Training Type'
   .field
     = f.label :complete_code, "Does the staff member completed training?"
+    %em *
     = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), {:prompt => 'Select Completed Status'}, {:id => "complete_status"}
   .field
     - if (@staff_cert_training.cert_date != "96/96/9666" && @staff_cert_training.cert_date != "97/97/9777")
@@ -30,6 +32,7 @@
   = f.hidden_field :cert_date, :id => "cert_date_value"
   .field
     = f.label :background_check_code, "Level of background check required"
+    %em *
     = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
   .field
     = f.label :frequency, "Frequency at which certification/training needs to be completed" 
