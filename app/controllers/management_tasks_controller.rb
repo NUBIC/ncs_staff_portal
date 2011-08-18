@@ -44,7 +44,7 @@ class ManagementTasksController < SecuredController
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully created.') }
         format.xml  { render :xml => @management_task, :status => :created, :location => @management_task }
       else
-        @management_tasks = @staff.management_tasks
+        @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
         format.html { render :action => "new", :management_tasks => @management_tasks }
         format.xml  { render :xml => @management_task.errors, :status => :unprocessable_entity }
       end
@@ -60,7 +60,7 @@ class ManagementTasksController < SecuredController
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully updated.') }
         format.xml  { head :ok }
       else
-        @management_tasks = @staff.management_tasks
+        @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
         format.html { render :action => "edit", :management_tasks => @management_tasks }
         format.xml  { render :xml => @management_task.errors, :status => :unprocessable_entity }
       end

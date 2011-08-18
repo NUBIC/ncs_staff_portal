@@ -1,6 +1,7 @@
 class StaffCertTraining < ActiveRecord::Base
   validates_presence_of :certificate_type
   belongs_to :staff
+  validates_date :expiration_date, :allow_blank => true
   
   ATTRIBUTE_MAPPING = { 
     :certificate_type_code => "CERTIFICATE_TYPE_CL1",
