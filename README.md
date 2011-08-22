@@ -56,7 +56,7 @@ Example:
     defaults:
       adapter: postgresql
       host: ncsdb-staging
-      port: 5423
+      port: 5432
     ncs_staff_portal:
       database: staff_portal_staging   # database name
       username: staff_portal
@@ -69,26 +69,24 @@ Staff Portal uses [Aker-Rails][] and [Aker][] for authentication.
 [Aker-Rails]: https://github.com/NUBIC/aker-rails/
 [Aker]: http://rubydoc.info/github/NUBIC/aker/
 
-Authentication setup has two steps.
+First, create a file under `/etc/nubic/ncs` for the the central
+authentication parameters. These parameters will be used for all NCS
+Navigator applications on the same server.
 
-1. Create file under `/etc/nubic/ncs` for the the central
-   authentication parameters. These parameters will be used for all
-   NCS Navigator applications on the same server.
+* In staging, the file name should be `aker-staging.yml`
+* In production, the file name should be `aker-prod.yml`
 
-     * In staging, the file name should be `aker-staging.yml`
-     * In production, the file name should be `aker-prod.yml`
-
-   Contents:
+Contents:
 
     cas:
       base_url: https://cas.myinst.edu/
 
-2. Create application users file
-   `/etc/nubic/ncs/staff_portal_users.yml`. The current version of
-   Staff Portal uses statically configured users; a future version
-   will rely on NCS Navigator suite-wide user provisioning.
+Second, create application users file
+`/etc/nubic/ncs/staff_portal_users.yml`. The current version of Staff
+Portal uses statically configured users; a future version will rely on
+NCS Navigator suite-wide user provisioning.
 
-   Example:
+Example:
 
         groups:
           StaffPortal:
@@ -129,7 +127,7 @@ Example:
       # default is "Username"
       username: NetID
       # The text that should appear in the center of the footer on
-      # each page. Note the '|' at the beginning -- this is necessary
+      # each page. Note the '|+' at the beginning -- this is necessary
       # if the text runs over multiple lines.
       footer_text: |+
         National Children’s Study - Greater Chicago Study Center
@@ -191,13 +189,13 @@ All the tasks should be executed from the application root on the
 server where the application is deployed. Each one will need to be run
 at least once for each environment in which Staff Portal is deployed.
 
-[rake][]: http://rake.rubyforge.org/
+[rake]: http://rake.rubyforge.org/
 
 #### Code lists
 
 Initialize the code lists from the MDES using [ncs_mdes][]:
 
-    $ rake mdes:load_codes_from_schema_20
+    $ bundle exec rake mdes:load_codes_from_schema_20
 
 [ncs_mdes]: https://github.com/NUBIC/ncs_mdes
 
@@ -205,7 +203,7 @@ Initialize the code lists from the MDES using [ncs_mdes][]:
 
 Load all users as empty staff records:
 
-    $ rake users:load_to_portal
+    $ bundle exec rake users:load_to_portal
 
 This creates staff records for the users specified in
 `/etc/nubic/ncs/staff_portal_users.yml`.
@@ -214,7 +212,7 @@ This creates staff records for the users specified in
 
 Load SSUs:
 
-    $ rake psu:load_ncs_area_ssus[/path/to/ssu-list.csv]
+    $ bundle exec rake psu:load_ncs_area_ssus[/path/to/ssu-list.csv]
 
 This creates SSU and area records that reflect the provided
 spreadsheet in Staff Portal. The CSV's columns must be `AREA`,
@@ -225,7 +223,7 @@ more SSUs.
 
 Load giveaway items:
 
-    $ rake giveaway_items:load_all[/path/to/giveaways.csv]
+    $ bundle exec rake giveaway_items:load_all[/path/to/giveaways.csv]
 
 This will load all the giveaway items for the outreach activities in
 the Staff Portal. The file must be a single column CSV file with all
