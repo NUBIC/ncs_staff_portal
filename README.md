@@ -1,157 +1,232 @@
-Staff Portal
-============
+NCS Navigator Staff Portal
+==========================
 
-Staff Portal keeps track of the staff information including demographic information, time, hours, expenses. It also keeps track of all the outreach activities for the study center. Staff Portal is designed based of MDES documents of the National Children Study and currently pointing to the MDES version 2.0.
+Staff Portal keeps track of the staff information including
+demographic information, time, hours, expenses. It also keeps track of
+all the outreach activities for the study center. Staff Portal's data
+model is based on the Master Data Element Specification of the
+National Children Study, version 2.0.
 
-It is a Ruby on Rails application which uses Rails 3 and a PostgreSQL database.
+It is a Ruby on Rails application which uses Rails 3 and a PostgreSQL
+database.
+
+Prerequisites
+-------------
+
+On the deployment workstation:
+
+* Ruby 1.8.7
+* RubyGems
+* [Bundler][] (install as a gem)
+* A [git][] client
+
+On the application server:
+
+* Ruby 1.8.7 ([Ruby Enterprise Edition][ree] is what GCSC uses)
+* RubyGems
+* [Bundler][] (install as a gem)
+* [Passenger][]
+* A [git][] client
+* Access to a PostgreSQL server
+
+[Bundler]: http://gembundler.com/
+[git]: http://git-scm.com/
+[Passenger]: http://modrails.com/
+[ree]: http://www.rubyenterpriseedition.com/
 
 Setup
 -----
 
-Staff Portal requires a few steps to get the data to start up:
+### Configuration on the application server
 
-### Prerequisites
+#### Database setup
 
-#### Database setup 
-Using [bcdatabase][] to configure the database for Staff Portal, you need to create file under `/etc/nubic/db`
+Staff Portal uses [bcdatabase][] to discover the database
+configuration to use. Bcdatabase looks for a [YAML][] file with a
+particular structure under `/etc/nubic/db`.
 
-   [bcdatabase]: https://github.com/NUBIC/bcdatabase/blob/master/README.markdown
+[bcdatabase]: https://github.com/NUBIC/bcdatabase/blob/master/README.markdown
+[YAML]: http://yaml.org/
 
-*    Staging server, file name should be `ncsdb_staging.yml`
+* For a staging deployment, the file name should be `/etc/nubic/db/ncsdb_staging.yml`
+* For production, it should be `/etc/nubic/db/ncsdb_prod.yml`
 
-*    Production server, file name should be `ncsdb_prod.yml`
+Example:
 
-File should looks like, e.g
-
+    defaults:
+      adapter: postgresql
+      host: ncsdb-staging
+      port: 5423
     ncs_staff_portal:
-        adapter: postgresql                 # database adapter
-        host: ncsdb-staging                 # database host
-        port: 5432                          # database port
-        database: staff_portal_staging      # database name
-        username: staff_portal
-        password: staff_portal
-    
-#### Authentication setup
-Staff Portal uses [Aker-rails][] and [Aker][] for the authentication.
+      database: staff_portal_staging   # database name
+      username: staff_portal
+      password: staff_portal
 
-[Aker-rails]: https://github.com/NUBIC/aker-rails/blob/rails3/README.md
-[Aker]: http://rubydoc.info/github/NUBIC/aker/master/file/README.md
-            
+#### Authentication setup
+
+Staff Portal uses [Aker-Rails][] and [Aker][] for authentication.
+
+[Aker-Rails]: https://github.com/NUBIC/aker-rails/
+[Aker]: http://rubydoc.info/github/NUBIC/aker/
+
 Authentication setup has two steps.
 
-1.    you need to create file under `/etc/nubic/ncs` for the cas setup.
+1. Create file under `/etc/nubic/ncs` for the the central
+   authentication parameters. These parameters will be used for all
+   NCS Navigator applications on the same server.
 
-     *   Staging server, file name should be `aker-staging.yml`
+     * In staging, the file name should be `aker-staging.yml`
+     * In production, the file name should be `aker-prod.yml`
 
-     *   Production server, file name should be `aker-prod.yml`
+   Contents:
 
-    File should looks like, e.g
-        
-        cas:
-           base_url: https://rubycas-server/     # url to cas server
-                  
-2.    you need to create application users file `staff_portal_users.yml` under `/etc/nubic/ncs/`
-        
-     File should looks like, e.g
+    cas:
+      base_url: https://cas.myinst.edu/
 
-        groups: 
-          StaffPortal: 
+2. Create application users file
+   `/etc/nubic/ncs/staff_portal_users.yml`. The current version of
+   Staff Portal uses statically configured users; a future version
+   will rely on NCS Navigator suite-wide user provisioning.
+
+   Example:
+
+        groups:
+          StaffPortal:
           - staff
           - supervisor
-        users: 
-          test1:    # username 
-            first_name: firstname1
-            last_name: lastname1
-            email: test1@test.com
-            portals: 
-            - StaffPortal: 
+        users:
+          jane:         # username
+            first_name: Jane
+            last_name: H
+            email: jane@example.com
+            portals:
+            - StaffPortal:
               - staff
-          test2:  # username 
-            first_name: firstname2
-            last_name: lastname2
-            email: test2@test.com
-            portals: 
-            - StaffPortal: 
+              - supervisor
+          warren:
+            first_name: Warren
+            last_name: K
+            email: warren@example.edu
+            portals:
+            - StaffPortal:
               - staff
-          superuser:
-            first_name: superuser
-            last_name: superuser
-            email: superuser@test.com
-            portals: 
-            - StaffPortal: 
-              - staff
-              - supervisor   # user has staff and supervisor role
-        
-#### Application configuration
-To personalize Staff Portal, each deployment will have its own configuration file. 
-    
-You need to create configuration file `staff_portal_config.yml` under `/etc/nubic/ncs/`
 
-File should looks like, e.g
+#### Center-specific setup
+
+To customize Staff Portal for your center, create a file named
+`/etc/nubic/ncs/staff_portal_config.yml`.
+
+Example:
 
     study_center:
-      id: 1111 # Study center specific id
+      id: 1111 # Study center ID (from the MDES)
     psu:
-      id: 1111 # psu id (Considering each study center have only one active psu)
+      id: 1111 # Primary sampling unit ID (from the MDES)
+    # Display customization. All these keys are optional.
     display:
-      username: "Login name" # any username display other then default one 'Username'
-      footer_text: 
-        Sample Footer Text # any footer text specific to study center. If you have multiline text for footer, append '|' before the footer text
-                               # e.g 
-                               # footer_text:|
-                               #       This is a multiline footer.
-                               #       To preserve multiline, you need to add '|' before text.
-                               #       This way you can have multiple lines in footer text.   
-        
-      footer_logo_front: "/staff_portal_images/footer_logo_front.png" # any footer logo you want to include before footer text
-      footer_logo_back: "/staff_portal_images/footer_logo_back.png"   # any footer logo you want to include after footer text
+      # The common name for the institutional user identity for this
+      # center. E.g., at Northwestern calls this the "NetID". The
+      # default is "Username"
+      username: NetID
+      # The text that should appear in the center of the footer on
+      # each page. Note the '|' at the beginning -- this is necessary
+      # if the text runs over multiple lines.
+      footer_text: |+
+        National Children’s Study - Greater Chicago Study Center
+        Institute for Healthcare Studies, Feinberg School of Medicine
+        Northwestern University
+        420 East Superior, 10th Floor
+        Chicago, IL 60611
+      # Local file paths to files which should be used as the left and
+      # right images in the footer.
+      footer_logo_front: "/etc/nubic/ncs/staff_portal_images/footer_logo_front.png"
+      footer_logo_back: "/etc/nubic/ncs/staff_portal_images/footer_logo_back.png"
     mail:
-      smtp:                                      # smtp configuration for mail setup
+      smtp:                                    # SMTP configuration (to send e-mail)
           address: "example.smtp.com"
           port: 25
           domain: "example.com"
-      host: "staging server/production server"   # host name 
-      from: "NCS_Staff_Portal@example.com"       # from address to be included in email
-      development:                               # if any development will be done,
-          email: "user@example.com"              # developer's email address for development testing email
-          
+      host: "staging server/production server" # host name
+      from: "NCS_Staff_Portal@example.com"     # from address to be included in email
+      development:                             # if any development will be done,
+        email: "user@example.com"              # developer's email address for development testing email
+
 ### Deployment
-To deploy Staff Portal on server, machine(which will be used to deploy staff portal to server) should have its own configuration file for deploy.
-    
-You need to create configuration file `deploy_config.yml` under `/etc/nubic/db/`
 
-File should looks like, e.g
+Staff Portal is deployed with [capistrano][cap] from a workstation. On
+the workstation, you need to create a configuration file
+`/etc/nubic/db/deploy_config.yml` to describe where it should be
+deployed to.
 
-    ncs_staff_portal:                                       
-        repo: "git://github.com/NUBIC/ncs_staff_portal.git"            # github url for staff portal. This will be same all the time.
-        deploy_to: "www/ncs_apps/"                                     # path on the server where application will be deploy   
-        staging_app_server: "staging.server"                           # staging server name 
-        production_app_server: "production.server"                     # production server name
-        
-After you check out the code, you need to deploy application on server.
+[cap]: https://github.com/capistrano/capistrano/wiki/
 
-    cap production deploy:migrations  # This will deploy application on production server. if deploying to staging, use 'cap staging deploy:migrations' instead.
-            
-### Rake tasks
-There are many rake tasks which will load data into application. 
+Example:
 
-All the tasks should be executed from the application root on deploy server.
+    ncs_staff_portal:
+      # Repository for staff portal. This will always be this value
+      # same unless you wish to deploy your own fork.
+      repo: "git://github.com/NUBIC/ncs_staff_portal.git"
+      # path on the server where application will be deploy
+      deploy_to: "/www/apps/"
+      # staging server hostname
+      staging_app_server: "staging.server"
+      # production server hostname
+      production_app_server: "production.server"
 
-1.    `rake mdes:load_codes_from_schema_20` (This will load all the mdes codes into Staff Portal.)
+After you check out the code, run `bundle install` to install the gems
+you'll need. Then deploy to the configured server:
 
-2.    `rake users:load_to_portal` (This will load the all users specified in `/etc/nubic/ncs/staff_portal_users.yml` to the Staff Portal.)
+    $ bundle exec cap production deploy:migrations
 
-3.    `rake psu:load_ncs_area_ssus[path_to_ssu_file]`
+(This deploys to your production server; to deploy to staging instead,
+substitute "staging" for "production".)
 
-      This will load the all the areas and ssus of the psu into Staff Portal. File should be csv file with columns name as `AREA`, `SSU_ID`, `SSU_NAME` for the `psu:id` specified in `/etc/nubic/ncs/staff_portal_config.yml`
+### Initialization
 
-      The list defined in `AREA` will be displayed in Staff Portal and `SSU_NAME` will be used internally. If you want `SSU_NAME` being display in Staff Portal, please have `SSU_NAME` and `AREA` same.
-      
-4.    `rake giveaway_items:load_all[path_to_item_file]`
+Staff Portal relies on many lists of data. It ships with [rake][]
+tasks which will populate these lists from outside sources, usually
+CSV files.
 
-      This will load all the giveaway items for the outreach activities in the Staff Portal. File should be csv file with all items are listed under column `NAME`.
-        
-        
-            
-                
-        
+All the tasks should be executed from the application root on the
+server where the application is deployed. Each one will need to be run
+at least once for each environment in which Staff Portal is deployed.
+
+[rake][]: http://rake.rubyforge.org/
+
+#### Code lists
+
+Initialize the code lists from the MDES using [ncs_mdes][]:
+
+    $ rake mdes:load_codes_from_schema_20
+
+[ncs_mdes]: https://github.com/NUBIC/ncs_mdes
+
+#### Staff
+
+Load all users as empty staff records:
+
+    $ rake users:load_to_portal
+
+This creates staff records for the users specified in
+`/etc/nubic/ncs/staff_portal_users.yml`.
+
+#### Secondary sampling units
+
+Load SSUs:
+
+    $ rake psu:load_ncs_area_ssus[/path/to/ssu-list.csv]
+
+This creates SSU and area records that reflect the provided
+spreadsheet in Staff Portal. The CSV's columns must be `AREA`,
+`SSU_ID`, and `SSU_NAME`. `AREA` is the human-readable name for one or
+more SSUs.
+
+#### Giveaway items
+
+Load giveaway items:
+
+    $ rake giveaway_items:load_all[/path/to/giveaways.csv]
+
+This will load all the giveaway items for the outreach activities in
+the Staff Portal. The file must be a single column CSV file with all
+items listed in the column `NAME`.
