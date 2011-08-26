@@ -153,7 +153,7 @@ Example:
 
 Staff Portal is deployed with [capistrano][cap] from a workstation. On
 the workstation, you need to create a configuration file
-`/etc/nubic/db/deploy_config.yml` to describe where it should be
+`/etc/nubic/db/ncs_deploy.yml` to describe where it should be
 deployed to.
 
 [cap]: https://github.com/capistrano/capistrano/wiki/
