@@ -6,8 +6,6 @@ describe ManagementTask do
     task.should_not be_nil
   end
   
-  it { should validate_presence_of(:task_date) }
-  
   it { should validate_presence_of(:task_type) }
   
   it { should belong_to(:staff_weekly_expense) }
@@ -65,6 +63,13 @@ describe ManagementTask do
         task= FactoryGirl.build(:management_task, :miles => -3)
         task.should_not be_valid
         task.should have(1).error_on(:miles)
+      end
+    end
+    describe "task_date" do
+      it "should not be blank" do
+        task= FactoryGirl.build(:management_task, :task_date => nil)
+        task.should_not be_valid
+        task.should have(1).error_on(:task_date)
       end
     end
   end
