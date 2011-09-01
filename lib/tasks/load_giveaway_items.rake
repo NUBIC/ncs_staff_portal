@@ -1,6 +1,6 @@
 namespace :giveaway_items do
   desc 'Loads the inventory items for outreach activity'
-  task :load_all, :file, :needs => :environment do |t, args|
+  task :load_all, [:file] => [:environment] do |t, args|
     FILE = args[:file]
     raise "Please pass the path to csv file.e.g 'rake items:load_all[path_to_file]'" unless FILE
     InventoryItem.delete_all  # Removes any previous entries of items

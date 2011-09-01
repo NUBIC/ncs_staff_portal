@@ -28,7 +28,8 @@ namespace :users do
   end
   
   desc "loads the users from csv file to static auth file"
-  task :load_to_file, :file, :needs => :environment do |t, args|
+  
+  task :load_to_file, [:file] => [:environment] do |t, args|
     FILE = args[:file]
     raise "Please pass the path to file with csv extension.e.g 'rake users:load_to_file[path_to_file]'" unless FILE
     users = {} 
