@@ -111,44 +111,22 @@ Example:
 
 #### Center-specific setup
 
-To customize Staff Portal for your center, create a file named
-`/etc/nubic/ncs/staff_portal_config.yml`.
+Staff Portal uses [ncs-navigator-configuration][] for shared configuration of the NCS Navigator suite applications. 
+For the center specific configuration, please refer the sample [configuration][] file from [ncs-navigator-configuration][]
+
+[ncs-navigator-configuration]: https://github.com/NUBIC/ncs_navigator_configuration
+[configuration]: https://github.com/NUBIC/ncs_navigator_configuration/blob/master/sample_configuration.ini
+
+To customize Staff Portal for your center, add following configuration element to the `[Staff Portal]` section of the [configuration][] file.
 
 Example:
-
-    study_center:
-      id: 1111 # Study center ID (from the MDES)
-    psu:
-      id: 1111 # Primary sampling unit ID (from the MDES)
-    # Display customization. All these keys are optional.
-    display:
-      # The common name for the institutional user identity for this
-      # center. E.g., at Northwestern calls this the "NetID". The
-      # default is "Username"
-      username: NetID
-      # The text that should appear in the center of the footer on
-      # each page. Note the '|+' at the beginning -- this is necessary
-      # if the text runs over multiple lines.
-      footer_text: |+
-        National Children’s Study - Greater Chicago Study Center
-        Institute for Healthcare Studies, Feinberg School of Medicine
-        Northwestern University
-        420 East Superior, 10th Floor
-        Chicago, IL 60611
-      # Local file paths to files which should be used as the left and
-      # right images in the footer.
-      footer_logo_front: "/etc/nubic/ncs/staff_portal_images/footer_logo_front.png"
-      footer_logo_back: "/etc/nubic/ncs/staff_portal_images/footer_logo_back.png"
-    mail:
-      smtp:                                    # SMTP configuration (to send e-mail)
-          address: "example.smtp.com"
-          port: 25
-          domain: "example.com"
-      host: "staging server/production server" # host name
-      from: "NCS_Staff_Portal@example.com"     # from address to be included in email
-      development:                             # if any development will be done,
-        email: "user@example.com"              # developer's email address for development testing email
-
+    
+    # for any futher development, developer's email address for development testing email
+    development_email = "user@example.com" 
+         
+    # Comma separated list of username for excluding users from weekly email reminder users list
+    reminder_excluded_users = "jane,warren"
+    
 ### Deployment
 
 Staff Portal is deployed with [capistrano][cap] from a workstation. On
@@ -212,12 +190,10 @@ This creates staff records for the users specified in
 
 Load SSUs:
 
-    $ bundle exec rake psu:load_ncs_area_ssus[/path/to/ssu-list.csv]
+    $ bundle exec rake psu:load_ncs_area_ssus
 
-This creates SSU and area records that reflect the provided
-spreadsheet in Staff Portal. The CSV's columns must be `AREA`,
-`SSU_ID`, and `SSU_NAME`. `AREA` is the human-readable name for one or
-more SSUs.
+This creates SSU and area records that reflect in the provided
+CSV from the [configuration][] file which describes the sampling units for the study center.
 
 #### Giveaway items
 
