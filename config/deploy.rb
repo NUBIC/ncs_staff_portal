@@ -4,6 +4,7 @@
 
 require 'bundler/capistrano'
 require 'bcdatabase'
+require 'ncs_navigator/configuration'
 
 require "whenever/capistrano"
 set :whenever_command, "bundle exec whenever"
@@ -91,13 +92,12 @@ namespace :db do
 end
 
 namespace :config do
-  config = YAML.load_file("/etc/nubic/ncs/staff_portal_config.yml")
   desc "Copy configurable images to /public/images/config folder"
   task :images,  :roles => :app do
-    if config['display']['footer_logo_front'] || config['display']['footer_logo_back']
+    if NcsNavigator.configuration.footer_logo_left || NcsNavigator.configuration.footer_logo_right
       run "mkdir -p #{current_path}/public/images/config"
-      run "cp #{config['display']['footer_logo_front']} #{current_path}/public/images/config" if config['display']['footer_logo_front']
-      run "cp #{config['display']['footer_logo_back']} #{current_path}/public/images/config" if config['display']['footer_logo_back']
+      run "cp #{NcsNavigator.configuration.footer_logo_left} #{current_path}/public/images/config" if NcsNavigator.configuration.footer_logo_left
+      run "cp #{NcsNavigator.configuration.footer_logo_right} #{current_path}/public/images/config" if NcsNavigator.configuration.footer_logo_right
     end
   end
 end

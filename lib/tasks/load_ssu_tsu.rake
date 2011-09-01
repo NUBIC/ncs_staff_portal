@@ -1,24 +1,21 @@
-require 'fastercsv'
+require 'ncs_navigator/configuration'
 namespace :psu do
-  desc "Loads the all areas for PSU and all SSUs for areas.Please pass the path to file to load.e.g 'rake psu:load_ncs_area_ssus[path_to_file]'"
-  task :load_ncs_area_ssus, :file, :needs => :environment do |t, args|
-    FILE = args[:file]
-    raise "Please pass the absolute path to file with csv extension.e.g 'rake psu:load_ncs_area_ssus[path_to_file]'" unless FILE
-    FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
-      unless NcsArea.find(:first, :conditions => {:psu_id  => StaffPortal.psu_id.to_s, :name => csv["AREA"]})
-        NcsArea.create(:psu_id => StaffPortal.psu_id.to_s, 
-                       :name => csv["AREA"])
-      end
-    end
-    NcsArea.all.each do |area|
-      FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
-        unless csv["AREA"] != area.name
-          NcsAreaSsu.create(:ssu_id => csv["SSU_ID"], 
-                       :ssu_name => csv["SSU_NAME"],
-                       :ncs_area => area)
+  desc "Loads the ncs areas and ssus for psu of the studycenter"
+  task :load_ncs_area_ssus => :environment do
+    NcsNavigator.configuration.psus.each do |psu|
+      psu.areas.each do |area|
+        unless NcsArea.find(:first, :conditions => {:psu_id  => psu.id, :name => area.name})
+          ncs_area = NcsArea.create(:psu_id => psu.id, 
+                                    :name => area.name)
+          area.ssus.each do |ssu|
+            NcsAreaSsu.create(:ssu_id => ssu.id, 
+                              :ssu_name => ssu.name,
+                              :ncs_area => ncs_area)
+          end
         end
       end
     end
+    puts "Created #{NcsArea.all.count} NcsAreas."
+    puts "Created #{NcsAreaSsu.all.count} NcsAreaSsus."
   end
-  
 end

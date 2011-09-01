@@ -96,6 +96,7 @@ GEM
       railties (~> 3.0)
     highline (1.6.1)
     i18n (0.6.0)
+    inifile (0.4.1)
     json (1.5.1)
     json_pure (1.5.1)
     mail (2.2.19)
@@ -104,8 +105,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    ncs_mdes (0.2.0)
+    ncs_mdes (0.4.1)
       nokogiri (~> 1.4)
+    ncs_navigator_configuration (0.0.1)
+      fastercsv (~> 1.5)
+      inifile (~> 0.4.1)
+      ncs_mdes (~> 0.4)
     net-ldap (0.1.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -114,7 +119,7 @@ GEM
     net-ssh (2.1.4)
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
-    nokogiri (1.4.4)
+    nokogiri (1.5.0)
     pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.3)
@@ -194,7 +199,8 @@ DEPENDENCIES
   haml (~> 3.0.25)
   haml-rails
   mail (= 2.2.19)
-  ncs_mdes (= 0.2.0)
+  ncs_mdes
+  ncs_navigator_configuration
   pg
   rails (= 3.0.5)
   rspec-rails (~> 2.5.0)

@@ -1,21 +1,19 @@
 require 'ncs_navigator/mdes'
+require 'ncs_navigator/configuration'
 
 module StaffPortal
   class << self
-    def config
-      @config ||= YAML.load_file("/etc/nubic/ncs/staff_portal_config.yml")
-    end
     
     def mdes
       @mdes ||= NcsNavigator::Mdes('2.0')
     end
-
-    def configuration(sub)
-      config[sub]
+    
+    def configuration
+      @configuration ||= NcsNavigator.configuration
     end
   
     def study_center_id
-      configuration('study_center')['id']
+      configuration.sc_id
     end
   
     def study_center_name
@@ -23,45 +21,29 @@ module StaffPortal
     end
     
     def psu_id
-      configuration('psu')['id']
+      configuration.psus.first.id unless NcsNavigator.configuration.psus.blank?
     end
-  
+      
     def psu_name
       @psu_name = mdes_label('psu_cl1', psu_id)
     end
     
-    def display_username
-      @display_username = configuration('display')['username']? configuration('display')['username'] : "Username" 
+    def footer_logo_left_path
+      "config/" << configuration.footer_logo_left.to_s.split("/").last if configuration.footer_logo_left
     end
     
-    def display_footer_text
-      configuration('display')['footer_text']
-    end
-    
-    def footer_logo_front_path
-      "config/" << footer_logo_front.split("/").last unless footer_logo_front.blank?
-    end
-    
-    def footer_logo_back_path
-      "config/" << footer_logo_back.split("/").last unless footer_logo_back.blank?
+    def footer_logo_right_path
+      "config/" << configuration.footer_logo_right.to_s.split("/").last if configuration.footer_logo_right
     end
     
     def development_email
-      configuration('mail')['development']['email']
+       configuration.staff_portal['development_email']
     end
     
     private
     
-    def footer_logo_front
-      configuration('display')['footer_logo_front']
-    end
-    
-    def footer_logo_back
-      configuration('display')['footer_logo_back']
-    end
-    
     def mdes_label(list_name, id)
-      mdes.types.find { |t| t.name == list_name }.code_list.find { |list| list.value == id.to_s }.label 
+      mdes.types.find { |t| t.name == list_name }.code_list.find { |list| list.value == id}.label 
     end
     
   end

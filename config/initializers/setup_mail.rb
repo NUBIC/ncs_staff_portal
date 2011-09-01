@@ -1,12 +1,10 @@
-@config = YAML.load_file("/etc/nubic/ncs/staff_portal_config.yml")
+require 'ncs_navigator/configuration'
 
-ActionMailer::Base.smtp_settings = {
-  :address => @config['mail']['smtp']['address'],
-  :port => @config['mail']['smtp']['port'],
-  :domain => @config['mail']['smtp']['domain']
-}
+ActionMailer::Base.smtp_settings = NcsNavigator.configuration.action_mailer_smtp_settings
+ActionMailer::Base.default :from => NcsNavigator.configuration.staff_portal['mail_from']
+ActionMailer::Base.default_url_options[:host] = NcsNavigator.configuration.staff_portal_uri.host
 
-ActionMailer::Base.default_url_options[:host] = @config['mail']['host']
-ActionMailer::Base.default :from => @config['mail']['from']
-
-Mail.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?
+if Rails.env.development?
+  ActionMailer::Base.default_url_options[:port] = "3000"
+  Mail.register_interceptor(DevelopmentMailInterceptor)
+end

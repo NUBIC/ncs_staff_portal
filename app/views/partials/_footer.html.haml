@@ -1,11 +1,11 @@
 .footer_logo_front
-  = image_tag(StaffPortal.footer_logo_front_path) if StaffPortal.footer_logo_front_path
+  = image_tag(StaffPortal.footer_logo_left_path) if StaffPortal.footer_logo_left_path
   
 .contact_info
-  = StaffPortal.display_footer_text.split("\n").join("<br>\n").html_safe
+  = NcsNavigator.configuration.footer_center_html
   
 .footer_logo_back
-  = image_tag(StaffPortal.footer_logo_back_path) if StaffPortal.footer_logo_back_path
+  = image_tag(StaffPortal.footer_logo_right_path) if StaffPortal.footer_logo_right_path
 
 .app_version
   = app_version_helper

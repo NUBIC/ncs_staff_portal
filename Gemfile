@@ -12,7 +12,7 @@ gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
 gem 'fastercsv'
 gem 'tabs_on_rails'
-gem 'ncs_mdes', '0.2.0'
+gem 'ncs_mdes'
 gem 'aker-rails'
 gem 'aker'
 gem 'mail', '2.2.19'
@@ -20,6 +20,7 @@ gem 'whenever', :require => false
 gem "will_paginate", "~> 3.0.pre4"
 gem "scoped_search"
 gem 'validates_timeliness', '~> 3.0.2'
+gem 'ncs_navigator_configuration'
 
 group :development, :test do
   gem 'rspec-rails', '~>2.5.0'

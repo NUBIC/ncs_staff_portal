@@ -2,7 +2,7 @@
 %p#notice= notice
 -display_content(@staff.name, "Name:")
 -display_content(@staff.email, "Email:")
--display_content(@staff.username, StaffPortal.display_username + ":")
+-display_content(@staff.username, NcsNavigator.configuration.study_center_username + ":")
 -display_content(StaffPortal.study_center_name, "Study center:")
 - if @staff.staff_type_other.blank?
   -display_content(@staff.staff_type, "Staff Type:", true)
