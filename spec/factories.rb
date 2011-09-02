@@ -42,10 +42,10 @@ FactoryGirl.define do
   
   factory :outreach_event do |event|
     event.name "test"
-    event.mode {|a| a.association(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "NCS Management", :local_code => 1) }
-    event.outreach_type {|a| a.association(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "NCS Management", :local_code => 1) } 
-    event.tailored {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "NCS Management", :local_code => 1) } 
-    event.evaluation_result {|a| a.association(:ncs_code, :list_name => "SUCCESS_LEVEL_CL1", :display_text => "NCS Management", :local_code => 1) } 
+    event.mode {|a| a.association(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "In-person", :local_code => 1) }
+    event.outreach_type {|a| a.association(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "Letters", :local_code => 1) } 
+    event.tailored {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "Yes", :local_code => 1) } 
+    event.evaluation_result {|a| a.association(:ncs_code, :list_name => "SUCCESS_LEVEL_CL1", :display_text => "Very Successful", :local_code => 1) } 
     event.event_date Date.today - 7.day
     event.outreach_staff_members {|a| [a.association(:outreach_staff_member)]}
     event.outreach_evaluations {|a| [a.association(:outreach_evaluation)]}
@@ -67,18 +67,18 @@ FactoryGirl.define do
   end
   
   factory :outreach_race do |r|
-    r.race {|a| a.association(:ncs_code, :list_name => "RACE_CL3", :display_text => "English", :local_code => 1) }
+    r.race {|a| a.association(:ncs_code, :list_name => "RACE_CL3", :display_text => "White", :local_code => 1) }
     r.association :outreach_event, :factory => :outreach_event
   end
   
   factory :outreach_language do |l|
-    l.language {|a| a.association(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "White", :local_code => 1) }
+    l.language {|a| a.association(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "English", :local_code => 1) }
     l.association :outreach_event, :factory => :outreach_event
   end
   
   factory :outreach_item do |item|
     item.association :outreach_event, :factory => :outreach_event
-    item.item_name "test"
+    item.item_name "Bag"
     item.item_quantity 2
   end
   

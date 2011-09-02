@@ -30,6 +30,9 @@ class Staff < ActiveRecord::Base
   validates :pay_amount, :numericality => {:greater_than => 0, :allow_nil => true }
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
+  validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
+  validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
+  
   has_many :staff_languages, :dependent => :destroy
   has_many :staff_cert_trainings, :dependent => :destroy
   has_many :staff_weekly_expenses, :dependent => :destroy

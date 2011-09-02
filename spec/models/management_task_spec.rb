@@ -72,5 +72,29 @@ describe ManagementTask do
         task.should have(1).error_on(:task_date)
       end
     end
+    describe "task_type" do
+      let(:task_type_code) { Factory(:ncs_code, :list_name => "STUDY_MNGMNT_TSK_TYPE_CL1", :display_text => "Other", :local_code => -5) }
+
+      it "should not valid if management task is 'Other' and task_type_other value is nil" do
+        management_task = FactoryGirl.build(:management_task, :task_type => task_type_code)
+        management_task.task_type_other = nil
+        management_task.should_not be_valid
+        management_task.should have(1).error_on(:task_type_other)
+      end
+
+      it "should not valid if management task is 'Other' and task_type_other value is blank string" do
+        management_task = FactoryGirl.build(:management_task, :task_type => task_type_code)
+        management_task.task_type_other = ''
+        management_task.should_not be_valid
+        management_task.should have(1).error_on(:task_type_other)
+      end
+
+      it "should be valid if management task is 'NCS Management' and task_type_other value is blank string" do
+        management_task = FactoryGirl.build(:management_task)
+        management_task.task_type_other = ''
+        management_task.should be_valid
+        management_task.task_type_other.should == nil
+      end
+    end
   end
 end

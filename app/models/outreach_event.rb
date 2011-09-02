@@ -46,6 +46,10 @@ class OutreachEvent < ActiveRecord::Base
    validates_presence_of :outreach_targets, :message => "can't be blank. Please add one or more targets"
    validates_presence_of :name, :mode, :outreach_type, :tailored, :evaluation_result 
    validates_date :event_date, :on_or_before => :today
+   validates_with OtherEntryValidator, :entry => :mode, :other_entry => :mode_other
+   validates_with OtherEntryValidator, :entry => :outreach_type, :other_entry => :outreach_type_other
+   validates_with OtherEntryValidator, :entry => :culture, :other_entry => :culture_other
+   
    validate :has_segments
    def has_segments
      errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_areas.blank?
