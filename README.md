@@ -127,6 +127,9 @@ Example:
     # Comma separated list of username for excluding users from weekly email reminder users list
     reminder_excluded_users = "jane,warren"
     
+    # Google Analytics account number to analyze staff portal's traffic data
+    google_analytics_number = "UA-1234"
+    
 ### Deployment
 
 Staff Portal is deployed with [capistrano][cap] from a workstation. On
