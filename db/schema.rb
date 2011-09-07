@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907155501) do
+ActiveRecord::Schema.define(:version => 20110907193127) do
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
-    t.date     "task_date"
-    t.integer  "task_type_code"
+    t.date     "task_date",               :null => false
+    t.integer  "task_type_code",          :null => false
     t.string   "task_type_other"
     t.decimal  "hours"
     t.decimal  "expenses"
@@ -33,20 +33,20 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "ncs_area_ssus", :force => true do |t|
     t.integer "ncs_area_id"
-    t.string  "ssu_id"
+    t.string  "ssu_id",      :null => false
     t.string  "ssu_name"
   end
 
   create_table "ncs_areas", :force => true do |t|
-    t.string "psu_id"
-    t.string "name"
+    t.string "psu_id", :null => false
+    t.string "name",   :null => false
   end
 
   create_table "ncs_codes", :force => true do |t|
-    t.string   "list_name"
+    t.string   "list_name",        :null => false
     t.string   "list_description"
-    t.string   "display_text"
-    t.integer  "local_code"
+    t.string   "display_text",     :null => false
+    t.integer  "local_code",       :null => false
     t.string   "global_code"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "outreach_evaluations", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "evaluation_code"
+    t.integer  "evaluation_code",   :null => false
     t.string   "evaluation_other"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -85,16 +85,16 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "outreach_items", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.string   "item_name"
+    t.string   "item_name",         :null => false
     t.string   "item_other"
-    t.integer  "item_quantity"
+    t.integer  "item_quantity",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "outreach_languages", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "language_code"
+    t.integer  "language_code",     :null => false
     t.string   "language_other"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "outreach_races", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "race_code"
+    t.integer  "race_code",         :null => false
     t.string   "race_other"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "outreach_targets", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "target_code"
+    t.integer  "target_code",       :null => false
     t.string   "target_other"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -155,10 +155,10 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "staff_cert_trainings", :force => true do |t|
     t.integer  "staff_id"
-    t.integer  "certificate_type_code"
-    t.integer  "complete_code"
+    t.integer  "certificate_type_code", :null => false
+    t.integer  "complete_code",         :null => false
     t.string   "cert_date"
-    t.integer  "background_check_code"
+    t.integer  "background_check_code", :null => false
     t.string   "frequency"
     t.date     "expiration_date"
     t.text     "comment"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "staff_languages", :force => true do |t|
     t.integer  "staff_id"
-    t.integer  "lang_code"
+    t.integer  "lang_code",  :null => false
     t.string   "lang_other"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "staff_weekly_expenses", :force => true do |t|
     t.integer  "staff_id"
-    t.date     "week_start_date"
+    t.date     "week_start_date",                                :null => false
     t.decimal  "rate",            :precision => 5,  :scale => 2
     t.decimal  "hours",           :precision => 5,  :scale => 2
     t.decimal  "expenses",        :precision => 10, :scale => 2
