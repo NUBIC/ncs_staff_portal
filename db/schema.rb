@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110818201955) do
+ActiveRecord::Schema.define(:version => 20110907155501) do
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -68,8 +68,6 @@ ActiveRecord::Schema.define(:version => 20110818201955) do
     t.string   "outreach_type_other"
     t.integer  "tailored_code",          :null => false
     t.integer  "language_specific_code"
-    t.integer  "language_code"
-    t.string   "language_other"
     t.integer  "race_specific_code"
     t.integer  "culture_specific_code"
     t.integer  "culture_code"
