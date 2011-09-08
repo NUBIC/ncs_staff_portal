@@ -749,11 +749,15 @@ body.ncs #content em {
   font-style: normal;
   font-size: 125%;
 }
-/* line 217, ../../../app/stylesheets/screen.scss */
+/* line 216, ../../../app/stylesheets/screen.scss */
+body.ncs #content .warning {
+  color: red;
+}
+/* line 220, ../../../app/stylesheets/screen.scss */
 body.ncs #content .text_search {
   padding: 1em 0;
 }
-/* line 223, ../../../app/stylesheets/screen.scss */
+/* line 226, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form {
   border: 1px solid #333;
   background-color: #e8e8e8;
@@ -767,20 +771,20 @@ body.ncs .current_form {
 * html body.ncs .current_form {
   overflow-x: hidden;
 }
-/* line 229, ../../../app/stylesheets/screen.scss */
+/* line 232, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form label, body.ncs .current_form .other_data {
   padding-left: 1em;
 }
-/* line 233, ../../../app/stylesheets/screen.scss */
+/* line 236, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 238, ../../../app/stylesheets/screen.scss */
+/* line 241, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form div {
   padding: 0.5em;
 }
-/* line 241, ../../../app/stylesheets/screen.scss */
+/* line 244, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_info {
   display: inline;
   float: left;
@@ -791,7 +795,7 @@ body.ncs .current_form .task_info {
 * html body.ncs .current_form .task_info {
   overflow-x: hidden;
 }
-/* line 245, ../../../app/stylesheets/screen.scss */
+/* line 248, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_expense {
   padding-left: 40px;
   display: inline;
@@ -803,7 +807,7 @@ body.ncs .current_form .task_expense {
 * html body.ncs .current_form .task_expense {
   overflow-x: hidden;
 }
-/* line 250, ../../../app/stylesheets/screen.scss */
+/* line 253, ../../../app/stylesheets/screen.scss */
 body.ncs .current_form .task_actions {
   padding-left: 120px;
   display: inline;
@@ -815,16 +819,16 @@ body.ncs .current_form .task_actions {
 * html body.ncs .current_form .task_actions {
   overflow-x: hidden;
 }
-/* line 257, ../../../app/stylesheets/screen.scss */
+/* line 260, ../../../app/stylesheets/screen.scss */
 body.ncs #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 261, ../../../app/stylesheets/screen.scss */
+/* line 264, ../../../app/stylesheets/screen.scss */
 body.ncs #footer div {
   min-height: 1px;
 }
-/* line 265, ../../../app/stylesheets/screen.scss */
+/* line 268, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_front {
   display: inline;
   float: left;
@@ -835,7 +839,7 @@ body.ncs #footer .footer_logo_front {
 * html body.ncs #footer .footer_logo_front {
   overflow-x: hidden;
 }
-/* line 269, ../../../app/stylesheets/screen.scss */
+/* line 272, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -848,7 +852,7 @@ body.ncs #footer .contact_info {
 * html body.ncs #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 275, ../../../app/stylesheets/screen.scss */
+/* line 278, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .footer_logo_back {
   margin-top: 1em;
   display: inline;
@@ -860,7 +864,7 @@ body.ncs #footer .footer_logo_back {
 * html body.ncs #footer .footer_logo_back {
   overflow-x: hidden;
 }
-/* line 280, ../../../app/stylesheets/screen.scss */
+/* line 283, ../../../app/stylesheets/screen.scss */
 body.ncs #footer .app_version {
   color: #999;
   display: inline;

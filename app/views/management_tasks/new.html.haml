@@ -9,5 +9,12 @@
   Note: Fields mark as (
   %em *
   ) are mandatory fields
+  
+- if @staff.staff_type_code.blank?
+  %p.warning
+    %em Warning: 
+    #{@staff.name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+    record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
+  
 
 = render 'management_tasks'
