@@ -3,7 +3,7 @@
 export RAILS_ENV=ci
 
 BUNDLER_VERSION=1.0.18
-GEMSET=ncs_signup
+GEMSET=ncs_staff_portal
 
 if [ -z $CI_RUBY ]; then
     echo "CI_RUBY must be set"
