@@ -64,6 +64,8 @@ GEM
     celerity (0.8.9)
     childprocess (0.1.8)
       ffi (~> 1.0.6)
+    ci_reporter (1.6.5)
+      builder (>= 2.1.2)
     compass (0.10.6)
       haml (>= 3.0.4)
     cucumber (0.10.2)
@@ -191,6 +193,7 @@ DEPENDENCIES
   bcdatabase
   capistrano
   capybara (~> 0.4.1.2)
+  ci_reporter (~> 1.6)
   compass (~> 0.10.6)
   cucumber-rails (~> 0.3.2)
   database_cleaner (~> 0.6.6)

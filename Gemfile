@@ -22,13 +22,14 @@ gem "scoped_search"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 
-group :development, :test do
+group :development, :test, :ci do
   gem 'rspec-rails', '~>2.5.0'
   gem 'capybara', '~> 0.4.1.2'
   gem 'cucumber-rails', '~>0.3.2'
   gem 'database_cleaner', '~>0.6.6'
   gem 'factory_girl_rails', '~> 1.1.rc1'
   gem 'shoulda'
+  gem 'ci_reporter', '~> 1.6'
 end
 
 gem "haml-rails"

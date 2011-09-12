@@ -3,22 +3,17 @@
   bcdb = Bcdatabase.load
 %>
 
-
+<%= bcdb.development :local_postgresql, :ncs_staff_portal %>
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test: &test
-  adapter: postgresql
-  database: ncs_staff_portal_test
-  username: ncs_user
-  password: childr3n!
-  encoding: utf8
+<%= bcdb.test :local_postgresql, :ncs_staff_portal_test %>
 
-cucumber:
-  <<: *test
-  
-<%= bcdb.development :local_postgresql, :ncs_staff_portal %>
+# Traditionally the same as test.
+<%= bcdb.cucumber :local_postgresql, :ncs_staff_portal_test %>
 
 <%= bcdb.staging :ncsdb_staging, :ncs_staff_portal %>
 
 <%= bcdb.production :ncsdb_prod, :ncs_staff_portal %>
+
+<%= bcdb.ci :public_ci_postgresql9, :ncs_staff_portal %>
