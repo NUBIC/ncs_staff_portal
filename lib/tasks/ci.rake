@@ -11,7 +11,7 @@ namespace :ci do
   task :specs => [:setup, :spec]
 
   # Prepare to run tests for CI
-  task :setup => ['log:clear', 'db:migrate']
+  task :setup => ['log:clear', :configuration_setup, 'db:migrate']
 
   desc "Run specs for CI (without database setup steps)"
   RSpec::Core::RakeTask.new(:spec => 'ci:setup:rspec') do |t|
@@ -21,5 +21,11 @@ namespace :ci do
   Cucumber::Rake::Task.new(:cucumber, 'Run features for CI (without database setup steps)') do |t|
     t.fork = true
     t.profile = 'ci'
+  end
+  
+  task :configuration_setup do
+    require 'ncs_navigator/configuration'
+    NcsNavigator.configuration =
+      NcsNavigator::Configuration.new(File.expand_path('../../../spec/configuration/navigator.ini', __FILE__))
   end
 end
