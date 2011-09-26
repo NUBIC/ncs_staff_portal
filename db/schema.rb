@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110921154443) do
+ActiveRecord::Schema.define(:version => 20110923204915) do
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -135,7 +135,6 @@ ActiveRecord::Schema.define(:version => 20110921154443) do
   end
 
   create_table "staff", :force => true do |t|
-    t.string   "name"
     t.string   "email"
     t.string   "username"
     t.integer  "study_center"
@@ -155,6 +154,8 @@ ActiveRecord::Schema.define(:version => 20110921154443) do
     t.string   "pay_type"
     t.decimal  "pay_amount",         :precision => 10, :scale => 2
     t.integer  "zipcode"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   create_table "staff_cert_trainings", :force => true do |t|
