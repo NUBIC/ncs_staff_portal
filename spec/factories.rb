@@ -108,5 +108,18 @@ FactoryGirl.define do
   sequence :email do |n|
     "email#{n}@test.com"
   end
+  
+  factory :role do |r|
+    r.name {Factory.next(:role_name)}
+  end
+  
+  sequence :role_name do |n|
+    "role_name#{n}"
+  end
+  
+  factory :staff_role do |sr|
+    sr.association :staff, :factory => :staff
+    sr.association :role, :factory => :role
+  end
 
 end

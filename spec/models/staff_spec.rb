@@ -38,6 +38,8 @@ describe Staff do
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:study_center) }
+  it { should have_many(:staff_roles) }
+  it { should have_many(:roles).through(:staff_roles) }
   
   describe "weekly_task_reminder" do
     before(:each) do

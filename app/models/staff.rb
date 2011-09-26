@@ -37,6 +37,10 @@ class Staff < ActiveRecord::Base
   has_many :staff_cert_trainings, :dependent => :destroy
   has_many :staff_weekly_expenses, :dependent => :destroy
   has_many :management_tasks, :through => :staff_weekly_expenses
+  has_many :staff_roles, :dependent => :destroy
+  has_many :roles, :through => :staff_roles
+  
+  accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
   
   before_save :calculate_hourly_rate
