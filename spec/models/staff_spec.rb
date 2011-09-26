@@ -34,7 +34,8 @@ describe Staff do
     end
   end
   
-  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:first_name) }
+  it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:study_center) }
@@ -43,10 +44,10 @@ describe Staff do
   
   describe "weekly_task_reminder" do
     before(:each) do
-      @staff1 = FactoryGirl.create(:staff, :name => "test1", :username => "test1", :email => "test1@test.com")
-      @staff2 = FactoryGirl.create(:staff, :name => "test2", :username => "test2", :email => "test2@test.com")
-      @staff3 = FactoryGirl.create(:staff, :name => "test3", :username => "test3", :email => "test3@test.com")
-      @staff4 = FactoryGirl.create(:staff, :name => "test4", :username => "test4", :email => "test4@test.com")
+      @staff1 = FactoryGirl.create(:staff)
+      @staff2 = FactoryGirl.create(:staff)
+      @staff3 = FactoryGirl.create(:staff)
+      @staff4 = FactoryGirl.create(:staff)
     
       @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.monday)
       @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)

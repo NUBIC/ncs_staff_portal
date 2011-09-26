@@ -7,8 +7,8 @@
           %li= msg
   - @staffLanguagesTemplate = generate_nested_attributes_template(f, :staff_languages, 'staff/staff_languages')
   .field
-    = f.label :name
-    = f.text_field :name,:readonly => true
+    = label_tag "Name"
+    = text_field_tag "name", @staff.name, :readonly => true
   .field
     = f.label :email
     = f.text_field :email,:readonly => true

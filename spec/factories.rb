@@ -8,7 +8,8 @@ FactoryGirl.define do
   end
   
   factory :staff do |s|
-    s.name "Testing Staff"  
+    s.first_name "FName"  
+    s.last_name "LName"  
     s.username {Factory.next(:user_name)}
     s.email {Factory.next(:email)}
     s.study_center 123456

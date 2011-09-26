@@ -24,7 +24,7 @@
 
 
 class Staff < ActiveRecord::Base
-  validates_presence_of :name, :username, :study_center
+  validates_presence_of :first_name, :last_name, :username, :study_center
   validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :on => :update
   validates_uniqueness_of :username
   validates :pay_amount, :numericality => {:greater_than => 0, :allow_nil => true }
@@ -44,6 +44,10 @@ class Staff < ActiveRecord::Base
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
   
   before_save :calculate_hourly_rate
+  
+  def name  
+      [first_name, last_name].join(' ')  
+  end
   
   def calculate_hourly_rate
     if !pay_type.blank? && !pay_amount.blank?
