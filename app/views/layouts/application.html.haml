@@ -1,35 +1,19 @@
 !!! 1.1
 %html
   %head>
-    %title NCS Staff Portal
-    %link{ :rel=>"icon", :type=>"image/gif", :href=>"/images/favicon.gif"}
-    = stylesheet_link_tag :all
-    = stylesheet_link_tag('jquery-ui-1.8.15.custom', 'YUI/2.9/datatable', 'YUI/2.9/datatable-skin', 'jquery.multiselect')
-    = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'compiled/print.css', :media => 'print'
-    = javascript_include_tag('jquery-1.6.2.min', 'jquery-ui-1.8.15.custom.min', 'application','YUI/2.9/yahoo-dom-event','YUI/2.9/element-min','YUI/2.9/datasource-min','YUI/2.9/datatable-min', 'jquery.multiselect.min')
-    = yield :javascript
-    = yield :head
-    = csrf_meta_tag
+    = render('partials/include')
   %body.bp.ncs
     #container
       #header
         #app_name
           NCS Staff Portal
         = render('partials/current_user', :current_user => current_user)
-        #tab_navigation
-          -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
-            = tab.outreach_events 'Outreach Activities', outreach_events_path
-            -if current_user.permit?(:supervisor)
-              = tab.time_and_expenses 'Time and Expenses', staff_weekly_expenses_path 
-            -else
-              = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@current_staff.id) 
-            -if current_user.permit?(:supervisor)
-              = tab.staff 'Staff Roster', staff_index_path
-            = tab.my_info 'My Information', staff_path(@current_staff)
+        = render('partials/horizontal_tabs')
       #content
         = yield 
       #footer
         = render('partials/footer')
     = render('partials/include_google_analytics') if Rails.env.production? && NcsNavigator.configuration.staff_portal['google_analytics_number']
+    
+
 
