@@ -4,8 +4,5 @@
   (
   = current_user.username
   )
-  &nbsp;as&nbsp;
-  %em
-    = current_user.permit?(:supervisor) ? "Supervisor" : "Staff"
   &nbsp;|&nbsp;
   = link_to "logout", logout_path
