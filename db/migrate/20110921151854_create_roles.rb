@@ -10,6 +10,7 @@ class CreateRoles < ActiveRecord::Migration
     execute "INSERT into roles (name) values ('Field Staff')"
     execute "INSERT into roles (name) values ('Phone Staff')"
     execute "INSERT into roles (name) values ('Outreach Staff')"
+    execute "INSERT into roles (name) values ('Administrative Staff')"
     execute "INSERT into roles (name) values ('Biological Specimen Collector')"
     execute "INSERT into roles (name) values ('Specimen Processor')"
     execute "INSERT into roles (name) values ('Data Manager')"
