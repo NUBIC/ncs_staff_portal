@@ -1,6 +1,7 @@
 class ManagementTasksController < SecuredController
   set_tab :time_and_expenses
-  before_filter :check_staff_access
+  layout :tasks_layout
+  before_filter :check_staff_access, :only => %w(new edit) 
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
   def new
@@ -8,9 +9,10 @@ class ManagementTasksController < SecuredController
     @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
-
+    add_breadcrumb "new task", new_staff_management_task_path(@staff)
+   
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.xml  { render :xml => @management_task }
     end
   end
@@ -21,6 +23,11 @@ class ManagementTasksController < SecuredController
     params[:page] ||= 1
     @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.find(params[:id])
+    add_breadcrumb "edit task", edit_staff_management_task_path(@staff, @management_task)
+    respond_to do |format|
+      format.html 
+      format.xml  { render :xml => @management_task }
+    end
   end
 
   # POST /management_tasks
@@ -79,8 +86,28 @@ class ManagementTasksController < SecuredController
       format.xml  { head :ok }
     end
   end
+  private
+  
   def check_staff_access
     @staff = Staff.find(params[:staff_id])
     check_user_access(@staff)
+    if (@staff.id == @current_staff.id) 
+      set_tab :time_and_expenses
+    else
+      # layout "layouts/staff_information"
+      set_tab :admin
+      set_tab :time_and_expenses, :vertical
+      add_breadcrumb "admin", :administration_index_path
+      add_breadcrumb "manage staff", :staff_index_path
+    end
+  end
+  
+  def tasks_layout
+    @staff = Staff.find(params[:staff_id])
+    if (@staff.id == @current_staff.id) 
+      "layouts/application"
+    else
+      "layouts/staff_information"
+    end
   end
 end

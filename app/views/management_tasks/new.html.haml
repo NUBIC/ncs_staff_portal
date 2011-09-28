@@ -1,6 +1,4 @@
-- if permit?(:supervisor)
-  = link_to "All staff time and expenses" ,staff_weekly_expenses_path
-
+= render_breadcrumbs :separator => ' / '
 %h3 Add new management task for #{@staff.name}
 
 = render 'management_task'
