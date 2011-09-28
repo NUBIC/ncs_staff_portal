@@ -12,6 +12,7 @@ gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
 gem 'fastercsv'
 gem 'tabs_on_rails'
+gem "breadcrumbs_on_rails"
 gem 'ncs_mdes'
 gem 'aker-rails'
 gem 'aker'

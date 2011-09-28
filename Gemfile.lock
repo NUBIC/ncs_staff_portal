@@ -44,6 +44,7 @@ GEM
       activesupport (>= 2.0)
       highline (~> 1.5)
       i18n
+    breadcrumbs_on_rails (2.1.0)
     builder (2.1.2)
     capistrano (2.5.21)
       highline
@@ -191,6 +192,7 @@ DEPENDENCIES
   aker
   aker-rails
   bcdatabase
+  breadcrumbs_on_rails
   capistrano
   capybara (~> 0.4.1.2)
   ci_reporter (~> 1.6)
