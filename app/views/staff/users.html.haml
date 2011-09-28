@@ -1,0 +1,39 @@
+= render_breadcrumbs :separator => ' / ' 
+.field
+= link_to 'Add new user', new_staff_path
+%div.yui-skin-sam
+  %div#user-list
+    %table#user-list-tbl
+      - @users.each do |user|
+        %tr
+          %td= link_to user.username,edit_user_staff_path(user)
+          %td= user.name
+          %td= display_roles(user.roles)
+          
+
+:javascript
+    $(document).ready(function() {
+      displayEventList()
+    });
+  
+    function displayEventList() {
+      var columnDefs = [
+          { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+          { key: "name", label: "Name", sortable: true},
+          { key: "role", label: "NCS Navigator role"}
+      ];
+      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("user-list-tbl"));
+      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+      dataSource.responseSchema = {
+        fields: [
+          { key: "username" },
+          { key: "name" },
+          { key: "role" }
+        ]
+      };
+      new YAHOO.widget.DataTable("user-list", columnDefs, dataSource, {
+          sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_DESC }
+      });
+      
+    }
+= will_paginate @users, :previous_label => "Previous", :next_label => "Next"

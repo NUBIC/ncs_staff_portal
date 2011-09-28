@@ -1,60 +1,96 @@
 class StaffController < SecuredController
-  layout "layouts/staff_information"
+  layout "layouts/application"
+  before_filter :check_staff_access,  :only => %w(show edit) 
+  
   set_tab :general_info, :vertical
-  before_filter :check_staff_access,  :except => [:index, :new]
+  set_tab :admin, :only => %w(index users new edit_user)
+
+  add_breadcrumb "admin", :administration_index_path, :only => %w(index users new edit_user) 
+  add_breadcrumb "manage users", :users_staff_index_path, :only => %w(new users edit_user)
+  add_breadcrumb "manage staff", :staff_index_path, :only => %w(index)
+
 
   # GET /staff
   # GET /staff.xml
   def index
-    set_tab :staff
-    params[:page] ||= 1
-    @staff_list = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
+    if permit?(Role::STAFF_SUPERVISOR)
+      params[:page] ||= 1
+      @staff_list = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
     
-    respond_to do |format|
-      format.html  { render :layout => "application"}
-      format.xml  { render :xml => @staff_list }
+      respond_to do |format|
+        format.html 
+        format.xml  { render :xml => @staff_list }
+      end
     end
-
+  end
+  
+  def users
+    if permit?(Role::USER_ADMINISTRATOR)
+      params[:page] ||= 1
+      @users = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
+    
+      respond_to do |format|
+        format.html  
+        format.xml  { render :xml => @users }
+      end
+    end
   end
 
   # GET /staff/1
   # GET /staff/1.xml
   def show
-    
+    @staff = Staff.find(params[:id])
+    add_breadcrumb "#{@staff.name}", edit_staff_path(@staff)
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
     end
   end
 
   # GET /staff/new
-  # GET /staff/new.xml
+  #  GET /staff/new.xml
   def new
-    throw :warden unless permit?(:supervisor)
-    @staff = Staff.new
-    set_tab :staff
-    respond_to do |format|
-      format.html { render :layout => "application"}
-      format.xml  { render :xml => @staff }
+    if permit?(Role::USER_ADMINISTRATOR)
+      add_breadcrumb "new user", :new_staff_path
+      @user = Staff.new
+      respond_to do |format|
+        format.html 
+        format.xml  { render :xml => @user }
+      end
     end
   end
 
   # GET /staff/1/edit
   def edit
+    @staff = Staff.find(params[:id])
+    add_breadcrumb "#{@staff.name}/edit", edit_staff_path(@staff)
+    respond_to do |format|
+      format.html { render :layout => "staff_information" }
+      format.xml  { render :xml => @staff }
+    end
+  end
+  
+  def edit_user
+    if permit?(Role::USER_ADMINISTRATOR)
+      @user = Staff.find(params[:id])
+      add_breadcrumb "#{@user.name}", edit_user_staff_path(@user)
+    end
   end
 
   # POST /staff
   # POST /staff.xml
   def create
-    @staff = Staff.new(params[:staff])
+    if permit?(Role::USER_ADMINISTRATOR)
+      @user = Staff.new(params[:staff])
 
-    respond_to do |format|
-      if @staff.save
-        format.html { redirect_to(staff_index_path, :notice => 'Staff was successfully created.') }
-        format.xml  { render :xml => @staff, :status => :created, :location => @staff }
-      else               
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @staff.save
+          format.html { redirect_to(users_staff_index_path) }
+          format.xml  { render :xml => @user, :status => :created, :location => @user }
+        else               
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -63,10 +99,29 @@ class StaffController < SecuredController
   # PUT /staff/1.xml
   def update
     @staff = Staff.find(params[:id])
-
     respond_to do |format|
       if @staff.update_attributes(params[:staff])
-        format.html { redirect_to(@staff, :notice => 'Staff was successfully updated.') }
+        format.html {
+          if permit?(Role::STAFF_SUPERVISOR)
+            if permit?(Role::USER_ADMINISTRATOR)
+              if @staff.id == @current_staff.id
+                render_staff
+              elsif params[:return_path] == "staff_index_path"
+                render_staff_list
+              elsif params[:return_path] == "users_staff_index_path"
+                render_user_list
+              end
+            elsif @staff.id == @current_staff.id
+              render_staff
+            else
+              render_staff_list
+            end
+          elsif permit?(Role::USER_ADMINISTRATOR)
+            render_user_list
+          else
+            render_staff
+          end
+        }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -86,15 +141,28 @@ class StaffController < SecuredController
       format.xml  { head :ok }
     end
   end
-  
+  private
   def check_staff_access
     @staff = Staff.find(params[:id])
     check_user_access(@staff)
-    # TODO: write in helper file and reuse everywhere 
     if (@staff.id == @current_staff.id) 
       set_tab :my_info
     else
-      set_tab :staff
+      set_tab :admin
+      add_breadcrumb "admin", :administration_index_path
+      add_breadcrumb "manage staff", :staff_index_path
     end
+  end
+  
+  def render_staff
+    redirect_to(@staff, :notice => 'Staff was successfully updated.') 
+  end
+  
+  def render_staff_list
+    redirect_to(staff_index_path)
+  end
+  
+  def render_user_list
+    redirect_to(users_staff_index_path)
   end
 end

@@ -11,10 +11,24 @@ OMA::Application.routes.draw do
 
   resources :staff do
     resources :staff_cert_trainings, :management_tasks
+    collection do
+      get 'users'
+    end
+    
+    member do
+      get 'edit_user'
+    end
   end
+  
+  resources :user
+  
+  resources :administration
 
   root :to => "public#index"
   
+  # match 'edit_user' => 'staff#edit_user', :as => 'user/edit'
+  # match 'new' => 'staff#new', :as => 'user/new'
+  # match 'users' => 'staff#users', :as => 'users'
   match 'dashboard' => 'secured#dashboard', :as => 'dashboard'
   match 'logout' => 'logout', :as => 'logout'
 

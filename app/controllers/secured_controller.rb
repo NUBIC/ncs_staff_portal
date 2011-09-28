@@ -5,7 +5,7 @@ class SecuredController < ApplicationController
   before_filter :set_current_staff
 
   def dashboard
-    if current_user.permit?(:supervisor)
+    if current_user.permit?(Role::STAFF_SUPERVISOR)
       redirect_to staff_weekly_expenses_path
     else
       redirect_to new_staff_management_task_path(@current_staff.id) 
@@ -17,7 +17,7 @@ class SecuredController < ApplicationController
   end
   
   def check_user_access(requested_staff)
-    unless permit?(:supervisor) or (requested_staff.id == @current_staff.id)
+    unless permit?(Role::STAFF_SUPERVISOR) or (requested_staff.id == @current_staff.id)
       throw :warden
     end   
   end

@@ -1,0 +1,30 @@
+- form_for @user, :html => { :id => 'user' } do |f|
+  -if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  = hidden_field_tag "return_path", "users_staff_index_path"
+  = f.hidden_field :notified, :value => false
+  .field
+    = f.label :first_name
+    = f.text_field :first_name
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  .field
+    = f.label :email
+    = f.text_field :email
+  .field
+    = f.label :username, NcsNavigator.configuration.study_center_username
+    = f.text_field :username
+    
+    = f.hidden_field :study_center, :value => StaffPortal.study_center_id
+  .field
+    - Role.all.each do |r|
+      .field
+        = check_box_tag "staff[role_ids][]",r.id, @user.roles.map(&:id).include?(r.id)
+        = r.name
+  .actions
+    = f.submit 'Save', :class => "control_button"
