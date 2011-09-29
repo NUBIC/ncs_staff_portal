@@ -84,12 +84,12 @@ class StaffController < SecuredController
       @user = Staff.new(params[:staff])
 
       respond_to do |format|
-        if @staff.save
+        if @user.save
           format.html { redirect_to(users_staff_index_path) }
           format.xml  { render :xml => @user, :status => :created, :location => @user }
         else               
           format.html { render :action => "new" }
-          format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
         end
       end
     end
