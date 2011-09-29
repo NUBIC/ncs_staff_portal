@@ -46,6 +46,10 @@ class Staff < ActiveRecord::Base
   
   before_save :calculate_hourly_rate
   
+  scope :with_role, lambda { |role| 
+    joins(:roles).where('roles.name = ?', role)
+  }
+  
   def validate_required?
     if notified == "false"
       false

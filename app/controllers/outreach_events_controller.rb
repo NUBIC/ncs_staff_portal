@@ -1,4 +1,5 @@
 class OutreachEventsController < SecuredController
+  permit Role::OUTREACH_STAFF
   set_tab :outreach_events
   # GET /outreach_events
   # GET /outreach_events.xml
