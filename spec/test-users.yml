@@ -4,9 +4,8 @@ users:
     first_name: FName1
     last_name: LName1
     portals: 
-      - StaffPortal: 
-        - staff
-        - supervisor
+      - NCSNavigator: 
+        - User Administrator
   staff: 
     password: staff
     first_name: FName2
@@ -15,6 +14,6 @@ users:
       - StaffPortal:
         - staff
 groups: 
-  StaffPortal:
+  NCSNavigator:
+    - User Administrator
     - staff
-    - supervisor
