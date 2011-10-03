@@ -124,7 +124,17 @@ class StaffController < SecuredController
         }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { 
+          if permit?(Role::STAFF_SUPERVISOR)
+            if permit?(Role::USER_ADMINISTRATOR)
+              @user = @staff
+              render :action => "edit_user", :location => @user
+            else
+              render :action => "edit", :location => @staff
+            end
+          end
+          
+        }
         format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
       end
     end
