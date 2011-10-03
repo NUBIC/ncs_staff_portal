@@ -6,7 +6,7 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
   = hidden_field_tag "return_path", "users_staff_index_path"
-  = f.hidden_field :notified, :value => false
+  = f.hidden_field :validate_update, :value => false
   .field
     = f.label :first_name
     = f.text_field :first_name

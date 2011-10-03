@@ -34,11 +34,6 @@ describe Staff do
     end
   end
   
-  it { should validate_presence_of(:first_name) }
-  it { should validate_presence_of(:last_name) }
-  it { should validate_presence_of(:username) }
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:study_center) }
   it { should have_many(:staff_roles) }
   it { should have_many(:roles).through(:staff_roles) }
   
@@ -55,15 +50,15 @@ describe Staff do
     end
     it "should return all the staff with no weekly task entry for the current week" do
       expected_staff = Staff.by_task_reminder(Date.today)
-      expected_staff[0].should == @staff1
-      expected_staff[1].should == @staff2
-      expected_staff[2].should == @staff4
+      expected_staff.should include @staff1
+      expected_staff.should include @staff2
+      expected_staff.should include @staff4
     end
     
     it "should return all the staff with no weekly task entry for the previous week" do
       expected_staff = Staff.by_task_reminder(Date.today - 1.week)
-      expected_staff[0].should == @staff3
-      expected_staff[1].should == @staff4
+      expected_staff.should include @staff3
+      expected_staff.should include @staff4
     end
   end
   
@@ -135,5 +130,51 @@ describe Staff do
       end
     end
     
+    describe "presence" do
+      it "first_name, last_name, email and studycenter is required if validate_create is not set" do
+        staff = FactoryGirl.build(:staff, :username => "test123", :first_name => nil, :last_name => nil, :email => nil , :study_center => nil)
+        staff.should_not be_valid
+        staff.should have(1).error_on(:first_name)
+        staff.should have(1).error_on(:last_name)
+        staff.should have(2).error_on(:email)
+        staff.should have(1).error_on(:study_center)
+      end
+      
+      it "staff_type, birth_date, gender, race, ethnicity, zipcode, subcontractor, experience is required if validate_update is not set" do
+        staff = FactoryGirl.create(:staff)
+        staff.save
+        staff.should_not be_valid
+        staff.should have(1).error_on(:staff_type)
+        staff.should have(1).error_on(:birth_date)
+        staff.should have(1).error_on(:gender)
+        staff.should have(1).error_on(:race)
+        staff.should have(1).error_on(:ethnicity)
+        staff.should have(1).error_on(:zipcode)
+        staff.should have(1).error_on(:subcontractor)
+        staff.should have(1).error_on(:experience)
+      end
+      
+      it "staff_type, birth_date, gender, race, ethnicity, zipcode, subcontractor, experience is not required if validate_update is false" do
+        staff = FactoryGirl.create(:staff, :validate_update => "false")
+        staff.save
+        staff.should be_valid
+      end
+    end
+    
+    describe "has_role" do
+      before(:each) do
+        @staff = FactoryGirl.create(:staff)
+        role = FactoryGirl.create(:role, :name => "User Administrator")
+        @staff.roles << role
+      end
+      
+      it "returns true if staff has particuler role" do
+        @staff.has_role("User Administrator").should == true
+      end
+      
+      it "returns false if staff has particuler role" do
+        @staff.has_role("System Administrator").should == false
+      end
+    end
   end
 end

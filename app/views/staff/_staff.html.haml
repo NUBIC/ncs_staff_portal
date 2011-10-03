@@ -7,7 +7,6 @@
           %li= msg
   - @staffLanguagesTemplate = generate_nested_attributes_template(f, :staff_languages, 'staff/staff_languages')
   = hidden_field_tag "return_path", "staff_index_path"
-  = f.hidden_field :notified, :value => true
   .field
     = label_tag "Name"
     = text_field_tag "name", @staff.name, :readonly => true

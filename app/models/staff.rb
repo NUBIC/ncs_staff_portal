@@ -24,13 +24,13 @@
 
 
 class Staff < ActiveRecord::Base
-  attr_accessor :notified
-  validates_presence_of :first_name, :last_name, :username, :study_center
-  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :if => :validate_required?, :on => :update
+  attr_accessor :validate_update, :validate_create
+  validates_presence_of :first_name, :last_name, :username, :study_center, :email, :if => :create_presence_required?
+  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :if => :update_presence_required?, :on => :update
   validates_uniqueness_of :username
   validates :pay_amount, :numericality => {:greater_than => 0, :allow_nil => true }
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
-  validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
+  validates :email,:uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   
@@ -50,8 +50,20 @@ class Staff < ActiveRecord::Base
     joins(:roles).where('roles.name = ?', role)
   }
   
-  def validate_required?
-    if notified == "false"
+  def has_role(role_name)
+    self.roles.map(&:name).include?(role_name)
+  end
+  
+  def update_presence_required?
+    if validate_update == "false"
+      false
+    else
+      true
+    end
+  end
+  
+  def create_presence_required?
+    if validate_create == "false"
       false
     else
       true
