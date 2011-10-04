@@ -25,12 +25,12 @@
 
 class Staff < ActiveRecord::Base
   attr_accessor :validate_update, :validate_create
-  validates_presence_of :first_name, :last_name, :username, :study_center, :email, :if => :create_presence_required?
+  validates_presence_of :first_name, :last_name, :username, :study_center, :if => :create_presence_required?
   validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :if => :update_presence_required?, :on => :update
   validates_uniqueness_of :username
   validates :pay_amount, :numericality => {:greater_than => 0, :allow_nil => true }
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
-  validates :email,:uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
+  validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }, :if => :create_presence_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   

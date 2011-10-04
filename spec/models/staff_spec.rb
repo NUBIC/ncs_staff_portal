@@ -136,7 +136,6 @@ describe Staff do
         staff.should_not be_valid
         staff.should have(1).error_on(:first_name)
         staff.should have(1).error_on(:last_name)
-        staff.should have(2).error_on(:email)
         staff.should have(1).error_on(:study_center)
       end
       
