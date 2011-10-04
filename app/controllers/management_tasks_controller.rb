@@ -9,7 +9,7 @@ class ManagementTasksController < SecuredController
     @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
-    add_breadcrumb "new task", new_staff_management_task_path(@staff)
+    add_breadcrumb "New Task", new_staff_management_task_path(@staff) unless same_as_current_user(@staff)
    
     respond_to do |format|
       format.html 
@@ -23,7 +23,7 @@ class ManagementTasksController < SecuredController
     params[:page] ||= 1
     @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.find(params[:id])
-    add_breadcrumb "edit task", edit_staff_management_task_path(@staff, @management_task)
+    add_breadcrumb "Edit Task", edit_staff_management_task_path(@staff, @management_task) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @management_task }
@@ -91,23 +91,18 @@ class ManagementTasksController < SecuredController
   def check_staff_access
     @staff = Staff.find(params[:staff_id])
     check_user_access(@staff)
-    if (@staff.id == @current_staff.id) 
+    if same_as_current_user(@staff)
       set_tab :time_and_expenses
     else
-      # layout "layouts/staff_information"
       set_tab :admin
       set_tab :time_and_expenses, :vertical
-      add_breadcrumb "admin", :administration_index_path
-      add_breadcrumb "manage staff", :staff_index_path
+      add_breadcrumb "Admin", :administration_index_path
+      add_breadcrumb "Manage Staff", :staff_index_path
     end
   end
   
   def tasks_layout
     @staff = Staff.find(params[:staff_id])
-    if (@staff.id == @current_staff.id) 
-      "layouts/application"
-    else
-      "layouts/staff_information"
-    end
+    same_as_current_user(@staff) ? "layouts/application" : "layouts/staff_information"
   end
 end

@@ -21,4 +21,8 @@ class SecuredController < ApplicationController
       throw :warden
     end   
   end
+  
+  def same_as_current_user(requested_staff)
+    requested_staff.id == @current_staff.id ? true : false
+  end
 end

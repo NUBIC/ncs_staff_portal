@@ -226,33 +226,23 @@ body.ncs {
   .current_form {
     border: 1px solid #333;
     background-color:  $form_table_bg;
-    @include column(22,true);
-    @include append-bottom(1em);
     
-    label, .other_data{
-      padding-left: 1em;
+    table {
+      padding: 0.2em 1em;
     }
     
-    em{ 
-    font-weight: bold;
-    font-style: normal;
+    table tr {
+      padding-left: 5em;
     }
     
-    div{ 
-        padding: 0.5em;
-    }
-    .task_info{
-      @include column(18,true);
-    }
-    
-    .task_expense{
-      @include prepend(1);
-      @include column(6);
+    em { 
+      font-weight: bold;
+      font-style: normal;
+      text-align: center;
     }
     
-    .task_actions{
-      @include prepend(3);
-      @include column(4,true);
+    table td { 
+      padding: 0.5em;
     }
     
   }
