@@ -9,7 +9,7 @@ class StaffCertTrainingsController < SecuredController
     @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings
     @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.build
-    
+    add_breadcrumb "New Certificate/Training", new_staff_staff_cert_training_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @staff_cert_training }
@@ -21,7 +21,7 @@ class StaffCertTrainingsController < SecuredController
     @staff = Staff.find(params[:staff_id])
     @staff_cert_trainings = @staff.staff_cert_trainings
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
-
+    add_breadcrumb "Edit Certificate/Training", edit_staff_staff_cert_training_path(@staff, @staff_cert_training) unless same_as_current_user(@staff)
   end
 
   # POST /staff_cert_trainings
@@ -78,9 +78,11 @@ class StaffCertTrainingsController < SecuredController
     check_user_access(@staff)
     # TODO: write in helper file and reuse everywhere 
     if @staff && (@staff.id == @current_staff.id)
-       set_tab :my_info
+      set_tab :my_info
     else
-      set_tab :staff
+      set_tab :admin
+      add_breadcrumb "Admin", :administration_index_path
+      add_breadcrumb "Manage Staff", :staff_index_path
     end
   end
 end
