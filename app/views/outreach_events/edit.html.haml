@@ -1,8 +1,9 @@
 - javascript 'nested_attributes', 'outreach_events', 'combobox'
+= render_breadcrumbs :separator => ' / ' 
 - if @outreach_event.event_date.blank?
-  %h3 Edit outreach activity/event #{@outreach_event.name}
+  %h4 Edit outreach activity/event #{@outreach_event.name}
 - else
-  %h3 Edit outreach activity/event #{@outreach_event.name}(#{@outreach_event.event_date})
+  %h4 Edit outreach activity/event #{@outreach_event.name}(#{@outreach_event.event_date})
 %p 
   - if !@outreach_event.created_by.blank?
     Created by: #{@outreach_event.created_by_user.name}

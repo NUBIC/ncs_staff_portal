@@ -1,6 +1,7 @@
 class OutreachEventsController < SecuredController
   permit Role::OUTREACH_STAFF
   set_tab :outreach_events
+  add_breadcrumb "Outreach Activities", :outreach_events_path, :only => %w(new edit) 
   # GET /outreach_events
   # GET /outreach_events.xml
   def index
@@ -24,7 +25,8 @@ class OutreachEventsController < SecuredController
     @outreach_event.outreach_staff_members.build
     @outreach_event.outreach_evaluations.build
     @outreach_event.outreach_targets.build
-
+    add_breadcrumb "New outreach event", new_outreach_event_path
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @outreach_event }
@@ -34,6 +36,7 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events/1/edit
   def edit
     @outreach_event = OutreachEvent.find(params[:id])
+    add_breadcrumb "Edit outreach event", edit_outreach_event_path(@outreach_event)
   end
 
   # POST /outreach_events
