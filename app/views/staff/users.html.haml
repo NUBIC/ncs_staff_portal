@@ -6,7 +6,7 @@
     %table#user-list-tbl
       - @users.each do |user|
         %tr
-          %td= link_to user.username,edit_user_staff_path(user)
+          %td= link_to user.username,edit_user_ staff_path(user)
           %td= user.name
           %td= display_roles(user.roles)
           

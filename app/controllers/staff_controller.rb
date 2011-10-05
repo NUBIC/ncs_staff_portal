@@ -5,9 +5,9 @@ class StaffController < SecuredController
   set_tab :general_info, :vertical
   set_tab :admin, :only => %w(index users new edit_user)
 
-  add_breadcrumb "admin", :administration_index_path, :only => %w(index users new edit_user) 
-  add_breadcrumb "manage users", :users_staff_index_path, :only => %w(new users edit_user)
-  add_breadcrumb "manage staff", :staff_index_path, :only => %w(index)
+  add_breadcrumb "Admin", :administration_index_path, :only => %w(index users new edit_user) 
+  add_breadcrumb "Manage Users", :users_staff_index_path, :only => %w(new users edit_user)
+  add_breadcrumb "Manage Staff", :staff_index_path, :only => %w(index)
 
 
   # GET /staff
@@ -40,7 +40,7 @@ class StaffController < SecuredController
   # GET /staff/1.xml
   def show
     @staff = Staff.find(params[:id])
-    add_breadcrumb "#{@staff.name}", edit_staff_path(@staff)
+    add_breadcrumb "#{@staff.name}", staff_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -63,7 +63,7 @@ class StaffController < SecuredController
   # GET /staff/1/edit
   def edit
     @staff = Staff.find(params[:id])
-    add_breadcrumb "#{@staff.name}/edit", edit_staff_path(@staff)
+    add_breadcrumb "#{@staff.name}", edit_staff_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -159,8 +159,8 @@ class StaffController < SecuredController
       set_tab :my_info
     else
       set_tab :admin
-      add_breadcrumb "admin", :administration_index_path
-      add_breadcrumb "manage staff", :staff_index_path
+      add_breadcrumb "Admin", :administration_index_path
+      add_breadcrumb "Manage Staff", :staff_index_path
     end
   end
   
