@@ -21,5 +21,8 @@ module InitialUserLoader
   end
 end
 
-InitialUserLoader.create if Role.find_by_name(Role::USER_ADMINISTRATOR)
-
+begin
+  InitialUserLoader.create if Role.find_by_name(Role::USER_ADMINISTRATOR)
+rescue => e
+  $stderr.puts "InitialUserLoader.create failed: #{e.class} #{e}"
+end
