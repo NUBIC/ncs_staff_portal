@@ -35,11 +35,14 @@ module Aker::Authorities
     private
 
     def build_groups
-      groups = []
-      Role.all.each do |role|
-        groups << Aker::Group.new(role.name)
+      begin
+        Role.all.collect do |role|
+          Aker::Group.new(role.name)
+        end
+      rescue => e
+        $stderr.puts "Loading roles failed. Authorization probably won't work. #{e.class}: #{e}."
+        []
       end
-      groups
     end
 
     def load_group_memberships(roles)
