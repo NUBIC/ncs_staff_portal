@@ -1,6 +1,5 @@
 GEM
   remote: http://rubygems.org/
-  remote: http://gemcutter.org/
   specs:
     aaronh-chronic (0.3.9)
     abstract (1.0.0)
