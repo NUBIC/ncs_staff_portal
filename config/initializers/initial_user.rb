@@ -3,8 +3,8 @@ require 'ncs_navigator/configuration'
 module InitialUserLoader
   class << self
     def create
-      username = NcsNavigator.configuration.staff_portal['username']
-      raise "Please provide the initial username." unless username
+      username = NcsNavigator.configuration.staff_portal['bootstrap_user']
+      raise "Please specify a bootstrap user (see README)." unless username
       user = Staff.find_by_username(username)
       role = Role.find_by_name(Role::USER_ADMINISTRATOR)
 
