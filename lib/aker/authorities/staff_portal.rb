@@ -2,7 +2,7 @@ require 'aker'
 
 module Aker::Authorities
   class StaffPortal
-    
+
     def initialize()
       @groups = build_groups
       @portal = "NCSNavigator".to_sym
@@ -13,13 +13,13 @@ module Aker::Authorities
       return user unless base
       user.merge!(base)
     end
-   
+
     def user(username)
       u = Aker::User.new(username)
-      staff = Staff.find_by_username(username) 
+      staff = Staff.find_by_username(username)
       u.portals << @portal
-      
-      if staff 
+
+      if staff
         attributes = ["first_name", "last_name", "email"]
         attributes.each do |a|
           setter = "#{a}="
