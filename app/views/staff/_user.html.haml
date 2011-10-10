@@ -19,7 +19,10 @@
   .field
     = f.label :username, NcsNavigator.configuration.study_center_username
     = f.text_field :username
-    
+  .field
+    = f.label :formatted_ncs_inactive_date, "Inactive Date"
+    = f.text_field :formatted_ncs_inactive_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"} 
+    = label_tag "(Leave blank to have it never expire, or set it in the past to have it expire immediately.)"
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
   .field
     - Role.all.each do |r|
@@ -28,3 +31,6 @@
         = r.name
   .actions
     = f.submit 'Save', :class => "control_button"
+    
+  :javascript
+    $(".datepicker").datepicker();

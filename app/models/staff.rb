@@ -33,6 +33,7 @@ class Staff < ActiveRecord::Base
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }, :if => :create_presence_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
+  validates_date :ncs_inactive_date, :allow_blank => true
   
   has_many :staff_languages, :dependent => :destroy
   has_many :staff_cert_trainings, :dependent => :destroy
@@ -54,20 +55,17 @@ class Staff < ActiveRecord::Base
     self.roles.map(&:name).include?(role_name)
   end
   
+  def is_active
+    (ncs_inactive_date.nil?) || (ncs_inactive_date != nil && ncs_inactive_date >= Time.now.to_date) ? true : false
+  end
+  
+  
   def update_presence_required?
-    if validate_update == "false"
-      false
-    else
-      true
-    end
+    validate_update == "false" ? false : true
   end
   
   def create_presence_required?
-    if validate_create == "false"
-      false
-    else
-      true
-    end
+    validate_create == "false" ? false : true
   end
   
   def name  
@@ -92,6 +90,14 @@ class Staff < ActiveRecord::Base
 
   def formatted_birth_date=(birth_date)
     self.birth_date = birth_date
+  end
+  
+  def formatted_ncs_inactive_date
+    ncs_inactive_date.nil? ? nil : ncs_inactive_date.to_s
+  end
+
+  def formatted_ncs_inactive_date=(ncs_inactive_date)
+    self.ncs_inactive_date = ncs_inactive_date
   end
   
   def self.by_task_reminder(by_date)

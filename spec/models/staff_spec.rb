@@ -175,5 +175,30 @@ describe Staff do
         @staff.has_role("System Administrator").should == false
       end
     end
+    
+    describe "is_active" do
+      before(:each) do
+        @staff = FactoryGirl.create(:staff)
+      end
+      
+      it "returns true if staff has ncs_inactive_date as nil" do
+        @staff.is_active.should == true
+      end
+      
+      it "returns true if staff has ncs_inactive_date as of today" do
+        @staff.ncs_inactive_date = Time.now.to_date
+        @staff.is_active.should == true
+      end
+      
+      it "returns true if staff has ncs_inactive_date greater than today" do
+        @staff.ncs_inactive_date = Time.now.to_date + 7.day
+        @staff.is_active.should == true
+      end
+      
+      it "returns false if staff has ncs_inactive_date less then today's date" do
+        @staff.ncs_inactive_date = Time.now.to_date - 7.day
+        @staff.is_active.should == false
+      end
+    end
   end
 end
