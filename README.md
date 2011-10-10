@@ -111,25 +111,29 @@ Example:
 
 #### Center-specific setup
 
-Staff Portal uses [ncs-navigator-configuration][] for shared configuration of the NCS Navigator suite applications. 
-For the center specific configuration, please refer the sample [configuration][] file from [ncs-navigator-configuration][]
+Staff Portal uses [ncs_navigator_configuration][] for shared
+configuration of the NCS Navigator suite applications. Most
+configuration properties are documented in its [sample
+configuration][ncsn_conf_sample].
 
-[ncs-navigator-configuration]: https://github.com/NUBIC/ncs_navigator_configuration
-[configuration]: https://github.com/NUBIC/ncs_navigator_configuration/blob/master/sample_configuration.ini
+[ncs_navigator_configuration]: https://github.com/NUBIC/ncs_navigator_configuration
+[ncsn_conf_sample]: http://rubydoc.info/gems/ncs_navigator_configuration/file/sample_configuration.ini
 
-To customize Staff Portal for your center, add following configuration element to the `[Staff Portal]` section of the [configuration][] file.
+To further customize Staff Portal for your center, add one or more of
+the following configuration elements to the `[Staff Portal]` section of
+the configuration file.
 
 Example:
-    
+
     # for any futher development, developer's email address for development testing email
-    development_email = "user@example.com" 
-         
+    development_email = "user@example.com"
+
     # Comma separated list of username for excluding users from weekly email reminder users list
     reminder_excluded_users = "jane,warren"
-    
+
     # Google Analytics account number to analyze staff portal's traffic data
     google_analytics_number = "UA-1234"
-    
+
 ### Deployment
 
 Staff Portal is deployed with [capistrano][cap] from a workstation. On
