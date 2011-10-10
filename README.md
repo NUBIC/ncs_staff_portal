@@ -81,55 +81,40 @@ Contents:
     cas:
       base_url: https://cas.myinst.edu/
 
-Second, create application users file
-`/etc/nubic/ncs/staff_portal_users.yml`. The current version of Staff
-Portal uses statically configured users; a future version will rely on
-NCS Navigator suite-wide user provisioning.
-
-Example:
-
-        groups:
-          StaffPortal:
-          - staff
-          - supervisor
-        users:
-          jane:         # username
-            first_name: Jane
-            last_name: H
-            email: jane@example.com
-            portals:
-            - StaffPortal:
-              - staff
-              - supervisor
-          warren:
-            first_name: Warren
-            last_name: K
-            email: warren@example.edu
-            portals:
-            - StaffPortal:
-              - staff
+Second, define a bootstrap user in
+`/etc/nubic/ncs/navigator.ini`. (See next section.)
 
 #### Center-specific setup
 
-Staff Portal uses [ncs-navigator-configuration][] for shared configuration of the NCS Navigator suite applications. 
-For the center specific configuration, please refer the sample [configuration][] file from [ncs-navigator-configuration][]
+Staff Portal uses [ncs_navigator_configuration][] for shared
+configuration of the NCS Navigator suite applications. Most
+configuration properties are documented in its [sample
+configuration][ncsn_conf_sample]. Staff Portal looks for the
+configuration in its default location, `/etc/nubic/ncs/navigator.ini`.
 
-[ncs-navigator-configuration]: https://github.com/NUBIC/ncs_navigator_configuration
-[configuration]: https://github.com/NUBIC/ncs_navigator_configuration/blob/master/sample_configuration.ini
+[ncs_navigator_configuration]: https://github.com/NUBIC/ncs_navigator_configuration
+[ncsn_conf_sample]: http://rubydoc.info/gems/ncs_navigator_configuration/file/sample_configuration.ini
 
-To customize Staff Portal for your center, add following configuration element to the `[Staff Portal]` section of the [configuration][] file.
+To further customize Staff Portal for your center, add one or more of
+the following configuration elements to the `[Staff Portal]` section of
+the configuration file. `bootstrap_user` is mandatory; all others are
+optional.
 
-Example:
-    
+    # The initial user for Staff Portal. This user will automatically
+    # granted the User Administrator role and will thus be able to
+    # provision more users. The username must be one that can be
+    # authenticated with the CAS server that Staff Portal uses.
+    bootstrap_user = jrp
+
     # for any futher development, developer's email address for development testing email
-    development_email = "user@example.com" 
-         
+    development_email = "user@example.com"
+
     # Comma separated list of username for excluding users from weekly email reminder users list
     reminder_excluded_users = "jane,warren"
-    
+
     # Google Analytics account number to analyze staff portal's traffic data
     google_analytics_number = "UA-1234"
-    
+
 ### Deployment
 
 Staff Portal is deployed with [capistrano][cap] from a workstation. On

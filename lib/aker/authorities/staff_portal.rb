@@ -2,7 +2,7 @@ require 'aker'
 
 module Aker::Authorities
   class StaffPortal
-    
+
     def initialize()
       @groups = build_groups
       @portal = "NCSNavigator".to_sym
@@ -13,13 +13,13 @@ module Aker::Authorities
       return user unless base
       user.merge!(base)
     end
-   
+
     def user(username)
       u = Aker::User.new(username)
-      staff = Staff.find_by_username(username) 
+      staff = Staff.find_by_username(username)
       u.portals << @portal
-      
-      if staff 
+
+      if staff
         attributes = ["first_name", "last_name", "email"]
         attributes.each do |a|
           setter = "#{a}="
@@ -35,11 +35,14 @@ module Aker::Authorities
     private
 
     def build_groups
-      groups = []
-      Role.all.each do |role|
-        groups << Aker::Group.new(role.name)
+      begin
+        Role.all.collect do |role|
+          Aker::Group.new(role.name)
+        end
+      rescue => e
+        $stderr.puts "Loading roles failed. Authorization probably won't work. #{e.class}: #{e}."
+        []
       end
-      groups
     end
 
     def load_group_memberships(roles)

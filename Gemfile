@@ -23,10 +23,10 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 
 group :development, :test, :ci do
-  gem 'rspec-rails', '~>2.5.0'
+  gem 'rspec-rails', '~> 2.5'
   gem 'cucumber'
   gem 'capybara'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'database_cleaner', '~>0.6.6'
   gem 'factory_girl_rails', '~> 1.1.rc1'
   gem 'shoulda'
