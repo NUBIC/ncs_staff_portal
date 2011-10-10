@@ -22,7 +22,7 @@ module InitialUserLoader
 end
 
 begin
-  InitialUserLoader.create if Role.find_by_name(Role::USER_ADMINISTRATOR)
+  InitialUserLoader.create if !%w(ci test).include?(Rails.env) && Role.find_by_name(Role::USER_ADMINISTRATOR)
 rescue => e
   $stderr.puts "InitialUserLoader.create failed: #{e.class} #{e}"
 end
