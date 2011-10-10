@@ -3,7 +3,8 @@ require 'spec_helper'
 describe InitialUserLoader do
   describe "create" do
     before(:each) do
-      @role = FactoryGirl.create(:role, :name => "User Administrator")
+      @role = Role.find_by_name(Role::USER_ADMINISTRATOR)
+      @role = FactoryGirl.create(:role, :name => "User Administrator") unless @role
     end
 
     it "new user and assign 'User Administrator' role if user with username does not exist" do

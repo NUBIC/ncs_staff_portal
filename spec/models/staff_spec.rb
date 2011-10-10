@@ -163,7 +163,8 @@ describe Staff do
     describe "has_role" do
       before(:each) do
         @staff = FactoryGirl.create(:staff)
-        role = FactoryGirl.create(:role, :name => "User Administrator")
+        role = Role.find_by_name(Role::USER_ADMINISTRATOR)
+        role = FactoryGirl.create(:role, :name => "User Administrator") unless role
         @staff.roles << role
       end
       
