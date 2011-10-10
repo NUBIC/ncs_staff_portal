@@ -23,7 +23,7 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 
 group :development, :test, :ci do
-  gem 'rspec-rails', '~>2.5.0'
+  gem 'rspec-rails', '~> 2.5'
   gem 'cucumber'
   gem 'capybara'
   gem 'cucumber-rails', :require => false
