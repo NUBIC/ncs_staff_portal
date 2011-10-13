@@ -82,7 +82,7 @@ class StaffCertTrainingsController < SecuredController
     else
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
-      add_breadcrumb "Manage Staff", :staff_index_path
+      add_breadcrumb "Manage staff details", :staff_index_path
     end
   end
 end

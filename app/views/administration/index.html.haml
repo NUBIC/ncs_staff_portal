@@ -1,7 +1,7 @@
 - if permit?(Role::STAFF_SUPERVISOR)
   .field
-    = link_to 'Manage Staff', staff_index_path
+    = link_to 'Manage staff details', staff_index_path
 - if permit?(Role::USER_ADMINISTRATOR)
   .field
-    = link_to 'Manage Users', users_staff_index_path
+    = link_to 'Administer user accounts', users_staff_index_path
   

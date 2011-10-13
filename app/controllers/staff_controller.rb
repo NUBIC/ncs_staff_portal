@@ -6,8 +6,8 @@ class StaffController < SecuredController
   set_tab :admin, :only => %w(index users new edit_user)
 
   add_breadcrumb "Admin", :administration_index_path, :only => %w(index users new edit_user) 
-  add_breadcrumb "Manage Users", :users_staff_index_path, :only => %w(new users edit_user)
-  add_breadcrumb "Manage Staff", :staff_index_path, :only => %w(index)
+  add_breadcrumb "Administer user accounts", :users_staff_index_path, :only => %w(new users edit_user)
+  add_breadcrumb "Manage staff details", :staff_index_path, :only => %w(index)
 
 
   # GET /staff
@@ -160,7 +160,7 @@ class StaffController < SecuredController
     else
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
-      add_breadcrumb "Manage Staff", :staff_index_path
+      add_breadcrumb "Manage staff details", :staff_index_path
     end
   end
   

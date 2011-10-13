@@ -97,7 +97,7 @@ class ManagementTasksController < SecuredController
       set_tab :admin
       set_tab :time_and_expenses, :vertical
       add_breadcrumb "Admin", :administration_index_path
-      add_breadcrumb "Manage Staff", :staff_index_path
+      add_breadcrumb "Manage staff details", :staff_index_path
     end
   end
   
