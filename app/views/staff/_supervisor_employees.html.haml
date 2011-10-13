@@ -1,0 +1,6 @@
+%tr{ :class => "supervisor_employees fields row" }
+  %td.col1
+    = label_tag "Staff member"
+    = f.select :employee_id, Staff.all.map {|s| [s.name, s.id]}, { :include_blank => true },{ :class => 'supervisor_employees_combobox_autocompleter supervisor_employees_selector' }
+  %td.col2
+    = link_to_remove_fields 'Remove', f, :supervisor_employees

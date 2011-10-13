@@ -41,15 +41,32 @@ class Staff < ActiveRecord::Base
   has_many :management_tasks, :through => :staff_weekly_expenses
   has_many :staff_roles, :dependent => :destroy
   has_many :roles, :through => :staff_roles
-  
+  has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
+  has_many :employees, :through => :supervisor_employees, :class_name => "Staff"
+  accepts_nested_attributes_for :supervisor_employees, :allow_destroy => true
   accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
   
-  before_save :calculate_hourly_rate
+  before_save :calculate_hourly_rate, :update_employees
+  
+  def update_employees
+    self.employees.delete_all unless self.has_role(Role::STAFF_SUPERVISOR)
+  end
   
   scope :with_role, lambda { |role| 
     joins(:roles).where('roles.name = ?', role)
   }
+  
+  scope :default_supervisors, lambda {
+    joins(:roles).
+    where("roles.name = 'Staff Supervisor' AND staff.id NOT IN (select supervisor_id from supervisor_employees)")
+  }
+  
+  def visible_employees
+    visible_employees = self.employees
+    visible_employees = Staff.all if visible_employees.empty? && has_role(Role::STAFF_SUPERVISOR)
+    visible_employees
+  end
   
   def has_role(role_name)
     self.roles.map(&:name).include?(role_name)

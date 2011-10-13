@@ -37,6 +37,9 @@ describe Staff do
   it { should have_many(:staff_roles) }
   it { should have_many(:roles).through(:staff_roles) }
   
+  it { should have_many(:supervisor_employees) }
+  it { should have_many(:employees).through(:supervisor_employees) }
+  
   describe "weekly_task_reminder" do
     before(:each) do
       @staff1 = FactoryGirl.create(:staff)
@@ -201,5 +204,69 @@ describe Staff do
         @staff.is_active.should == false
       end
     end
+    
+    describe "supervisor employees" do
+      before(:each) do
+        @sup = FactoryGirl.create(:staff, :first_name => "Super Supervisor")
+        @role = Role.find_by_name(Role::STAFF_SUPERVISOR)
+        @role = FactoryGirl.create(:role, :name => Role::STAFF_SUPERVISOR) unless @role
+        @sup.roles << @role
+        
+        @sup1 = FactoryGirl.create(:staff, :first_name => "Supervisor")
+        @sup1.roles << @role
+        
+        @staff1 = FactoryGirl.create(:staff)
+        @staff2 = FactoryGirl.create(:staff)
+        @staff3 = FactoryGirl.create(:staff)
+        @sup1.employees = [@staff1, @staff2]
+      end
+      describe "default_supervisors" do
+        it "returns the all the suervisor who has access to all employees" do
+          actual_sup = Staff.default_supervisors
+          actual_sup.should include @sup
+        end
+      
+        it "does not include the supervisor who has employee assigned" do
+          actual_sup = Staff.default_supervisors
+          actual_sup.should_not include @sup1
+        end
+      end
+      
+      describe "visible_employees" do
+        it "returns all the assigned employees for supervisor" do
+          employees = @sup1.visible_employees
+          employees.should include @staff1
+          employees.should include @staff2
+          employees.should_not include @staff3
+        end
+        
+        it "returns all the employees if there is no assigned employee for supervisor" do
+          employees = @sup.visible_employees
+          employees.should include @staff1
+          employees.should include @staff2
+          employees.should include @staff3
+        end
+        
+        it "returns empty array for staff other then supervisor" do
+          other = FactoryGirl.create(:staff)
+          employees = other.visible_employees
+          employees.should be_empty
+        end
+      end
+      
+      describe "update_employees" do
+        it "does nothing if staff has supervisor role" do
+          @sup1.employees.should include @staff1
+          @sup1.employees.should include @staff2
+        end
+        
+        it "delete all the employees if staff doesn't have Staff Supervisor Role" do
+          @sup1.validate_update = "false"
+          @sup1.roles.delete_all 
+          @sup1.save
+          @sup1.employees.should be_empty
+        end
+      end
+   end
   end
 end

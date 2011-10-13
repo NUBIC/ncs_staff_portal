@@ -24,6 +24,13 @@ module ApplicationHelper
     list.join(', ')
   end
   
+  def display_supervisors(supervisors)
+    list = supervisors.map do |supervisor|
+      link_to (supervisor.name, edit_user_staff_path(supervisor))
+    end
+    list.join(', ')
+  end
+  
   def display_roles(roles)
     list = roles.map do |role|
       role.name

@@ -15,7 +15,7 @@ class StaffController < SecuredController
   def index
     if permit?(Role::STAFF_SUPERVISOR)
       params[:page] ||= 1
-      @staff_list = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
+      @staff_list = @current_staff.visible_employees.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
     
       respond_to do |format|
         format.html 
