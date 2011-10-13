@@ -267,6 +267,19 @@ describe Staff do
           @sup1.employees.should be_empty
         end
       end
-   end
+      
+      describe "supervisors" do
+        it "returns assigned supervisors" do
+          supervisors = @staff1.supervisors
+          supervisors.count.should == 1
+          supervisors.should include @sup1
+        end
+        
+        it "should not return un assigned supervisors" do
+          supervisors = @staff1.supervisors
+          supervisors.should_not include @sup
+        end
+      end
+    end
   end
 end

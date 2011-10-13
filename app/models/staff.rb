@@ -43,6 +43,7 @@ class Staff < ActiveRecord::Base
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
   has_many :employees, :through => :supervisor_employees, :class_name => "Staff"
+  
   accepts_nested_attributes_for :supervisor_employees, :allow_destroy => true
   accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
@@ -61,6 +62,10 @@ class Staff < ActiveRecord::Base
     joins(:roles).
     where("roles.name = 'Staff Supervisor' AND staff.id NOT IN (select supervisor_id from supervisor_employees)")
   }
+  
+  def supervisors
+    Staff.where("staff.id IN (select supervisor_id from supervisor_employees where employee_id = ?)", self.id)
+  end
   
   def visible_employees
     visible_employees = self.employees
