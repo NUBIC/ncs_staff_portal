@@ -13,15 +13,19 @@
       General Information
     .row
       = f.label :first_name
+      %em *
       = f.text_field :first_name
     .row
       = f.label :last_name
+      %em *
       = f.text_field :last_name
     .row
       = f.label :email
+      %em *
       = f.text_field :email
     .row
       = f.label :username, NcsNavigator.configuration.study_center_username
+      %em *
       = f.text_field :username
     .row
       = f.label :formatted_ncs_inactive_date, "Inactive Date"
@@ -30,7 +34,7 @@
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
   .block
     .title
-      Role Information
+      Role(s)
     .row
       - Role.all.each do |r|
         .field
@@ -40,13 +44,16 @@
   - if @user.has_role(Role::STAFF_SUPERVISOR)
     .block
       .title
-        Supervising Staff Information
+        Supervisees
       %table{ :class => 'records supervisor_employees row' }
         %tr.row
           %td
-            Supervising all the staff
-            %em * 
-            (Click the 'Add staff member' link to add more staff members to supervise)
+            - if @user.employees.empty?
+              This user is currently set to supervise all staff members.  To limit this role to set of staff members, add the staff members below.
+            - else
+              This user supervises the list of staff members below.  To enable this user to manage all staff members, remove each individual from the list.
+            .row
+              (Click the 'Add staff member' link to add more staff members to supervise)
         %tbody.nested_records_supervisor_employees
           - f.fields_for :supervisor_employees do |supervisor_employee|
             = render :partial => 'staff/supervisor_employees', :locals => { :f => supervisor_employee }
@@ -54,13 +61,20 @@
           %tr.row
             %td{ :colspan => '3' }
               = link_to_add_fields "Add staff member", :supervisor_employees
-  - else
-    = "Current staff will be supervise by"
-    = display_supervisors(Staff.default_supervisors).html_safe
-    = ". If you want to add particular supervisor for the staff, please go the supervisor page and add staff under supervisor."
+  .block
+    .row
+      = "This user will be supervised by"
+      = display_supervisors(Staff.default_supervisors).html_safe
+      - if !@user.supervisors.empty?
+        = "and assigned supervisor(s) "
+        = display_supervisors(@user.supervisors).html_safe
+      = ".To change this, use the account page of the particular supervisor."
   .actions
     = f.submit 'Save', :class => "control_button"
-    
+  %p
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields 
   :javascript
     $(".datepicker").datepicker();
     $(document).ready(function() {
