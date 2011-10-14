@@ -20,7 +20,7 @@
       var columnDefs = [
           { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
           { key: "name", label: "Name", sortable: true},
-          { key: "role", label: "NCS Navigator role"}
+          { key: "role", label: "Role(s)"}
       ];
       var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("user-list-tbl"));
       dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
