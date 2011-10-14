@@ -21,7 +21,7 @@ describe StaffWeeklyExpense do
       @expense3 = staff3.staff_weekly_expenses.create(:week_start_date => Date.today.monday)
     
       role = Role.find_by_name(Role::STAFF_SUPERVISOR)
-      role = FactoryGirl.create(:role, :name => Role::STAFF_SUPERVISOR) unless @role
+      role = FactoryGirl.create(:role, :name => Role::STAFF_SUPERVISOR) unless role
       
       @sup1 = FactoryGirl.create(:staff, :first_name => "Supervisor")
       @sup1.roles << role
