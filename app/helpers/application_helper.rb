@@ -26,7 +26,7 @@ module ApplicationHelper
   
   def display_supervisors(supervisors)
     list = supervisors.map do |supervisor|
-      link_to (supervisor.name, edit_user_staff_path(supervisor))
+      link_to(supervisor.name, edit_user_staff_path(supervisor)) unless supervisor.nil?
     end
     list.join(', ')
   end
