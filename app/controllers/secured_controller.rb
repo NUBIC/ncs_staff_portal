@@ -14,7 +14,7 @@ class SecuredController < ApplicationController
 
   def set_current_staff
     @current_staff = Staff.find_by_username(current_user.username)
-    unless @current_staff.is_active
+    unless @current_staff && @current_staff.is_active
       throw :warden
     end
   end
