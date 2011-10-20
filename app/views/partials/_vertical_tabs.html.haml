@@ -1,5 +1,5 @@
 #tab_vertical
-  -tabs_tag :namespace => :vertical do |tab|
+  = tabs_tag :namespace => :vertical do |tab|
     - if @staff
       = tab.general_info 'General Information', staff_path(@staff.id)
       = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@staff.id)

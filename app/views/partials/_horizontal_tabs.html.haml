@@ -1,5 +1,5 @@
 #tab_navigation
-  -tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
+  = tabs_tag(:builder => ApplicationHelper::NCSTabsBuilder) do |tab|
     -if current_user.permit?(Role::OUTREACH_STAFF)
       = tab.outreach_events 'Outreach Activities', outreach_events_path
     -if current_user.permit?(Role::STAFF_SUPERVISOR)
