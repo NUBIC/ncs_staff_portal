@@ -36,4 +36,11 @@ describe StaffLanguage do
       language.lang_other.should == nil
     end
   end
+  describe "as_json" do
+    it "contains name" do
+      language = Factory(:staff_language)
+      actual_json = language.as_json
+      actual_json["name"].should == "English"
+    end
+  end
 end
