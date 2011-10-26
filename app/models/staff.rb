@@ -24,6 +24,7 @@
 
 
 class Staff < ActiveRecord::Base
+  self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create
   validates_presence_of :first_name, :last_name, :username, :study_center, :if => :create_presence_required?
   validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :if => :update_presence_required?, :on => :update
@@ -62,6 +63,21 @@ class Staff < ActiveRecord::Base
     joins(:roles).
     where("roles.name = 'Staff Supervisor' AND staff.id NOT IN (select supervisor_id from supervisor_employees)")
   }
+  
+  def as_json(options={})
+    json = {}
+    json["staff_type"] = self.staff_type ? self.staff_type.display_text : nil
+    json["gender"] = self.gender ? self.gender.display_text : nil
+    json["subcontractor"] = self.subcontractor ? self.subcontractor.display_text : nil
+    json["race"] = self.race ? self.race.display_text : nil
+    json["ethnicity"] =  self.ethnicity ? self.ethnicity.display_text : nil
+    json["experience"] =  self.experience ? self.experience.display_text : nil
+    json["languages"] = self.staff_languages.as_json
+    super( :except => [ :id, :pay_type, :pay_amount, :hourly_rate, :created_at, :updated_at, :comment, 
+                             :staff_type_code, :age_range_code, :gender_code,:race_code, :subcontractor_code, 
+                             :ethnicity_code, :experience_code, :birth_date ], 
+           :include =>[:roles]).merge(json)
+  end
   
   def supervisors
     Staff.where("staff.id IN (select supervisor_id from supervisor_employees where employee_id = ?)", self.id)
