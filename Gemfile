@@ -23,7 +23,7 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 
 group :development, :test, :ci do
-  gem 'rspec-rails', '~> 2.7'
+  gem 'rspec-rails', '2.6.1'
   gem 'cucumber'
   gem 'capybara'
   gem "json_spec"
