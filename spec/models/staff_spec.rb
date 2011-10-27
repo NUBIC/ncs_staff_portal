@@ -314,6 +314,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Principal Investigator", :local_code => 1) 
         @staff.staff_type_code = 1
         actual_json = @staff.as_json
         actual_json["staff_type"].should == "Principal Investigator"
@@ -330,6 +331,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "GENDER_CL1", :display_text => "Male", :local_code => 1) 
         @staff.gender_code = 1
         actual_json = @staff.as_json
         actual_json["gender"].should == "Male"
@@ -346,6 +348,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "YES", :local_code => 1) 
         @staff.subcontractor_code = 1
         actual_json = @staff.as_json
         actual_json["subcontractor"].should == "Yes"
@@ -362,6 +365,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "RACE_CL1", :display_text => "White", :local_code => 1) 
         @staff.race_code = 1
         actual_json = @staff.as_json
         actual_json["race"].should == "White"
@@ -378,6 +382,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "ETHNICITY_CL1", :display_text => "Hispanic or Latino", :local_code => 1) 
         @staff.ethnicity_code = 1
         actual_json = @staff.as_json
         actual_json["ethnicity"].should == "Hispanic or Latino"
@@ -394,6 +399,7 @@ describe Staff do
       end
       
       it "value to actual display name" do
+        Factory.create(:ncs_code, :list_name => "EXPERIENCE_LEVEL_CL1", :display_text => "Less than 1 year", :local_code => 1) 
         @staff.experience_code = 1
         actual_json = @staff.as_json
         actual_json["experience"].should == "Less than 1 year"
