@@ -30,6 +30,6 @@ begin
         NcsNavigator::Configuration.new(File.expand_path('../../../spec/configuration/navigator.ini', __FILE__))
     end
   end
-rescue LoadError =>e
+rescue Exception => e
   puts "Warning: #{e}"
 end
