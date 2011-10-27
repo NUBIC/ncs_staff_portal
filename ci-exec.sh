@@ -42,4 +42,4 @@ set -e
 
 bundle install
 
-bundle exec rake ci:specs --trace
+bundle exec rake ci:all --trace
