@@ -4,7 +4,6 @@
 
 require 'bundler/capistrano'
 require 'bcdatabase'
-require 'ncs_navigator/configuration'
 
 require "whenever/capistrano"
 set :whenever_command, "bundle exec whenever"
@@ -94,10 +93,6 @@ end
 namespace :config do
   desc "Copy configurable images to /public/images/config folder"
   task :images,  :roles => :app do
-    if NcsNavigator.configuration.footer_logo_left || NcsNavigator.configuration.footer_logo_right
-      run "mkdir -p #{current_path}/public/images/config"
-      run "cp #{NcsNavigator.configuration.footer_logo_left} #{current_path}/public/images/config" if NcsNavigator.configuration.footer_logo_left
-      run "cp #{NcsNavigator.configuration.footer_logo_right} #{current_path}/public/images/config" if NcsNavigator.configuration.footer_logo_right
-    end
+    run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
 end
