@@ -5,6 +5,9 @@ ENV["RAILS_ENV"] ||= "test"
 # newer version of cucumber-rails. Consider adding your own code to a new file 
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
+require 'ncs_navigator/configuration'
+NcsNavigator.configuration =
+  NcsNavigator::Configuration.new(File.expand_path('../../../spec/configuration/navigator.ini', __FILE__))
 
 require 'cucumber/rails'
 require "json_spec/cucumber"
