@@ -6,14 +6,31 @@ users:
     portals: 
       - NCSNavigator: 
         - User Administrator
+        - Staff Supervisor
   staff: 
     password: staff
     first_name: FName2
     last_name: LName2
     portals:
-      - StaffPortal:
-        - staff
+      - NCSNavigator:
+        - Outreach Staff
+  staff1: 
+    password: staff1
+    first_name: FName2
+    last_name: LName2
+    portals:
+      - NCSNavigator:
+        - Field Staff
+  supervisor: 
+    password: supervisor
+    first_name: FName2
+    last_name: LName2
+    portals:
+      - NCSNavigator:
+        - Staff Supervisor
 groups: 
   NCSNavigator:
     - User Administrator
-    - staff
+    - Staff Supervisor
+    - Outreach Staff
+    - Field Staff
