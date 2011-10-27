@@ -348,10 +348,10 @@ describe Staff do
       end
       
       it "value to actual display name" do
-        Factory.create(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "YES", :local_code => 1) 
+        Factory.create(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "Yes", :local_code => 1) 
         @staff.subcontractor_code = 1
         actual_json = @staff.as_json
-        actual_json["subcontractor"].should == "YES"
+        actual_json["subcontractor"].should == "Yes"
       end
     end
     
