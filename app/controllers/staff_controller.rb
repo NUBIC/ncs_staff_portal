@@ -39,11 +39,14 @@ class StaffController < SecuredController
   # GET /staff/1
   # GET /staff/1.xml
   def show
-    @staff = Staff.find(params[:id])
-    add_breadcrumb "#{@staff.name}", staff_path(@staff) unless same_as_current_user(@staff)
+    @staff = find_staff
     respond_to do |format|
-      format.html { render :layout => "staff_information" }
+      format.html { 
+        render :layout => "staff_information" 
+        add_breadcrumb "#{@staff.name}", staff_path(@staff) unless same_as_current_user(@staff)
+      }
       format.xml  { render :xml => @staff }
+      format.json { render :json => @staff }
     end
   end
 
@@ -153,14 +156,23 @@ class StaffController < SecuredController
   end
   private
   def check_staff_access
-    @staff = Staff.find(params[:id])
+    @staff = find_staff
     check_user_access(@staff)
-    if (@staff.id == @current_staff.id) 
+    if same_as_current_user(@staff)
       set_tab :my_info
     else
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
+    end
+  end
+  
+  def find_staff
+    staff = Staff.find_by_username(params[:id]) || Staff.find(params[:id])
+    if staff
+      staff
+    else
+      raise "Staff does not exist."
     end
   end
   

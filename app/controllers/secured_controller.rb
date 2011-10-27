@@ -20,7 +20,7 @@ class SecuredController < ApplicationController
   end
   
   def check_user_access(requested_staff)
-    unless permit?(Role::STAFF_SUPERVISOR) or (requested_staff.id == @current_staff.id)
+    unless requested_staff.id == @current_staff.id or @current_staff.visible_employees.map(&:id).include?(requested_staff.id) 
       throw :warden
     end   
   end

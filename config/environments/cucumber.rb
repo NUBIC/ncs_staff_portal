@@ -29,11 +29,11 @@ OMA::Application.configure do
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   config.aker do
     ui_mode :form
+    api_mode :http_basic
     static = Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
     authorities static
     central '/etc/nubic/ncs/aker-local.yml'

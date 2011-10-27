@@ -7,6 +7,7 @@ ENV['RAILS_ENV'] = 'cucumber'
 # files.
 
 require 'cucumber/rails'
+require "json_spec/cucumber"
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -50,3 +51,7 @@ end
 #     DatabaseCleaner.strategy = :transaction
 #   end
 #
+
+def last_json
+  last_response.body
+end
