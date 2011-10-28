@@ -32,4 +32,11 @@ OMA::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  config.after_initialize do
+    Aker.configure do
+      ui_mode :form
+      api_mode :http_basic
+      authority Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
+    end
+  end
 end
