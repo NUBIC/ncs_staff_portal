@@ -46,11 +46,10 @@ OMA::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-    config.after_initialize do
+  config.after_initialize do
     Aker.configure do
-      static = Aker::Authorities::Static.from_file("/etc/nubic/ncs/staff_portal_users.yml")
-      authorities :cas, static
+      staff_portal = Aker::Authorities::StaffPortal.new
+      authorities :cas, staff_portal
       central '/etc/nubic/ncs/aker-staging.yml'
     end
   end
