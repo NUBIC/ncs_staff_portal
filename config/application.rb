@@ -56,3 +56,5 @@ module OMA
     end
   end
 end
+
+require 'will_paginate/array'
