@@ -48,7 +48,7 @@ module OMA
 
       # The authentication protocol(s) to use for non-interactive
       # access.  There is no default.
-      # api_mode :http_basic
+      api_mode :http_basic, :cas_proxy
 
       # The portal to which this application belongs.  Optional.
       portal :NCSNavigator
