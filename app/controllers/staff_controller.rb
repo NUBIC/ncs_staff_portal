@@ -134,11 +134,20 @@ class StaffController < SecuredController
         format.html { 
           if permit?(Role::STAFF_SUPERVISOR)
             if permit?(Role::USER_ADMINISTRATOR)
-              @user = @staff
-              render :action => "edit_user", :location => @user
+              if params[:return_path] == "staff_index_path"
+                render :action => "edit", :location => @staff
+              elsif params[:return_path] == "users_staff_index_path"
+                @user = @staff
+                render :action => "edit_user", :location => @user
+              end
             else
               render :action => "edit", :location => @staff
             end
+          elsif permit?(Role::USER_ADMINISTRATOR)
+            @user = @staff
+            render :action => "edit_user", :location => @user
+          else
+            render :action => "edit", :location => @staff
           end
           
         }
