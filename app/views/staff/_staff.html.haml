@@ -29,8 +29,9 @@
     = f.text_field :staff_type_other, {:size => 20 ,:id => "staff_type_other"} 
   .field
     = f.label :pay_amount, "Pay amount (in US Dollars)"
-    = f.select :pay_type, ["Hourly","Yearly"]
-    = f.text_field :pay_amount
+    %em * 
+    = f.select :pay_type, ["Hourly","Yearly", "Voluntary"], {:prompt => 'Select pay type'},{:id => "pay_type"}
+    = f.text_field :pay_amount, {:id => "pay_amount", :size =>10}
   .field
     = f.label :formatted_birth_date , "Date of Birth (mm/dd/yyyy)"
     %em *
@@ -94,5 +95,6 @@
       wire_up_select_other("#staff_type","#staff_type_other");
       wire_up_select_other("#race","#race_other");
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
-      disabled_selected_options(".staff_languages_selector")
+      disabled_selected_options(".staff_languages_selector");
+      wire_up_pay_amount("#pay_type", "#pay_amount")
     });

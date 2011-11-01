@@ -31,10 +31,13 @@
         %td
       %tr.task
         %td
-          - if (@staff.hourly_rate.blank? || @staff.hourly_rate == 0)
-            Your Rate: Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
+          Your Rate:
+          - if (@staff.hourly_rate.blank?)
+            Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
+          - elsif (@staff.hourly_rate == 0)
+            Voluntary Work. #{link_to "Update", edit_staff_path(@staff.id)}
           - else
-            Your Rate: $#{@staff.hourly_rate}/hr
+            $#{@staff.hourly_rate}/hr.
         %td
           = f.label :expenses, "Expense $"
           = f.text_field :expenses, {:size =>6}

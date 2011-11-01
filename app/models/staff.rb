@@ -26,15 +26,16 @@
 class Staff < ActiveRecord::Base
   self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create
+  
   validates_presence_of :first_name, :last_name, :username, :study_center, :if => :create_presence_required?
-  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :if => :update_presence_required?, :on => :update
+  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
   validates_uniqueness_of :username
-  validates :pay_amount, :numericality => {:greater_than => 0, :allow_nil => true }
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
   validates :email, :presence => true, :uniqueness => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }, :if => :create_presence_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   validates_date :ncs_inactive_date, :allow_blank => true
+  validate :pay_amount_required, :if => :update_presence_required?, :on => :update
   
   has_many :staff_languages, :dependent => :destroy
   has_many :staff_cert_trainings, :dependent => :destroy
@@ -51,10 +52,17 @@ class Staff < ActiveRecord::Base
   
   before_save :calculate_hourly_rate, :update_employees
   
+  def pay_amount_required
+    if self.pay_type == "Hourly" or self.pay_type =="Yearly"
+      errors.add(:pay_amount, "can't be blank") if self.pay_amount.blank?
+      errors.add(:pay_amount, "must be greater than 0") if !self.pay_amount.blank? and self.pay_amount <= 0
+    end
+  end
+  
   def update_employees
     self.employees.delete_all unless self.has_role(Role::STAFF_SUPERVISOR)
   end
-  
+
   scope :with_role, lambda { |role| 
     joins(:roles).where('roles.name = ?', role)
   }
@@ -78,6 +86,10 @@ class Staff < ActiveRecord::Base
                              :ethnicity_code, :experience_code, :birth_date ], 
            :include =>[:roles]).merge(json)
   end
+  
+  def expenses_without_pay
+     self.staff_weekly_expenses.where("rate = 0.00 or rate IS NULL")
+   end
   
   def supervisors
     Staff.where("staff.id IN (select supervisor_id from supervisor_employees where employee_id = ?)", self.id)
@@ -111,14 +123,13 @@ class Staff < ActiveRecord::Base
   end
   
   def calculate_hourly_rate
-    if !pay_type.blank? && !pay_amount.blank?
-      if pay_type == "Hourly"
-        self.hourly_rate = pay_amount
-      elsif pay_type == "Yearly"
-        self.hourly_rate = (pay_amount/1750).round(2)
-      end
-    else
+    if pay_type == "Hourly"
+      self.hourly_rate = pay_amount unless pay_amount.blank?
+    elsif pay_type == "Yearly"
+      self.hourly_rate = (pay_amount/1750).round(2) unless pay_amount.blank?
+    elsif pay_type == "Voluntary"
       self.hourly_rate = 0
+      self.pay_amount = 0
     end
   end
   

@@ -210,3 +210,29 @@ function check_select_for_yes_nested_attribute(select_id, nested_attribute_class
     })
   }
 }
+
+
+function wire_up_pay_amount(select_id, other_id){
+  check_select_for_pay_amount(select_id, other_id);
+  $(select_id).change(function(){
+    check_select_for_pay_amount(select_id, other_id);
+  });
+}
+
+function check_select_for_pay_amount(select_id, other_id){
+  var s = $(select_id+" option:selected");
+  var o = $(other_id);
+
+  if((o.size() > 0) && (s.size() > 0)){
+    if (s.val() == "Voluntary") {
+      o.val('0.00'); 
+      o.attr('disabled', 'disabled');
+      o.css('background-color', '#d0d0d0');
+    } else{
+      o.removeAttr('disabled');
+      o.css('background-color', '#FFFFFF')
+    }
+  }
+}
+
+

@@ -104,6 +104,10 @@ class StaffController < SecuredController
     @staff = Staff.find(params[:id])
     respond_to do |format|
       if @staff.update_attributes(params[:staff])
+        @staff.expenses_without_pay.each do |expense|
+          expense.rate = @staff.hourly_rate
+          expense.save!
+        end
         format.html {
           if permit?(Role::STAFF_SUPERVISOR)
             if permit?(Role::USER_ADMINISTRATOR)

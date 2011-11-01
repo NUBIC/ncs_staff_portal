@@ -11,7 +11,7 @@ describe Staff do
   
   
   describe "calculate_hourly_rate" do
-    it "should put pay_amount as it is as hourly_rate if pay_type is 'Hourly'" do
+    it "should put hourly_rate as it is as pay_amount if pay_type is 'Hourly'" do
       staff= FactoryGirl.build(:staff)
       staff.pay_type = "Hourly"
       staff.pay_amount = 25.00
@@ -19,7 +19,7 @@ describe Staff do
       staff.hourly_rate.should == 25.00
     end
     
-    it "should put pay_amount as 'amount/no.of hours worked in year' if pay_type is 'Yearly'" do
+    it "should put hourly_rate as 'amount/no.of hours worked in year' if pay_type is 'Yearly'" do
       staff= FactoryGirl.build(:staff)
       staff.pay_type = "Yearly"
       staff.pay_amount = 50000
@@ -27,19 +27,28 @@ describe Staff do
       staff.hourly_rate.should == 28.57
     end
     
-    it "should not calculate the hourly_rate if pay_amount is nil" do
+    it "should set hourly_rate as 0 and pay_amount as 0 if pay_type is 'Voluntary'" do
+      staff= FactoryGirl.build(:staff)
+      staff.pay_type = "Voluntary"
+      staff.save
+      staff.hourly_rate.should == 0
+      staff.pay_amount.should == 0
+    end
+    
+    it "should not calculate the hourly_rate if pay_amount is blank && pay_type is 'Yearly'" do
       staff= FactoryGirl.build(:staff)
       staff.pay_type = "Yearly"
       staff.save
-      staff.hourly_rate.should == 0
+      staff.hourly_rate.should == nil
     end
     
-    it "should not calculate the hourly_rate if pay_amount is nil" do
+    it "should not calculate the hourly_rate if pay_amount is blank && pay_type is 'Hourly'" do
       staff= FactoryGirl.build(:staff)
-      staff.pay_amount = 50000
+      staff.pay_type = "Hourly"
       staff.save
-      staff.hourly_rate.should == 0
+      staff.hourly_rate.should == nil
     end
+    
   end
   
   it { should have_many(:staff_roles) }
@@ -72,22 +81,6 @@ describe Staff do
       expected_staff.should include @staff4
     end
   end
-  
-  describe "pay_amount" do
-    it "should not contain other than decimal value" do
-      staff= FactoryGirl.build(:staff)
-      staff.pay_amount = "25,00"
-      staff.should_not be_valid
-      staff.should have(1).error_on(:pay_amount)
-    end
-    
-    it "should be greater than 0 dollar" do
-      staff= FactoryGirl.build(:staff)
-      staff.pay_amount = -3
-      staff.should_not be_valid
-      staff.should have(1).error_on(:pay_amount)
-    end
-  end 
   
   describe "validates" do
     
@@ -168,6 +161,43 @@ describe Staff do
         staff = FactoryGirl.create(:staff, :validate_update => "false")
         staff.save
         staff.should be_valid
+      end
+    end
+    
+    describe "pay_amount_required" do
+      before(:each) do
+        @staff = FactoryGirl.create(:staff)
+        @staff.staff_type_code = 1
+        @staff.gender_code = 1
+        @staff.race_code = 1
+        @staff.ethnicity_code = 1
+        @staff.zipcode = 12345
+        @staff.subcontractor_code = 1
+        @staff.experience_code = 1
+        @staff.birth_date = Date.today - 18.year
+        @staff.pay_type = "Hourly"
+      end
+      
+      it "throws error if pay_amount is blank" do
+        @staff.should_not be_valid
+        @staff.should have(1).error_on(:pay_amount)
+        @staff.errors[:pay_amount].should == ["can't be blank"]
+      end
+      
+      it "pay_amount should not contain other than decimal value" do
+        @staff.pay_amount = "invalid"
+        @staff.save
+        @staff.should_not be_valid
+        @staff.should have(1).error_on(:pay_amount)
+        @staff.errors[:pay_amount].should == ["must be greater than 0"]
+      end
+
+      it "pay_amount should be greater than 0 dollar" do
+        @staff.pay_amount = -3
+        @staff.save
+        @staff.should_not be_valid
+        @staff.should have(1).error_on(:pay_amount)
+        @staff.errors[:pay_amount].should == ["must be greater than 0"]
       end
     end
   end
@@ -425,7 +455,7 @@ describe Staff do
       end
     end
     
-    describe "containd languages" do
+    describe "contains languages" do
       it "key" do
         @staff.as_json.has_key?("languages").should == true
       end
@@ -440,6 +470,26 @@ describe Staff do
         json_languages.count.should == 1
         json_languages[0]["name"].should == "English"
       end
+    end
+  end
+  
+  describe "expenses_without_pay" do
+    before(:each) do
+      @staff = FactoryGirl.create(:staff)
+      @staff.staff_weekly_expenses.create(:week_start_date => Date.today.monday, :rate => 22.56)
+    end
+    
+    it "contain expenses with null rate" do
+      @staff.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday, :rate => nil)
+      expenses = @staff.expenses_without_pay
+      expenses.count.should == 1
+    end
+    
+    it "contain expenses with 0.00 rate" do
+      @staff.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday, :rate => nil)
+      @staff.staff_weekly_expenses.create(:week_start_date => (Date.today - 2.week).monday, :rate => 0.00)
+      expenses = @staff.expenses_without_pay
+      expenses.count.should == 2
     end
   end
 end
