@@ -5,10 +5,10 @@ class SecuredController < ApplicationController
   before_filter :set_current_staff
 
   def dashboard
-    if current_user.permit?(Role::STAFF_SUPERVISOR)
-      redirect_to staff_weekly_expenses_path
-    else
-      redirect_to new_staff_management_task_path(@current_staff.id) 
+    if permit?(*Role.management_group) 
+      redirect_to new_staff_management_task_path(@current_staff.id)
+    elsif permit?(*Role.data_collection_group)
+      redirect_to new_staff_data_collection_task_path(@current_staff.id)
     end
   end
 

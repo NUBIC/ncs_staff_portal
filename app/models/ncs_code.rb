@@ -24,7 +24,8 @@ class NcsCode < ActiveRecord::Base
     :race_specific_code => "CONFIRM_TYPE_CL6",
     :culture_specific_code => "CONFIRM_TYPE_CL6",
     :culture_code => "CULTURE_CL1",
-    :evaluation_result_code => "SUCCESS_LEVEL_CL1"
+    :evaluation_result_code => "SUCCESS_LEVEL_CL1",
+    :data_collection_task_type_code => "STUDY_DATA_CLLCTN_TSK_TYPE_CL1"
     }
 
   def self.ncs_code_lookup(attribute_name)

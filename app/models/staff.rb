@@ -41,6 +41,7 @@ class Staff < ActiveRecord::Base
   has_many :staff_cert_trainings, :dependent => :destroy
   has_many :staff_weekly_expenses, :dependent => :destroy
   has_many :management_tasks, :through => :staff_weekly_expenses
+  has_many :data_collection_tasks, :through => :staff_weekly_expenses
   has_many :staff_roles, :dependent => :destroy
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
@@ -99,6 +100,14 @@ class Staff < ActiveRecord::Base
     visible_employees = self.employees
     visible_employees = Staff.all if visible_employees.empty? && has_role(Role::STAFF_SUPERVISOR)
     visible_employees
+  end
+  
+  def belongs_to_management_group
+    Role.management_group.any? { |role| self.has_role(role) }  
+  end
+  
+  def belongs_to_data_collection_group
+    Role.data_collection_group.any? { |role| self.has_role(role) } 
   end
   
   def has_role(role_name)

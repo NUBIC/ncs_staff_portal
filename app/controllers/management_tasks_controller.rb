@@ -9,8 +9,6 @@ class ManagementTasksController < SecuredController
     @management_tasks = Staff.find(params[:staff_id]).management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @staff = Staff.find(params[:staff_id])
     @management_task = @staff.management_tasks.build
-    add_breadcrumb "New Task", new_staff_management_task_path(@staff) unless same_as_current_user(@staff)
-   
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @management_task }
@@ -23,7 +21,6 @@ class ManagementTasksController < SecuredController
     params[:page] ||= 1
     @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.find(params[:id])
-    add_breadcrumb "Edit Task", edit_staff_management_task_path(@staff, @management_task) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @management_task }

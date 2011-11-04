@@ -492,4 +492,43 @@ describe Staff do
       expenses.count.should == 2
     end
   end
+  
+  describe "belongs_to" do
+    before(:each) do
+      @staff = FactoryGirl.create(:staff)
+      @data_collection_group =  Role.find_by_name(Role::FIELD_STAFF)
+      @data_collection_group = FactoryGirl.create(:role, :name => "Field Staff") unless @data_collection_group
+    end
+    describe "management_group" do
+      it "returns true if staff has any role from management_group" do
+        @staff.roles << @user_admin
+        @staff.belongs_to_management_group.should == true
+      end
+      
+      it "returns false if staff has no role" do
+        @staff.belongs_to_management_group.should == false
+      end
+      
+      it "returns false if staff has no any role from management_group" do
+        @staff.roles << @data_collection_group
+        @staff.belongs_to_management_group.should == false
+      end
+    end
+    
+    describe "data_collection_group" do
+      it "returns true if staff has any role from data_collection_group" do
+        @staff.roles << @data_collection_group
+        @staff.belongs_to_data_collection_group.should == true
+      end
+      
+      it "returns false if staff has no role" do
+        @staff.belongs_to_data_collection_group.should == false
+      end
+      
+      it "returns false if staff has no any role from data_collection_group" do
+        @staff.roles << @user_admin
+        @staff.belongs_to_data_collection_group.should == false
+      end
+    end
+  end
 end

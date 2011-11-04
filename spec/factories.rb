@@ -41,6 +41,15 @@ FactoryGirl.define do
     task.association :staff_weekly_expense, :factory => :staff_weekly_expense
   end
   
+  factory :data_collection_task do |task|
+    task.task_type {|a| a.association(:ncs_code, :list_name => "STUDY_DATA_CLLCTN_TSK_TYPE_CL1", :display_text => "Field Management", :local_code => 1) }
+    task.task_date Date.today  
+    task.hours nil
+    task.miles nil
+    task.expenses nil
+    task.association :staff_weekly_expense, :factory => :staff_weekly_expense
+  end
+  
   factory :outreach_event do |event|
     event.name "test"
     event.mode {|a| a.association(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "In-person", :local_code => 1) }

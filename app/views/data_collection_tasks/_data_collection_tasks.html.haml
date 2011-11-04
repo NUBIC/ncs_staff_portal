@@ -1,0 +1,52 @@
+%h4 Listing data collection task for #{@staff.name} 
+%div.yui-skin-sam
+  %div#tasks-list
+    %table#data-collection-tasks-list
+      - @data_collection_tasks.each do |data_collection_task|
+        %tr
+          %td= link_to data_collection_task.task_date, edit_staff_data_collection_task_path(@staff, data_collection_task)
+          - if !data_collection_task.task_type_code.blank?
+            - if data_collection_task.task_type.display_text == "Other"
+              %td= data_collection_task.task_type_other
+            - else
+              %td= data_collection_task.task_type.display_text
+          - else 
+            %td= ""
+          %td= data_collection_task.hours
+          %td= data_collection_task.miles
+          %td= data_collection_task.expenses
+          %td= data_collection_task.comment
+          %td= button_to "Delete", { :action => "destroy", :id => data_collection_task.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete  
+:javascript
+    $(document).ready(function() {
+      displayTasksList()
+    });
+    
+    function displayTasksList() {
+      var columnDefs = [
+          { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+          { key: "type", label: "Type" },
+          { key: "hours", label: "Hours" },
+          { key: "miles", label: "Miles" },
+          { key: "expenses", label: "Expenses" },
+          { key: "comment", label: "Comment" },
+          { key: "controls", label: "Controls"}
+      ];
+      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("data-collection-tasks-list"));
+      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+      dataSource.responseSchema = {
+        fields: [
+          { key: "date" },
+          { key: "type" },
+          { key: "hours" },
+          { key: "miles" },
+          { key: "expenses" },
+          { key: "comment" },
+          { key: "controls" }
+        ]
+      };
+      new YAHOO.widget.DataTable("tasks-list", columnDefs, dataSource, {
+        sortedBy: { key: "date", dir: YAHOO.widget.DataTable.CLASS_DESC}
+      });
+    }
+= will_paginate @data_collection_tasks, :previous_label => "Previous", :next_label => "Next"

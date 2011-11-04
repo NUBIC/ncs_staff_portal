@@ -10,7 +10,7 @@ OMA::Application.routes.draw do
   resources :staff_languages
 
   resources :staff do
-    resources :staff_cert_trainings, :management_tasks
+    resources :staff_cert_trainings, :management_tasks, :data_collection_tasks
     collection do
       get 'users'
     end

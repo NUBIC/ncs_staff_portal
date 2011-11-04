@@ -1,15 +1,17 @@
-- if @staff.belongs_to_management_group
+- if @staff.belongs_to_data_collection_group
   .header
     = render_breadcrumbs :separator => ' / ' 
   .header
+    - if @staff.belongs_to_management_group
+      = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "breadcrumbs_link"
     %span.breadcrumbs
-      Management Task
-    - if @staff.belongs_to_data_collection_group
-      = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "breadcrumbs_link"  
+      Data Collection Task
     - if current_user.permit?(Role::STAFF_SUPERVISOR)
       = link_to 'Staff Entries', staff_weekly_expenses_path, :class => "breadcrumbs_link"
-  %h4 Add new management task for #{@staff.name}
-  = render 'management_task'
+  
+  %h4 Edit data collection task for #{@staff.name}
+
+  = render 'data_collection_task'
 
   %p
     Note: Fields mark as (
@@ -21,6 +23,5 @@
       %em Warning: 
       #{@staff.name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
       record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
-  
 
-  = render 'management_tasks'
+  = render 'data_collection_tasks'

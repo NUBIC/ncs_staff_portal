@@ -10,7 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010214236) do
+ActiveRecord::Schema.define(:version => 20111102182519) do
+
+  create_table "data_collection_tasks", :force => true do |t|
+    t.integer  "staff_weekly_expense_id"
+    t.date     "task_date"
+    t.integer  "task_type_code"
+    t.string   "task_type_other"
+    t.decimal  "hours"
+    t.decimal  "expenses"
+    t.decimal  "miles"
+    t.integer  "cases"
+    t.integer  "transmit"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
