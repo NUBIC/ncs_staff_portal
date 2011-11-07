@@ -6,7 +6,7 @@
       = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "breadcrumbs_link"
     %span.breadcrumbs
       Data Collection Task
-    - if current_user.permit?(Role::STAFF_SUPERVISOR)
+    - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
       = link_to 'Staff Entries', staff_weekly_expenses_path, :class => "breadcrumbs_link"
   
   %h4 Add new data collection task for #{@staff.name}

@@ -6,7 +6,7 @@
       Management Task
     - if @staff.belongs_to_data_collection_group
       = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "breadcrumbs_link"
-    - if current_user.permit?(Role::STAFF_SUPERVISOR)
+    - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
       = link_to 'Staff Entries', staff_weekly_expenses_path, :class => "breadcrumbs_link"
   %h4 Edit management task for #{@staff.name}
 
