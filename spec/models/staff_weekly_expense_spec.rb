@@ -40,4 +40,84 @@ describe StaffWeeklyExpense do
       actaul_expenses.count.should == 3
     end
   end
+  
+  describe "total" do
+    before(:each) do
+      @expense = Factory(:staff_weekly_expense)
+    end
+    
+    describe "hours" do
+      it "gives total hours of management_tasks and data_collection_task" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :hours => 12) 
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :hours => 15) 
+        @expense.total_hours.should == 27
+      end
+    
+      it "gives total hours of management_tasks hours only if no data_collection_tasks associated with weekly_expenses" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :hours => 20) 
+        @expense.total_hours.should == 20
+      end
+    
+      it "gives total hours of data_collection_tasks hours only if no management_tasks associated with weekly_expenses" do
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :hours => 18) 
+        @expense.total_hours.should == 18
+      end
+    end
+    
+    describe "miles" do
+      it "gives total miles of management_tasks and data_collection_task" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :miles => 12) 
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :miles => 15) 
+        @expense.total_miles.should == 27
+      end
+    
+      it "gives total miles of management_tasks miles only if no data_collection_tasks associated with weekly_expenses" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :miles => 20) 
+        @expense.total_miles.should == 20
+      end
+    
+      it "gives total miles of data_collection_tasks miles only if no management_tasks associated with weekly_expenses" do
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :miles => 18) 
+        @expense.total_miles.should == 18
+      end
+    end
+    
+    describe "expenses" do
+      it "gives total expenses of management_tasks and data_collection_task" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :expenses => 200) 
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :expenses => 150) 
+        @expense.total_expenses.should == 350
+      end
+    
+      it "gives total expenses of management_tasks expenses only if no data_collection_tasks associated with weekly_expenses" do
+        @expense.management_tasks << FactoryGirl.create(:management_task, :expenses => 250) 
+        @expense.total_expenses.should == 250
+      end
+    
+      it "gives total expenses of data_collection_tasks expenses only if no management_tasks associated with weekly_expenses" do
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :expenses => 300) 
+        @expense.total_expenses.should == 300
+      end
+    end
+    
+    describe "expenses" do
+      it "gives total numbers of management_tasks and data_collection_tasks" do
+        @expense.management_tasks << FactoryGirl.create(:management_task) 
+        @expense.management_tasks << FactoryGirl.create(:management_task)
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task) 
+        @expense.total_tasks.should == 3
+      end
+    
+      it "gives total numbers management_tasks only if no data_collection_tasks associated with weekly_expenses" do
+        @expense.management_tasks << FactoryGirl.create(:management_task) 
+        @expense.total_tasks.should == 1
+      end
+    
+      it "gives total numbers of data_collection_tasks only if no management_tasks associated with weekly_expenses" do
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task) 
+        @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task) 
+        @expense.total_tasks.should == 2
+      end
+    end
+  end
 end

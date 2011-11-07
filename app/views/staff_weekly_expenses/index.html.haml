@@ -14,12 +14,12 @@
       %table#weekly-expense-tbl
         - @staff_weekly_expenses.each do |staff_weekly_expense|
           %tr
-            %td=link_to staff_weekly_expense.week_start_date, new_staff_management_task_path(staff_weekly_expense.staff.id)
+            %td= link_to staff_weekly_expense.week_start_date, staff_weekly_expense.staff
             %td= staff_weekly_expense.staff.name
-            %td= staff_weekly_expense.management_tasks.map(&:hours).compact.inject(0){ |total, hours| total + hours}
-            %td= staff_weekly_expense.management_tasks.map(&:expenses).compact.inject(0){ |total, expenses| total + expenses }
-            %td= staff_weekly_expense.management_tasks.map(&:miles).compact.inject(0){ |total, miles| total + miles}
-            %td= staff_weekly_expense.management_tasks.length
+            %td= staff_weekly_expense.total_hours
+            %td= staff_weekly_expense.total_miles
+            %td= staff_weekly_expense.total_expenses
+            %td= staff_weekly_expense.total_tasks
             %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
   :javascript
       $(document).ready(function() {
