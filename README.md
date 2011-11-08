@@ -181,7 +181,7 @@ Load SSUs:
     $ bundle exec rake psu:load_ncs_area_ssus
 
 This creates SSU and area records that reflect in the provided
-CSV from the [configuration][] file which describes the sampling units for the study center.
+CSV from the [ncs_navigator_configuration][] file which describes the sampling units for the study center.
 
 #### Giveaway items
 
