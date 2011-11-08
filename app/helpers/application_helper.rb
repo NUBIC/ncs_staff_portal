@@ -6,6 +6,10 @@ module ApplicationHelper
       end
   end
   
+  def same_as_current_user(requested_staff)
+    requested_staff.id == @current_staff.id ? true : false
+  end
+  
   def display_languages(languages)
     list = languages.map do |language|
       if (language.lang.display_text == "Other")
