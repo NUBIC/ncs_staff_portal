@@ -3,7 +3,9 @@ namespace :email do
   task :task_reminder => :environment do
     excluded_users = NcsNavigator.configuration.staff_portal['reminder_excluded_users'].split(",") unless NcsNavigator.configuration.staff_portal['reminder_excluded_users'].blank?
     Staff.by_task_reminder(Date.today).each do |staff|
-      StaffMailer.staff_reminder_mail(staff).deliver unless (!excluded_users.blank? && excluded_users.include?(staff.username))
+      if staff.is_active
+        StaffMailer.staff_reminder_mail(staff).deliver unless (!excluded_users.blank? && excluded_users.include?(staff.username))
+      end
     end
   end
 end
