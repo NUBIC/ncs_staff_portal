@@ -46,7 +46,7 @@ OMA::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-    config.after_initialize do
+  config.after_initialize do
     Aker.configure do
       staff_portal = Aker::Authorities::StaffPortal.new
       authorities :cas, staff_portal
