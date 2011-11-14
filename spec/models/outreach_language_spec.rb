@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: outreach_languages
+#
+#  id                :integer         not null, primary key
+#  outreach_event_id :integer
+#  language_code     :integer         not null
+#  language_other    :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require 'spec_helper'
 
 describe OutreachLanguage do

@@ -38,6 +38,7 @@ GEM
     aker-rails (3.0.1)
       aker (~> 3.0)
       rails (~> 3.0)
+    annotate (2.4.0)
     arel (2.0.10)
     bcdatabase (1.2.1)
       activesupport (>= 2.0)
@@ -195,6 +196,7 @@ PLATFORMS
 DEPENDENCIES
   aker
   aker-rails
+  annotate
   bcdatabase
   breadcrumbs_on_rails
   capistrano

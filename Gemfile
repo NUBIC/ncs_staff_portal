@@ -32,6 +32,7 @@ group :development, :test, :ci do
   gem 'factory_girl_rails', '~> 1.1.rc1'
   gem 'shoulda'
   gem 'ci_reporter', '~> 1.6'
+  gem 'annotate'
 end
 
 gem "haml-rails"

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: ncs_codes
+#
+#  id               :integer         not null, primary key
+#  list_name        :string(255)     not null
+#  list_description :string(255)
+#  display_text     :string(255)     not null
+#  local_code       :integer         not null
+#  global_code      :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 class NcsCode < ActiveRecord::Base
   validates_presence_of :list_name, :display_text, :local_code
   ATTRIBUTE_MAPPING = { 

@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: ncs_areas
+#
+#  id     :integer         not null, primary key
+#  psu_id :string(255)     not null
+#  name   :string(255)     not null
+#
+
 require 'spec_helper'
 
 describe NcsArea do

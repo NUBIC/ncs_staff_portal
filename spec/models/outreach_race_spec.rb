@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: outreach_races
+#
+#  id                :integer         not null, primary key
+#  outreach_event_id :integer
+#  race_code         :integer         not null
+#  race_other        :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require 'spec_helper'
 
 describe OutreachRace do

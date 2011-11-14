@@ -1,27 +1,32 @@
-# Schema Information
-# Schema version: 20110406152435
+# == Schema Information
 #
 # Table name: staff
 #
-# name                  :string
-# email                 :string
-# netid                 :string
-# study_center          :integer
-# staff_type_code       :integer
-# staff_type_other      :string
-# subcontractor_code    :integer
-# birth_date            :date
-# hourly_rate           :decimal
-# pay_type              :string
-# pay_hour              :decimal
-# gender_code           :integer
-# race_code             :integer
-# race_other            :string
-# zipcode               :integer
-# ethnicity_code        :integer
-# experience_code       :integer
-# comment               :text
-
+#  id                 :integer         not null, primary key
+#  email              :string(255)
+#  username           :string(255)
+#  study_center       :integer
+#  staff_type_code    :integer
+#  staff_type_other   :string(255)
+#  subcontractor_code :integer
+#  gender_code        :integer
+#  race_code          :integer
+#  race_other         :string(255)
+#  ethnicity_code     :integer
+#  experience_code    :integer
+#  comment            :text
+#  created_at         :datetime
+#  updated_at         :datetime
+#  hourly_rate        :decimal(5, 2)
+#  birth_date         :date
+#  pay_type           :string(255)
+#  pay_amount         :decimal(10, 2)
+#  zipcode            :integer
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  ncs_active_date    :date
+#  ncs_inactive_date  :date
+#
 
 class Staff < ActiveRecord::Base
   self.include_root_in_json = false

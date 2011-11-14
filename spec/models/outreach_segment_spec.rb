@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: outreach_segments
+#
+#  id                :integer         not null, primary key
+#  outreach_event_id :integer
+#  ncs_area_id       :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require 'spec_helper'
 
 describe OutreachSegment do

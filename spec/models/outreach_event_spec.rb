@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: outreach_events
+#
+#  id                     :integer         not null, primary key
+#  event_date             :date
+#  mode_code              :integer         not null
+#  mode_other             :string(255)
+#  outreach_type_code     :integer         not null
+#  outreach_type_other    :string(255)
+#  tailored_code          :integer         not null
+#  language_specific_code :integer
+#  race_specific_code     :integer
+#  culture_specific_code  :integer
+#  culture_code           :integer
+#  culture_other          :string(255)
+#  cost                   :decimal(, )
+#  no_of_staff            :integer
+#  evaluation_result_code :integer         not null
+#  created_at             :datetime
+#  updated_at             :datetime
+#  name                   :string(255)
+#  letters_quantity       :integer
+#  attendees_quantity     :integer
+#  created_by             :integer
+#
+
 require 'spec_helper'
 
 describe OutreachEvent do

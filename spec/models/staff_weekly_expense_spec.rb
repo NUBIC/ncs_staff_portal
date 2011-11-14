@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: staff_weekly_expenses
+#
+#  id              :integer         not null, primary key
+#  staff_id        :integer
+#  week_start_date :date            not null
+#  rate            :decimal(5, 2)
+#  hours           :decimal(5, 2)
+#  expenses        :decimal(10, 2)
+#  miles           :decimal(5, 2)
+#  comment         :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 require 'spec_helper'
 
 describe StaffWeeklyExpense do

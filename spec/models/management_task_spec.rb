@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: management_tasks
+#
+#  id                      :integer         not null, primary key
+#  staff_weekly_expense_id :integer
+#  task_date               :date            not null
+#  task_type_code          :integer         not null
+#  task_type_other         :string(255)
+#  hours                   :decimal(, )
+#  expenses                :decimal(, )
+#  miles                   :decimal(, )
+#  comment                 :text
+#  created_at              :datetime
+#  updated_at              :datetime
+#
+
 require 'spec_helper'
 
 describe ManagementTask do

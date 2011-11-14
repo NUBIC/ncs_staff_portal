@@ -1,26 +1,29 @@
-# Schema Information
-# Schema version: 20110426180246
+# == Schema Information
 #
 # Table name: outreach_events
 #
-# event_date                  :date
-# mode_code                   :integer
-# mode_other                  :string
-# outreach_type_code          :integer
-# outreach_type_other         :string
-# tailored_code               :integer
-# language_specific_code      :integer
-# language_code               :integer
-# language_other              :string
-# race_specific_code          :integer
-# culture_specific_code       :integer
-# culture_code                :integer
-# culture_other               :string
-# cost                        :decimal
-# evaluation_result_code      :integer
-# name                        :string
-# letters_quantity            :integer
-# attendees_quantity          :integer
+#  id                     :integer         not null, primary key
+#  event_date             :date
+#  mode_code              :integer         not null
+#  mode_other             :string(255)
+#  outreach_type_code     :integer         not null
+#  outreach_type_other    :string(255)
+#  tailored_code          :integer         not null
+#  language_specific_code :integer
+#  race_specific_code     :integer
+#  culture_specific_code  :integer
+#  culture_code           :integer
+#  culture_other          :string(255)
+#  cost                   :decimal(, )
+#  no_of_staff            :integer
+#  evaluation_result_code :integer         not null
+#  created_at             :datetime
+#  updated_at             :datetime
+#  name                   :string(255)
+#  letters_quantity       :integer
+#  attendees_quantity     :integer
+#  created_by             :integer
+#
 
 class OutreachEvent < ActiveRecord::Base
    has_many :outreach_staff_members, :dependent => :destroy

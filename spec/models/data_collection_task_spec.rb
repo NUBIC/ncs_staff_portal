@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: data_collection_tasks
+#
+#  id                      :integer         not null, primary key
+#  staff_weekly_expense_id :integer
+#  task_date               :date
+#  task_type_code          :integer
+#  task_type_other         :string(255)
+#  hours                   :decimal(, )
+#  expenses                :decimal(, )
+#  miles                   :decimal(, )
+#  cases                   :integer
+#  transmit                :integer
+#  comment                 :text
+#  created_at              :datetime
+#  updated_at              :datetime
+#
+
 require 'spec_helper'
 
 describe DataCollectionTask do

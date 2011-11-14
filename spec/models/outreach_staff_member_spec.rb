@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: outreach_staff_members
+#
+#  id                :integer         not null, primary key
+#  staff_id          :integer
+#  outreach_event_id :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require 'spec_helper'
 
 describe OutreachStaffMember do

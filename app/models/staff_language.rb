@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: staff_languages
+#
+#  id         :integer         not null, primary key
+#  staff_id   :integer
+#  lang_code  :integer         not null
+#  lang_other :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class StaffLanguage < ActiveRecord::Base
   belongs_to :staff
   validates_presence_of :lang

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: outreach_items
+#
+#  id                :integer         not null, primary key
+#  outreach_event_id :integer
+#  item_name         :string(255)     not null
+#  item_other        :string(255)
+#  item_quantity     :integer         not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 class OutreachItem < ActiveRecord::Base
   belongs_to :outreach_event
   validates_presence_of :item_name, :item_quantity

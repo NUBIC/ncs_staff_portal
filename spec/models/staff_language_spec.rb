@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: staff_languages
+#
+#  id         :integer         not null, primary key
+#  staff_id   :integer
+#  lang_code  :integer         not null
+#  lang_other :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'spec_helper'
 
 describe StaffLanguage do

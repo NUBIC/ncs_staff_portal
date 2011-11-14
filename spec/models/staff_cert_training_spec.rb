@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: staff_cert_trainings
+#
+#  id                    :integer         not null, primary key
+#  staff_id              :integer
+#  certificate_type_code :integer         not null
+#  complete_code         :integer         not null
+#  cert_date             :string(255)
+#  background_check_code :integer         not null
+#  frequency             :string(255)
+#  expiration_date       :date
+#  comment               :text
+#  created_at            :datetime
+#  updated_at            :datetime
+#
+
 require 'spec_helper'
 
 describe StaffCertTraining do
