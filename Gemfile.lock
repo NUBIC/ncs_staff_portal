@@ -179,6 +179,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.30)
+    uuidtools (2.1.2)
     validates_timeliness (3.0.7)
       timeliness (~> 0.3.3)
     warden (1.0.6)
@@ -220,6 +221,7 @@ DEPENDENCIES
   scoped_search
   shoulda
   tabs_on_rails
+  uuidtools
   validates_timeliness (~> 3.0.2)
   whenever
   will_paginate (~> 3.0.pre4)

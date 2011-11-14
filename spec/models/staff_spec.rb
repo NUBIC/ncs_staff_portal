@@ -26,6 +26,7 @@
 #  last_name          :string(255)
 #  ncs_active_date    :date
 #  ncs_inactive_date  :date
+#  staff_id           :string(36)      not null
 #
 
 require 'spec_helper'
@@ -86,6 +87,20 @@ describe Staff do
 
   it { should have_many(:supervisor_employees) }
   it { should have_many(:employees).through(:supervisor_employees) }
+
+  describe '#staff_id' do
+    it 'is automatically set if not set' do
+      Staff.new.staff_id.should_not be_nil
+    end
+
+    it 'is left alone if already set' do
+      Staff.new(:staff_id => 'fred').staff_id.should == 'fred'
+    end
+
+    it 'is set to a different value for each staff record' do
+      Staff.new.staff_id.should_not == Staff.new.staff_id
+    end
+  end
 
   describe "weekly_task_reminder" do
     before(:each) do

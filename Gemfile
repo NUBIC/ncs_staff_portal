@@ -21,6 +21,7 @@ gem "will_paginate", "~> 3.0.pre4"
 gem "scoped_search"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
+gem 'uuidtools'
 
 group :development, :test, :ci do
   gem 'rspec-rails', '2.6.1'

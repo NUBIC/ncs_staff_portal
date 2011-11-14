@@ -26,6 +26,7 @@
 #  last_name          :string(255)
 #  ncs_active_date    :date
 #  ncs_inactive_date  :date
+#  staff_id           :string(36)      not null
 #
 
 class Staff < ActiveRecord::Base
@@ -57,6 +58,8 @@ class Staff < ActiveRecord::Base
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
 
   before_save :calculate_hourly_rate, :update_employees
+
+  acts_as_mdes_record :public_id => :staff_id
 
   def pay_amount_required
     if self.pay_type == "Hourly" or self.pay_type =="Yearly"

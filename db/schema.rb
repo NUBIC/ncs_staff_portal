@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102182519) do
+ActiveRecord::Schema.define(:version => 20111114222840) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -164,16 +164,19 @@ ActiveRecord::Schema.define(:version => 20111102182519) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "hourly_rate",        :precision => 5,  :scale => 2
+    t.decimal  "hourly_rate",                      :precision => 5,  :scale => 2
     t.date     "birth_date"
     t.string   "pay_type"
-    t.decimal  "pay_amount",         :precision => 10, :scale => 2
+    t.decimal  "pay_amount",                       :precision => 10, :scale => 2
     t.integer  "zipcode"
     t.string   "first_name"
     t.string   "last_name"
     t.date     "ncs_active_date"
     t.date     "ncs_inactive_date"
+    t.string   "staff_id",           :limit => 36,                                :null => false
   end
+
+  add_index "staff", ["staff_id"], :name => "uq_staff_staff_id", :unique => true
 
   create_table "staff_cert_trainings", :force => true do |t|
     t.integer  "staff_id"
