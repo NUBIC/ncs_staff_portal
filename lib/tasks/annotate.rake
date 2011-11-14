@@ -6,5 +6,7 @@ namespace :annotate do
 end
 
 task('db:migrate').enhance do
-  task('annotate:models').invoke
+  if Rails.env == 'development'
+    task('annotate:models').invoke
+  end
 end
