@@ -22,29 +22,29 @@ describe StaffCertTraining do
     training = Factory(:staff_cert_training)
     training.should_not be_nil
   end
-  
+
   it { should validate_presence_of(:certificate_type) }
-  
+
   it { should belong_to(:staff) }
-  
+
   it "should be validate the cert_date value as '97/97/9777' as 'Not Applicable'" do
     training = FactoryGirl.build(:staff_cert_training)
     training.cert_date = '97/97/9777'
     training.should be_valid
   end
-  
+
   it "should be validate the cert_date value as '96/96/9666' as 'Unknown'" do
     training = FactoryGirl.build(:staff_cert_training)
     training.cert_date = '96/96/9666'
     training.should be_valid
   end
-  
+
   it "should be validate the cert_date value for valid date" do
     training = FactoryGirl.build(:staff_cert_training)
     training.cert_date = Date.today
     training.should be_valid
   end
-  
+
   it "should not validate the cert_date for invalid value" do
     training = FactoryGirl.build(:staff_cert_training)
     training.cert_date = "121211"
