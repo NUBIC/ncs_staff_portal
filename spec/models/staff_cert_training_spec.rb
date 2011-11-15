@@ -13,6 +13,7 @@
 #  comment               :text
 #  created_at            :datetime
 #  updated_at            :datetime
+#  staff_cert_list_id    :string(36)      not null
 #
 
 require 'spec_helper'
@@ -26,6 +27,12 @@ describe StaffCertTraining do
   it { should validate_presence_of(:certificate_type) }
 
   it { should belong_to(:staff) }
+
+  describe '#public_id' do
+    it 'is :staff_cert_list_id' do
+      StaffCertTraining.new(:staff_cert_list_id => 'GH').public_id.should == 'GH'
+    end
+  end
 
   it "should be validate the cert_date value as '97/97/9777' as 'Not Applicable'" do
     training = FactoryGirl.build(:staff_cert_training)

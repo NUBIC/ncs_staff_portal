@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114222840) do
+ActiveRecord::Schema.define(:version => 20111115052754) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(:version => 20111114222840) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "staff_exp_data_coll_task_id", :limit => 36, :null => false
   end
+
+  add_index "data_collection_tasks", ["staff_exp_data_coll_task_id"], :name => "uq_data_collection_tasks_staff_exp_data_coll_task_id", :unique => true
 
   create_table "inventory_items", :force => true do |t|
     t.string   "name"
@@ -35,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20111114222840) do
 
   create_table "management_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
-    t.date     "task_date",               :null => false
-    t.integer  "task_type_code",          :null => false
+    t.date     "task_date",                             :null => false
+    t.integer  "task_type_code",                        :null => false
     t.string   "task_type_other"
     t.decimal  "hours"
     t.decimal  "expenses"
@@ -44,7 +47,10 @@ ActiveRecord::Schema.define(:version => 20111114222840) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "staff_exp_mgmt_task_id",  :limit => 36, :null => false
   end
+
+  add_index "management_tasks", ["staff_exp_mgmt_task_id"], :name => "uq_management_tasks_staff_exp_mgmt_task_id", :unique => true
 
   create_table "ncs_area_ssus", :force => true do |t|
     t.integer "ncs_area_id"
@@ -180,24 +186,30 @@ ActiveRecord::Schema.define(:version => 20111114222840) do
 
   create_table "staff_cert_trainings", :force => true do |t|
     t.integer  "staff_id"
-    t.integer  "certificate_type_code", :null => false
-    t.integer  "complete_code",         :null => false
+    t.integer  "certificate_type_code",               :null => false
+    t.integer  "complete_code",                       :null => false
     t.string   "cert_date"
-    t.integer  "background_check_code", :null => false
+    t.integer  "background_check_code",               :null => false
     t.string   "frequency"
     t.date     "expiration_date"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "staff_cert_list_id",    :limit => 36, :null => false
   end
+
+  add_index "staff_cert_trainings", ["staff_cert_list_id"], :name => "uq_staff_cert_trainings_staff_cert_list_id", :unique => true
 
   create_table "staff_languages", :force => true do |t|
     t.integer  "staff_id"
-    t.integer  "lang_code",  :null => false
+    t.integer  "lang_code",                       :null => false
     t.string   "lang_other"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "staff_language_id", :limit => 36, :null => false
   end
+
+  add_index "staff_languages", ["staff_language_id"], :name => "uq_staff_languages_staff_language_id", :unique => true
 
   create_table "staff_roles", :force => true do |t|
     t.integer  "staff_id"
@@ -208,15 +220,18 @@ ActiveRecord::Schema.define(:version => 20111114222840) do
 
   create_table "staff_weekly_expenses", :force => true do |t|
     t.integer  "staff_id"
-    t.date     "week_start_date",                                :null => false
-    t.decimal  "rate",            :precision => 5,  :scale => 2
-    t.decimal  "hours",           :precision => 5,  :scale => 2
-    t.decimal  "expenses",        :precision => 10, :scale => 2
-    t.decimal  "miles",           :precision => 5,  :scale => 2
+    t.date     "week_start_date",                                              :null => false
+    t.decimal  "rate",                          :precision => 5,  :scale => 2
+    t.decimal  "hours",                         :precision => 5,  :scale => 2
+    t.decimal  "expenses",                      :precision => 10, :scale => 2
+    t.decimal  "miles",                         :precision => 5,  :scale => 2
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "weekly_exp_id",   :limit => 36,                                :null => false
   end
+
+  add_index "staff_weekly_expenses", ["weekly_exp_id"], :name => "uq_staff_weekly_expenses_weekly_exp_id", :unique => true
 
   create_table "supervisor_employees", :force => true do |t|
     t.integer "supervisor_id", :null => false

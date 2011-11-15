@@ -12,6 +12,7 @@
 #  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime
+#  weekly_exp_id   :string(36)      not null
 #
 
 require 'spec_helper'
@@ -25,6 +26,12 @@ describe StaffWeeklyExpense do
   it { should validate_presence_of(:week_start_date) }
 
   it { should belong_to(:staff) }
+
+  describe '#public_id' do
+    it 'is :weekly_exp_id' do
+      StaffWeeklyExpense.new(:weekly_exp_id => '55').public_id.should == '55'
+    end
+  end
 
   describe "visible_expenses" do
     before(:each) do

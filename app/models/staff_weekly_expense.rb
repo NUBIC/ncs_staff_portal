@@ -12,6 +12,7 @@
 #  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime
+#  weekly_exp_id   :string(36)      not null
 #
 
 class StaffWeeklyExpense < ActiveRecord::Base
@@ -19,6 +20,8 @@ class StaffWeeklyExpense < ActiveRecord::Base
   has_many :management_tasks, :dependent => :destroy
   has_many :data_collection_tasks, :dependent => :destroy
   belongs_to :staff
+
+  acts_as_mdes_record :public_id => :weekly_exp_id
 
   def self.visible_expenses(staff_ids = [])
     if staff_ids.any?

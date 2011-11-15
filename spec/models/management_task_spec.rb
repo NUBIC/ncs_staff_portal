@@ -13,6 +13,7 @@
 #  comment                 :text
 #  created_at              :datetime
 #  updated_at              :datetime
+#  staff_exp_mgmt_task_id  :string(36)      not null
 #
 
 require 'spec_helper'
@@ -28,6 +29,12 @@ describe ManagementTask do
   it { should belong_to(:staff_weekly_expense) }
 
   it { should belong_to(:task_type) }
+
+  describe '#public_id' do
+    it 'is :staff_exp_mgmt_task_id' do
+      ManagementTask.new(:staff_exp_mgmt_task_id => 'fred').public_id.should == 'fred'
+    end
+  end
 
   describe "validations" do
     describe "hours" do

@@ -2,18 +2,21 @@
 #
 # Table name: staff_languages
 #
-#  id         :integer         not null, primary key
-#  staff_id   :integer
-#  lang_code  :integer         not null
-#  lang_other :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                :integer         not null, primary key
+#  staff_id          :integer
+#  lang_code         :integer         not null
+#  lang_other        :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  staff_language_id :string(36)      not null
 #
 
 class StaffLanguage < ActiveRecord::Base
   belongs_to :staff
   validates_presence_of :lang
   belongs_to :lang, :conditions => "list_name = 'LANGUAGE_CL2'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :lang_code
+
+  acts_as_mdes_record :public_id => :staff_language_id
 
   validates_with OtherEntryValidator, :entry => :lang, :other_entry => :lang_other
 

@@ -13,6 +13,7 @@
 #  comment                 :text
 #  created_at              :datetime
 #  updated_at              :datetime
+#  staff_exp_mgmt_task_id  :string(36)      not null
 #
 
 class ManagementTask < ActiveRecord::Base
@@ -25,6 +26,8 @@ class ManagementTask < ActiveRecord::Base
 
   belongs_to :staff_weekly_expense
   belongs_to :task_type, :conditions => "list_name = 'STUDY_MNGMNT_TSK_TYPE_CL1'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :task_type_code
+
+  acts_as_mdes_record :public_id => :staff_exp_mgmt_task_id
 
   def formatted_task_date
     task_date.nil? ? nil : task_date.to_s

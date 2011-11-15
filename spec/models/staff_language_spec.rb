@@ -2,12 +2,13 @@
 #
 # Table name: staff_languages
 #
-#  id         :integer         not null, primary key
-#  staff_id   :integer
-#  lang_code  :integer         not null
-#  lang_other :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                :integer         not null, primary key
+#  staff_id          :integer
+#  lang_code         :integer         not null
+#  lang_other        :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  staff_language_id :string(36)      not null
 #
 
 require 'spec_helper'
@@ -23,6 +24,12 @@ describe StaffLanguage do
   it { should validate_presence_of(:lang) }
 
   it { should belong_to(:staff) }
+
+  describe '#public_id' do
+    it 'is :staff_language_id' do
+      StaffLanguage.new(:staff_language_id => 'FTE').public_id.should == 'FTE'
+    end
+  end
 
   describe "validates lang_other" do
     let(:lang_code) { Factory(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "Other", :local_code => -5) }

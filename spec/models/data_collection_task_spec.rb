@@ -2,19 +2,20 @@
 #
 # Table name: data_collection_tasks
 #
-#  id                      :integer         not null, primary key
-#  staff_weekly_expense_id :integer
-#  task_date               :date
-#  task_type_code          :integer
-#  task_type_other         :string(255)
-#  hours                   :decimal(, )
-#  expenses                :decimal(, )
-#  miles                   :decimal(, )
-#  cases                   :integer
-#  transmit                :integer
-#  comment                 :text
-#  created_at              :datetime
-#  updated_at              :datetime
+#  id                          :integer         not null, primary key
+#  staff_weekly_expense_id     :integer
+#  task_date                   :date
+#  task_type_code              :integer
+#  task_type_other             :string(255)
+#  hours                       :decimal(, )
+#  expenses                    :decimal(, )
+#  miles                       :decimal(, )
+#  cases                       :integer
+#  transmit                    :integer
+#  comment                     :text
+#  created_at                  :datetime
+#  updated_at                  :datetime
+#  staff_exp_data_coll_task_id :string(36)      not null
 #
 
 require 'spec_helper'
@@ -30,6 +31,12 @@ describe DataCollectionTask do
   it { should belong_to(:staff_weekly_expense) }
 
   it { should belong_to(:task_type) }
+
+  describe '#public_id' do
+    it 'is :staff_exp_data_coll_task_id' do
+      DataCollectionTask.new(:staff_exp_data_coll_task_id => 'fred').public_id.should == 'fred'
+    end
+  end
 
   describe "validations" do
     describe "hours" do

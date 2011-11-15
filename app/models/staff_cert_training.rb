@@ -13,6 +13,7 @@
 #  comment               :text
 #  created_at            :datetime
 #  updated_at            :datetime
+#  staff_cert_list_id    :string(36)      not null
 #
 
 class StaffCertTraining < ActiveRecord::Base
@@ -20,6 +21,8 @@ class StaffCertTraining < ActiveRecord::Base
   belongs_to :staff
   validates_date :expiration_date, :allow_blank => true
   validate :valid_cert_date
+
+  acts_as_mdes_record :public_id => :staff_cert_list_id
 
   def valid_cert_date
     if !(self.cert_date == "96/96/9666" || self.cert_date == "97/97/9777")

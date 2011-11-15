@@ -2,19 +2,20 @@
 #
 # Table name: data_collection_tasks
 #
-#  id                      :integer         not null, primary key
-#  staff_weekly_expense_id :integer
-#  task_date               :date
-#  task_type_code          :integer
-#  task_type_other         :string(255)
-#  hours                   :decimal(, )
-#  expenses                :decimal(, )
-#  miles                   :decimal(, )
-#  cases                   :integer
-#  transmit                :integer
-#  comment                 :text
-#  created_at              :datetime
-#  updated_at              :datetime
+#  id                          :integer         not null, primary key
+#  staff_weekly_expense_id     :integer
+#  task_date                   :date
+#  task_type_code              :integer
+#  task_type_other             :string(255)
+#  hours                       :decimal(, )
+#  expenses                    :decimal(, )
+#  miles                       :decimal(, )
+#  cases                       :integer
+#  transmit                    :integer
+#  comment                     :text
+#  created_at                  :datetime
+#  updated_at                  :datetime
+#  staff_exp_data_coll_task_id :string(36)      not null
 #
 
 class DataCollectionTask < ActiveRecord::Base
@@ -27,6 +28,8 @@ class DataCollectionTask < ActiveRecord::Base
 
   belongs_to :staff_weekly_expense
   belongs_to :task_type, :conditions => "list_name = 'STUDY_DATA_CLLCTN_TSK_TYPE_CL1'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :task_type_code
+
+  acts_as_mdes_record :public_id => :staff_exp_data_coll_task_id
 
   def formatted_task_date
     task_date.nil? ? nil : task_date.to_s
