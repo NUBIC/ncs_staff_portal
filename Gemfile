@@ -34,6 +34,11 @@ group :development, :test, :ci do
   gem 'shoulda'
   gem 'ci_reporter', '~> 1.6'
   gem 'annotate'
+  gem 'guard'
+  gem 'guard-spork'
+  gem 'spork', '> 0.9.0.rc'
+  gem 'rb-fsevent'
+  gem 'growl'
 end
 
 gem "haml-rails"

@@ -91,6 +91,12 @@ GEM
     ffi (1.0.9)
     gherkin (2.5.4)
       json (>= 1.4.6)
+    growl (1.0.3)
+    guard (0.8.8)
+      thor (~> 0.14.6)
+    guard-spork (0.3.1)
+      guard (>= 0.8.4)
+      spork (>= 0.8.4)
     haml (3.0.25)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
@@ -149,6 +155,7 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.4)
     rake (0.9.2.2)
+    rb-fsevent (0.4.3.1)
     rdoc (3.11)
       json (~> 1.4)
     rspec (2.6.0)
@@ -174,6 +181,7 @@ GEM
       json_pure
       rubyzip
     shoulda (2.11.3)
+    spork (0.9.0.rc9)
     tabs_on_rails (2.0.2)
     term-ansicolor (1.0.7)
     thor (0.14.6)
@@ -212,6 +220,9 @@ DEPENDENCIES
   database_cleaner (~> 0.6.6)
   factory_girl_rails (~> 1.1.rc1)
   fastercsv
+  growl
+  guard
+  guard-spork
   haml (~> 3.0.25)
   haml-rails
   json_spec
@@ -220,9 +231,11 @@ DEPENDENCIES
   ncs_navigator_configuration
   pg
   rails (= 3.0.10)
+  rb-fsevent
   rspec-rails (= 2.6.1)
   scoped_search
   shoulda
+  spork (> 0.9.0.rc)
   tabs_on_rails
   uuidtools
   validates_timeliness (~> 3.0.2)
