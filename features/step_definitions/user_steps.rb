@@ -49,35 +49,5 @@ Given /staff with username (.+)$/ do |usernames|
 end
 
 Then /has correct JSON response$/ do
-  steps %Q{
-  Then the JSON response should be:
-  """
-    {"study_center": 1234,
-         "staff_type_other": null,
-         "ncs_inactive_date": null,
-         "gender": null,
-         "zipcode": null,
-         "subcontractor": null,
-         "username": "staff",
-         "race_other": null,
-         "ethnicity": null,
-         "experience": null,
-         "last_name": "staff",
-         "staff_type": null,
-         "languages": [
-
-          ],
-         "roles": [
-
-          ],
-         "race": null,
-         "ncs_active_date": null,
-         "first_name": "staff",
-         "email": "staff@test.com"
-         }
-    """
-  }
+  JSON.parse(last_response.body)['username'].should == 'staff'
 end
-
-
-
