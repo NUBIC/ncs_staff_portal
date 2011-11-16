@@ -21,6 +21,8 @@ Spork.prefork do
   require 'factory_girl'
 
   RSpec.configure do |config|
+    config.treat_symbols_as_metadata_keys_with_true_values = true
+
     # == Mock Framework
     #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -30,10 +32,27 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
-    # If you're not using ActiveRecord, or you'd prefer not to run each of your
-    # examples within a transaction, remove the following line or assign false
-    # instead of true.
-    config.use_transactional_fixtures = true
+    config.before(:all) do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.before(:each, :clean_with_truncation) do
+      DatabaseCleaner.strategy = :truncation
+    end
+
+    config.after(:each, :clean_with_truncation) do
+      DatabaseCleaner.strategy = :transaction
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
     config.include Aker::Rails::Test::Helpers
   end
 end
