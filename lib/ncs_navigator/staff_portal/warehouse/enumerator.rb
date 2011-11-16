@@ -39,5 +39,37 @@ module NcsNavigator::StaffPortal::Warehouse
         study_center ncs_active_date ncs_inactive_date
       )
     )
+
+    produce_one_for_one(:staff_languages, StaffLanguage,
+      :query => %Q(
+        SELECT sl.*, s.staff_id AS public_id_for_staff
+        FROM staff_languages sl
+          INNER JOIN staff s ON sl.staff_id = s.id
+        WHERE sl.lang_code <> -5
+      ),
+      :prefix => 'staff_',
+      :column_map => {
+        :public_id_for_staff => :staff_id,
+      },
+      :ignored_columns => %w(staff_id)
+    )
+
+    # Per PO dictum, combine all "others" into one row. See #1526.
+    produce_one_for_one(:staff_languages_other, StaffLanguage,
+      :query => %Q(
+        SELECT
+          min(sl.staff_language_id) staff_language_id,
+          string_agg(sl.lang_other, ',') staff_lang_oth,
+          sl.lang_code AS staff_lang,
+          s.staff_id AS public_id_for_staff
+        FROM staff_languages sl
+          INNER JOIN staff s ON sl.staff_id = s.id
+        WHERE sl.lang_code = -5
+        GROUP BY s.staff_id, sl.lang_code
+      ),
+      :column_map => {
+        :public_id_for_staff => :staff_id,
+      }
+    )
   end
 end

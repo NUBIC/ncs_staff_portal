@@ -108,5 +108,70 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end
     end
+
+    describe 'for StaffLanguage' do
+      let(:sp_model) { StaffLanguage }
+      let(:other_code) { Factory(:ncs_code, :list_name => 'LANGUAGE_CL2', :local_code => '-5') }
+      let(:staff) { Factory(:valid_staff) }
+
+      context 'from code list' do
+        let(:producer_names) { [:staff_languages] }
+        let!(:sp_record) { Factory(:staff_language, :staff => staff) }
+
+        it 'uses the public ID for staff' do
+          results.last.staff_id.should == staff.staff_id
+        end
+
+        it 'generates one WH record for each language entry' do
+          results.size.should == 1
+        end
+
+        it 'ignores "other"' do
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Esperanto', :staff => staff)
+
+          results.size.should == 1
+        end
+      end
+
+      context 'other' do
+        let(:producer_names) { [:staff_languages_other] }
+
+        before do
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Esperanto', :staff => staff,
+            :staff_language_id => 'E')
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Aramaic', :staff => staff,
+            :staff_language_id => 'A')
+        end
+
+        it 'uses the public ID for staff' do
+          results.last.staff_id.should == staff.staff_id
+        end
+
+        it 'ignores coded entries' do
+          Factory(:staff_language, :staff => staff)
+
+          results.size.should == 1
+        end
+
+        it 'aggregates multiple "other" languages into one WH other entry' do
+          # Intentionally an array with one string
+          results.collect(&:staff_lang_oth).should == ['Esperanto,Aramaic']
+        end
+
+        it 'uses the lexically earliest staff_language_id' do
+          results.collect(&:staff_language_id).should == ['A']
+        end
+
+        it 'includes the other code' do
+          results.collect(&:staff_lang).should == ['-5']
+        end
+
+        it 'aggregates within a single staff member only' do
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Gujarati')
+
+          results.collect(&:staff_lang_oth).should == ['Esperanto,Aramaic', 'Gujarati']
+        end
+      end
+    end
   end
 end
