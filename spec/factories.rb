@@ -14,7 +14,25 @@ FactoryGirl.define do
     s.email {Factory.next(:email)}
     s.study_center 123456
   end
-  
+
+  factory :valid_staff, :class => Staff do |s|
+    s.first_name 'Josephine'
+    s.last_name  'Hull'
+    s.username   'jh540'
+    s.email      'jh@example.net'
+    s.study_center 2900092
+    s.birth_date Date.new(1977, 1, 3)
+    s.staff_type    { |a| a.association(:ncs_code, :list_name => 'STUDY_STAFF_TYPE_CL1', :local_code => 12, :display_text => 'Telephone Center Staff') }
+    s.gender        { |a| a.association(:ncs_code, :list_name => 'GENDER_CL1', :local_code => 2, :display_text => 'Female') }
+    s.race          { |a| a.association(:ncs_code, :list_name => 'RACE_CL1', :local_code => 1, :display_text => 'White') }
+    s.subcontractor { |a| a.association(:ncs_code, :list_name => 'CONFIRM_TYPE_CL2', :local_code => 1, :display_text => 'Yes') }
+    s.ethnicity     { |a| a.association(:ncs_code, :list_name => 'ETHNICITY_CL1', :local_code => 2, :display_text => 'Not Hispanic or Latino') }
+    s.experience    { |a| a.association(:ncs_code, :list_name => 'EXPERIENCE_LEVEL_CL1', :local_code => 3, :display_text => '6 or more years') }
+    s.pay_type 'Hourly'
+    s.pay_amount '6.95'
+    s.zipcode '92131'
+  end
+
   factory :staff_language do |sl|
     sl.association :staff, :factory => :staff
     sl.lang {|a| a.association(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "English", :local_code => 1) }
