@@ -173,5 +173,33 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end
     end
+
+    describe 'for StaffCertTraining' do
+      let!(:sp_record) { Factory(:staff_cert_training) }
+      let(:sp_model) { StaffCertTraining }
+
+      let(:producer_names) { [:staff_cert_trainings] }
+
+      it 'uses the public ID for staff' do
+        results.first.staff_id.should == Staff.first.staff_id
+      end
+
+      it 'generates one WH record per SP record' do
+        results.size.should == 1
+      end
+
+      context do
+        include_context 'mapping test'
+
+        [
+          [:certificate_type, ncs_code(7), :cert_train_type, '7'],
+          [:complete, ncs_code(2), :cert_completed, '2'],
+          [:background_check, ncs_code(6), :staff_bgcheck_lvl, '6'],
+          [:frequency, 4, :cert_type_frequency, '4'],
+          [:expiration_date, Date.new(2014, 3, 2), :cert_type_exp_date, '2014-03-02'],
+          [:comment, 'Not important', :cert_comment],
+        ].each { |args| verify_mapping(*args) }
+      end
+    end
   end
 end
