@@ -351,5 +351,132 @@ module NcsNavigator::StaffPortal::Warehouse
         ].each { |args| verify_mapping(*args) }
       end
     end
+
+    describe 'for OutreachEvent' do
+      let(:producer_names) { [:outreach_events] }
+      let(:sp_model) { OutreachEvent }
+
+      let!(:ncs_area) { Factory(:ncs_area) }
+      let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area) }
+      let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+      let!(:outreach_event) {
+        Factory(:outreach_event, :outreach_segments => [outreach_segment])
+      }
+
+      shared_examples 'a basic outreach event' do
+        include_context 'mapping test'
+
+        it 'has a derived public ID' do
+          results.first.outreach_event_id.should == "staff_portal-#{outreach_event.id}"
+        end
+
+        [
+          [:event_date, Date.new(2011, 7, 5), :outreach_event_date, '2011-07-05'],
+          [:mode, ncs_code(8), :outreach_mode, '8'],
+          [:mode_other, 'E', :outreach_mode_oth],
+          [:outreach_type, ncs_code(5), :outreach_type, '5'],
+          [:culture_other, 'Secular Humanist', :outreach_culture_oth],
+          [:cost, '250.00', :outreach_cost, '250.0'],
+          [:cost, nil, :outreach_cost, '0.0'],
+          [:no_of_staff, 18, :outreach_staffing, '18'],
+          [:evaluation_result, ncs_code(4), :outreach_eval_result, '4']
+        ].each { |args| verify_mapping(*args) }
+
+        it 'includes the other language from a different table' do
+          Factory(:outreach_language,
+            :outreach_event => outreach_event, :language_other => 'Babylonian')
+          results.first.outreach_lang_oth.should == 'Babylonian'
+        end
+
+        it 'sums letters and attendees for quantity' do
+          outreach_event.update_attributes(:letters_quantity => 8, :attendees_quantity => 3)
+
+          results.first.outreach_quantity.should == '11'
+        end
+
+        it 'always uses "no" for incidents (until incidents are supported)' do
+          results.first.outreach_incident.should == '2'
+        end
+
+        it 'produces one record per SSU in the area' do
+          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '7')
+
+          results.size.should == 3
+        end
+
+        it 'produces one record per SSU per area' do
+          area2 = Factory(:ncs_area)
+          Factory(:ncs_area_ssu, :ncs_area => area2, :ssu_id => '5')
+          Factory(:outreach_segment, :outreach_event => outreach_event, :ncs_area => area2)
+
+          results.size.should == 2
+        end
+      end
+
+      describe 'when tailored' do
+        before do
+          outreach_event.update_attribute(:tailored_code, 1)
+        end
+
+        it_behaves_like 'a basic outreach event'
+
+        [
+          %w(language outreach_lang1),
+          %w(race outreach_race1),
+          %w(culture outreach_culture1)
+        ].each do |which, wh_var|
+          describe "#{which} specificity" do
+            it 'is the set value if set' do
+              outreach_event.update_attribute(:"#{which}_specific_code", 1)
+              results.first.send(wh_var).should == '1'
+            end
+
+            it 'is the unknown value if not set' do
+              outreach_event.update_attribute(:"#{which}_specific_code", nil)
+              results.first.send(wh_var).should == '-4'
+            end
+          end
+        end
+
+        describe 'designated culture' do
+          it 'is the set value if set' do
+            outreach_event.update_attribute(:culture_code, 8)
+            results.first.outreach_culture2.should == '8'
+          end
+
+          it 'is the missing value if missing' do
+            outreach_event.update_attribute(:culture_code, nil)
+            results.first.outreach_culture2.should == '-4'
+          end
+        end
+      end
+
+      describe 'when untailored' do
+        before do
+          # Why does update_attribute work everywhere else but not here?
+          outreach_event.tailored = Factory(:ncs_code, :local_code => 2)
+          outreach_event.save!
+        end
+
+        it_behaves_like 'a basic outreach event'
+
+        it 'is not for a specific language' do
+          results.first.outreach_lang1.should == '2'
+        end
+
+        it 'is not for a specific race' do
+          results.first.outreach_race1.should == '2'
+        end
+
+        it 'is not for a specific culture' do
+          results.first.outreach_culture1.should == '2'
+        end
+
+        it 'does not designate a culture' do
+          results.first.outreach_culture2.should == '-7'
+        end
+      end
+    end
   end
 end

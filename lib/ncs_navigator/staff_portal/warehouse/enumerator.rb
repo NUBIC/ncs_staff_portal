@@ -8,7 +8,7 @@ module NcsNavigator::StaffPortal::Warehouse
     bcdatabase :name => 'ncs_staff_portal'
 
     on_unused_columns :fail
-    ignored_columns :id, :created_at, :updated_at
+    ignored_columns :id, :created_at, :updated_at, :created_by
 
     age_expression = '((current_date - birth_date) / 365.25)'
     produce_one_for_one(:staff, Staff,
@@ -157,6 +157,37 @@ module NcsNavigator::StaffPortal::Warehouse
         :public_id_for_staff_weekly_expenses => :staff_weekly_expense_id
       },
       :ignored_columns => %w(hours expenses miles task_date staff_weekly_expense_id)
+    )
+
+    produce_one_for_one(:outreach_events, Outreach,
+      :query => %Q(
+        SELECT
+          'staff_portal-' || oe.id AS outreach_event_id,
+          to_char(oe.event_date, 'YYYY-MM-DD') AS event_date,
+          oe.outreach_type_code,
+          oe.mode_code,
+          oe.mode_other,
+          oe.culture_other,
+          COALESCE(oe.cost, '0.0') AS cost,
+          oe.no_of_staff AS outreach_staffing,
+          oe.evaluation_result_code AS outreach_eval_result,
+          (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
+          ns.ssu_id,
+          ol.language_other AS lang_other,
+          2 AS outreach_incident,
+          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.language_specific_code, -4) END AS outreach_lang1,
+          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.race_specific_code,     -4) END AS outreach_race1,
+          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.culture_specific_code,  -4) END AS outreach_culture1,
+          CASE oe.tailored_code WHEN 2 THEN -7 ELSE COALESCE(oe.culture_code,           -4) END AS outreach_culture2
+        FROM outreach_events oe
+         INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
+         INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+         LEFT JOIN (
+           SELECT outreach_event_id, language_other
+           FROM outreach_languages WHERE language_other IS NOT NULL AND length(trim(language_other)) > 0
+         ) ol ON oe.id=ol.outreach_event_id
+      ),
+      :prefix => 'outreach_'
     )
   end
 end
