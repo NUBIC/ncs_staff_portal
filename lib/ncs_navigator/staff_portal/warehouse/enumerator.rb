@@ -162,7 +162,7 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:outreach_events, Outreach,
       :query => %Q(
         SELECT
-          'staff_portal-' || oe.id AS outreach_event_id,
+          'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id,
           to_char(oe.event_date, 'YYYY-MM-DD') AS event_date,
           oe.outreach_type_code,
           oe.mode_code,

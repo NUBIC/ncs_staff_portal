@@ -367,7 +367,8 @@ module NcsNavigator::StaffPortal::Warehouse
         include_context 'mapping test'
 
         it 'has a derived public ID' do
-          results.first.outreach_event_id.should == "staff_portal-#{outreach_event.id}"
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
         end
 
         [
@@ -411,6 +412,13 @@ module NcsNavigator::StaffPortal::Warehouse
           Factory(:outreach_segment, :outreach_event => outreach_event, :ncs_area => area2)
 
           results.size.should == 2
+        end
+
+        it 'gives each separate record a unique ID' do
+          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '7')
+
+          results.collect(&:outreach_event_id).uniq.size.should == 3
         end
       end
 
