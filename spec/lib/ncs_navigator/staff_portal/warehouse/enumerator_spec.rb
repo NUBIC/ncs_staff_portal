@@ -201,5 +201,155 @@ module NcsNavigator::StaffPortal::Warehouse
         ].each { |args| verify_mapping(*args) }
       end
     end
+
+    describe 'staff weekly expenses' do
+      let!(:sp_record) { Factory(:staff_weekly_expense) }
+      let(:sp_model) { StaffWeeklyExpense }
+
+      let(:producer_names) { [:staff_weekly_expenses] }
+
+      it 'uses the public ID for staff' do
+        results.first.staff_id.should == Staff.first.staff_id
+      end
+
+      context do
+        include_examples 'mapping test'
+
+        [
+          [:week_start_date, Date.new(2011, 4, 8), :week_start_date, '2011-04-08'],
+          [:comment, 'Slow week', :weekly_expenses_comment],
+          [:rate, '23.4', :staff_pay]
+        ].each { |args| verify_mapping(*args) }
+      end
+
+      shared_examples 'summed attributes' do
+        include_context 'mapping test'
+
+        it 'produces one expense record for many tasks' do
+          results.size.should == 1
+        end
+
+        it 'produces separate WH records for separate SP records' do
+          task2.update_attribute(:staff_weekly_expense, Factory(:staff_weekly_expense))
+          results.size.should == 2
+        end
+
+        describe 'hours' do
+          it 'sums across all tasks' do
+            task1.update_attributes(:hours => '16.02')
+            task2.update_attributes(:hours => '90.00')
+
+            results.first.staff_hours.should == '106.02'
+          end
+
+          it 'uses 0.00 if there are no hours' do
+            results.first.staff_hours.should == '0.0'
+          end
+        end
+
+        describe 'expenses' do
+          it 'sums across all tasks' do
+            task1.update_attributes(:expenses =>  '9.99')
+            task2.update_attributes(:expenses => '10.08')
+
+            results.first.staff_expenses.should == '20.07'
+          end
+
+          it 'uses 0.00 if there are no expenses' do
+            results.first.staff_expenses.should == '0.0'
+          end
+        end
+
+        describe 'miles' do
+          it 'sums across all tasks' do
+            task1.update_attributes(:miles =>  '52.02')
+            task2.update_attributes(:miles => '150.21')
+
+            results.first.staff_miles.should == '202.23'
+          end
+
+          it 'uses 0.00 if there are no miles' do
+            results.first.staff_miles.should == '0.0'
+          end
+        end
+      end
+
+      describe 'with management tasks' do
+        let!(:task1) { Factory(:management_task, :staff_weekly_expense => sp_record) }
+        let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
+
+        include_examples 'summed attributes'
+      end
+
+      describe 'with data collection tasks' do
+        let!(:task1) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
+        let!(:task2) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
+
+        include_examples 'summed attributes'
+      end
+
+      describe 'with both kinds of tasks' do
+        let!(:task1) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
+        let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
+
+        include_examples 'summed attributes'
+      end
+    end
+
+    describe 'for ManagementTasks' do
+      let(:producer_names) { [:management_tasks] }
+
+      let(:sp_model) { ManagementTask }
+      let!(:sp_record) { Factory(:management_task) }
+
+      it 'uses the public ID for the associated weekly expense' do
+        results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
+      end
+
+      it 'generates one WH record per SP record' do
+        results.size.should == 1
+      end
+
+      context do
+        include_context 'mapping test'
+
+        [
+          [:task_type, ncs_code(11), :mgmt_task_type, '11'],
+          [:task_type_other, 'Shuffling', :mgmt_task_type_oth],
+          [:hours, '12.0', :mgmt_task_hrs],
+          [:hours, nil, :mgmt_task_hrs, '0.0'],
+          [:comment, 'Tempus fugit', :mgmt_task_comment]
+        ].each { |args| verify_mapping(*args) }
+      end
+    end
+
+    describe 'for DataCollectionTask' do
+      let(:producer_names) { [:data_collection_tasks] }
+
+      let(:sp_model) { DataCollectionTask }
+      let!(:sp_record) { Factory(:data_collection_task) }
+
+      it 'uses the public ID for the associated weekly expense' do
+        results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
+      end
+
+      it 'generates one WH record per SP record' do
+        results.size.should == 1
+      end
+
+      context do
+        include_context 'mapping test'
+
+        [
+          [:task_type, ncs_code(7), :data_coll_task_type, '7'],
+          [:task_type_other, 'Sketching', :data_coll_task_type_oth],
+          [:cases, 18, :data_coll_task_cases, '18'],
+          [:transmit, 4, :data_coll_transmit, '4'],
+          [:hours, '12.0', :data_coll_tasks_hrs],
+          [:hours, nil, :data_coll_tasks_hrs, '0.0'],
+          [:comment, 'DC', :data_coll_task_comment]
+        ].each { |args| verify_mapping(*args) }
+      end
+    end
   end
 end

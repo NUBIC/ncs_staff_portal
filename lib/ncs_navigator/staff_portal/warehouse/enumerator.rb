@@ -91,5 +91,72 @@ module NcsNavigator::StaffPortal::Warehouse
       },
       :ignored_columns => %w(staff_id expiration_date)
     )
+
+    produce_one_for_one(:staff_weekly_expenses, StaffWeeklyExpense,
+      :query => %Q(
+        SELECT
+          s.staff_id AS public_id_for_staff,
+          COALESCE(t.staff_hours,    '0.0') staff_hours,
+          COALESCE(t.staff_expenses, '0.0') staff_expenses,
+          COALESCE(t.staff_miles,    '0.0') staff_miles,
+          to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
+          swe.rate,
+          swe.comment
+        FROM staff_weekly_expenses swe
+          INNER JOIN staff s ON swe.staff_id=s.id
+          LEFT JOIN (
+            SELECT staff_weekly_expense_id,
+              SUM(hours) staff_hours, SUM(expenses) staff_expenses, SUM(miles) staff_miles
+            FROM (
+              SELECT staff_weekly_expense_id, hours, expenses, miles FROM management_tasks
+              UNION ALL
+              SELECT staff_weekly_expense_id, hours, expenses, miles FROM data_collection_tasks
+            ) all_exp
+            GROUP BY staff_weekly_expense_id
+          ) t ON swe.id=t.staff_weekly_expense_id
+      ),
+      :column_map => {
+        :public_id_for_staff => :staff_id,
+        :comment => :weekly_expenses_comment,
+        :rate => :staff_pay
+      },
+      :ignored_columns => %w(hours miles expenses staff_id rate)
+    )
+
+    produce_one_for_one(:management_tasks, StaffExpMngmntTasks,
+      :query => %Q(
+        SELECT
+          mt.*,
+          COALESCE(mt.hours, '0.0') AS mgmt_task_hrs,
+          swe.weekly_exp_id AS public_id_for_staff_weekly_expenses
+        FROM management_tasks mt
+          INNER JOIN staff_weekly_expenses swe ON mt.staff_weekly_expense_id=swe.id
+      ),
+      :prefix => 'mgmt_',
+      :column_map => {
+        :comment => :mgmt_task_comment,
+        :public_id_for_staff_weekly_expenses => :staff_weekly_expense_id
+     },
+      :ignored_columns => %w(staff_weekly_expense_id hours expenses miles task_date)
+    )
+
+    produce_one_for_one(:data_collection_tasks, StaffExpDataCllctnTasks,
+      :query => %Q(
+        SELECT
+          dc.*,
+          COALESCE(dc.hours, '0.0') AS hours_or_zero,
+          swe.weekly_exp_id AS public_id_for_staff_weekly_expenses
+        FROM data_collection_tasks dc
+          INNER JOIN staff_weekly_expenses swe ON dc.staff_weekly_expense_id=swe.id
+      ),
+      :prefix => 'data_coll_',
+      :column_map => {
+        :comment => :data_coll_task_comment,
+        :cases => :data_coll_task_cases,
+        :hours_or_zero => :data_coll_tasks_hrs,
+        :public_id_for_staff_weekly_expenses => :staff_weekly_expense_id
+      },
+      :ignored_columns => %w(hours expenses miles task_date staff_weekly_expense_id)
+    )
   end
 end
