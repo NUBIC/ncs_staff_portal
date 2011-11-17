@@ -169,7 +169,7 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'aggregates within a single staff member only' do
           Factory(:staff_language, :lang => other_code, :lang_other => 'Gujarati')
 
-          results.collect(&:staff_lang_oth).should == ['Esperanto,Aramaic', 'Gujarati']
+          results.collect(&:staff_lang_oth).sort.should == ['Esperanto,Aramaic', 'Gujarati']
         end
       end
     end
