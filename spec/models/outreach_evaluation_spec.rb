@@ -13,8 +13,9 @@
 require 'spec_helper'
 
 describe OutreachEvaluation do
+  let(:evaluation) { Factory(:outreach_evaluation) }
+
   it "should create a new instance given valid attributes" do
-    evaluation = Factory(:outreach_evaluation)
     evaluation.should_not be_nil
   end
   
@@ -45,5 +46,13 @@ describe OutreachEvaluation do
       outreach_evaluation.should be_valid
       outreach_evaluation.evaluation_other.should == nil
     end
+  end
+  
+  it 'can access its parent' do
+    oe = Factory(:outreach_event)
+    oe.outreach_evaluations << evaluation
+    oe.save!
+    
+    OutreachEvaluation.find(evaluation.id).outreach_event.should == oe
   end
 end
