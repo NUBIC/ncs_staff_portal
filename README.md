@@ -128,22 +128,53 @@ Example:
 
     ncs_staff_portal:
       # Repository for staff portal. This will always be this value
-      # same unless you wish to deploy your own fork.
+      # unless you wish to deploy your own fork.
       repo: "git://github.com/NUBIC/ncs_staff_portal.git"
-      # path on the server where application will be deploy
-      deploy_to: "/www/apps/"
+      # path on the server where application will be deployed
+      deploy_to: "/www/apps/ncs_staff_portal"
       # staging server hostname
       staging_app_server: "staging.server"
       # production server hostname
       production_app_server: "production.server"
 
 After you check out the code, run `bundle install` to install the gems
-you'll need. Then deploy to the configured server:
+you'll need. The first time you deploy, capistrano needs to set up the
+directory layout it expects:
+
+    $ bundle exec cap production deploy:setup
+
+Then deploy to the configured server:
 
     $ bundle exec cap production deploy:migrations
 
 (This deploys to your production server; to deploy to staging instead,
 substitute "staging" for "production".)
+
+After the first deployment, you should only need to run
+`deploy:migrations` to get new versions. You can also use
+`deploy:pending` to see what would be deployed.
+
+If you have problems deploying, you can run this:
+
+    $ bundle exec cap production deploy:check
+
+and capistrano will try to tell you why it cannot deploy.
+
+#### Deployment user
+
+As currently configured, Staff Portal will be deployed as the user you
+use to connect to the application server. The target directory must be
+writable by that user, and (by way of Passenger) the software will be
+executed with that users' permissions.
+
+Most likely, the use account you use to connect to the application
+server will be your personal account. We [may add specific
+support][1622] for deploying using a different account from the login
+account, but an option for now is to use an alias defined in
+`.ssh/config` on the workstation. See issue [1622][] for a more
+detailed discussion of this option.
+
+[1622]: https://code.bioinformatics.northwestern.edu/issues/issues/show/1622
 
 ### Initialization
 
