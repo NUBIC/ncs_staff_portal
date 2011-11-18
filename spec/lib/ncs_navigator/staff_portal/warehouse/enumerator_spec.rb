@@ -484,6 +484,240 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'does not designate a culture' do
           results.first.outreach_culture2.should == '-7'
         end
+
+        describe 'specifying language and race' do
+          let(:producer_names) { [:outreach_untailored_automatic] }
+          let(:lang_results) { results.select { |r| r.is_a?(MdesModule::OutreachLang2) } }
+          let(:race_results) { results.select { |r| r.is_a?(MdesModule::OutreachRace) } }
+
+          it 'uses English (code=1) as the language' do
+            lang_results.first.outreach_lang2.should == '1'
+          end
+
+          it 'uses NA (code=-7) as the race' do
+            race_results.first.outreach_race2.should == '-7'
+          end
+
+          describe 'with multiple SSUs' do
+            before do
+              Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+            end
+
+            it 'produces multiple languages, each with a unique ID' do
+              lang_results.collect(&:outreach_lang2_id).uniq.size.should == 2
+            end
+
+            it 'produces multiple races, each with a unique ID' do
+              race_results.collect(&:outreach_race_id).uniq.size.should == 2
+            end
+          end
+        end
+      end
+
+      describe 'and languages' do
+        let(:producer_names) { [:outreach_languages] }
+        let(:sp_model) { OutreachLanguage }
+
+        let!(:outreach_language) {
+          Factory(:outreach_language,
+            :outreach_event => outreach_event, :language => Factory(:ncs_code, :local_code => 4))
+        }
+
+        it 'has the correct derived outreach event ID' do
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        end
+
+        it 'has the correct derived record ID' do
+          results.first.outreach_lang2_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-L#{outreach_language.id}"
+        end
+
+        describe 'with multiple languages' do
+          let!(:outreach_language2) {
+            Factory(:outreach_language,
+              :outreach_event => outreach_event,
+              :language => Factory(:ncs_code, :local_code => 6))
+          }
+
+          it 'produces one record per SSU per language' do
+            Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+
+            results.collect(&:outreach_lang2).sort.should == %w(4 4 6 6)
+          end
+
+          it 'gives each language record a unique ID' do
+            results.collect(&:outreach_lang2_id).uniq.size.should == 2
+          end
+        end
+      end
+
+      describe 'and races' do
+        let(:producer_names) { [:outreach_races] }
+        let(:sp_model) { OutreachRace }
+
+        let!(:outreach_race) {
+          Factory(:outreach_race,
+            :outreach_event => outreach_event,
+            :race => Factory(:ncs_code, :local_code => 4, :list_name => 'RACE_CL3'))
+        }
+
+        it 'has the correct derived outreach event ID' do
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        end
+
+        it 'has the correct derived record ID' do
+          results.first.outreach_race_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-R#{outreach_race.id}"
+        end
+
+        context do
+          include_context 'mapping test'
+
+          verify_mapping(:race_other, 'Klingon', :outreach_race_oth)
+        end
+
+        describe 'with multiple races' do
+          let!(:outreach_race2) {
+            Factory(:outreach_race,
+              :outreach_event => outreach_event,
+              :race => Factory(:ncs_code, :local_code => 6))
+          }
+
+          it 'produces one record per SSU per race' do
+            Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+
+            results.collect(&:outreach_race2).sort.should == %w(4 4 6 6)
+          end
+
+          it 'gives each record a unique ID' do
+            results.collect(&:outreach_race_id).uniq.size.should == 2
+          end
+        end
+      end
+
+      describe 'and targets' do
+        let(:producer_names) { [:outreach_targets] }
+        let(:sp_model) { OutreachTarget }
+
+        it 'has the correct derived outreach event ID' do
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        end
+
+        it 'has the correct derived record ID' do
+          results.first.outreach_target_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-T#{outreach_event.outreach_targets.first.id}"
+        end
+
+        context do
+          include_context 'mapping test'
+
+          verify_mapping(:target_other, 'Hay bale', :outreach_target_ms_oth)
+        end
+
+        describe 'with multiple targets' do
+          let!(:outreach_target2) {
+            Factory(:outreach_target,
+              :outreach_event => outreach_event,
+              :target => Factory(:ncs_code, :local_code => 3))
+          }
+
+          it 'produces one record per SSU per target' do
+            Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+
+            results.collect(&:outreach_target_ms).sort.should == %w(10 10 3 3)
+          end
+
+          it 'gives each record a unique ID' do
+            results.collect(&:outreach_target_id).uniq.size.should == 2
+          end
+        end
+      end
+
+      describe 'and evaluations' do
+        let(:producer_names) { [:outreach_evaluations] }
+        let(:sp_model) { OutreachEvaluation }
+
+        let!(:outreach_evaluation) {
+          outreach_event.outreach_evaluations.first
+        }
+
+        it 'has the correct derived outreach event ID' do
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        end
+
+        it 'has the correct derived record ID' do
+          results.first.outreach_event_eval_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-E#{outreach_evaluation.id}"
+        end
+
+        context do
+          include_context 'mapping test'
+
+          verify_mapping(:evaluation_other, 'Too slow', :outreach_eval_oth)
+        end
+
+        describe 'with multiple evaluations' do
+          let!(:outreach_evaluation2) {
+            Factory(:outreach_evaluation,
+              :outreach_event => outreach_event,
+              :evaluation => Factory(:ncs_code, :local_code => 6))
+          }
+
+          it 'produces one record per SSU per eval' do
+            Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+
+            results.collect(&:outreach_eval).sort.should == %w(1 1 6 6)
+          end
+
+          it 'gives each record a unique ID' do
+            results.collect(&:outreach_event_eval_id).uniq.size.should == 2
+          end
+        end
+      end
+
+      describe 'and staff' do
+        let(:producer_names) { [:outreach_staff_members] }
+        let(:sp_model) { OutreachStaffMember }
+
+        let!(:outreach_staff_member) {
+          outreach_event.outreach_staff_members.first
+        }
+
+        it 'has the correct derived outreach event ID' do
+          results.first.outreach_event_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        end
+
+        it 'has the correct derived record ID' do
+          results.first.outreach_event_staff_id.should ==
+            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-S#{outreach_staff_member.id}"
+        end
+
+        it 'uses the public ID for the staff member' do
+          results.first.staff_id.should == outreach_staff_member.staff.public_id
+        end
+
+        describe 'with multiple staff' do
+          let!(:outreach_staff_member2) {
+            Factory(:outreach_staff_member,
+              :outreach_event => outreach_event,
+              :staff => Factory(:valid_staff, :first_name => 'Jane'))
+          }
+
+          it 'produces one record per SSU per staff' do
+            Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
+
+            results.size.should == 4
+          end
+
+          it 'gives each record a unique ID' do
+            results.collect(&:outreach_event_staff_id).uniq.size.should == 2
+          end
+        end
       end
     end
   end

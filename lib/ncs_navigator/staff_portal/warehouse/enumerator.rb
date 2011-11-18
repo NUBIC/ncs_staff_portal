@@ -159,6 +159,22 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(hours expenses miles task_date staff_weekly_expense_id)
     )
 
+    ####### OUTREACH
+
+    def self.outreach_join(table_name, id_prefix, options={})
+      %Q{
+        SELECT
+          ot.*,
+          'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id  AS public_id_for_outreach_events,
+          'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id || '-#{id_prefix}' || ot.id  AS public_id_for_this_table
+          #{', s.staff_id AS public_id_for_staff' if options[:staff]}
+        FROM #{table_name} ot
+          INNER JOIN outreach_segments os ON ot.outreach_event_id=os.outreach_event_id
+          INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+          #{'INNER JOIN staff s ON ot.staff_id=s.id' if options[:staff]}
+      }
+    end
+
     produce_one_for_one(:outreach_events, Outreach,
       :query => %Q(
         SELECT
@@ -188,6 +204,84 @@ module NcsNavigator::StaffPortal::Warehouse
          ) ol ON oe.id=ol.outreach_event_id
       ),
       :prefix => 'outreach_'
+    )
+
+    produce_one_for_one(:outreach_languages, OutreachLang2,
+      :query => outreach_join('outreach_languages', 'L'),
+      # in MDES 2.0, language other is in the main OE record for some reason
+      :ignored_columns => %w(language_other outreach_event_id),
+      :column_map => {
+        :language_code => :outreach_lang2,
+        :public_id_for_outreach_events => :outreach_event_id,
+        :public_id_for_this_table => :outreach_lang2_id
+      }
+    )
+
+    produce_one_for_one(:outreach_races, OutreachRace,
+      :query => outreach_join('outreach_races', 'R'),
+      :ignored_columns => %w(outreach_event_id),
+      :column_map => {
+        :race_code => :outreach_race2,
+        :race_other => :outreach_race_oth,
+        :public_id_for_outreach_events => :outreach_event_id,
+        :public_id_for_this_table => :outreach_race_id
+      }
+    )
+
+    produce_records(:outreach_untailored_automatic,
+      :query => %Q(
+        SELECT
+          'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id
+        FROM outreach_events oe
+         INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
+         INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+        WHERE oe.tailored_code=2
+      )
+    ) do |oe_id|
+      [
+        OutreachLang2.new(
+          :outreach_lang2_id => [oe_id, 'L-untailored'].join('-'),
+          :outreach_event_id => oe_id,
+          :outreach_lang2 => '1' # English
+        ),
+        OutreachRace.new(
+          :outreach_race_id => [oe_id, 'L-untailored'].join('-'),
+          :outreach_event_id => oe_id,
+          :outreach_race2 => '-7'
+        )
+      ]
+    end
+
+    produce_one_for_one(:outreach_targets, OutreachTarget,
+      :query => outreach_join('outreach_targets', 'T'),
+      :ignored_columns => %w(outreach_event_id),
+      :column_map => {
+        :target_code => :outreach_target_ms,
+        :target_other => :outreach_target_ms_oth,
+        :public_id_for_outreach_events => :outreach_event_id,
+        :public_id_for_this_table => :outreach_target_id
+      }
+    )
+
+    produce_one_for_one(:outreach_evaluations, OutreachEval,
+      :query => outreach_join('outreach_evaluations', 'E'),
+      :ignored_columns => %w(outreach_event_id),
+      :column_map => {
+        :evaluation_code => :outreach_eval,
+        :evaluation_other => :outreach_eval_oth,
+        :public_id_for_outreach_events => :outreach_event_id,
+        :public_id_for_this_table => :outreach_event_eval_id
+      }
+    )
+
+    produce_one_for_one(:outreach_staff_members, OutreachStaff,
+      :query => outreach_join('outreach_staff_members', 'S', :staff => true),
+      :ignored_columns => %w(outreach_event_id staff_id),
+      :column_map => {
+        :public_id_for_outreach_events => :outreach_event_id,
+        :public_id_for_this_table => :outreach_event_staff_id,
+        :public_id_for_staff => :staff_id
+      }
     )
   end
 end
