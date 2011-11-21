@@ -27,6 +27,7 @@ module NcsNavigator::StaffPortal::Warehouse
             ELSE 7
           END AS staff_age_range
         FROM staff s
+        WHERE s.zipcode IS NOT NULL
       ),
       :prefix => 'staff_',
       :column_map => {
@@ -46,6 +47,7 @@ module NcsNavigator::StaffPortal::Warehouse
         FROM staff_languages sl
           INNER JOIN staff s ON sl.staff_id = s.id
         WHERE sl.lang_code <> -5
+          AND s.zipcode IS NOT NULL
       ),
       :prefix => 'staff_',
       :column_map => {
@@ -64,7 +66,7 @@ module NcsNavigator::StaffPortal::Warehouse
           s.staff_id AS public_id_for_staff
         FROM staff_languages sl
           INNER JOIN staff s ON sl.staff_id = s.id
-        WHERE sl.lang_code = -5
+        WHERE sl.lang_code = -5 AND s.zipcode IS NOT NULL
         GROUP BY s.staff_id, sl.lang_code
       ),
       :column_map => {
@@ -81,6 +83,7 @@ module NcsNavigator::StaffPortal::Warehouse
 #          s.staff_id AS public_id_for_staff
 #        FROM staff_cert_trainings sct
 #         INNER JOIN staff s ON sct.staff_id = s.id
+#        WHERE s.zipcode IS NOT NULL
 #      ),
 #      :column_map => {
 #        :certificate_type_code => :cert_train_type,
@@ -116,6 +119,7 @@ module NcsNavigator::StaffPortal::Warehouse
             ) all_exp
             GROUP BY staff_weekly_expense_id
           ) t ON swe.id=t.staff_weekly_expense_id
+        WHERE s.zipcode IS NOT NULL
       ),
       :column_map => {
         :public_id_for_staff => :staff_id,
@@ -133,6 +137,8 @@ module NcsNavigator::StaffPortal::Warehouse
           swe.weekly_exp_id AS public_id_for_staff_weekly_expenses
         FROM management_tasks mt
           INNER JOIN staff_weekly_expenses swe ON mt.staff_weekly_expense_id=swe.id
+          INNER JOIN staff s ON swe.staff_id=s.id
+        WHERE s.zipcode IS NOT NULL
       ),
       :prefix => 'mgmt_',
       :column_map => {
@@ -150,6 +156,8 @@ module NcsNavigator::StaffPortal::Warehouse
           swe.weekly_exp_id AS public_id_for_staff_weekly_expenses
         FROM data_collection_tasks dc
           INNER JOIN staff_weekly_expenses swe ON dc.staff_weekly_expense_id=swe.id
+          INNER JOIN staff s ON swe.staff_id=s.id
+        WHERE s.zipcode IS NOT NULL
       ),
       :prefix => 'data_coll_',
       :column_map => {
@@ -174,6 +182,7 @@ module NcsNavigator::StaffPortal::Warehouse
           INNER JOIN outreach_segments os ON ot.outreach_event_id=os.outreach_event_id
           INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
           #{'INNER JOIN staff s ON ot.staff_id=s.id' if options[:staff]}
+        #{'WHERE s.zipcode IS NOT NULL' if options[:staff]}
       }
     end
 

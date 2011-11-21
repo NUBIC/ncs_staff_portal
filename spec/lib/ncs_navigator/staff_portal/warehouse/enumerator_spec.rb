@@ -72,14 +72,20 @@ module NcsNavigator::StaffPortal::Warehouse
       end
     end
 
+    shared_examples 'staff associated' do
+      it 'produces no records for an incomplete staff member' do
+        staff.update_attribute(:zipcode, nil)
+        results.size.should == 0
+      end
+    end
+
     describe 'for Staff' do
       let(:producer_names) { [:staff] }
       let(:sp_model) { Staff }
       let!(:sp_record) { Factory(:valid_staff) }
 
       it 'excludes records which have been initialized but not updated' do
-        pending 'Is this still necessary?'
-        Factory(:staff, :validate_create => 'true', :staff_type => nil)
+        Factory(:staff, :validate_create => 'true', :zipcode => nil)
 
         results.collect(&:staff_zip).should == %w(92131)
       end
@@ -149,6 +155,7 @@ module NcsNavigator::StaffPortal::Warehouse
           results.size.should == 1
         end
 
+        include_examples 'staff associated'
         include_examples 'one-to-one valid'
       end
 
@@ -165,6 +172,8 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'uses the public ID for staff' do
           results.last.staff_id.should == staff.staff_id
         end
+
+        include_examples 'staff associated'
 
         it 'ignores coded entries' do
           Factory(:staff_language, :staff => staff)
@@ -212,6 +221,7 @@ module NcsNavigator::StaffPortal::Warehouse
       end
 
       include_examples 'one-to-one valid'
+      include_examples 'staff associated'
 
       context do
         include_context 'mapping test'
@@ -229,7 +239,8 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     describe 'staff weekly expenses' do
-      let!(:sp_record) { Factory(:staff_weekly_expense) }
+      let(:staff) { Factory(:valid_staff) }
+      let!(:sp_record) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { StaffWeeklyExpense }
 
       let(:producer_names) { [:staff_weekly_expenses] }
@@ -243,6 +254,7 @@ module NcsNavigator::StaffPortal::Warehouse
       end
 
       include_examples 'one-to-one valid'
+      include_examples 'staff associated'
 
       context do
         include_examples 'mapping test'
@@ -331,8 +343,10 @@ module NcsNavigator::StaffPortal::Warehouse
     describe 'for ManagementTasks' do
       let(:producer_names) { [:management_tasks] }
 
+      let(:staff) { Factory(:valid_staff) }
+      let(:expense) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { ManagementTask }
-      let!(:sp_record) { Factory(:management_task) }
+      let!(:sp_record) { Factory(:management_task, :staff_weekly_expense => expense) }
 
       it 'uses the public ID for the associated weekly expense' do
         results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
@@ -343,6 +357,7 @@ module NcsNavigator::StaffPortal::Warehouse
       end
 
       include_examples 'one-to-one valid'
+      include_examples 'staff associated'
 
       context do
         include_context 'mapping test'
@@ -361,10 +376,13 @@ module NcsNavigator::StaffPortal::Warehouse
     describe 'for DataCollectionTask' do
       let(:producer_names) { [:data_collection_tasks] }
 
+      let(:staff) { Factory(:valid_staff) }
+      let(:expense) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { DataCollectionTask }
-      let!(:sp_record) { Factory(:data_collection_task) }
+      let!(:sp_record) { Factory(:data_collection_task, :staff_weekly_expense => expense) }
 
       include_examples 'one-to-one valid'
+      include_examples 'staff associated'
 
       it 'uses the public ID for the associated weekly expense' do
         results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
@@ -756,6 +774,7 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:outreach_staff_member) {
           outreach_event.outreach_staff_members.first
         }
+        let(:staff) { outreach_staff_member.staff }
         let(:sp_record) { outreach_staff_member }
 
         it 'has the correct derived outreach event ID' do
@@ -773,6 +792,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         include_examples 'one-to-one valid'
+        include_examples 'staff associated'
 
         describe 'with multiple staff' do
           let!(:outreach_staff_member2) {
