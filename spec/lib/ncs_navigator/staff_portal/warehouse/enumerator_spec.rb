@@ -66,7 +66,7 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     shared_examples 'one-to-one valid' do
-      it 'it produces a single valid warehouse record (except for PSU id) from a valid staff portal record' do
+      it 'produces a single valid warehouse record from a valid staff portal record' do
         sp_record.should be_valid
         record_should_be_valid(results.first)
       end
@@ -83,6 +83,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
         results.collect(&:staff_zip).should == %w(92131)
       end
+
+      include_examples 'one-to-one valid'
 
       context do
         include_context 'mapping test'
@@ -146,6 +148,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
           results.size.should == 1
         end
+
+        include_examples 'one-to-one valid'
       end
 
       context 'other' do
@@ -203,6 +207,8 @@ module NcsNavigator::StaffPortal::Warehouse
         results.size.should == 1
       end
 
+      include_examples 'one-to-one valid'
+
       context do
         include_context 'mapping test'
 
@@ -211,6 +217,7 @@ module NcsNavigator::StaffPortal::Warehouse
           [:complete, ncs_code(2), :cert_completed, '2'],
           [:background_check, ncs_code(6), :staff_bgcheck_lvl, '6'],
           [:frequency, 4, :cert_type_frequency, '4'],
+          [:cert_date, Date.new(2011, 3, 2), :cert_date, '2011-03-02'],
           [:expiration_date, Date.new(2014, 3, 2), :cert_type_exp_date, '2014-03-02'],
           [:comment, 'Not important', :cert_comment],
         ].each { |args| verify_mapping(*args) }
@@ -230,6 +237,8 @@ module NcsNavigator::StaffPortal::Warehouse
       it 'uses its own public ID' do
         results.first.weekly_exp_id.should == sp_record.weekly_exp_id
       end
+
+      include_examples 'one-to-one valid'
 
       context do
         include_examples 'mapping test'
@@ -329,6 +338,8 @@ module NcsNavigator::StaffPortal::Warehouse
         results.size.should == 1
       end
 
+      include_examples 'one-to-one valid'
+
       context do
         include_context 'mapping test'
 
@@ -336,6 +347,7 @@ module NcsNavigator::StaffPortal::Warehouse
           [:task_type, ncs_code(11), :mgmt_task_type, '11'],
           [:task_type_other, 'Shuffling', :mgmt_task_type_oth],
           [:hours, '12.0', :mgmt_task_hrs],
+          [:hours, BigDecimal.new('0.12E2'), :mgmt_task_hrs, '12.0'],
           [:hours, nil, :mgmt_task_hrs, '0.0'],
           [:comment, 'Tempus fugit', :mgmt_task_comment]
         ].each { |args| verify_mapping(*args) }
@@ -347,6 +359,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
       let(:sp_model) { DataCollectionTask }
       let!(:sp_record) { Factory(:data_collection_task) }
+
+      include_examples 'one-to-one valid'
 
       it 'uses the public ID for the associated weekly expense' do
         results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
@@ -561,6 +575,7 @@ module NcsNavigator::StaffPortal::Warehouse
           Factory(:outreach_language,
             :outreach_event => outreach_event, :language => Factory(:ncs_code, :local_code => 4))
         }
+        let(:sp_record) { outreach_language }
 
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
@@ -571,6 +586,8 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_lang2_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-L#{outreach_language.id}"
         end
+
+        include_examples 'one-to-one valid'
 
         describe 'with multiple languages' do
           let!(:outreach_language2) {
@@ -600,6 +617,7 @@ module NcsNavigator::StaffPortal::Warehouse
             :outreach_event => outreach_event,
             :race => Factory(:ncs_code, :local_code => 4, :list_name => 'RACE_CL3'))
         }
+        let(:sp_record) { outreach_race }
 
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
@@ -610,6 +628,8 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_race_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-R#{outreach_race.id}"
         end
+
+        include_examples 'one-to-one valid'
 
         context do
           include_context 'mapping test'
@@ -640,6 +660,8 @@ module NcsNavigator::StaffPortal::Warehouse
         let(:producer_names) { [:outreach_targets] }
         let(:sp_model) { OutreachTarget }
 
+        let(:sp_record) { outreach_event.outreach_targets.first }
+
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
@@ -649,6 +671,8 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_target_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-T#{outreach_event.outreach_targets.first.id}"
         end
+
+        include_examples 'one-to-one valid'
 
         context do
           include_context 'mapping test'
@@ -682,6 +706,7 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:outreach_evaluation) {
           outreach_event.outreach_evaluations.first
         }
+        let(:sp_record) { outreach_evaluation }
 
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
@@ -692,6 +717,8 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_event_eval_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-E#{outreach_evaluation.id}"
         end
+
+        include_examples 'one-to-one valid'
 
         context do
           include_context 'mapping test'
@@ -725,6 +752,7 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:outreach_staff_member) {
           outreach_event.outreach_staff_members.first
         }
+        let(:sp_record) { outreach_staff_member }
 
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
@@ -739,6 +767,8 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'uses the public ID for the staff member' do
           results.first.staff_id.should == outreach_staff_member.staff.public_id
         end
+
+        include_examples 'one-to-one valid'
 
         describe 'with multiple staff' do
           let!(:outreach_staff_member2) {
