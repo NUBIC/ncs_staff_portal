@@ -1,3 +1,4 @@
+@api
 Feature: Staff API
 
   # Scenario: Users List

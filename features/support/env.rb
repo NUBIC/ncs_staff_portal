@@ -43,6 +43,26 @@ rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
 
+Capybara.register_driver :rack_interactive do |app|
+  # This forces Aker into interactive mode
+  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Mozilla' })
+end
+
+Capybara.register_driver :rack_api do |app|
+  Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Some-Client' })
+end
+
+Capybara.default_driver = :rack_interactive
+
+Before('@api') do
+  Capybara.current_driver = :rack_api
+end
+
+After('@api') do
+  Capybara.use_default_driver
+end
+
+#
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
 #

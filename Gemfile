@@ -31,6 +31,7 @@ group :development, :test, :ci do
   gem 'rspec-rails', '2.6.1'
   gem 'cucumber'
   gem 'capybara'
+  gem 'launchy'
   gem "json_spec"
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner', '~>0.6.6'
