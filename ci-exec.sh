@@ -40,6 +40,6 @@ if [ $? -ne 0 ]; then
 fi
 set -e
 
-bundle install
+bundle _${BUNDLER_VERSION}_ install
 
-bundle exec rake ci:all --trace
+bundle _${BUNDLER_VERSION}_ exec rake ci:all --trace
