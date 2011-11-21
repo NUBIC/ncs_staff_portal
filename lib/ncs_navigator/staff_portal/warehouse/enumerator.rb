@@ -72,25 +72,26 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     )
 
-    produce_one_for_one(:staff_cert_trainings, StaffCertTraining,
-      :query => %Q(
-        SELECT
-          sct.*,
-          to_char(sct.expiration_date, 'YYYY-MM-DD') AS cert_type_exp_date,
-          s.staff_id AS public_id_for_staff
-        FROM staff_cert_trainings sct
-         INNER JOIN staff s ON sct.staff_id = s.id
-      ),
-      :column_map => {
-        :certificate_type_code => :cert_train_type,
-        :complete_code => :cert_completed,
-        :background_check_code => :staff_bgcheck_lvl,
-        :frequency => :cert_type_frequency,
-        :comment => :cert_comment,
-        :public_id_for_staff => :staff_id
-      },
-      :ignored_columns => %w(staff_id expiration_date)
-    )
+    # Pending due to #1638
+#    produce_one_for_one(:staff_cert_trainings, StaffCertTraining,
+#      :query => %Q(
+#        SELECT
+#          sct.*,
+#          to_char(sct.expiration_date, 'YYYY-MM-DD') AS cert_type_exp_date,
+#          s.staff_id AS public_id_for_staff
+#        FROM staff_cert_trainings sct
+#         INNER JOIN staff s ON sct.staff_id = s.id
+#      ),
+#      :column_map => {
+#        :certificate_type_code => :cert_train_type,
+#        :complete_code => :cert_completed,
+#        :background_check_code => :staff_bgcheck_lvl,
+#        :frequency => :cert_type_frequency,
+#        :comment => :cert_comment,
+#        :public_id_for_staff => :staff_id
+#      },
+#      :ignored_columns => %w(staff_id expiration_date)
+#    )
 
     produce_one_for_one(:staff_weekly_expenses, StaffWeeklyExpense,
       :query => %Q(

@@ -199,6 +199,10 @@ module NcsNavigator::StaffPortal::Warehouse
 
       let(:producer_names) { [:staff_cert_trainings] }
 
+      before do
+        pending '#1638'
+      end
+
       it 'uses the public ID for staff' do
         results.first.staff_id.should == Staff.first.staff_id
       end
