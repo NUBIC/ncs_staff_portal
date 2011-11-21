@@ -20,14 +20,14 @@ module NavigationHelpers
     when /the default page/
       dashboard_path
 
-    when /^a data collection task entry page for (\S+?)+$/
-      new_staff_data_collection_task_path(Staff.find_by_username($1))
+    when /^a data collection task entry page for (\S+?)$/
+      new_staff_data_collection_task_path(existing_staff($1))
 
-    when /^a management task entry page for (\S+?)+$/
-      new_staff_management_task_path(Staff.find_by_username($1))
+    when /^a management task entry page for (\S+?)$/
+      new_staff_management_task_path(existing_staff($1))
 
-    when /^the staff information page for (\S+?)+$/
-      staff_path(Staff.find_by_username($1))
+    when /^the staff information page for (\S+?)$/
+      staff_path(existing_staff($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -46,6 +46,11 @@ module NavigationHelpers
       end
     end
   end
+
+  def existing_staff(username)
+    Staff.find_by_username(username).tap { |s| s.should_not be_nil }
+  end
+  private :existing_staff
 end
 
 World(NavigationHelpers)
