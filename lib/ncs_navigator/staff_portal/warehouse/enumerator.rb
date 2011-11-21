@@ -242,12 +242,12 @@ module NcsNavigator::StaffPortal::Warehouse
     ) do |oe_id|
       [
         OutreachLang2.new(
-          :outreach_lang2_id => [oe_id, 'L-untailored'].join('-'),
+          :outreach_lang2_id => [oe_id, 'L-UT'].join('-'),
           :outreach_event_id => oe_id,
           :outreach_lang2 => '1' # English
         ),
         OutreachRace.new(
-          :outreach_race_id => [oe_id, 'L-untailored'].join('-'),
+          :outreach_race_id => [oe_id, 'R-UT'].join('-'),
           :outreach_event_id => oe_id,
           :outreach_race2 => '-7'
         )

@@ -57,15 +57,18 @@ module NcsNavigator::StaffPortal::Warehouse
       end
     end
 
+    def record_should_be_valid(wh_record)
+      if wh_record.respond_to?(:psu_id=)
+        wh_record.psu_id = '20000030'
+      end
+      wh_record.valid?
+      wh_record.errors.to_a.should == []
+    end
+
     shared_examples 'one-to-one valid' do
       it 'it produces a single valid warehouse record (except for PSU id) from a valid staff portal record' do
         sp_record.should be_valid
-        wh_record = results.first
-        if wh_record.respond_to?(:psu_id=)
-          wh_record.psu_id = '20000030'
-        end
-        results.first.valid?
-        results.first.errors.to_a.should == []
+        record_should_be_valid(results.first)
       end
     end
 
@@ -373,7 +376,7 @@ module NcsNavigator::StaffPortal::Warehouse
       let(:sp_model) { OutreachEvent }
 
       let!(:ncs_area) { Factory(:ncs_area) }
-      let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area) }
+      let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
       let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
       let!(:outreach_event) {
         Factory(:outreach_event, :outreach_segments => [outreach_segment])
@@ -524,6 +527,14 @@ module NcsNavigator::StaffPortal::Warehouse
 
           it 'uses NA (code=-7) as the race' do
             race_results.first.outreach_race2.should == '-7'
+          end
+
+          it 'produces a valid language record' do
+            record_should_be_valid(lang_results.first)
+          end
+
+          it 'produces a valid race record' do
+            record_should_be_valid(race_results.first)
           end
 
           describe 'with multiple SSUs' do
