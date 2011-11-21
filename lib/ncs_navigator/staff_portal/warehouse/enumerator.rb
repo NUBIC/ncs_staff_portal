@@ -192,6 +192,7 @@ module NcsNavigator::StaffPortal::Warehouse
           ns.ssu_id,
           ol.language_other AS lang_other,
           2 AS outreach_incident,
+          oe.tailored_code,
           CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.language_specific_code, -4) END AS outreach_lang1,
           CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.race_specific_code,     -4) END AS outreach_race1,
           CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.culture_specific_code,  -4) END AS outreach_culture1,

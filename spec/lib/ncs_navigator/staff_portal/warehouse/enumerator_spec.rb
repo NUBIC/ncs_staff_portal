@@ -57,6 +57,18 @@ module NcsNavigator::StaffPortal::Warehouse
       end
     end
 
+    shared_examples 'one-to-one valid' do
+      it 'it produces a single valid warehouse record (except for PSU id) from a valid staff portal record' do
+        sp_record.should be_valid
+        wh_record = results.first
+        if wh_record.respond_to?(:psu_id=)
+          wh_record.psu_id = '20000030'
+        end
+        results.first.valid?
+        results.first.errors.to_a.should == []
+      end
+    end
+
     describe 'for Staff' do
       let(:producer_names) { [:staff] }
       let(:sp_model) { Staff }
@@ -370,10 +382,14 @@ module NcsNavigator::StaffPortal::Warehouse
       shared_examples 'a basic outreach event' do
         include_context 'mapping test'
 
+        let(:sp_record) { outreach_event }
+
         it 'has a derived public ID' do
           results.first.outreach_event_id.should ==
             "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
         end
+
+        include_examples 'one-to-one valid'
 
         [
           [:event_date, Date.new(2011, 7, 5), :outreach_event_date, '2011-07-05'],
@@ -433,6 +449,10 @@ module NcsNavigator::StaffPortal::Warehouse
 
         it_behaves_like 'a basic outreach event'
 
+        it 'has the correct tailored value' do
+          results.first.outreach_tailored.should == '1'
+        end
+
         [
           %w(language outreach_lang1),
           %w(race outreach_race1),
@@ -472,6 +492,10 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         it_behaves_like 'a basic outreach event'
+
+        it 'has the correct tailored value' do
+          results.first.outreach_tailored.should == '2'
+        end
 
         it 'is not for a specific language' do
           results.first.outreach_lang1.should == '2'
