@@ -61,6 +61,13 @@ Given %r{^staff member (\S+) has role \"([^\"]+)\"$} do |username, role|
   staff.save!
 end
 
+Given /^staff member (\S+) has no roles$/ do |username|
+  staff = Staff.find_by_username(username)
+  staff.should_not be_nil
+  staff.staff_roles.clear
+  staff.save!
+end
+
 Then /has correct JSON response$/ do
   JSON.parse(last_response.body)['username'].should == 'staff'
 end

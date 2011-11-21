@@ -26,6 +26,9 @@ module NavigationHelpers
     when /^a management task entry page for (\S+?)+$/
       new_staff_management_task_path(Staff.find_by_username($1))
 
+    when /^the staff information page for (\S+?)+$/
+      staff_path(Staff.find_by_username($1))
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

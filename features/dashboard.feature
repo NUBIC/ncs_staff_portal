@@ -18,11 +18,11 @@ Scenario Outline: Default page for various roles
     | Staff Supervisor              | a management task entry page      |
     | Outreach Staff                | a management task entry page      |
     | Administrative Staff          | a management task entry page      |
+    | Data Manager                  | the staff information page        |
 
-@wip
 Scenario: Default page for a staff member with no roles
   Given staff with username zw108
-    And zw108 has no roles
+    And staff member zw108 has no roles
    When I go to the default page
     And I log in as "zw108"
    Then I should be on the staff information page for zw108

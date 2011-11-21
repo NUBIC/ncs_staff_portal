@@ -9,6 +9,8 @@ class SecuredController < ApplicationController
       redirect_to new_staff_management_task_path(@current_staff.id)
     elsif permit?(*Role.data_collection_group)
       redirect_to new_staff_data_collection_task_path(@current_staff.id)
+    else
+      redirect_to staff_path(@current_staff)
     end
   end
 
