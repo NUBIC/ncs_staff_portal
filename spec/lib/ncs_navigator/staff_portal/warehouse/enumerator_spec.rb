@@ -212,6 +212,10 @@ module NcsNavigator::StaffPortal::Warehouse
         results.first.staff_id.should == Staff.first.staff_id
       end
 
+      it 'uses its own public ID' do
+        results.first.weekly_exp_id.should == sp_record.weekly_exp_id
+      end
+
       context do
         include_examples 'mapping test'
 

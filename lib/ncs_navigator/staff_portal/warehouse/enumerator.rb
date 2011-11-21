@@ -96,6 +96,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :query => %Q(
         SELECT
           s.staff_id AS public_id_for_staff,
+          swe.weekly_exp_id,
           COALESCE(t.staff_hours,    '0.0') staff_hours,
           COALESCE(t.staff_expenses, '0.0') staff_expenses,
           COALESCE(t.staff_miles,    '0.0') staff_miles,
