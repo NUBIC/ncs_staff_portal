@@ -7,7 +7,7 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-      
+
     when /login/
       dashboard_path
 
@@ -16,6 +16,15 @@ module NavigationHelpers
 
     when /the list of users/
       users_staff_index_path
+
+    when /the default page/
+      dashboard_path
+
+    when /^a data collection task entry page for (\S+?)+$/
+      new_staff_data_collection_task_path(Staff.find_by_username($1))
+
+    when /^a management task entry page for (\S+?)+$/
+      new_staff_management_task_path(Staff.find_by_username($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

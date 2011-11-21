@@ -3,9 +3,8 @@ require 'aker'
 module Aker::Authorities
   class StaffPortal
 
-    def initialize()
-      @groups = build_groups
-      @portal = "NCSNavigator".to_sym
+    def initialize(ignored_config=nil)
+      @portal = :NCSNavigator
     end
 
     def amplify!(user)
@@ -34,9 +33,13 @@ module Aker::Authorities
 
     private
 
+    def groups
+      @groups ||= build_groups
+    end
+
     def build_groups
       begin
-        Role.all.collect do |role|
+        ::Role.all.collect do |role|
           Aker::Group.new(role.name)
         end
       rescue => e
@@ -55,7 +58,7 @@ module Aker::Authorities
     end
 
     def find_group(group_name)
-      existing = @groups.find_all { |g| g.name == group_name}.compact.first
+      groups.find_all { |g| g.name == group_name}.compact.first
     end
   end
 end

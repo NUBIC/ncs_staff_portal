@@ -43,6 +43,8 @@ rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
 
+###### MODES
+
 Capybara.register_driver :rack_interactive do |app|
   # This forces Aker into interactive mode
   Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Mozilla' })
@@ -62,18 +64,12 @@ After('@api') do
   Capybara.use_default_driver
 end
 
-#
-# You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
-# See the DatabaseCleaner documentation for details. Example:
-#
-#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
-#   end
-#
-#   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
-#
+###### STATIC AUTHORITY
+
+Before do
+  Aker.configuration.authorities.detect { |a| a.is_a?(Aker::Authorities::Static) }.
+    clear.load!(File.open("#{Rails.root}/spec/test-users.yml"))
+end
 
 def last_json
   last_response.body

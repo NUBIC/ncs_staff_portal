@@ -1,3 +1,5 @@
+require 'aker/authorities/staff_portal'
+
 OMA::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -36,6 +38,7 @@ OMA::Application.configure do
   config.aker do
     ui_mode :form
     api_mode :http_basic
-    authority Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
+    authority Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml"),
+      Aker::Authorities::StaffPortal
   end
 end

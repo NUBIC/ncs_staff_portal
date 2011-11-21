@@ -44,8 +44,21 @@ end
 
 Given /staff with username (.+)$/ do |usernames|
   usernames.split(', ').each do |username|
-    staff = Staff.create!(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username, :study_center => 1234)
+    Factory(:valid_staff,
+      :username => username, :email => "#{username}@test.com",
+      :first_name => username, :last_name => username, :study_center => 1234)
+    Aker.configuration.authorities.detect { |a| a.is_a?(Aker::Authorities::Static) }.
+      valid_credentials!(:user, username, username)
   end
+end
+
+Given %r{^staff member (\S+) has role \"([^\"]+)\"$} do |username, role|
+  staff = Staff.find_by_username(username)
+  staff.should_not be_nil
+  role = Role.find_or_create_by_name(role)
+  staff.staff_roles.should be_empty
+  staff.staff_roles.build(:role => role)
+  staff.save!
 end
 
 Then /has correct JSON response$/ do
