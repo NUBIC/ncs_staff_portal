@@ -15,3 +15,5 @@
 require 'mdes_data_loader'
 # Our custom data seed loader 
 MdesDataLoader::load_codes_from_schema('2.0')
+
+Role.create_all
