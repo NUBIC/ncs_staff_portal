@@ -25,6 +25,10 @@ module NcsNavigator::StaffPortal::Warehouse
     }
     let(:producer_names) { [] }
     let(:results) { enumerator.to_a(*producer_names) }
+    let(:staff) { Factory(:valid_staff) }
+    let(:other_staff) {
+      Factory(:valid_staff, :first_name => 'Jane', :username => 'jh675', :email => 'jh@example.edu')
+    }
 
     it 'can be created' do
       Enumerator.create_transformer(wh_config).should respond_to(:transform)
@@ -135,7 +139,6 @@ module NcsNavigator::StaffPortal::Warehouse
     describe 'for StaffLanguage' do
       let(:sp_model) { StaffLanguage }
       let(:other_code) { Factory(:ncs_code, :list_name => 'LANGUAGE_CL2', :local_code => '-5') }
-      let(:staff) { Factory(:valid_staff) }
 
       context 'from code list' do
         let(:producer_names) { [:staff_languages] }
@@ -195,7 +198,8 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         it 'aggregates within a single staff member only' do
-          Factory(:staff_language, :lang => other_code, :lang_other => 'Gujarati')
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Gujarati',
+            :staff => other_staff)
 
           results.collect(&:staff_lang_oth).sort.should == ['Esperanto,Aramaic', 'Gujarati']
         end
@@ -239,7 +243,6 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     describe 'staff weekly expenses' do
-      let(:staff) { Factory(:valid_staff) }
       let!(:sp_record) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { StaffWeeklyExpense }
 
@@ -274,7 +277,8 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         it 'produces separate WH records for separate SP records' do
-          task2.update_attribute(:staff_weekly_expense, Factory(:staff_weekly_expense))
+          task2.update_attribute(:staff_weekly_expense,
+            Factory(:staff_weekly_expense, :staff => other_staff))
           results.size.should == 2
         end
 
@@ -343,7 +347,6 @@ module NcsNavigator::StaffPortal::Warehouse
     describe 'for ManagementTasks' do
       let(:producer_names) { [:management_tasks] }
 
-      let(:staff) { Factory(:valid_staff) }
       let(:expense) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { ManagementTask }
       let!(:sp_record) { Factory(:management_task, :staff_weekly_expense => expense) }
@@ -376,7 +379,6 @@ module NcsNavigator::StaffPortal::Warehouse
     describe 'for DataCollectionTask' do
       let(:producer_names) { [:data_collection_tasks] }
 
-      let(:staff) { Factory(:valid_staff) }
       let(:expense) { Factory(:staff_weekly_expense, :staff => staff) }
       let(:sp_model) { DataCollectionTask }
       let!(:sp_record) { Factory(:data_collection_task, :staff_weekly_expense => expense) }
@@ -774,8 +776,11 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:outreach_staff_member) {
           outreach_event.outreach_staff_members.first
         }
-        let(:staff) { outreach_staff_member.staff }
         let(:sp_record) { outreach_staff_member }
+
+        before do
+          outreach_staff_member.update_attribute(:staff, staff)
+        end
 
         it 'has the correct derived outreach event ID' do
           results.first.outreach_event_id.should ==
@@ -798,7 +803,7 @@ module NcsNavigator::StaffPortal::Warehouse
           let!(:outreach_staff_member2) {
             Factory(:outreach_staff_member,
               :outreach_event => outreach_event,
-              :staff => Factory(:valid_staff, :first_name => 'Jane'))
+              :staff => other_staff)
           }
 
           it 'produces one record per SSU per staff' do
