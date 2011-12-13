@@ -108,7 +108,10 @@ optional.
 
     # for any futher development, developer's email address for development testing email
     development_email = "user@example.com"
-
+    
+    # weekly email reminder can be enable or disable for the particular deployment.
+    email_reminder = false
+    
     # Comma separated list of username for excluding users from weekly email reminder users list
     reminder_excluded_users = "jane,warren"
 
