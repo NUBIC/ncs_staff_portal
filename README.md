@@ -196,15 +196,6 @@ Initialize the code lists from the MDES using [ncs_mdes][]:
 
 [ncs_mdes]: https://github.com/NUBIC/ncs_mdes
 
-#### Staff
-
-Load all users as empty staff records:
-
-    $ bundle exec rake users:load_to_portal
-
-This creates staff records for the users specified in
-`/etc/nubic/ncs/staff_portal_users.yml`.
-
 #### Secondary sampling units
 
 Load SSUs:
