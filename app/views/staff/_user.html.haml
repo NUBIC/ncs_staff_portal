@@ -31,7 +31,12 @@
       = f.label :formatted_ncs_inactive_date, "Inactive Date"
       = f.text_field :formatted_ncs_inactive_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"} 
       = label_tag "(Leave blank to have it never expire, or set it in the past to have it expire immediately.)"
+    .row
+      = f.label :external, "External User"
+      = f.check_box :external
+      = label_tag "(Check if user is not using Staff Portal for the time and expense entry)" 
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
+    
   .block
     .title
       Role(s)

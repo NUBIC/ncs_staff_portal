@@ -1,3 +1,7 @@
+- if @staff.external?
+  %p.warning
+    %em Warning: 
+    #{@staff.name} is an external user and should not be using the application for time and expense entry.
 .current_form
   = form_for [@staff, @data_collection_task] do |f|
     -if @data_collection_task.errors.any?

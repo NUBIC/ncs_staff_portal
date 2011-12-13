@@ -37,7 +37,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
         hourly_rate pay_type pay_amount
-        study_center ncs_active_date ncs_inactive_date
+        study_center ncs_active_date ncs_inactive_date external
       )
     )
 
