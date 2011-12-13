@@ -69,18 +69,19 @@
     .row
       = f.label :attendees_quantity, "Number of attendees"
       = f.text_field :attendees_quantity, {:size => 5}
-    %table{ :class => 'records outreach_items' }
-      %tr.row
-        %td
-          Giveaway items for outreach event (Click the 'Add giveaway item' link to add one or more giveaway items, if Applicable)
-        %td
-      %tbody.nested_records_outreach_items
-        - f.fields_for :outreach_items do |outreach_item|
-          = render :partial => 'outreach_events/outreach_items', :locals => { :f => outreach_item }
-      %tfoot
-        %tr
-          %td{ :colspan => '3' }
-            = link_to_add_fields "Add giveaway item", :outreach_items
+    - if InventoryItem.all.count > 0
+      %table{ :class => 'records outreach_items' }
+        %tr.row
+          %td
+            Giveaway items for outreach event (Click the 'Add giveaway item' link to add one or more giveaway items, if Applicable)
+          %td
+        %tbody.nested_records_outreach_items
+          - f.fields_for :outreach_items do |outreach_item|
+            = render :partial => 'outreach_events/outreach_items', :locals => { :f => outreach_item }
+        %tfoot
+          %tr
+            %td{ :colspan => '3' }
+              = link_to_add_fields "Add giveaway item", :outreach_items
     .row
       = f.label :cost, "Non-labor cost to conduct outreach:"
       = f.text_field :cost, {:size => 5}

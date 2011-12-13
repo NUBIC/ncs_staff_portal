@@ -222,4 +222,4 @@ Load giveaway items:
 
 This will load all the giveaway items for the outreach activities in
 the Staff Portal. The file must be a single column CSV file with all
-items listed in the column `NAME`.
+items listed in the column `NAME`. This is not the mandatory task though because MDES doesn't require any giveaway items data and it is not being submitted to VDR.
