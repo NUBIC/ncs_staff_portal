@@ -1,0 +1,8 @@
+users : [
+    [ 'pos', {first_name: 'Stefon', last_name: 'Alexander', email: 'pos@example.org'} ],
+    [ 'cotter', {first_name: 'Kyle', last_name: 'Smith', email: 'cotter@example.org'} ],
+    [ 'broali', {first_name: 'Jason', last_name: 'Newman', email: 'broali@example.org'} ],
+    [ 'sims', {first_name: 'Andrew', last_name: 'Sims', email: 'sims@example.org'} ],
+    [ 'dessa', {first_name: 'Margret', last_name: 'Wander', email: 'dessa@example.org'} ],
+    [ 'slug', {first_name: 'Sean', last_name: 'Daily', email: 'slug@example.org'} ]
+]

@@ -15,10 +15,15 @@ Prerequisites
 
 On the deployment workstation:
 
+* RVM
 * Ruby 1.8.7
 * RubyGems
 * [Bundler][] (install as a gem)
 * A [git][] client
+
+Ubuntu (11.04) package prerequisites
+* sudo apt-get install ruby postgresql zlib1g-dev libssl-dev libreadline6-dev libxml2-dev libxslt-dev libpq-dev
+
 
 On the application server:
 
@@ -33,6 +38,7 @@ On the application server:
 [git]: http://git-scm.com/
 [Passenger]: http://modrails.com/
 [ree]: http://www.rubyenterpriseedition.com/
+[rvm]: http://beginrescueend.com/
 
 Setup
 -----
@@ -50,6 +56,7 @@ particular structure under `/etc/nubic/db`.
 
 * For a staging deployment, the file name should be `/etc/nubic/db/ncsdb_staging.yml`
 * For production, it should be `/etc/nubic/db/ncsdb_prod.yml`
+* For developement, it should be `/etc/nubic/db/local_postgresql.yml`
 
 Example:
 
@@ -75,6 +82,7 @@ Navigator applications on the same server.
 
 * In staging, the file name should be `aker-staging.yml`
 * In production, the file name should be `aker-prod.yml`
+* In development, the file name should be `aker-local.yml`
 
 Contents:
 
@@ -114,6 +122,14 @@ optional.
 
     # Google Analytics account number to analyze staff portal's traffic data
     google_analytics_number = "UA-1234"
+
+### Development
+
+You'll need to load the database structure into your local database server
+on your development workstation before you can run the application.
+This can be done by running:
+ $ rake db:create
+ $ rake db:migrate
 
 ### Deployment
 
@@ -203,7 +219,9 @@ Load all users as empty staff records:
     $ bundle exec rake users:load_to_portal
 
 This creates staff records for the users specified in
-`/etc/nubic/ncs/staff_portal_users.yml`.
+`/etc/nubic/ncs/staff_portal_users.yml`. A sample file is included in this repository as [example_staff_portal_users.yml][]
+
+[example_staff_portal_users.yml]:[https://github.com/umn-enhs/ncs_staff_portal/blob/master/example_staff_portal_users.yml]
 
 #### Secondary sampling units
 

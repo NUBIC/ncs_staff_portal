@@ -6,14 +6,15 @@ namespace :users do
     hash = YAML.load_file("/etc/nubic/ncs/staff_portal_users.yml")
     counter = 0
     hash['users'].each do |username, value| 
-      unless Staff.find(:first, :conditions => {:username => username})
+      unless Staff.find_by_username(username)
         name = value['first_name']
+        email = value['email']
         if value['last_name']
           name << " " << value['last_name']
         end
         Staff.create( :name => name, 
                       :username => username,
-                      :email => value['email'],
+                      :email => email,
                       :study_center => StaffPortal.study_center_id)
         counter += 1
       end
