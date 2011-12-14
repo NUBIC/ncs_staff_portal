@@ -21,8 +21,9 @@ On the deployment workstation:
 * [Bundler][] (install as a gem)
 * A [git][] client
 
-Ubuntu (11.04) package prerequisites
-* sudo apt-get install ruby postgresql zlib1g-dev libssl-dev libreadline6-dev libxml2-dev libxslt-dev libpq-dev
+Ubuntu (11.04) package prerequisites:
+
+	$ sudo apt-get install ruby postgresql zlib1g-dev libssl-dev libreadline6-dev libxml2-dev libxslt-dev libpq-dev
 
 
 On the application server:
@@ -219,9 +220,9 @@ Load all users as empty staff records:
     $ bundle exec rake users:load_to_portal
 
 This creates staff records for the users specified in
-`/etc/nubic/ncs/staff_portal_users.yml`. A sample file is included in this repository as [example_staff_portal_users.yml][]
+`/etc/nubic/ncs/staff_portal_users.yml`. A sample file is included in this repository as [example_staff_portal_users][]
 
-[example_staff_portal_users.yml]:[https://github.com/umn-enhs/ncs_staff_portal/blob/master/example_staff_portal_users.yml]
+[example_staff_portal_users]:[https://github.com/umn-enhs/ncs_staff_portal/blob/master/example_staff_portal_users.yml]
 
 #### Secondary sampling units
 
