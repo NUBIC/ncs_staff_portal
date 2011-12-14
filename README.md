@@ -222,7 +222,7 @@ Load all users as empty staff records:
 This creates staff records for the users specified in
 `/etc/nubic/ncs/staff_portal_users.yml`. A sample file is included in this repository as [example_staff_portal_users][]
 
-[example_staff_portal_users]:[https://github.com/umn-enhs/ncs_staff_portal/blob/master/example_staff_portal_users.yml]
+[example_staff_portal_users]: https://github.com/umn-enhs/ncs_staff_portal/blob/master/example_staff_portal_users.yml
 
 #### Secondary sampling units
 
