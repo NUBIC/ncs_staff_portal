@@ -509,7 +509,7 @@ body.ncs {
 }
 /* line 34, ../../../app/stylesheets/screen.scss */
 body.ncs a:hover {
-  background-color: #406cd5;
+  background-color: #7a0019;
   color: #f0f0f0;
 }
 /* line 41, ../../../app/stylesheets/screen.scss */
@@ -560,7 +560,7 @@ body.ncs #header, body.ncs #footer {
 }
 /* line 79, ../../../app/stylesheets/screen.scss */
 body.ncs #header {
-  background-color: #ccd3e8;
+  background-color: #ffde7a;
 }
 /* line 81, ../../../app/stylesheets/screen.scss */
 body.ncs #header #app_name {
@@ -615,9 +615,9 @@ body.ncs #header #tab_navigation li a {
   display: block;
   width: 12em;
   padding: 0.3em 0.3em 0.1em 0.3em;
-  background-color: #406cd5;
+  background-color: #7a0019;
   text-decoration: none;
-  border: 1px solid #406cd5;
+  border: 1px solid #7a0019;
   border-bottom: 0px;
   text-align: center;
   color: #f0f0f0;
@@ -629,7 +629,7 @@ body.ncs #header #tab_navigation li.current a {
   padding: 0.3em 0.3em 0.1em 0.3em;
   background-color: #f0f0f0;
   text-decoration: none;
-  border: 1px solid #406cd5;
+  border: 1px solid #7a0019;
   border-bottom: 0px;
   text-align: center;
   color: #333333;
@@ -768,7 +768,7 @@ body.ncs #content .breadcrumbs {
   padding: 0.3em 0.3em 0.1em 0.3em;
   background-color: #f0f0f0;
   text-decoration: none;
-  border: 1px solid #ccd3e8;
+  border: 1px solid #7a0019;
   border-bottom: 0px;
   text-align: center;
   color: #333333;
@@ -778,9 +778,9 @@ body.ncs #content .breadcrumbs_link {
   display: inline-block;
   width: 12em;
   padding: 0.3em 0.3em 0.1em 0.3em;
-  background-color: #ccd3e8;
+  background-color: #7a0019;
   text-decoration: none;
-  border: 1px solid #ccd3e8;
+  border: 1px solid #7a0019;
   text-align: center;
   color: #333333;
 }
