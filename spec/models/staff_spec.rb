@@ -178,6 +178,14 @@ describe Staff do
         staff.should be_valid
         staff.race_other.should == nil
       end
+      
+      it "should be valid if staff race is 'Native Hawaiian or Other Pacific Islander' and race_other value is nil" do
+        staff = FactoryGirl.build(:staff, :race => Factory(:ncs_code, :list_name => "RACE_CL1", :display_text => "Native Hawaiian or Other Pacific Islander", :local_code => 1))
+        staff.race_other = ''
+        staff.should be_valid
+        staff.should_not have(1).error_on(:race_other)
+        staff.race_other.should == nil
+      end
     end
 
     describe "presence" do
