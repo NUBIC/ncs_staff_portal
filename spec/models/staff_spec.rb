@@ -129,6 +129,15 @@ describe Staff do
   end
 
   describe "validates" do
+    
+    describe "email" do
+      it "should not be unique" do
+        FactoryGirl.create(:staff, :email => "test@email.com")
+        staff = FactoryGirl.create(:valid_staff, :email => "test@email.com")
+        staff.should be_valid
+        staff.should_not have(1).error_on(:email)
+      end
+    end
 
     describe "staff_type" do
       let(:staff_type_code) { Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Other", :local_code => -5) }
