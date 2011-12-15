@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* AUGUST 2010 : UNIVERSITY RELATIONS */
+/* v4.090824 IE6  */
+
+/* FIXES LEFT NAV LINK POSITION */
+#main_nav_3 {margin:3px 20px 0 0;}
+ul.main_nav li {margin:3px 0 0 -40px;}
+
+/* FIXES COPYRIGHT POSITION */
+.copyright {margin-left:5px;}
+
+/* FIXES LIST POSITION */
+ul {margin-left:50px;}
+ol {margin-left:50px;}
