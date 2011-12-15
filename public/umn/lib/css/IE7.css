@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/* AUGUST 2010 : UNIVERSITY RELATIONS */
+/* v4.090824 IE7  */
+
+/* FIXES LEFT NAV POSITION */
+#main_nav_2{margin:0 -10px 0 10px; width:160px;}
+
+/* MAKES BULLETS AND NUMBERS APPEAR */
+ul {list-style-type: disc; margin-left: 40px;}
+ol {list-style-type:decimal;margin-left:40px;}
+
+/* HACK FOR FONT SIZE FROM OLSON */
+body {font-size:small;font:x-small; }
+code {font-size:108%;}
+
+/* FIXES COPYRIGHT POSITION */
+.copyright { float:left; margin-left: 10px; list-style:none;}

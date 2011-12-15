@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* UNIVERSITY OF MINNESOTA OPTIONAL WEB TEMPLATE STYLESHEET */
+/* FEBRUARY 2010 : UNIVERSITY RELATIONS*/
+/* v3.090219  */
+
+/*OPTIONAL HORIZONTAL NAVIGATION*/
+#header_sub {behavior:url("../lib/htc/csshover2.htc");} /*Fix for IE's lack of support for :hover*/
+#header_sub {height:100%;line-height:30px;font-size:90%;color:#FFFFFF;text-align:right;background:#7A0019 url(../../assets/img/bg_header_sub.gif) top left repeat-x;border-top:1px solid #5b0013;border-bottom: 1px solid #5b0013;}
+#header_sub ul#header_sub_nav {margin:0 12px 0 0;display:inline;float:right; list-style:none;}
+#header_sub ul#header_sub_nav li.tl_menu {display:inline;float:left;position:relative;}
+#header_sub ul#header_sub_nav li.tl_menu a {display:block;color:#FFFFFF;font-weight:bold;padding:0 5px;text-decoration: none;}
+#header_sub ul#header_sub_nav li.tl_menu a:hover {color:#FFB71E;}
+
+
+/* DROP DOWN MENU FOR OPTIONAL HORIZONTAL NAVIGATION*/
+div.dd_menu_top { background:transparent url(../../assets/img/dd_menu_bottom.gif) bottom left no-repeat; width:144px;}
+ul.dd_menu {background:transparent url(../../assets/img/dd_menu_top.gif) top left no-repeat;text-align:center;line-height:15px;padding:10px 1px 0;margin-bottom:10px;margin-left:0px; margin-right:0; list-style:none;}
+.dd_last ul.dd_menu {background-image:url(../../assets/img/dd_menu_top_end.gif);}
+#header_sub ul#header_sub_nav li.tl_menu ul.dd_menu li {border-bottom:1px solid #fdd67b;}
+#header_sub ul#header_sub_nav li.tl_menu ul.dd_menu li a {width:142px;margin:0;padding:2px 0;color:#333333;font-weight:normal;}
+#header_sub ul#header_sub_nav li.tl_menu ul.dd_menu li a:hover {background-color:#E3E3E3;color:#333333;}
+#header_sub ul#header_sub_nav li.tl_menu div.dd_menu_top {position:absolute;left:-999em;top:25px;z-index:999;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div.dd_menu_top {visibility:visible;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div#nav_cat1 {left:-45px;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div#nav_cat2 {left:-18px;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div#nav_cat3 {left:-23px;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div#nav_cat4 {left:-30px;}
+#header_sub ul#header_sub_nav li.tl_menu:hover div#nav_cat5 {left:-55px;}
+
+
+
+/*UNIT NAME FOR OPTIONAL HORIZONTAL NAVIGATION*/
+.unit { display:inline; float:left; color:#FFDE7A; margin-left:10px; font-size:90%; }
+.unit a {color:#FFDE7A;text-decoration:none;}
+.unit a:hover {color:#FFFFFF;text-decoration:none;}
+.unit a:visited {color:#FFDE7A;text-decoration:none;}
+
+
+/*OPTIONAL UNIT FOOTER*/
+#unit_footer {font-size:90%;;border-bottom: 3px solid #e4e4e4;padding: 5px 0 0 0;line-height: 20px;width: 960px;}
+#unit_footer1 {font-size:90%;;border-bottom: 3px solid #e4e4e4;padding:5px 0 0 0;background-color: #e4e4e4;line-height: 20px;width: 960px;}
+#unit_footer2 {font-size:90%;;border-bottom: 3px solid #e4e4e4;padding:5px 0 0 0;background-color: #d4cfc7;line-height: 20px;width: 960px;}
+
+/* set the float to left for left-aligned links, or right for right-aligned links*/
+ul.unit_footer_links { float:right; padding-left: 10px; padding-right: 10px; }
+ul.unit_footer_links li { display:inline; padding: 5px; }
+ul.unit_footer_links li a {color:#7a0019;text-decoration: none;border-bottom: 1px solid #c2a9ae;}
+ul.unit_footer_links li a:link {color:#7a0019;}
+ul.unit_footer_links li a:visited {color:#900021;}
+ul.unit_footer_links li a:hover {color:#666666;}
+ul.unit_footer_links li a:active {color:#666666;}
+
+.acronym_border { border-bottom-style: none; }
