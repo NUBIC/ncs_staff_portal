@@ -68,6 +68,13 @@ Given /^staff member (\S+) has no roles$/ do |username|
   staff.save!
 end
 
+Given /^staff member (\S+) is an inactive staff$/ do |username|
+  staff = Staff.find_by_username(username)
+  staff.should_not be_nil
+  staff.ncs_inactive_date = Time.now.to_date - 7.day
+  staff.save!
+end
+
 Then /has correct JSON response$/ do
   JSON.parse(last_response.body)['username'].should == 'staff'
 end

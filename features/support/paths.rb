@@ -28,6 +28,9 @@ module NavigationHelpers
 
     when /^the staff information page for (\S+?)$/
       staff_path(existing_staff($1))
+      
+    when /the manage staff details page/
+      staff_index_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
