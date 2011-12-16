@@ -28,6 +28,15 @@
       %em *
       = f.text_field :username
     .row
+      = f.label :staff_id, "Staff ID"
+      = f.text_field :staff_id, {:class => "staff_id", :id => "staff_id", :readonly => true}
+      %a#edit_staff_id
+        Edit
+      %a#save_staff_id
+        Save
+      %span.warning#warning_staff_id
+        (Warning: Assigned Staff Id should not be modified for existing staff.)
+    .row
       = f.label :formatted_ncs_inactive_date, "Inactive Date"
       = f.text_field :formatted_ncs_inactive_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"} 
       = label_tag "(Leave blank to have it never expire, or set it in the past to have it expire immediately.)"
@@ -54,9 +63,9 @@
         %tr.row
           %td
             - if @user.employees.empty?
-              This user is currently set to supervise all staff members.  To limit this role to set of staff members, add the staff members below.
+              This user is currently set to supervise all staff members. To limit this role to set of staff members, add the staff members below.
             - else
-              This user supervises the list of staff members below.  To enable this user to manage all staff members, remove each individual from the list.
+              This user supervises the list of staff members below. To enable this user to manage all staff members, remove each individual from the list.
             .row
               (Click the 'Add staff member' link to add more staff members to supervise)
         %tbody.nested_records_supervisor_employees
@@ -83,5 +92,27 @@
   :javascript
     $(".datepicker").datepicker();
     $(document).ready(function() {
+      edit_staff_id();
       supervisorEmployeesTemplateUI = new NCSPortal.SupervisorEmployees.UI({supervisorEmployeesTemplate: '#{@supervisorEmployeesTemplate}' });
     })
+    
+    function edit_staff_id() {
+      var staff_id = $("#staff_id");
+      $("#save_staff_id").hide();
+      $("#warning_staff_id").hide();
+      staff_id.css('background-color', '#d0d0d0');
+      $("#edit_staff_id").click(function(){
+        staff_id.removeAttr('readonly');
+        staff_id.css('background-color', '#ffffff')
+        $("#edit_staff_id").hide();
+        $("#save_staff_id").show();
+        $("#warning_staff_id").show();
+      })
+      $("#save_staff_id").click(function(){
+        $("#save_staff_id").hide();
+        $("#edit_staff_id").show();
+        $("#warning_staff_id").hide();
+        staff_id.attr('readonly', 'readonly')
+        staff_id.css('background-color', '#d0d0d0');
+      })
+    }

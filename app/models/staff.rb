@@ -43,7 +43,7 @@ class Staff < ActiveRecord::Base
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   validates_date :ncs_inactive_date, :allow_blank => true
   validate :pay_amount_required, :if => :update_presence_required?, :on => :update
-
+  validates :staff_id, :presence => true, :uniqueness => { :message => "ID is already taken. Please choose different Staff ID." }
   has_many :staff_languages, :dependent => :destroy
   has_many :staff_cert_trainings, :dependent => :destroy
   has_many :staff_weekly_expenses, :dependent => :destroy
