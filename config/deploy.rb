@@ -76,11 +76,11 @@ end
 # backup the database before migrating
 # before 'deploy:migrate', 'db:backup'
 
-# after deploying, generate static pages, copy over uploads and results, cleanup old deploys, aggressively set permissions
-after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions'
+# after deploying, generate static pages, copy over uploads and results, cleanup old deploys
+after 'deploy:update_code', 'deploy:cleanup'
 
-# after deploying symlink , copy images to current image config location.
-after 'deploy:symlink', 'config:images'
+# after deploying symlink , aggressively set permissions, copy images to current image config location.
+after 'deploy:symlink', 'deploy:permissions', 'config:images'
 
 # Database
 namespace :db do
