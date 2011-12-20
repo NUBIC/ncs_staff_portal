@@ -1,4 +1,4 @@
-require File.expand_path("../lib/ncs_navigator_configuration_helper", __FILE__)
+require File.expand_path("../../lib/ncs_navigator_configuration_helper", __FILE__)
 job_type :rake_default, "cd :path && RAILS_ENV=:environment bundle exec rake :task :output"
 
 if NcsNavigatorConfigurationHelper.email_reminder
