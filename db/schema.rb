@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213163658) do
+ActiveRecord::Schema.define(:version => 20111221175617) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -222,15 +221,11 @@ ActiveRecord::Schema.define(:version => 20111213163658) do
 
   create_table "staff_weekly_expenses", :force => true do |t|
     t.integer  "staff_id"
-    t.date     "week_start_date",                                              :null => false
-    t.decimal  "rate",                          :precision => 5,  :scale => 2
-    t.decimal  "hours",                         :precision => 5,  :scale => 2
-    t.decimal  "expenses",                      :precision => 10, :scale => 2
-    t.decimal  "miles",                         :precision => 5,  :scale => 2
-    t.text     "comment"
+    t.date     "week_start_date",                                             :null => false
+    t.decimal  "rate",                          :precision => 5, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "weekly_exp_id",   :limit => 36,                                :null => false
+    t.string   "weekly_exp_id",   :limit => 36,                               :null => false
   end
 
   add_index "staff_weekly_expenses", ["weekly_exp_id"], :name => "uq_staff_weekly_expenses_weekly_exp_id", :unique => true
