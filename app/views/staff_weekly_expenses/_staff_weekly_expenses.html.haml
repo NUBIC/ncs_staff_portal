@@ -40,7 +40,6 @@
   .actions
     = f.submit 'Save'
   :javascript
-    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     $(function () {
       var managementTasksTemplate = '#{@managementTasksTemplate}',
       managmentTasksUI = new NCSPortal.ManagementTasks.UI({managementTasksTemplate: managementTasksTemplate });
