@@ -41,7 +41,7 @@ FactoryGirl.define do
   factory :staff_cert_training do |cert|
     cert.association :staff, :factory => :staff
     cert.certificate_type {|a| a.association(:ncs_code, :list_name => "CERTIFICATE_TYPE_CL1", :display_text => "Certified to conduct specific assessment", :local_code => 1) }
-    cert.complete {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "Yes", :local_code => 1) }
+    cert.complete {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "No", :local_code => 2) }
     cert.background_check {|a| a.association(:ncs_code, :list_name => "BACKGROUND_CHCK_LVL_CL1", :display_text => "A", :local_code => 1) }
   end
 

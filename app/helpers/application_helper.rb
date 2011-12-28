@@ -6,6 +6,18 @@ module ApplicationHelper
       end
   end
   
+  def display_cert_date(cert_date)
+    if cert_date == NcsCode.not_applicable_date
+      haml_tag :td,"Not Applicable"
+    elsif cert_date == NcsCode.unknown_date
+      haml_tag :td,"Don't Know"
+    elsif !cert_date.blank?
+      haml_tag :td,cert_date.to_date.strftime("%m/%d/%Y") 
+    else
+      haml_tag :td
+    end
+  end
+  
   def same_as_current_user(requested_staff)
     requested_staff.id == @current_staff.id ? true : false
   end

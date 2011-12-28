@@ -21,13 +21,17 @@ class StaffCertTraining < ActiveRecord::Base
   belongs_to :staff
   validates_date :expiration_date, :allow_blank => true
   validate :valid_cert_date
-
+  before_save :format_cert_date
   acts_as_mdes_record :public_id => :staff_cert_list_id
 
+  def format_cert_date
+    self.cert_date = cert_date.to_date.strftime("%Y-%m-%d") if !cert_date.blank? && only_date 
+  end
+  
   def valid_cert_date
-    if !(self.cert_date == "96/96/9666" || self.cert_date == "97/97/9777")
-      validates_date :cert_date, :allow_blank => true
-    end
+    if only_date
+      validates_date :cert_date, :allow_blank => complete_code == 1 ? false : true
+    end 
   end
 
   ATTRIBUTE_MAPPING = {
@@ -47,5 +51,9 @@ class StaffCertTraining < ActiveRecord::Base
 
   def formatted_expiration_date=(expiration_date)
     self.expiration_date = expiration_date
+  end
+  
+  def only_date
+    (cert_date != NcsCode.unknown_date && cert_date != NcsCode.not_applicable_date) ? true : false
   end
 end

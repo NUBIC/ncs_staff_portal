@@ -52,4 +52,12 @@ class NcsCode < ActiveRecord::Base
   def self.attribute_lookup(attribute_name)
      ATTRIBUTE_MAPPING[attribute_name]
   end
+  
+  def self.not_applicable_date
+    return "9777-97-97"
+  end
+  
+  def self.unknown_date
+    return "9666-96-96"
+  end
 end

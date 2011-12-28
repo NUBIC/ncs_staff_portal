@@ -33,29 +33,83 @@ describe StaffCertTraining do
       StaffCertTraining.new(:staff_cert_list_id => 'GH').public_id.should == 'GH'
     end
   end
+  
+  describe "cert_date" do
+    it "should not be blank if complete is 'Yes'" do
+      training = FactoryGirl.build(:staff_cert_training, :complete => Factory(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "Yes", :local_code => 1))
+      training.should_not be_valid
+      training.should have(1).error_on(:cert_date)
+      training.errors[:cert_date].should == ["is not a valid date"]
+    end
+    
+    it "can be blank if complete is 'No'" do
+      training = FactoryGirl.build(:staff_cert_training)
+      training.should be_valid
+      training.should_not have(1).error_on(:cert_date)
+    end
+    
+    it "should be valid if value is as 'Not Applicable'" do
+      training = FactoryGirl.build(:staff_cert_training, :cert_date => NcsCode.not_applicable_date)
+      training.should be_valid
+      training.cert_date.should == NcsCode.not_applicable_date
+    end
 
-  it "should be validate the cert_date value as '97/97/9777' as 'Not Applicable'" do
-    training = FactoryGirl.build(:staff_cert_training)
-    training.cert_date = '97/97/9777'
-    training.should be_valid
+    it "should be valid if value is as 'Unknown'" do
+      training = FactoryGirl.build(:staff_cert_training, :cert_date => NcsCode.unknown_date)
+      training.should be_valid
+      training.cert_date.should == NcsCode.unknown_date
+    end
+
+    it "should be valid for valid date" do
+      training = FactoryGirl.build(:staff_cert_training)
+      training.cert_date = Date.today
+      training.should be_valid
+    end
+
+    it "should not be valid invalid value" do
+      training = FactoryGirl.build(:staff_cert_training)
+      training.cert_date = "121211"
+      training.should_not be_valid
+      training.should have(1).error_on(:cert_date)
+    end
   end
-
-  it "should be validate the cert_date value as '96/96/9666' as 'Unknown'" do
-    training = FactoryGirl.build(:staff_cert_training)
-    training.cert_date = '96/96/9666'
-    training.should be_valid
+  
+  describe "only_date" do
+    it "should return true if cert_date is a date" do
+      training = FactoryGirl.build(:staff_cert_training, :cert_date => Date.today)
+      training.only_date.should == true
+    end
+    
+    it "should return false if cert_date is unknown date" do
+      training = FactoryGirl.build(:staff_cert_training, :cert_date => NcsCode.unknown_date)
+      training.only_date.should == false
+    end
+    
+    it "should return false if cert_date is not applicable date" do
+      training = FactoryGirl.build(:staff_cert_training, :cert_date => NcsCode.not_applicable_date)
+      training.only_date.should == false
+    end
   end
-
-  it "should be validate the cert_date value for valid date" do
-    training = FactoryGirl.build(:staff_cert_training)
-    training.cert_date = Date.today
-    training.should be_valid
-  end
-
-  it "should not validate the cert_date for invalid value" do
-    training = FactoryGirl.build(:staff_cert_training)
-    training.cert_date = "121211"
-    training.should_not be_valid
-    training.should have(1).error_on(:cert_date)
+  
+  describe "format_cert_date" do
+    it "should not the format the blank value" do
+      training = Factory(:staff_cert_training)
+      training.cert_date.should be_nil
+    end
+    
+    it "should not the format the not_applicable_date value" do
+      training = Factory(:staff_cert_training, :cert_date => NcsCode.not_applicable_date)
+      training.cert_date.should == NcsCode.not_applicable_date
+    end
+    
+    it "should not the format the unknown_date value" do
+      training = Factory(:staff_cert_training, :cert_date => NcsCode.unknown_date)
+      training.cert_date.should == NcsCode.unknown_date
+    end
+    
+    it "should the format only date value" do
+      training = Factory(:staff_cert_training, :cert_date => "12/28/2011")
+      training.cert_date.should == "2011-12-28"
+    end
   end
 end

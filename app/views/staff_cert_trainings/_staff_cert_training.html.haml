@@ -15,19 +15,19 @@
     %em *
     = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), {:prompt => 'Select Completed Status'}, {:id => "complete_status"}
   .field
-    - if (@staff_cert_training.cert_date != "96/96/9666" && @staff_cert_training.cert_date != "97/97/9777")
+    - if @staff_cert_training.only_date
       = radio_button_tag 'cert_date', 'date', true, :class => "cert_date"
-      = label_tag "Date staff member was certified: (mm/dd/yyyy) "
-      = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker', :id => "cert_date_temp"
+      = label_tag "Date staff member was certified"
+      = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker', :id => "cert_date_temp", :size => 10, :maxLength => 10 
     - else
       = radio_button_tag 'cert_date', 'date', false, :class => "cert_date"
-      = label_tag "Date staff member was certified: (mm/dd/yyyy) "
-      = text_field_tag 'cert_date_val', nil, :class => 'datepicker', :id => "cert_date_temp", :disabled => true
+      = label_tag "Date staff member was certified"
+      = text_field_tag 'cert_date_val', nil, :class => 'datepicker', :id => "cert_date_temp", :disabled => true, :size => 10, :maxLength => 10 
   .field
-    = radio_button_tag 'cert_date', '96/96/9666', @staff_cert_training.cert_date == "96/96/9666", :class => "cert_date"
+    = radio_button_tag 'cert_date', NcsCode.unknown_date, @staff_cert_training.cert_date == NcsCode.unknown_date, :class => "cert_date"
     = label_tag "Don't Know"
   .field
-    = radio_button_tag 'cert_date', '97/97/9777', @staff_cert_training.cert_date == "97/97/9777", :class => "cert_date"
+    = radio_button_tag 'cert_date', NcsCode.not_applicable_date , @staff_cert_training.cert_date == NcsCode.not_applicable_date, :class => "cert_date"
     = label_tag  "Not Applicable"
   = f.hidden_field :cert_date, :id => "cert_date_value"
   .field
@@ -36,10 +36,10 @@
     = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
   .field
     = f.label :frequency, "Frequency at which certification/training needs to be completed" 
-    = f.text_field :frequency
+    = f.text_field :frequency, { :size => 10}
   .field
     = f.label :formatted_expiration_date, "Cerification/Training expiration date"
-    = f.text_field :formatted_expiration_date, :class => "datepicker"
+    = f.text_field :formatted_expiration_date, { :class => "datepicker", :size => 10, :maxLength => 10 }
   .field
     = f.label :comment
     = f.text_field :comment
