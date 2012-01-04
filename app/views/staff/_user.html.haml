@@ -1,4 +1,4 @@
-- form_for @user, :html => { :id => 'user' } do |f|
+= form_for @user, :html => { :id => 'user' } do |f|
   -if @user.errors.any?
     #error_explanation
       %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
@@ -69,7 +69,7 @@
             .row
               (Click the 'Add staff member' link to add more staff members to supervise)
         %tbody.nested_records_supervisor_employees
-          - f.fields_for :supervisor_employees do |supervisor_employee|
+          = f.fields_for :supervisor_employees do |supervisor_employee|
             = render :partial => 'staff/supervisor_employees', :locals => { :f => supervisor_employee }
         %tfoot
           %tr.row

@@ -1,5 +1,5 @@
-- form_for @staff, :html => { :id => 'staff' } do |f|
-  -if @staff.errors.any?
+= form_for @staff, :html => { :id => 'staff' } do |f|
+  - if @staff.errors.any?
     #error_explanation
       %h2= "#{pluralize(@staff.errors.count, "error")} prohibited this staff from being saved:"
       %ul
@@ -70,7 +70,7 @@
           Languages
         %th
     %tbody.nested_records_staff_languages
-      - f.fields_for :staff_languages do |staff_language|
+      = f.fields_for :staff_languages do |staff_language|
         = render :partial => 'staff/staff_languages', :locals => { :f => staff_language }
     %tfoot
       %tr
