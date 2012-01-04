@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221175617) do
+ActiveRecord::Schema.define(:version => 20111228223642) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20111221175617) do
     t.date     "ncs_inactive_date"
     t.string   "staff_id",           :limit => 36,                                                   :null => false
     t.boolean  "external",                                                        :default => false, :null => false
+    t.boolean  "notify",                                                          :default => true,  :null => false
   end
 
   add_index "staff", ["staff_id"], :name => "uq_staff_staff_id", :unique => true

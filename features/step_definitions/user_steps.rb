@@ -56,7 +56,7 @@ Given %r{^staff member (\S+) has role \"([^\"]+)\"$} do |username, role|
   staff = Staff.find_by_username(username)
   staff.should_not be_nil
   role = Role.find_or_create_by_name(role)
-  staff.staff_roles.should be_empty
+  # staff.staff_roles.should be_empty
   staff.staff_roles.build(:role => role)
   staff.save!
 end

@@ -28,6 +28,7 @@
 #  ncs_inactive_date  :date
 #  staff_id           :string(36)      not null
 #  external           :boolean         default(FALSE), not null
+#  notify             :boolean         default(TRUE), not null
 #
 
 require 'spec_helper'

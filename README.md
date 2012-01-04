@@ -111,9 +111,6 @@ optional.
     
     # weekly email reminder can be enable or disable for the particular deployment.
     email_reminder = false
-    
-    # Comma separated list of username for excluding users from weekly email reminder users list
-    reminder_excluded_users = "jane,warren"
 
     # Google Analytics account number to analyze staff portal's traffic data
     google_analytics_number = "UA-1234"

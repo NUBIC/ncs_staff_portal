@@ -109,48 +109,40 @@ class StaffController < SecuredController
           expense.save!
         end
         format.html {
-          if permit?(Role::STAFF_SUPERVISOR)
+          if @staff.id == @current_staff.id
+            if params[:return_path] == "users_staff_index_path"
+              render_user_list
+            else
+              render_staff
+            end
+          elsif permit?(Role::STAFF_SUPERVISOR)
             if permit?(Role::USER_ADMINISTRATOR)
-              if @staff.id == @current_staff.id
-                render_staff
-              elsif params[:return_path] == "staff_index_path"
+              if params[:return_path] == "staff_index_path"
                 render_staff_list
-              elsif params[:return_path] == "users_staff_index_path"
+              else
                 render_user_list
               end
-            elsif @staff.id == @current_staff.id
-              render_staff
             else
               render_staff_list
-            end
+            end 
           elsif permit?(Role::USER_ADMINISTRATOR)
             render_user_list
           else
             render_staff
           end
         }
+        format.json { head :ok }
         format.xml  { head :ok }
       else
         format.html { 
-          if permit?(Role::STAFF_SUPERVISOR)
-            if permit?(Role::USER_ADMINISTRATOR)
-              if params[:return_path] == "staff_index_path"
-                render :action => "edit", :location => @staff
-              elsif params[:return_path] == "users_staff_index_path"
-                @user = @staff
-                render :action => "edit_user", :location => @user
-              end
-            else
-              render :action => "edit", :location => @staff
-            end
-          elsif permit?(Role::USER_ADMINISTRATOR)
+          if params[:return_path] == "users_staff_index_path"
             @user = @staff
             render :action => "edit_user", :location => @user
           else
-            render :action => "edit", :location => @staff
+            render :action => "edit"
           end
-          
         }
+        format.json { render :json => @staff.errors, :status => :unprocessable_entity }
         format.xml  { render :xml => @staff.errors, :status => :unprocessable_entity }
       end
     end

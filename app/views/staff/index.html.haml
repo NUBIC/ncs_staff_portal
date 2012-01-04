@@ -13,11 +13,28 @@
               %td= staff.staff_type_other
             - else
               %td= staff.staff_type.display_text
+          %td
+            = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
           %td= button_to "Delete", { :action => "destroy", :id => staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
 
 :javascript
     $(document).ready(function() {
       displayStaffList()
+      $(".notify").each(function(){ 
+         $(this).change(function(){
+           staff_id = $(this).attr('staff_id')
+           notify = this.checked ? true : false
+           url =  "/staff/" + staff_id +".json"
+           data = "{\"staff\":{\"notify\":\""+notify+"\", \"validate_update\":\"false\"}}"
+           $.ajax({
+             url: url,
+             type: 'PUT',
+             contentType: "application/json",
+             dataType: 'json',
+             data: data
+           });
+         });
+       });
     });
   
     function displayStaffList() {
@@ -25,6 +42,7 @@
           { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
           { key: "name", label: "Name", sortable: true},
           { key: "type", label: "NCS Staff Type" },
+          { key: "notify", label: "Receive reminder email" },
           { key: "controls", label: "Controls" }
       ];
       var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
@@ -34,6 +52,7 @@
           { key: "username" },
           { key: "name" },
           { key: "type" },
+          { key: "notify" },
           { key: "controls" }
         ]
       };

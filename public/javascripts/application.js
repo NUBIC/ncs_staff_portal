@@ -14,6 +14,13 @@ NCSPortal.OutreachItems = {};
 NCSPortal.OutreachLanguages = {};
 NCSPortal.SupervisorEmployees = {};
 
+
+// Added X-CSRF-Token to request header as per http://weblog.rubyonrails.org/2011/2/8/csrf-protection-bypass-in-ruby-on-rails
+$(document).ajaxSend(function(e, xhr, options) {
+  var token = $("meta[name='csrf-token']").attr("content");
+  xhr.setRequestHeader("X-CSRF-Token", token);
+});
+
 // Used inside document ready method call to wire up selects with other fields
 function wire_up_select_other(select_id, other_id){
   check_select_for_other(select_id, other_id);

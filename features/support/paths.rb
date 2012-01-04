@@ -14,7 +14,7 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
 
-    when /the list of users/
+    when /the manage users accounts page/
       users_staff_index_path
 
     when /the default page/
@@ -31,6 +31,12 @@ module NavigationHelpers
       
     when /the manage staff details page/
       staff_index_path
+      
+    when /the staff edit page for (\S+?)$/
+      edit_staff_path(existing_staff($1))
+      
+    when /the user edit page for (\S+?)$/
+      edit_user_staff_path(existing_staff($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
