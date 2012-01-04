@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20111228223642) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "weekly_exp_id",   :limit => 36,                               :null => false
+    t.text     "comment"
   end
 
   add_index "staff_weekly_expenses", ["weekly_exp_id"], :name => "uq_staff_weekly_expenses_weekly_exp_id", :unique => true

@@ -9,6 +9,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  weekly_exp_id   :string(36)      not null
+#  comment         :text
 #
 
 class StaffWeeklyExpense < ActiveRecord::Base
