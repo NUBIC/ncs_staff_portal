@@ -108,7 +108,7 @@ describe StaffCertTraining do
     end
     
     it "should the format only date value" do
-      training = Factory(:staff_cert_training, :cert_date => "12/28/2011")
+      training = Factory(:staff_cert_training, :cert_date => "2011-12-28")
       training.cert_date.should == "2011-12-28"
     end
   end
