@@ -207,14 +207,10 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     describe 'for StaffCertTraining' do
-      let!(:sp_record) { Factory(:staff_cert_training) }
+      let!(:sp_record) { Factory(:staff_cert_training, :staff => staff) }
       let(:sp_model) { StaffCertTraining }
 
       let(:producer_names) { [:staff_cert_trainings] }
-
-      before do
-        pending '#1638'
-      end
 
       it 'uses the public ID for staff' do
         results.first.staff_id.should == Staff.first.staff_id
