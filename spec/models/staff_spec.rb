@@ -199,12 +199,14 @@ describe Staff do
     end
 
     describe "presence" do
-      it "first_name, last_name, email and studycenter is required if validate_create is not set" do
-        staff = FactoryGirl.build(:staff, :username => "test123", :first_name => nil, :last_name => nil, :email => nil , :study_center => nil)
+      it "first_name, last_name, email, studycenter and alteast one role is required if validate_create is true" do
+        staff = FactoryGirl.build(:staff, :username => "test123", :first_name => nil, :last_name => nil, :email => nil , :study_center => nil, :validate_create => "true")
         staff.should_not be_valid
         staff.should have(1).error_on(:first_name)
         staff.should have(1).error_on(:last_name)
         staff.should have(1).error_on(:study_center)
+        staff.should have(1).error_on(:roles)
+        staff.errors[:roles].should == ["can not be empty. User must have atleast one role assigned. Please select one or more roles."]
       end
 
       it "staff_type, birth_date, gender, race, ethnicity, zipcode, subcontractor, experience is required if validate_update is not set" do

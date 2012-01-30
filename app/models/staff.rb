@@ -58,7 +58,12 @@ class Staff < ActiveRecord::Base
   accepts_nested_attributes_for :supervisor_employees, :allow_destroy => true
   accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
-
+  
+  validate :has_roles, :if => :create_presence_required?
+  def has_roles
+    errors.add(:roles, "can not be empty. User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank?
+  end
+  
   before_save :calculate_hourly_rate, :update_employees
 
   acts_as_mdes_record :public_id => :staff_id
@@ -137,7 +142,7 @@ class Staff < ActiveRecord::Base
   end
 
   def create_presence_required?
-    validate_create == "false" ? false : true
+    validate_create == "true" ? true : false
   end
 
   def name
