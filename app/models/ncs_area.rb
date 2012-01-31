@@ -10,4 +10,5 @@
 class NcsArea < ActiveRecord::Base
   validates_presence_of :name, :psu_id
   validates_uniqueness_of :name, :scope => :psu_id
+  has_many :ncs_area_ssus, :dependent => :destroy
 end
