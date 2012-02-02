@@ -21,6 +21,7 @@ Scenario: Redirect to user list page for user admin update user
   Given staff with username super11
   And staff member super11 has role "User Administrator"
   And staff with username test111
+  And staff member test111 has role "Outreach Staff"
   When I log in as "super11"
   And I go to the user edit page for test111
   And I press "Save"
@@ -54,6 +55,7 @@ Scenario: Redirect to user list page when log in user has staff supervisor and u
   And staff member super11 has role "User Administrator"
   And staff member super11 has role "Staff Supervisor"
   And staff with username test111
+  And staff member test111 has role "Outreach Staff"
   When I log in as "super11"
   And I go to the user edit page for test111
   And I press "Save"
