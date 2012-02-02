@@ -89,7 +89,7 @@ module NcsNavigator::StaffPortal::Warehouse
       let!(:sp_record) { Factory(:valid_staff) }
 
       it 'excludes records which have been initialized but not updated' do
-        Factory(:staff, :validate_create => 'true', :zipcode => nil)
+        Factory(:staff, :zipcode => nil)
 
         results.collect(&:staff_zip).should == %w(92131)
       end
