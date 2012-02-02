@@ -160,6 +160,10 @@ If you have problems deploying, you can run this:
 
 and capistrano will try to tell you why it cannot deploy.
 
+if you make changes to the footer logo paths in navigator.ini in between deploys, you have to run rake task to copy images
+    
+    $ bundle exec cap production config:images
+
 #### Deployment user
 
 As currently configured, Staff Portal will be deployed as the user you
