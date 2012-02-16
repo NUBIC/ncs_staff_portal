@@ -25,8 +25,9 @@ OMA::Application.configure do
   
   config.after_initialize do
     Aker.configure do
+      static = Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
       staff_portal = Aker::Authorities::StaffPortal.new
-      authorities :cas, staff_portal
+      authorities :cas, staff_portal, static
       central '/etc/nubic/ncs/aker-local.yml'
     end
   end

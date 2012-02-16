@@ -104,4 +104,10 @@ namespace :config do
   task :images,  :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
+  
+  desc "Create the static auth file for the application user"
+  task :static_authority, :roles => :app do
+    run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} static_user:create"
+  end
 end
+

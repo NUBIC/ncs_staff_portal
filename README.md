@@ -97,14 +97,19 @@ configuration in its default location, `/etc/nubic/ncs/navigator.ini`.
 
 To further customize Staff Portal for your center, add one or more of
 the following configuration elements to the `[Staff Portal]` section of
-the configuration file. `bootstrap_user` is mandatory; all others are
-optional.
+the configuration file. `bootstrap_user` and `psc_user_password` are mandatory; 
+all others are optional.
 
     # The initial user for Staff Portal. This user will automatically
     # granted the User Administrator role and will thus be able to
     # provision more users. The username must be one that can be
     # authenticated with the CAS server that Staff Portal uses.
     bootstrap_user = jrp
+    
+    # The psc user password for Staff Portal. There will be application 
+    # user with username as "psc_application"which will be used for 
+    # communication between Patient Study Calendar and Staff Portal.
+    psc_user_password = "password"
 
     # for any futher development, developer's email address for development testing email
     development_email = "user@example.com"
