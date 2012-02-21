@@ -29,6 +29,7 @@
 #  staff_id           :string(36)      not null
 #  external           :boolean         default(FALSE), not null
 #  notify             :boolean         default(TRUE), not null
+#  numeric_id         :integer         not null
 #
 
 class Staff < ActiveRecord::Base
@@ -63,10 +64,25 @@ class Staff < ActiveRecord::Base
   def has_roles
     errors.add(:roles, "can not be empty. User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank?
   end
-  
   before_save :calculate_hourly_rate, :update_employees
 
   acts_as_mdes_record :public_id => :staff_id
+  after_initialize :generate_numeric_id
+    
+  def generate_numeric_id
+    if self.numeric_id.blank?
+      random = Staff.generate_random_number
+      if Staff.all.map(&:numeric_id).include?(random)
+        generate_numeric_id
+      else
+        self.numeric_id = random
+      end
+    end
+  end
+  
+  def self.generate_random_number
+    rand(2**31 - 1)
+  end
 
   def pay_amount_required
     if self.pay_type == "Hourly" or self.pay_type =="Yearly"

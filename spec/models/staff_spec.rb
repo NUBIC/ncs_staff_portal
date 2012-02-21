@@ -29,6 +29,7 @@
 #  staff_id           :string(36)      not null
 #  external           :boolean         default(FALSE), not null
 #  notify             :boolean         default(TRUE), not null
+#  numeric_id         :integer         not null
 #
 
 require 'spec_helper'
@@ -101,6 +102,20 @@ describe Staff do
 
     it 'is set to a different value for each staff record' do
       Staff.new.staff_id.should_not == Staff.new.staff_id
+    end
+  end
+  
+  describe '#numeric_id' do
+    it 'is automatically set if not set' do
+      Staff.new.numeric_id.should_not be_nil
+    end
+
+    it 'is left alone if already set' do
+      Staff.new(:numeric_id => 1234).numeric_id.should == 1234
+    end
+    
+    it 'is set to a different value for each staff record' do
+      Staff.new.numeric_id.should_not == Staff.new.numeric_id
     end
   end
 
@@ -388,7 +403,7 @@ describe Staff do
       @staff = FactoryGirl.create(:staff)
     end
 
-    ["username", "first_name", "last_name", "email", "study_center", "ncs_active_date", "ncs_inactive_date", "staff_type_other", "race_other"].each do |key|
+    ["username", "first_name", "last_name", "email", "study_center", "ncs_active_date", "ncs_inactive_date", "staff_type_other", "race_other", "numeric_id"].each do |key|
       it "contains #{key}" do
         @staff.as_json.has_key?("#{key}").should == true
       end
