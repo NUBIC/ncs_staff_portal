@@ -11,7 +11,9 @@ end
 
 
 Given /a valid API user with username (.+)$/ do |username|
-  staff = Staff.create!(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username, :study_center => 1234)
+  Factory(:valid_staff,
+    :username => username, :email => "#{username}@test.com",
+    :first_name => username, :last_name => username, :study_center => 1234)
   steps %Q{
     Given I am using the basic credentials "#{username}" / "#{username}"
   }
@@ -19,27 +21,31 @@ end
 
 Given /a valid API user with default supervisor$/ do
   username = "supervisor"
-  staff = Staff.create!(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username, :study_center => 1234)
-  role = Role.find_by_name(Role::STAFF_SUPERVISOR)
-  role = Role.create(:name => Role::STAFF_SUPERVISOR) unless role
-  staff.roles << role
+  Factory(:valid_staff,
+    :username => username, :email => "#{username}@test.com",
+    :first_name => username, :last_name => username, :study_center => 1234)
+  role = Role::STAFF_SUPERVISOR
   steps %Q{
     Given I am using the basic credentials "#{username}" / "#{username}"
+    And staff member #{username} has role "#{role}"
   }
 end
 
 Given /a valid API user with supervisor role to the staff (.+)$/ do |usernames|
-  supervisor = "supervisor"
-  staff = Staff.create!(:username => supervisor, :email => "#{supervisor}@test.com", :first_name => supervisor, :last_name => supervisor, :study_center => 1234)
-  role = Role.find_by_name(Role::STAFF_SUPERVISOR)
-  role = Role.create(:name => Role::STAFF_SUPERVISOR) unless role
-  staff.roles << role
-  usernames.split(', ').each do |username|
-    staff.employees << Staff.create!(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username, :study_center => 1234)
-  end
+  username = "supervisor"
+  staff = Factory(:valid_staff,
+    :username => username, :email => "#{username}@test.com",
+    :first_name => username, :last_name => username, :study_center => 1234)
+  role = Role::STAFF_SUPERVISOR
   steps %Q{
-    Given I am using the basic credentials "#{supervisor}" / "#{supervisor}"
+    Given I am using the basic credentials "#{username}" / "#{username}"
+    And staff member #{username} has role "#{role}"
   }
+  usernames.split(', ').each do |username|
+    staff.employees << Factory(:valid_staff,
+      :username => username, :email => "#{username}@test.com",
+      :first_name => username, :last_name => username, :study_center => 1234)
+  end
 end
 
 Given /staff with username (.+)$/ do |usernames|
@@ -56,7 +62,6 @@ Given %r{^staff member (\S+) has role \"([^\"]+)\"$} do |username, role|
   staff = Staff.find_by_username(username)
   staff.should_not be_nil
   role = Role.find_or_create_by_name(role)
-  # staff.staff_roles.should be_empty
   staff.staff_roles.build(:role => role)
   staff.save!
 end
