@@ -6,7 +6,7 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
   - @supervisorEmployeesTemplate = generate_nested_attributes_template(f, :supervisor_employees, 'staff/supervisor_employees')
-  = hidden_field_tag "return_path", "users_staff_index_path"
+  = hidden_field_tag "return_path", "users_path"
   = f.hidden_field :validate_update, :value => false
   = f.hidden_field :validate_create, :value => true
   .block

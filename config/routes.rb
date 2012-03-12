@@ -20,17 +20,15 @@ OMA::Application.routes.draw do
     end
   end
   
-  resources :user
-  
   resources :administration
 
   root :to => "public#index"
   
-  # match 'edit_user' => 'staff#edit_user', :as => 'user/edit'
-  # match 'new' => 'staff#new', :as => 'user/new'
-  # match 'users' => 'staff#users', :as => 'users'
   match 'dashboard' => 'secured#dashboard', :as => 'dashboard'
   match 'logout' => 'logout', :as => 'logout'
+  match "users" => "staff#users", :via => [:get]
+  match "users/new" => "staff#new", :via => [:get], :as => 'new_users'
+  match "users/:id/edit" => "staff#edit_user", :via => [:get], :as => 'edit_users'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

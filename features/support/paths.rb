@@ -15,7 +15,7 @@ module NavigationHelpers
       '/'
 
     when /the manage users accounts page/
-      users_staff_index_path
+      users_path
 
     when /the default page/
       dashboard_path
@@ -36,7 +36,7 @@ module NavigationHelpers
       edit_staff_path(existing_staff($1))
       
     when /the user edit page for (\S+?)$/
-      edit_user_staff_path(existing_staff($1))
+      edit_users_path(existing_staff($1))
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

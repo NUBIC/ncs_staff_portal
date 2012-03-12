@@ -6,7 +6,7 @@ class StaffController < SecuredController
   set_tab :admin, :only => %w(index users new edit_user)
 
   add_breadcrumb "Admin", :administration_index_path, :only => %w(index users new edit_user) 
-  add_breadcrumb "Administer user accounts", :users_staff_index_path, :only => %w(new users edit_user)
+  add_breadcrumb "Administer user accounts", :users_path, :only => %w(new users edit_user)
   add_breadcrumb "Manage staff details", :staff_index_path, :only => %w(index)
 
 
@@ -24,6 +24,7 @@ class StaffController < SecuredController
     end
   end
   
+  # GET /users
   def users
     if permit?(Role::USER_ADMINISTRATOR)
       params[:page] ||= 1
@@ -51,10 +52,11 @@ class StaffController < SecuredController
   end
 
   # GET /staff/new
-  #  GET /staff/new.xml
+  # GET /staff/new.xml
+  # GET /users/new
   def new
     if permit?(Role::USER_ADMINISTRATOR)
-      add_breadcrumb "new user", :new_staff_path
+      add_breadcrumb "new user", :new_users_path
       @user = Staff.new
       respond_to do |format|
         format.html 
@@ -73,10 +75,11 @@ class StaffController < SecuredController
     end
   end
   
+  # GET /users/1/edit
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
       @user = Staff.find(params[:id])
-      add_breadcrumb "#{@user.name}", edit_user_staff_path(@user)
+      add_breadcrumb "#{@user.name}", edit_users_path(@user)
     end
   end
 
@@ -88,7 +91,7 @@ class StaffController < SecuredController
 
       respond_to do |format|
         if @user.save
-          format.html { redirect_to(users_staff_index_path) }
+          format.html { redirect_to(users_path) }
           format.xml  { render :xml => @user, :status => :created, :location => @user }
         else               
           format.html { render :action => "new" }
@@ -110,7 +113,7 @@ class StaffController < SecuredController
         end
         format.html {
           if @staff.id == @current_staff.id
-            if params[:return_path] == "users_staff_index_path"
+            if params[:return_path] == "users_path"
               render_user_list
             else
               render_staff
@@ -135,7 +138,7 @@ class StaffController < SecuredController
         format.xml  { head :ok }
       else
         format.html { 
-          if params[:return_path] == "users_staff_index_path"
+          if params[:return_path] == "users_index_path"
             @user = @staff
             render :action => "edit_user", :location => @user
           else
@@ -173,11 +176,10 @@ class StaffController < SecuredController
   end
   
   def find_staff
-    staff = Staff.find_by_username(params[:id]) || Staff.find(params[:id])
-    if staff
-      staff
-    else
-      raise "Staff does not exist."
+    begin
+      staff = Staff.find_by_username(params[:id]) || Staff.find_by_numeric_id(params[:id]) || Staff.find(params[:id]) 
+    rescue ActiveRecord::RecordNotFound
+      render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
   
@@ -190,6 +192,6 @@ class StaffController < SecuredController
   end
   
   def render_user_list
-    redirect_to(users_staff_index_path)
+    redirect_to(users_path)
   end
 end
