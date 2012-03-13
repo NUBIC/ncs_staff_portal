@@ -25,15 +25,25 @@ class StaffController < SecuredController
   end
   
   # GET /users
+  # GET /users.xml
+  # GET /users.json
+  # GET /users.json?role=X  (get users by roles for single role 'X')
+  # GET /users.json?role[]=X&role[]=Y   (get users by roles for multiple roles 'X' or 'Y')
   def users
     if permit?(Role::USER_ADMINISTRATOR)
-      params[:page] ||= 1
-      @users = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
-    
+      if params[:role]
+        @users = Staff.find_by_role(params[:role])
+      else
+        params[:page] ||= 1
+        @users = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
+      end
       respond_to do |format|
         format.html  
         format.xml  { render :xml => @users }
+        format.json { render :json => @users }
       end
+    else
+      throw :warden
     end
   end
 

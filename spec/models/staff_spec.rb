@@ -612,4 +612,29 @@ describe Staff do
       end
     end
   end
+  
+  describe "find_by_role" do
+    before(:each) do
+      @staff = FactoryGirl.create(:valid_staff)
+      @staff.roles << @user_admin
+    end
+    
+    describe "returns the all the staff" do
+      it "for one role" do
+        search_staff = Staff.find_by_role(Role::USER_ADMINISTRATOR)
+        search_staff.should_not be_nil
+        search_staff.should include @staff
+      end
+      
+      it "for multiple roles" do
+        staff1 = FactoryGirl.create(:valid_staff, :username => "1234")
+        staff1.roles << @user_admin
+        staff1.roles << @staff_supervisor
+        search_staff = Staff.find_by_role([Role::USER_ADMINISTRATOR, Role::STAFF_SUPERVISOR])
+        search_staff.should_not be_empty
+        search_staff.should include @staff
+        search_staff.should include staff1
+      end
+    end
+  end
 end

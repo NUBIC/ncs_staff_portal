@@ -1,12 +1,5 @@
 @api
-Feature: Staff API
-
-  # Scenario: Users List
-  #   Given an authenticated user
-  #   And I have users with username user1, user2
-  #   When I go to the list of users
-  #   Then I should see "user1"
-  #   And I should see "user2"
+Feature: Users API
 
   Scenario: Valid authenticated staff can get their own information
     Given a valid API user with username staff
@@ -40,6 +33,57 @@ Feature: Staff API
     Then access is forbidden
 
   Scenario: Unauthorized access to get request is not allowed
-    And staff with username staff
+    Given staff with username staff
     When I send a GET request for "/staff/staff.json"
     Then unauthorized access
+
+  Scenario: Valid authenticated user administrator can get all the staff in the system
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    And staff with username test3
+    When I send a GET request for "/users.json"
+    Then the request is successful
+    And the JSON should have 4 user
+    
+  Scenario: Access to get users request by the user with role other than User Administrator is not allowed
+    Given a valid API user with username staff
+    And staff member staff has role "Staff Supervisor"
+    When I send a GET request for "/users.json"
+    Then access is forbidden
+    
+  Scenario: Valid authenticated user administrator can get all the staff by role with single role
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff member test1 has role "Phone Staff"
+    And staff with username test2
+    And staff member test2 has role "Phone Staff"
+    And staff with username test3
+    And staff member test3 has role "Field Staff"
+    When I send a GET request for "/users.json?role%5B%5D=Phone%20Staff"
+    Then the request is successful
+    And the JSON should have 2 user
+    And the JSON at "0/roles" should be an array
+    And the JSON at "0/roles/0/name" should be "Phone Staff"
+    And the JSON at "1/roles" should be an array
+    And the JSON at "1/roles/0/name" should be "Phone Staff"
+
+  Scenario: Valid authenticated user administrator can get all the staff by role with multiple roles
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff member test1 has role "Phone Staff"
+    And staff with username test2
+    And staff member test2 has role "Outreach Staff"
+    And staff with username test3
+    And staff member test3 has role "Field Staff"
+    When I send a GET request for "/users.json?role%5B%5D=Phone%20Staff&role%5B%5D=Field%20Staff"
+    Then the request is successful
+    And the JSON should have 2 user
+    And the JSON at "0/roles" should be an array
+    And the JSON at "0/roles/0/name" should be "Phone Staff"
+    And the JSON at "1/roles" should be an array
+    And the JSON at "1/roles/0/name" should be "Field Staff"
+

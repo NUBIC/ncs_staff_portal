@@ -94,10 +94,10 @@ class Staff < ActiveRecord::Base
   def update_employees
     self.employees.delete_all unless self.has_role(Role::STAFF_SUPERVISOR)
   end
-
-  scope :with_role, lambda { |role|
-    joins(:roles).where('roles.name = ?', role)
-  }
+  
+  def self.find_by_role(role)
+    Staff.joins(:roles).where("roles.name IN (?)", role).uniq
+  end
 
   scope :default_supervisors, lambda {
     joins(:roles).
