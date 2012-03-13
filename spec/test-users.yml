@@ -32,6 +32,7 @@ users:
     portals: 
     - NCSNavigator: 
       - Staff Supervisor
+      - User Administrator
     password: psc_application
 groups: 
   NCSNavigator:
