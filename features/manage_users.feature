@@ -86,4 +86,113 @@ Feature: Users API
     And the JSON at "0/roles/0/name" should be "Phone Staff"
     And the JSON at "1/roles" should be an array
     And the JSON at "1/roles/0/name" should be "Field Staff"
-
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by last_name
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?last_name=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/last_name" should be "lname_test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?username=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/username" should be "test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name and last_name
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=fname_test1&last_name=lname_test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "0/last_name" should be "lname_test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name and username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=fname_test1&username=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "0/username" should be "test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by last_name and username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?last_name=lname_test1&username=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/last_name" should be "lname_test1"
+    And the JSON at "0/username" should be "test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name and last_name and username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=fname_test1&last_name=lname_test1&username=test1"
+    Then the request is successful
+    And the JSON should have 1 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "0/last_name" should be "lname_test1"
+    And the JSON at "0/username" should be "test1"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name or last_name
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=fname_test1&last_name=lname_test2&operator=OR"
+    Then the request is successful
+    And the JSON should have 2 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "1/last_name" should be "lname_test2"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name or username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    When I send a GET request for "/users.json?first_name=fname_test1&username=test2&operator=OR"
+    Then the request is successful
+    And the JSON should have 2 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "1/username" should be "test2"
+    
+  Scenario: Valid authenticated user administrator can search the staff by first_name or last_name or username
+    Given a valid API user with username superuser
+    And staff member superuser has role "User Administrator"
+    And staff with username test1
+    And staff with username test2
+    And staff with username test3
+    When I send a GET request for "/users.json?first_name=fname_test1&last_name=lname_test2&username=test3&operator=OR"
+    Then the request is successful
+    And the JSON should have 3 user
+    And the JSON at "0/first_name" should be "fname_test1"
+    And the JSON at "1/last_name" should be "lname_test2"
+    And the JSON at "2/username" should be "test3"

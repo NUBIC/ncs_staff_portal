@@ -29,10 +29,15 @@ class StaffController < SecuredController
   # GET /users.json
   # GET /users.json?role=X  (get users by roles for single role 'X')
   # GET /users.json?role[]=X&role[]=Y   (get users by roles for multiple roles 'X' or 'Y')
+  # GET /users.json?first_name=X&last_name=Y&username=Z   (get users by first_name 'X' and last_name 'Y' and username 'Z')
+  # GET /users.json?first_name=X&last_name=Y&username=Z&operator=OR   (get users by first_name 'X' or last_name 'Y' or username 'Z')
+
   def users
     if permit?(Role::USER_ADMINISTRATOR)
       if params[:role]
         @users = Staff.find_by_role(params[:role])
+      elsif params[:first_name] || params[:last_name] || params[:username]
+        @users = Staff.where(construct_condition_string(params))
       else
         params[:page] ||= 1
         @users = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
@@ -203,5 +208,33 @@ class StaffController < SecuredController
   
   def render_user_list
     redirect_to(users_path)
+  end
+  
+  def construct_condition_string(params)
+    operator = params[:operator] =~ /OR/ ? " OR " : " AND "
+    if params[:first_name]
+      conditions = get_search_string(:first_name, params[:first_name])
+      if params[:last_name]
+        conditions << operator
+        conditions << get_search_string(:last_name, params[:last_name])
+      end
+      if params[:username]
+        conditions << operator
+        conditions << get_search_string(:username, params[:username])
+      end
+    elsif params[:last_name]
+      conditions = get_search_string(:last_name, params[:last_name])
+      if params[:username]
+        conditions << operator
+        conditions << get_search_string(:username, params[:username])
+      end
+    elsif params[:username]
+      conditions = get_search_string(:username, params[:username])
+    end
+    conditions
+  end
+  
+  def get_search_string(key, value)
+    Staff.arel_table[key].matches("%#{value}%").to_sql
   end
 end

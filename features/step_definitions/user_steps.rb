@@ -52,7 +52,7 @@ Given /staff with username (.+)$/ do |usernames|
   usernames.split(', ').each do |username|
     Factory(:valid_staff,
       :username => username, :email => "#{username}@test.com",
-      :first_name => username, :last_name => username, :study_center => 1234)
+      :first_name => "fname_" + username, :last_name => "lname_" + username, :study_center => 1234)
     Aker.configuration.authorities.detect { |a| a.is_a?(Aker::Authorities::Static) }.
       valid_credentials!(:user, username, username)
   end
