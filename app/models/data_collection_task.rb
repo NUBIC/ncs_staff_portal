@@ -21,9 +21,9 @@
 class DataCollectionTask < ActiveRecord::Base
   validates_presence_of  :task_type
   validates_date :task_date, :allow_blank => false
-  validates :hours, :numericality => {:less_than => 100.00, :greater_than => 0, :allow_nil => true }
-  validates :expenses, :numericality => {:less_than => 99999999.99, :greater_than => 0, :allow_nil => true }
-  validates :miles, :numericality => {:less_than => 999.99, :greater_than => 0,:allow_nil => true }
+  validates :hours, :numericality => {:less_than => 100.00, :greater_than_or_equal_to => 0, :allow_nil => true }
+  validates :expenses, :numericality => {:less_than => 99999999.99, :greater_than_or_equal_to => 0, :allow_nil => true }
+  validates :miles, :numericality => {:less_than => 999.99, :greater_than_or_equal_to => 0,:allow_nil => true }
   validates_with OtherEntryValidator, :entry => :task_type, :other_entry => :task_type_other
 
   belongs_to :staff_weekly_expense

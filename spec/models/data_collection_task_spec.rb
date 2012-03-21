@@ -52,10 +52,15 @@ describe DataCollectionTask do
         task.should have(1).error_on(:hours)
       end
 
-      it "should be greater than 0 hours" do
+      it "should be positive value" do
         task= FactoryGirl.build(:data_collection_task, :hours => -3)
         task.should_not be_valid
         task.should have(1).error_on(:hours)
+      end
+      
+      it "should allow 0" do
+        task= FactoryGirl.build(:data_collection_task, :hours => 0)
+        task.should be_valid
       end
     end
 
@@ -72,10 +77,15 @@ describe DataCollectionTask do
         task.should have(1).error_on(:expenses)
       end
 
-      it "should be greater than $ 0 expenses" do
+      it "should be positive value" do
         task= FactoryGirl.build(:data_collection_task, :expenses => -3)
         task.should_not be_valid
         task.should have(1).error_on(:expenses)
+      end
+      
+      it "should allow 0" do
+        task= FactoryGirl.build(:data_collection_task, :expenses => 0)
+        task.should be_valid
       end
     end
 
@@ -93,10 +103,15 @@ describe DataCollectionTask do
         task.should have(1).error_on(:miles)
       end
 
-      it "should be greater than 0 miles" do
+      it "should be positive value" do
         task= FactoryGirl.build(:data_collection_task, :miles => -3)
         task.should_not be_valid
         task.should have(1).error_on(:miles)
+      end
+      
+      it "should allow 0" do
+        task= FactoryGirl.build(:data_collection_task, :miles => 0)
+        task.should be_valid
       end
     end
 
