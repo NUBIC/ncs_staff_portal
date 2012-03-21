@@ -9,7 +9,7 @@
           %td= link_to user.username,edit_users_path(user)
           %td= user.name
           %td= display_roles(user.roles)
-          
+          %td= user.is_active ? "Active" : "Disabled"
 
 :javascript
     $(document).ready(function() {
@@ -19,8 +19,9 @@
     function displayEventList() {
       var columnDefs = [
           { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-          { key: "name", label: "Name", sortable: true},
-          { key: "role", label: "Role(s)"}
+          { key: "name", label: "Name", sortable: true },
+          { key: "role", label: "Role(s)" },
+          { key: "status", label: "Status" }
       ];
       var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("user-list-tbl"));
       dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
@@ -28,7 +29,8 @@
         fields: [
           { key: "username" },
           { key: "name" },
-          { key: "role" }
+          { key: "role" },
+          { key: "status" }
         ]
       };
       new YAHOO.widget.DataTable("user-list", columnDefs, dataSource, {
