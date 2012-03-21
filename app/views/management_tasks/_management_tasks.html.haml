@@ -12,9 +12,9 @@
               %td= management_task.task_type.display_text
           - else 
             %td= ""
-          %td= management_task.hours
-          %td= management_task.miles
-          %td= management_task.expenses
+          %td= display_task(management_task.hours)
+          %td= display_task(management_task.miles)
+          %td= display_task(management_task.expenses)
           %td= management_task.comment
           %td= button_to "Delete", { :action => "destroy", :id => management_task.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete  
 :javascript

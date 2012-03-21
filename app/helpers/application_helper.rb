@@ -18,6 +18,10 @@ module ApplicationHelper
     end
   end
   
+  def display_task(value)
+    value.blank? ? "0.0" : value
+  end
+  
   def same_as_current_user(requested_staff)
     requested_staff.id == @current_staff.id ? true : false
   end
