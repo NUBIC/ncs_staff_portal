@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-OMA::Application.load_tasks
+NcsStaffPortal::Application.load_tasks

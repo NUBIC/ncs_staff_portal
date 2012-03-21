@@ -1,4 +1,4 @@
-OMA::Application.routes.draw do
+NcsStaffPortal::Application.routes.draw do
   resources :outreach_events
 
   #resources :management_tasks
