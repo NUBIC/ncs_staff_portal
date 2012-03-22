@@ -166,17 +166,6 @@ class StaffController < SecuredController
     end
   end
 
-  # DELETE /staff/1
-  # DELETE /staff/1.xml
-  def destroy
-    @staff = Staff.find(params[:id])
-    @staff.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(staff_index_url) }
-      format.xml  { head :ok }
-    end
-  end
   private
   def check_staff_access
     @staff = find_staff

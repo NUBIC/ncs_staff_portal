@@ -15,8 +15,6 @@
               %td= staff.staff_type.display_text
           %td
             = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
-          %td= button_to "Delete", { :action => "destroy", :id => staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
-
 :javascript
     $(document).ready(function() {
       displayStaffList()
@@ -42,8 +40,7 @@
           { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
           { key: "name", label: "Name", sortable: true},
           { key: "type", label: "NCS Staff Type" },
-          { key: "notify", label: "Receive reminder email" },
-          { key: "controls", label: "Controls" }
+          { key: "notify", label: "Receive reminder email" }
       ];
       var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
       dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
@@ -52,8 +49,7 @@
           { key: "username" },
           { key: "name" },
           { key: "type" },
-          { key: "notify" },
-          { key: "controls" }
+          { key: "notify" }
         ]
       };
       new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
