@@ -18,7 +18,7 @@ Scenario Outline: Default page for various roles
     | Staff Supervisor              | a management task entry page      |
     | Outreach Staff                | a management task entry page      |
     | Administrative Staff          | a management task entry page      |
-    | Data Manager                  | the staff information page        |
+    | Data Reader                   | the staff information page        |
 
 Scenario: Default page for a staff member with no roles
   Given staff with username zw108
