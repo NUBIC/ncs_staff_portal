@@ -199,6 +199,9 @@ All the tasks should be executed from the application root on the
 server where the application is deployed. Each one will need to be run
 at least once for each environment in which Staff Portal is deployed.
 
+RAILS_ENV needs to be set to the appropriate value (production, staging) when running the various setup rake tasks for production or staging environment.
+e.g `bundle exec rake mdes:load_codes_from_schema_20 RAILS_ENV=production`
+
 [rake]: http://rake.rubyforge.org/
 
 #### Code lists
