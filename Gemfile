@@ -22,7 +22,7 @@ gem "scoped_search"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
-
+gem 'exception_notification', :require => 'exception_notifier'
 gem 'ncs_mdes_warehouse', '~> 0.1'
 # gem 'ncs_mdes_warehouse', '~> 0.1',
 #   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'

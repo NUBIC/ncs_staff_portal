@@ -1,3 +1,4 @@
+require 'ncs_navigator/configuration'
 NcsStaffPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -54,5 +55,9 @@ NcsStaffPortal::Application.configure do
       central '/etc/nubic/ncs/aker-staging.yml'
     end
   end
-
+  
+  config.middleware.use ExceptionNotifier,
+    :email_prefix => "[NCS Staff Portal] ",
+    :sender_address => NcsNavigator.configuration.staff_portal['mail_from'],
+    :exception_recipients => NcsNavigator.configuration.staff_portal['exception_recipients'].split(",") if NcsNavigator.configuration.staff_portal['exception_recipients']
 end
