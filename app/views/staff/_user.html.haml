@@ -77,13 +77,18 @@
             %td{ :colspan => '3' }
               = link_to_add_fields "Add staff member", :supervisor_employees
   .block
+    .title
+      Supervisor(s)
     .row
-      = "This user will be supervised by"
-      = display_supervisors(Staff.default_supervisors).html_safe
-      - if !@user.supervisors.empty?
-        = "and assigned supervisor(s) "
-        = display_supervisors(@user.supervisors).html_safe
-      = ".To change this, use the account page of the particular supervisor."
+      - if Staff.default_supervisors.empty? && @user.supervisors.empty?
+        = "This user has no supervisor."
+      - else
+        = "This user will be supervised by"
+        = display_supervisors(Staff.default_supervisors).html_safe
+        - if !@user.supervisors.empty?
+          = "and assigned supervisor(s) "
+          = display_supervisors(@user.supervisors).html_safe
+        = ".To change this, use the account page of the particular supervisor."
   .actions
     = f.submit 'Save', :class => "control_button"
   %p
