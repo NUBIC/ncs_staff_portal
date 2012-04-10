@@ -89,7 +89,7 @@ end
 after 'deploy:update_code', 'deploy:cleanup'
 
 # after deploying symlink, aggressively set permissions, copy images to current image config location.
-after 'deploy:symlink', 'deploy:permissions', 'config:images'
+after 'deploy:symlink', 'deploy:permissions', 'config:images', 'config:static_authority'
 
 # Database
 namespace :db do
