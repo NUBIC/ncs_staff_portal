@@ -49,9 +49,9 @@ NcsStaffPortal::Application.configure do
   config.active_support.deprecation = :notify
   config.after_initialize do
     Aker.configure do
-      static = Aker::Authorities::Static.from_file("#{Rails.root}/lib/aker/static_auth.yml")
       staff_portal = Aker::Authorities::StaffPortal.new
-      authorities :cas, staff_portal, static
+      authorities :cas, staff_portal
+      authorities Aker::Authorities::Static.from_file("#{Rails.root}/lib/aker/static_auth.yml") if File.exists?("#{Rails.root}/lib/aker/static_auth.yml")
       central '/etc/nubic/ncs/aker-staging.yml'
     end
   end
