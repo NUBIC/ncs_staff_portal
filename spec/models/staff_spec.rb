@@ -107,7 +107,7 @@ describe Staff do
   
   describe '#numeric_id' do
     it 'is automatically set if not set' do
-      Staff.new.numeric_id.should_not be_nil
+      FactoryGirl.create(:staff).numeric_id.should_not be_nil
     end
 
     it 'is left alone if already set' do
@@ -115,7 +115,7 @@ describe Staff do
     end
     
     it 'is set to a different value for each staff record' do
-      Staff.new.numeric_id.should_not == Staff.new.numeric_id
+      FactoryGirl.create(:staff).numeric_id.should_not == FactoryGirl.create(:staff).numeric_id
     end
   end
 

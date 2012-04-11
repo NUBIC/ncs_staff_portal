@@ -67,16 +67,16 @@ class Staff < ActiveRecord::Base
   before_save :calculate_hourly_rate, :update_employees
 
   acts_as_mdes_record :public_id => :staff_id
-  after_initialize :generate_numeric_id
+  before_create :generate_numeric_id 
     
   def generate_numeric_id
     if self.numeric_id.blank?
       random = Staff.generate_random_number
-      if Staff.all.map(&:numeric_id).include?(random)
-        generate_numeric_id
-      else
-        self.numeric_id = random
+      all_numeric_ids  = Staff.select([:numeric_id, :staff_id]).map(&:numeric_id)
+      while all_numeric_ids.include?(random)
+        random = Staff.generate_random_number
       end
+      self.numeric_id = random
     end
   end
   
