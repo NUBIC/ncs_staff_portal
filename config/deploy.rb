@@ -75,7 +75,7 @@ namespace :deploy do
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
-  
+
   desc "Fix permissions"
   task :permissions do
     sudo "chmod -R g+w #{shared_path} #{current_path} #{release_path}"
@@ -104,7 +104,7 @@ namespace :config do
   task :images,  :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
-  
+
   desc "Create the static auth file for the application user"
   task :static_authority, :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} static_user:create"
