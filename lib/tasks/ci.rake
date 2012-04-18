@@ -7,7 +7,7 @@ begin
 
     desc "Run the full CI process"
     task :all => [:setup, :spec, :cucumber]
-  
+
     desc "Run the CI specs only"
     task :specs => [:setup, :spec]
 
@@ -23,7 +23,7 @@ begin
       t.fork = true
       t.profile = 'ci'
     end
-  
+
     task :configuration_setup do
       require 'ncs_navigator/configuration'
       NcsNavigator.configuration =
