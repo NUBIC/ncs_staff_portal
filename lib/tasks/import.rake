@@ -13,6 +13,10 @@ namespace :import do
     NcsNavigator::Warehouse::DatabaseInitializer.new(t.config).set_up_repository
   end
 
+  def import_wh_config
+    task('import:warehouse_setup').config
+  end
+
   # For import scenarios where the staff data will not go into SP, but
   # rather will exist separately and be ETL'd in parallel.
   desc 'Pass outside staff & outreach data through to an XML file'
