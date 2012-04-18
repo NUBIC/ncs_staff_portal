@@ -17,7 +17,7 @@ namespace :import do
   # rather will exist separately and be ETL'd in parallel.
   desc 'Pass outside staff & outreach data through to an XML file'
   task :passthrough => [:warehouse_setup, :environment] do
-    require 'ncs_navigator/core'
+    require 'ncs_navigator/staff_portal'
 
     pass = NcsNavigator::StaffPortal::Warehouse::NotImportedPassthrough.new(import_wh_config)
     pass.import

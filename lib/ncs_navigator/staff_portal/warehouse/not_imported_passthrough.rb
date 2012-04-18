@@ -1,3 +1,5 @@
+require 'ncs_navigator/staff_portal'
+
 module NcsNavigator::StaffPortal::Warehouse
   ##
   # An "importer" that skips importing. Instead, it copies all the
