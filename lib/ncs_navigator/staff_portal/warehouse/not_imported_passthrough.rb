@@ -22,7 +22,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     def passthrough_tables
       Enumerator.record_producers.
-        select { |rp| rp.respond_to?(:model) }.collect(&:model).collect(&:mdes_table_name)
+        select { |rp| rp.respond_to?(:model) }.collect(&:model).collect(&:mdes_table_name).uniq
     end
   end
 end

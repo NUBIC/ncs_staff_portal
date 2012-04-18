@@ -38,6 +38,10 @@ module NcsNavigator::StaffPortal::Warehouse
       it 'does include outreach models' do
         model_tables.should include('outreach')
       end
+
+      it 'contains each table only once' do
+        model_tables.sort.should == model_tables.uniq.sort
+      end
     end
 
     describe '#import' do
