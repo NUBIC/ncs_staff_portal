@@ -31,5 +31,5 @@ begin
     end
   end
 rescue Exception => e
-  puts "Warning: #{e}"
+  $stderr.puts "Warning: #{e}"
 end
