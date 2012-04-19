@@ -31,5 +31,7 @@ begin
     end
   end
 rescue Exception => e
-  $stderr.puts "Warning: #{e}"
+  unless %w(staging production).include?(ENV['RAILS_ENV'])
+    $stderr.puts "Error setting up CI tasks: #{e}"
+  end
 end
