@@ -1,82 +1,72 @@
-%h4 List of outreach activities/events
-= link_to 'New outreach activity/event', new_outreach_event_path
+.content_body
+  .section
+    = link_to 'Add new outreach activity/event', new_outreach_event_path, :class => "add_link icon_link"
+    .search
+      = form_tag outreach_events_path, :method => :get do 
+        = text_field_tag "search", params[:search]
+        = submit_tag "Search", :class => "control_button"
+        = label_tag "(Search by 'event name' or 'segment' or 'staff member')"
+  .section_gap
+  .section
+    .section_heading
+      - model_name = (@outreach_events.size == 1 ? "Outreach Activity" : "Outreach Activities")
+      = raw page_entries_info @outreach_events, {:model => model_name}
+    %div.yui-skin-sam
+      %div#event-list
+        %table#event-list-tbl
+          - @outreach_events.each do |outreach_event|
+            %tr
+              %td= link_to outreach_event.formatted_event_date, edit_outreach_event_path(outreach_event)
+              %td= outreach_event.name_text
+              %td= display_segments(outreach_event.outreach_segments)
+              %td= outreach_event.evaluation_result.display_text
+              %td= outreach_event.mode_text
+              %td= outreach_event.outreach_type_text
+              %td= outreach_event.created_by_user_text
+              - if @can_delete
+                %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
+              - else
+                %td
 
-%div.text_search
-  = form_tag outreach_events_path, :method => :get do 
-    = text_field_tag "search", params[:search]
-    = submit_tag "Search", :class => "control_button"
-    = label_tag "(Search by 'event name' or 'segment' or 'staff member')"
-%div.yui-skin-sam
-  %div#event-list
-    %table#event-list-tbl
-      - @outreach_events.each do |outreach_event|
-        %tr
-          - if outreach_event.event_date.blank?
-            %td
-          - else
-            %td= link_to outreach_event.event_date, edit_outreach_event_path(outreach_event)
-          - if outreach_event.name.blank?
-            %td
-          - else
-            %td= outreach_event.name
-          %td= display_segments(outreach_event.outreach_segments)
-          %td= outreach_event.evaluation_result.display_text
-          - if outreach_event.mode.display_text == "Other"
-            %td=outreach_event.mode_other
-          - else
-            %td= outreach_event.mode.display_text
-          - if outreach_event.outreach_type.display_text == "Other"
-            %td=outreach_event.outreach_type_other
-          - else
-            %td= outreach_event.outreach_type.display_text
-          - if outreach_event.created_by.blank?
-            %td
-          - else
-            %td= outreach_event.created_by_user.name
-          - if @can_delete
-            %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
-          - else
-            %td
+    :javascript
+        $(document).ready(function() {
+          displayEventList()
+        });
 
-:javascript
-    $(document).ready(function() {
-      displayEventList()
-    });
-  
-    function displayEventList() {
-      var columnDefs = [
-          { key: "date", label: "Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-          { key: "name", label: "Name", sortable: true},
-          { key: "segment", label: "Segments"},
-          { key: "result", label: "Result" },
-          { key: "mode", label: "Mode" },
-          { key: "type", label: "Type" },
-          { key: "created_by", label: "Created By" },
-          { key: "controls", label: "Controls" }
-      ];
-      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("event-list-tbl"));
-      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-      dataSource.responseSchema = {
-        fields: [
-          { key: "date" },
-          { key: "name" },
-          { key: "segment" },
-          { key: "result" },
-          { key: "mode" },
-          { key: "type" },
-          { key: "created_by"},
-          { key: "controls" }
-        ]
-      };
-      var dataTable = new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
-          sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_DESC }
-      });
-      
-      var canDelete = #{@can_delete}
-      if (canDelete) {
-        dataTable.showColumn("controls"); 
-      } else {
-        dataTable.hideColumn("controls"); 
-      }
-    }
-= will_paginate @outreach_events, :previous_label => "Previous", :next_label => "Next"
+        function displayEventList() {
+          var columnDefs = [
+              { key: "date", label: "Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+              { key: "name", label: "Name", sortable: true},
+              { key: "segment", label: "Segments"},
+              { key: "result", label: "Result" },
+              { key: "mode", label: "Mode" },
+              { key: "type", label: "Type" },
+              { key: "created_by", label: "Created By" },
+              { key: "controls", label: "Controls" }
+          ];
+          var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("event-list-tbl"));
+          dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+          dataSource.responseSchema = {
+            fields: [
+              { key: "date" },
+              { key: "name" },
+              { key: "segment" },
+              { key: "result" },
+              { key: "mode" },
+              { key: "type" },
+              { key: "created_by"},
+              { key: "controls" }
+            ]
+          };
+          var dataTable = new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
+              sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_DESC }
+          });
+
+          var canDelete = #{@can_delete}
+          if (canDelete) {
+            dataTable.showColumn("controls"); 
+          } else {
+            dataTable.hideColumn("controls"); 
+          }
+        }
+    = will_paginate @outreach_events, :previous_label => "Previous", :next_label => "Next"

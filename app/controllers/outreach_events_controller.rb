@@ -36,7 +36,7 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events/1/edit
   def edit
     @outreach_event = OutreachEvent.find(params[:id])
-    add_breadcrumb "Edit outreach event", edit_outreach_event_path(@outreach_event)
+    add_breadcrumb "Edit outreach event[#{@outreach_event.formatted_event_date} - #{@outreach_event.name_text}]", edit_outreach_event_path(@outreach_event)
   end
 
   # POST /outreach_events

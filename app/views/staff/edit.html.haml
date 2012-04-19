@@ -1,7 +1,6 @@
-= render_breadcrumbs :separator => ' / ' 
 - javascript 'nested_attributes', 'staff_languages_list'
-%h4 Edit information for #{@staff.name}
-
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / '
 = render 'staff'
 
 

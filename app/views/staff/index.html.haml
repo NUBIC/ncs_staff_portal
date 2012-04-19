@@ -1,60 +1,64 @@
-= render_breadcrumbs :separator => ' / ' 
-%div.yui-skin-sam
-  %div#staff-list
-    %table#staff-list-tbl
-      - @staff_list.each do |staff|
-        %tr
-          %td= link_to staff.username, staff
-          %td= staff.name
-          - if staff.staff_type_code.blank?
-            %td= ""
-          - else
-            - if staff.staff_type.display_text == "Other"
-              %td= staff.staff_type_other
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / ' 
+.section
+  .section_heading
+    = raw page_entries_info @staff_list, {:model => "Staff"}
+  %div.yui-skin-sam
+    %div#staff-list
+      %table#staff-list-tbl
+        - @staff_list.each do |staff|
+          %tr
+            %td= link_to staff.username, staff
+            %td= staff.name
+            - if staff.staff_type_code.blank?
+              %td= ""
             - else
-              %td= staff.staff_type.display_text
-          %td
-            = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
-:javascript
-    $(document).ready(function() {
-      displayStaffList()
-      $(".notify").each(function(){ 
-         $(this).change(function(){
-           staff_id = $(this).attr('staff_id')
-           notify = this.checked ? true : false
-           url =  "/staff/" + staff_id +".json"
-           data = "{\"staff\":{\"notify\":\""+notify+"\", \"validate_update\":\"false\"}}"
-           $.ajax({
-             url: url,
-             type: 'PUT',
-             contentType: "application/json",
-             dataType: 'json',
-             data: data
+              - if staff.staff_type.display_text == "Other"
+                %td= staff.staff_type_other
+              - else
+                %td= staff.staff_type.display_text
+            %td
+              = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
+  :javascript
+      $(document).ready(function() {
+        displayStaffList()
+        $(".notify").each(function(){ 
+           $(this).change(function(){
+             staff_id = $(this).attr('staff_id')
+             notify = this.checked ? true : false
+             url =  "/staff/" + staff_id +".json"
+             data = "{\"staff\":{\"notify\":\""+notify+"\", \"validate_update\":\"false\"}}"
+             $.ajax({
+               url: url,
+               type: 'PUT',
+               contentType: "application/json",
+               dataType: 'json',
+               data: data
+             });
            });
          });
-       });
-    });
-  
-    function displayStaffList() {
-      var columnDefs = [
-          { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
-          { key: "name", label: "Name", sortable: true},
-          { key: "type", label: "NCS Staff Type" },
-          { key: "notify", label: "Receive reminder email" }
-      ];
-      var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
-      dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-      dataSource.responseSchema = {
-        fields: [
-          { key: "username" },
-          { key: "name" },
-          { key: "type" },
-          { key: "notify" }
-        ]
-      };
-      new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
-          sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_ASC }
       });
-    }
+  
+      function displayStaffList() {
+        var columnDefs = [
+            { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
+            { key: "name", label: "Name", sortable: true},
+            { key: "type", label: "NCS Staff Type" },
+            { key: "notify", label: "Receive reminder email" }
+        ];
+        var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("staff-list-tbl"));
+        dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+        dataSource.responseSchema = {
+          fields: [
+            { key: "username" },
+            { key: "name" },
+            { key: "type" },
+            { key: "notify" }
+          ]
+        };
+        new YAHOO.widget.DataTable("staff-list", columnDefs, dataSource, {
+            sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_ASC }
+        });
+      }
     
-= will_paginate @staff_list, :previous_label => "Previous", :next_label => "Next"
+  = will_paginate @staff_list, :previous_label => "Previous", :next_label => "Next"

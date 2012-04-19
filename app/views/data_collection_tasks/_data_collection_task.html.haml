@@ -2,72 +2,82 @@
   %p.warning
     %em Warning: 
     #{@staff.name} is an external user and should not be using the application for time and expense entry.
-.current_form
-  = form_for [@staff, @data_collection_task] do |f|
-    -if @data_collection_task.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@data_collection_task.errors.count, "error")} prohibited this data_collection_task from being saved:"
-        %ul
-          - @data_collection_task.errors.full_messages.each do |msg|
-            %li= msg
-    %table
-      %tr
-        %td
-          = f.label :formatted_task_date, "Task date"
-          %em *
-          = f.text_field :formatted_task_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
-        %td{ :colspan => "2" }
-          = f.label :comment
-          = f.text_field :comment
-      %tr.task
-        %td
-          = f.label :task_type_code, "Task Type"
-          %em *
-          = f.select :task_type_code, NcsCode.ncs_code_lookup(:data_collection_task_type_code), {:prompt => 'Select Tasks'}, {:id => "task_type"}
-        %td{ :colspan => "2" }
-          = f.label :task_type_other
-          = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"}
-      %tr
-        %td{ :colspan => "3" }
-          = f.label :cases, "Total number of cases"
-          = f.text_field :cases, {:size =>5}
-      %tr
-        %td{ :colspan => "3" }
-          = f.label :transmit, "Number of days in reference week that data collector transmitted data of type DATA_COLL_TASK_TYPE from tablet to SC at least one time"
-          = f.text_field :transmit, {:size =>5}
-      %tr.task
-        %td
-          %em Labor expenses:
-        %td
-          %em Other expenses (non-labor):
-        %td
-      %tr.task
-        %td
-          Your Rate:
-          - if (@staff.hourly_rate.blank?)
-            Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
-          - elsif (@staff.hourly_rate == 0)
-            Voluntary Work. #{link_to "Update", edit_staff_path(@staff.id)}
-          - else
-            $#{@staff.hourly_rate}/hr.
-        %td
-          = f.label :expenses, "Expense $"
-          = f.text_field :expenses, {:size =>6}
-        %td
-          = f.submit 'Save', :class => "control_button"
-          = link_to 'Cancel', new_staff_data_collection_task_path(params[:staff_id])
-      %tr.task
-        %td
-          = f.label :hours, "Hours spent"
-          = f.text_field :hours, {:size =>4}
-        %td
-          = f.label :miles, "Miles driven"
-          = f.text_field :miles, {:size =>4}
-        %td
-    
-    :javascript
-      // For the 'other' task type field
-      // Check on pageload
-      $(document).ready(function(){
-        wire_up_select_other("#task_type","#task_type_other");
-      });
+= form_for [@staff, @data_collection_task] do |f|
+  -if @data_collection_task.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@data_collection_task.errors.count, "error")} prohibited this data_collection_task from being saved:"
+      %ul
+        - @data_collection_task.errors.full_messages.each do |msg|
+          %li= msg
+  %table
+    %tr
+      %td
+        = f.label :formatted_task_date, "Task date"
+        %em *
+        = f.text_field :formatted_task_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
+      %td{ :colspan => "2" }
+        = f.label :comment
+        = f.text_field :comment
+    %tr
+      %td
+        = f.label :task_type_code, "Task Type"
+        %em *
+        = f.select :task_type_code, NcsCode.ncs_code_lookup(:data_collection_task_type_code), {:prompt => 'Select Tasks'}, {:id => "task_type"}
+      %td{ :colspan => "2" }
+        = f.label :task_type_other
+        = f.text_field :task_type_other, {:size =>20 ,:id => "task_type_other"}
+    %tr
+      %td{ :colspan => "3" }
+        = f.label :cases, "Total number of cases"
+        = f.text_field :cases, {:size =>5}
+    %tr
+      %td{ :colspan => "3" }
+        = f.label :transmit, "Number of days"
+        = f.text_field :transmit, {:size =>5}
+        in reference week that data collector transmitted data of type DATA_COLL_TASK_TYPE from tablet to SC at least one time
+    %tr
+      %td
+        %em Labor expenses:
+      %td
+        %em Other expenses (non-labor):
+      %td
+    %tr
+      %td
+        Your Rate:
+        - if (@staff.hourly_rate.blank?)
+          Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
+        - elsif (@staff.hourly_rate == 0)
+          Voluntary Work. #{link_to "Update", edit_staff_path(@staff.id)}
+        - else
+          $#{@staff.hourly_rate}/hr.
+      %td
+        = f.label :expenses, "Expense $"
+        = f.text_field :expenses, {:size =>6}
+      %td
+        = f.submit 'Save', :class => "control_button"
+        = link_to 'Cancel', new_staff_data_collection_task_path(params[:staff_id]), :class => "control_button"
+    %tr
+      %td
+        = f.label :hours, "Hours spent"
+        = f.text_field :hours, {:size =>4}
+      %td
+        = f.label :miles, "Miles driven"
+        = f.text_field :miles, {:size =>4}
+      %td
+  %p
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields
+
+  - if @staff.staff_type_code.blank?
+    %p.warning
+      %em Warning: 
+      #{@staff.name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+      record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
+  
+  :javascript
+    // For the 'other' task type field
+    // Check on pageload
+    $(document).ready(function(){
+      wire_up_select_other("#task_type","#task_type_other");
+    });

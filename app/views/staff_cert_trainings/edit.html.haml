@@ -1,11 +1,9 @@
-= render_breadcrumbs :separator => ' / ' 
-= render 'staff_cert_trainings'
-
-%h4 Edit certification/training for #{@staff.name}
-
-= render 'staff_cert_training'
-
-%p
-  Note: Fields mark as (
-  %em *
-  ) are mandatory fields
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / ' 
+.content_body
+  = render 'staff_cert_trainings'
+  .section_gap
+  .section
+    .section_heading
+      Edit Certification/Training [#{@staff_cert_training.certificate_type_text}] for #{@staff.name}
+    = render 'staff_cert_training'

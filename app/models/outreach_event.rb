@@ -72,6 +72,22 @@ class OutreachEvent < ActiveRecord::Base
      self.event_date = event_date
    end
    
+   def mode_text
+     self.mode.display_text == "Other" ? self.mode_other : self.mode.display_text
+   end
+   
+   def outreach_type_text
+     self.outreach_type.display_text == "Other" ? self.outreach_type_other : self.outreach_type.display_text
+   end
+   
+   def created_by_user_text
+     self.created_by.blank? ? nil : self.created_by_user.name
+   end
+   
+   def name_text
+     self.name.blank? ? nil : self.name
+   end
+   
    ATTRIBUTE_MAPPING = { 
      :mode_code => "OUTREACH_MODE_CL1",
      :outreach_type_code => "OUTREACH_TYPE_CL1",

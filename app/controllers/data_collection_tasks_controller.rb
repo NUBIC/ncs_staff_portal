@@ -97,6 +97,7 @@ class DataCollectionTasksController < SecuredController
       set_tab :time_and_expenses, :vertical
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
+      add_breadcrumb "#{@staff.name}", staff_path(@staff)
     end
   end
 

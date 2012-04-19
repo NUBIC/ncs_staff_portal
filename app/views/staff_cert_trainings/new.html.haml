@@ -1,13 +1,13 @@
-= render_breadcrumbs :separator => ' / ' 
-= render 'staff_cert_trainings'
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / '
+.content_body
+  = render 'staff_cert_trainings'
+  .section_gap
+  .section
+    .section_heading
+      New Certification/Training for #{@staff.name}
+    = render 'staff_cert_training'
 
-%h4 Add new certification/training for #{@staff.name}
 
-= render 'staff_cert_training'
-
-%p
-  Note: Fields mark as (
-  %em *
-  ) are mandatory fields
 
 

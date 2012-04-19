@@ -30,12 +30,11 @@ form.bp {
 }
 
 // Page layout can be done using mixins applied to your semantic classes and IDs:
+
 body.ncs {
-  a:hover {
-    background-color: $tab_nav_bg;
-    color: #f0f0f0;
-  }
-  
+  font-family: Verdana, Helvetica, Arial;
+  font-size: 14px;
+  background-color: $base_bg !important;  
   
   /* jQuery UI - Override the jQuery CSS*/
   .ui-widget {
@@ -61,243 +60,316 @@ body.ncs {
   }
   
   .control_button {
-     background-color: #e0dcdc;
-     border:1px solid;
-     border-radius:10px;
+    background-color: #e0dcdc;
+    border:1px solid;
+    border-radius:10px;
+    font-family: Verdana, Helvetica, Arial;
+    font-size: 14px;
+  }
+  
+  a.control_button, a.control_button:hover {
+    text-decoration: none;
+    padding: 0.05em 0.5em;
+    border-radius:15px;
+    display: inline-block;
+    text-align: center;
+    color: black;
+  }
+  
+  .icon_link {
+    font-size: 1.1em;
+    padding: 2px 2px 2px 20px;
+    text-decoration: none;
+  }
+  
+  .login_link {
+    background: url(../../../images/door_in.png) 0 3px no-repeat !important;
+  }
+  
+  .logout_link, .logout_link:hover {
+    background: url(../../../images/door_out.png) 0 3px no-repeat !important;
+  }
+  
+  .delete_link, .delete_link:hover {
+    background: url(../../../images/delete.png) 0 3px no-repeat !important;
+  }
+  
+  .add_link, .add_link:hover {
+    background: url(../../../images/add.png) 0 3px no-repeat !important;
+  }
+  
+  .cancel_link, .cancel_link:hover {
+    background: url(../../../images/cancel.png) 0 3px no-repeat !important;
+  }
+  
+  .edit_link, .edit_link:hover {
+    background: url(../../../images/edit.png) 0 3px no-repeat !important;
+  }
+  
+  .save_link, .save_link:hover {
+    background: url(../../../images/save.png) 0 3px no-repeat !important;
+  }
+  
+  .list_link, .list_link:hover {
+    background: url(../../images/list.png) 0 2px no-repeat !important;
+  }
+  
+  a:hover {
+    background-color: $content_bg;
+    color: #b66e19;
   }
   
   #container {
     @include container; 
    // @include showgrid(); //for debug and allignment purposes
+    @include rounded-corners(.75em);
+    border: 2px solid $BORDER_GRAY;
+    background-color: white;
+    padding: 20px 40px;
+    margin: 1em auto;
 
-  }
-  
-  #header, #footer {
-    @include column($blueprint-grid-columns);
-  }
-
-  #header {
-    background-color: $header_bg;
-    #app_name {
-      @include prepend(1);
-      font-size: 2.0em; 
-      @include column(6); 
-    }
-
-    #current_user {
-      @include prepend-top(0.5em);
-      @include column(16, true);
-      @include append(1);
-      text-align: right;
+    #header, #footer {
+      @include column($blueprint-grid-columns);
     }
     
+    #header {
+      background-color: $header_bg;
+      @include rounded-corners(1em);
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      border: 2px solid $NU_PURPLE;
+
+      #current_user {
+        float: right;
+        @include prepend(1);
+        @include append(1);
+      }
+    
+      #app_name {
+        @include prepend(1);
+        @include append(1);
+        font-size: 2.0em;
+      }
+    } // end of header
+
+    #footer {
+      background-color: $footer_bg;
+      font-size: 1.1em;
+    
+      div {
+        min-height: 1px;      
+      }
+    
+      .footer_logo_front {
+        @include column(6);
+      }
+  
+      .contact_info {
+        @include prepend-top(1em);
+        @include column(14);
+        text-align: center;
+      }
+  
+      .footer_logo_back {
+        @include prepend-top(1em);
+        @include column(3,true); 
+      }
+
+      .app_version {
+        color: #999;
+        @include column($blueprint-grid-columns);
+        text-align: right;
+      }
+    } // end of footer
+  }
+  
+  #main {
+    padding-bottom: 4em;
+    @include column($blueprint-grid-columns - 2);
+    @include prepend(1);
+    @include append(1);
+    background-color: $tab_nav_current_bg;
+    @include rounded-corners(1em);
+    border: 2px solid #ccc;
+    
     #tab_navigation {
-      @include column($blueprint-grid-columns);
+      @include column($blueprint-grid-columns - 2);
       ul {
         list-style-type: none;
       }
-
+    
       ul li{
         display: inline;
         float: left;
         padding: 1em 0.5em 0 0.5em;
       }
-
+    
       li a{
+        background-color: $tab_nav_bg;
+        color: $tab_nav_txt;
+      }
+      
+      li a, li.current a {
         display: block;
         width: 12em;
         padding: 0.3em 0.3em 0.1em 0.3em;
-        background-color: $tab_nav_bg;
         text-decoration: none;
         border: 1px solid $tab_nav_border;
+        @include tab-rounded-corners(.5em);
         border-bottom: 0px;
         text-align: center;
-        color: $tab_nav_txt;
       }
             
       li.current a{
-        display: block;
-        width: 12em;
-        padding: 0.3em 0.3em 0.1em 0.3em;
-        background-color: $tab_nav_current_bg;
-        text-decoration: none;
-        border: 1px solid $tab_nav_border;
-        border-bottom: 0px;
-        text-align: center;
+        background-color: $WHITE;
         color: $tab_nav_current_txt; 
       }
     } // end of tab nav
-  } // end of header
-
-
     
-  #tab_vertical { 
-    @include column(5);
-    @include prepend-top(1em);
-    ul {
-     list-style-type: none;
-      padding: 0;
-      margin: 0;
+    #welcome {
+      @include column($blueprint-grid-columns - 2);
     }
+    
+    #content {
+      @include column($blueprint-grid-columns - 2);
+      @include prepend(1);
+      @include append(1);
+      padding: 1em 1em;
+      background-color: $WHITE;
+      @include rounded-corners(1em);
+      border: 1px solid transparent;
 
-    ul li{
-      padding: 0.5em;
-    }
+      table td.col1{
+        @include column(17)
+      }
 
-    li a{
-      display: block;
-      width: 12em;
-      padding: 0.3em 0.3em 0.1em 0.3em;
-      background-color: $tab_vertical_bg;
-      text-decoration: none;
-      border: 1px solid $tab_vertical_border;
-      text-align: center;
-      color: $tab_nav_txt;
-    }
+      table td.col2{
+        @include column(3,true)
+      }
 
-    li.current span{
-      display: block;
-      width: 12em;
-      padding: 0.3em 0.3em 0.1em 0.3em;
-      background-color: $tab_vertical_current_bg;
-      text-decoration: none;
-      border: 1px solid $tab_vertical_border;
-      text-align: center;
-      color: $tab_vertical_current_txt; 
-    }
+      .block {
+        background-color: $form_table_bg;
+        @include append-bottom(1em);
+        @include prepend-top(1em);
+        @include rounded-corners(.5em);
+      }
 
-    }
-  #content_vertical {
-   @include column(17,true);
-   @include prepend-top(1em); 
+      .block .title {
+        font-weight: bold;
+        font-style: normal;
+      }
+      
+      .row, .block, .title, table tr, table td {
+        padding: 0.2em 0.2em;
+      }
+
+      em { 
+        font-weight: bold;
+        font-style: normal;
+      }
+      
+      .warning { 
+        color: red; 
+      }
+
+      .search  {
+        padding: 1em 0;
+      }
+      
+      .breadcrumbs {
+        padding: 0 0 1em 0;
+      }
+      
+      .content_body {
+        background-color: $tab_vertical_current_bg;
+      }
+      
+      .current_tab, .other_tab {
+        display: inline-block;
+        width: 12em;
+        padding: 0.3em 0.3em 0.1em 0.3em;
+        text-decoration: none;
+        text-align: center;
+        @include tab-rounded-corners(.5em);
+        color: $tab_nav_current_txt;
+        border: 1px solid $task_tab_bg;
+      }
+
+      .current_tab {
+        background-color: $tab_vertical_current_bg;
+        border-bottom: 0px;
+      }
+
+      .other_tab {
+        background-color: $task_tab_bg;
+        border: 1px solid $task_tab_bg;
+      }
+      
+      .section {
+        background-color:  $form_table_bg;
+        @include rounded-corners(1em);
+        border: 1px solid $BORDER_GRAY;
+        padding: 1em;
+      }
+      
+      .section_heading {
+        text-decoration: none;
+        padding-bottom: 1em;
+        font-weight: bold;
+      }
+      
+      .section_gap {
+        padding: 1em;
+      }
+      
+      p {
+        padding: 0;
+      }
+      
+      #tab_vertical { 
+        @include column(4);
+        @include prepend-top(1em);
+        ul {
+         list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        ul li{
+          padding: 0.5em;
+        }
+
+        li a{
+          display: block;
+          width: 12em;
+          padding: 0.3em 0.3em 0.1em 0.3em;
+          background-color: $tab_vertical_bg;
+          text-decoration: none;
+          border: 1px solid $tab_vertical_border;
+          text-align: center;
+          color: $tab_nav_txt;
+        }
+
+        li.current span{
+          display: block;
+          width: 12em;
+          padding: 0.3em 0.3em 0.1em 0.3em;
+          background-color: $tab_vertical_current_bg;
+          text-decoration: none;
+          border: 1px solid $tab_vertical_border;
+          text-align: center;
+          color: $tab_vertical_current_txt; 
+        }
+      }
+      
+      #content_vertical {
+        @include column(17,true);
+        @include prepend-top(1em); 
+        background-color: $tab_vertical_current_bg;
+        @include rounded-corners(1em);
+        margin: 1em;
+        padding: 0.5em;
+      }
+    } //end of content
   }
-  
-  #content {
-    @include column($blueprint-grid-columns - 2);
-    padding: 1em 0;
-    @include prepend(1);
-    @include append(1); 
-    background-color: $tab_nav_current_bg;
-    table {
-      //border: 0.1px solid #333;
-      //background-color:  $current_form_bg
-    }
-    
-    table tr, table td, .row {
-       padding: 0.2em 0;
-    }
-    
-    table td.col1{
-      @include column(17)
-    }
-    
-    table td.col2{
-      @include column(3,true)
-    }
-    
-    .block {
-      background-color: $form_table_bg;
-      @include append-bottom(1em);
-    }
-    
-    .block .title {
-      font-weight: bold;
-      font-style: normal;
-      font-size: 125%;
-      padding: 0.2em 0;
-    }
-    
-    em { 
-      font-weight: bold;
-      font-style: normal;
-      font-size: 125%;
-    }
-   .warning { 
-      color: red; 
-    }
-    
-    .text_search {
-      padding: 1em 0;
-    }
-    
-    .header {
-      margin-bottom: 0.5em;
-    }
-    
-    .breadcrumbs {
-      //float: left;
-      //padding: 0 1em 0 0;
-      display: inline-block;
-      width: 12em;
-      padding: 0.3em 0.3em 0.1em 0.3em;
-      background-color: $tab_vertical_current_bg;
-      text-decoration: none;
-      border: 1px solid $task_tab_bg;
-      border-bottom: 0px;
-      text-align: center;
-      color: $tab_nav_current_txt;
-    }
-    
-    .breadcrumbs_link {
-      display: inline-block;
-      width: 12em;
-      padding: 0.3em 0.3em 0.1em 0.3em;
-      background-color: $task_tab_bg;
-      text-decoration: none;
-      border: 1px solid $task_tab_bg;
-      text-align: center;
-      color: $tab_nav_current_txt;
-    }
-    
-  }
-  
-  .current_form {
-    border: 1px solid #333;
-    background-color:  $form_table_bg;
-    
-    table {
-      padding: 0.2em 1em;
-    }
-    
-    em { 
-      font-weight: bold;
-      font-style: normal;
-      text-align: center;
-    }
-    
-    table td { 
-      padding: 0.5em;
-    }
-    
-  }
-
-  #footer {
-    background-color: $footer_bg;
-    font-size: 1.1em;
-    
-    div {
-      min-height: 1px;      
-    }
-    
-    .footer_logo_front {
-      @include column(6);
-    }
-  
-    .contact_info {
-      @include prepend-top(1em);
-      @include column(14);
-      text-align: center;
-    }
-  
-    .footer_logo_back {
-      @include prepend-top(1em);
-      @include column(3,true); 
-    }
-
-    .app_version {
-      color: #999;
-      @include column($blueprint-grid-columns);
-      text-align: right;
-    }
-  } // end of footer
 } // end of body

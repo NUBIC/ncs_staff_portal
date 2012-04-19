@@ -1,6 +1,7 @@
-= render_breadcrumbs :separator => ' / ' 
-%h4 General Information for #{@staff.name}
-%p#notice= notice
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / '
+- if notice
+  %p#notice= notice
 -display_content(@staff.name, "Name:")
 -display_content(@staff.email, "Email:")
 -display_content(@staff.username, NcsNavigator.configuration.study_center_username + ":")
@@ -23,4 +24,4 @@
 %p
   %b Language(s) spoken:
   = display_languages(@staff.staff_languages)
-= link_to 'Edit', edit_staff_path(@staff)
+= link_to 'Edit', edit_staff_path(@staff), :class => "edit_link icon_link"

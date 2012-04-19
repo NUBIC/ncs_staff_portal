@@ -2,8 +2,9 @@
 // Feel free to delete these if you want keep the defaults:
 
 $blueprint-grid-columns: 24;
-$blueprint-container-size: 950px;
-$blueprint-grid-margin: 10px;
+$blueprint-container-size : 1160px;
+$blueprint-grid-margin    : 10px;
+$blueprint-font-family    : Arial,Helvetica,sans-serif;
 
 // Use this to calculate the width based on the total width.
 // Or you can set $blueprint-grid-width to a fixed value and unset $blueprint-container-size -- it will be calculated for you.
@@ -30,3 +31,22 @@ $tab_vertical_border: #9672FF;
 $tab_vertical_current_bg: #f0f0f0;
 $tab_vertical_txt: #f0f0f0;
 $tab_vertical_current_txt: #333;
+$base_bg: #CCD3E8;
+$BORDER_GRAY: #ccc;
+$NU_PURPLE: #520063;
+$WHITE: #ffffff;
+
+@mixin rounded-corners($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin tab-rounded-corners($radius) {
+  border-top-left-radius:$radius;
+  border-top-right-radius:$radius;
+  -moz-border-top-left-radius: $radius;
+  -moz-border-top-right-radius: $radius;
+  -webkit-border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+}

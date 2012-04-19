@@ -5,12 +5,13 @@
   %body.bp.ncs
     #container
       #header
+        = render('partials/current_user', :current_user => current_user)
         #app_name
           NCS Staff Portal
-        = render('partials/current_user', :current_user => current_user)
+      #main
         = render('partials/horizontal_tabs')
-      #content
-        = render('partials/vertical_tabs')
+        #content
+          = render('partials/vertical_tabs')
       #footer
         = render('partials/footer')
       

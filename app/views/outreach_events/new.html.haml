@@ -1,11 +1,6 @@
 - javascript 'nested_attributes', 'outreach_events', 'combobox'
-= render_breadcrumbs :separator => ' / ' 
-%h4 New outreach activity/event
-%p
-  Note: Fields mark as (
-  %em *
-  ) are mandatory fields
-
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / '
 = render 'outreach_events'
 
 

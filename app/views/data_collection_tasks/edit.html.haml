@@ -1,27 +1,9 @@
-- if @staff.belongs_to_data_collection_group
-  .header
-    = render_breadcrumbs :separator => ' / ' 
-  .header
-    - if @staff.belongs_to_management_group
-      = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "breadcrumbs_link"
-    %span.breadcrumbs
-      Data Collection Task
-    - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
-      = link_to 'Staff Entries', staff_weekly_expenses_path, :class => "breadcrumbs_link"
-  
-  %h4 Edit data collection task for #{@staff.name}
-
-  = render 'data_collection_task'
-
-  %p
-    Note: Fields mark as (
-    %em *
-    ) are mandatory fields
-  
-  - if @staff.staff_type_code.blank?
-    %p.warning
-      %em Warning: 
-      #{@staff.name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
-      record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
-
+= render 'tabs'
+.content_body
+  .section_gap
+  .section
+    .section_heading
+      Edit data collection task[#{@data_collection_task.task_date} - #{@data_collection_task.task_type_text}] for #{@staff.name}
+    = render 'data_collection_task'
+  .section_gap
   = render 'data_collection_tasks'

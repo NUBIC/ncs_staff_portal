@@ -5,12 +5,13 @@
   %body.bp.ncs
     #container
       #header
+        = render('partials/current_user', :current_user => current_user)
         #app_name
           NCS Staff Portal
-        = render('partials/current_user', :current_user => current_user)
+      #main
         = render('partials/horizontal_tabs')
-      #content
-        = yield 
+        #content
+          = yield 
       #footer
         = render('partials/footer')
     = render('partials/include_google_analytics') if Rails.env.production? && NcsNavigator.configuration.staff_portal['google_analytics_number']

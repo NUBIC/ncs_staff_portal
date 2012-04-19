@@ -56,4 +56,8 @@ class StaffCertTraining < ActiveRecord::Base
   def only_date
     (cert_date != NcsCode.unknown_date && cert_date != NcsCode.not_applicable_date) ? true : false
   end
+  
+  def certificate_type_text
+    self.certificate_type.display_text == "Other" ? self.certificate_type_other : self.certificate_type.display_text
+  end
 end

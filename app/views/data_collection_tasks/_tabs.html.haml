@@ -1,0 +1,10 @@
+- if @staff.belongs_to_data_collection_group
+  .breadcrumbs
+    = render_breadcrumbs :separator => ' / ' 
+  .content_tab
+    - if @staff.belongs_to_management_group
+      = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "other_tab"
+    %span.current_tab
+      Data Collection Task
+    - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
+      = link_to 'Staff Entries', staff_weekly_expenses_path, :class => "other_tab"

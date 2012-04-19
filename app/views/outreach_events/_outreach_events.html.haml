@@ -1,4 +1,6 @@
-
+%p
+  -unless @outreach_event.created_by.blank?
+    Created by: #{@outreach_event.created_by_user_text}
 = form_for @outreach_event do |f|
   -if @outreach_event.errors.any?
     #error_explanation
@@ -175,7 +177,7 @@
             = link_to_add_fields "Add staff member", :outreach_staff_members
   .row
     = f.submit 'Save', :class => "control_button"
-    = link_to 'Exit without save', outreach_events_path
+    = link_to 'Exit without save', outreach_events_path, :class => "control_button"
   %br
   %p
     Note: Fields mark as (

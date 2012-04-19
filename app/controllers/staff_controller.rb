@@ -56,11 +56,9 @@ class StaffController < SecuredController
   # GET /staff/1.xml
   def show
     @staff = find_staff
+    add_breadcrumb "#{@staff.name}", staff_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
-      format.html { 
-        render :layout => "staff_information" 
-        add_breadcrumb "#{@staff.name}", staff_path(@staff) unless same_as_current_user(@staff)
-      }
+      format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
       format.json { render :json => @staff }
     end
@@ -83,7 +81,7 @@ class StaffController < SecuredController
   # GET /staff/1/edit
   def edit
     @staff = Staff.find(params[:id])
-    add_breadcrumb "#{@staff.name}", edit_staff_path(@staff) unless same_as_current_user(@staff)
+    add_breadcrumb "Edit - #{@staff.name}", edit_staff_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -94,7 +92,7 @@ class StaffController < SecuredController
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
       @user = Staff.find(params[:id])
-      add_breadcrumb "#{@user.name}", edit_users_path(@user)
+      add_breadcrumb "Edit user[#{@user.username} - #{@user.name}]", edit_users_path(@user)
     end
   end
 

@@ -36,4 +36,8 @@ class ManagementTask < ActiveRecord::Base
   def formatted_task_date=(task_date)
     self.task_date = task_date
   end
+  
+  def task_type_text
+    self.task_type.display_text == "Other" ? self.task_type_other : self.task_type.display_text
+  end
 end

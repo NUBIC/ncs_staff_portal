@@ -15,8 +15,9 @@
       #header
         #app_name
           NCS Staff Portal
-      #content
-        = yield
+      #main
+        #welcome
+          = yield
       #footer
         = render("partials/footer")
     = render('partials/include_google_analytics') if Rails.env.production?

@@ -6,10 +6,11 @@ class StaffCertTrainingsController < SecuredController
   # GET /staff_cert_trainings/new
   # GET /staff_cert_trainings/new.xml
   def new
-    @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings
+    params[:page] ||= 1
+    @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.build
-    add_breadcrumb "New Certificate/Training", new_staff_staff_cert_training_path(@staff) unless same_as_current_user(@staff)
+    add_breadcrumb "Certificates/Trainings", new_staff_staff_cert_training_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @staff_cert_training }
@@ -18,10 +19,11 @@ class StaffCertTrainingsController < SecuredController
 
   # GET /staff_cert_trainings/1/edit
   def edit
+    params[:page] ||= 1
     @staff = Staff.find(params[:staff_id])
-    @staff_cert_trainings = @staff.staff_cert_trainings
+    @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
-    add_breadcrumb "Edit Certificate/Training", edit_staff_staff_cert_training_path(@staff, @staff_cert_training) unless same_as_current_user(@staff)
+    add_breadcrumb "Certificates/Trainings", edit_staff_staff_cert_training_path(@staff, @staff_cert_training) unless same_as_current_user(@staff)
   end
 
   # POST /staff_cert_trainings
@@ -83,6 +85,7 @@ class StaffCertTrainingsController < SecuredController
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
+      add_breadcrumb "#{@staff.name}", staff_path(@staff)
     end
   end
 end

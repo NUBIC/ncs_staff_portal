@@ -31,10 +31,8 @@
     .row
       = f.label :staff_id, "Staff ID"
       = f.text_field :staff_id, {:class => "staff_id", :id => "staff_id", :readonly => true}
-      %a#edit_staff_id
-        Edit
-      %a#save_staff_id
-        Save
+      = link_to "Edit", "#", :class => "edit_link icon_link", :id => "edit_staff_id"
+      = link_to "Save", "#", :class => "save_link icon_link", :id => "save_staff_id"
       %span.warning#warning_staff_id
         (Warning: Assigned Staff Id should not be modified for existing staff.)
     .row
