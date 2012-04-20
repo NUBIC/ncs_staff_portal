@@ -1,11 +1,27 @@
 .breadcrumbs
   = render_breadcrumbs :separator => ' / '
-.section
+.block
   = link_to 'Add new user', new_users_path, :class => "add_link icon_link"
-  .section_heading
+  = form_tag users_path, :method => :get do 
+    .title
+      Search Users
+    .row
+      = label_tag "first_name", "First Name"
+      = text_field_tag "first_name", params[:first_name]
+    .row
+      = label_tag "last_name", "Last Name"
+      = text_field_tag "last_name", params[:last_name]
+    .row
+      = label_tag "username", "Username"
+      = text_field_tag "username", params[:username]
+    .row
+      = submit_tag "Search", :class => "control_button"
+      = link_to 'Reset', users_path, :class => "control_button"
+.block
+  .title
     - model_name = (@users.size == 1 ? "User" : "Users")
     = raw page_entries_info @users, {:model => model_name}
-  %div.yui-skin-sam
+  %div.yui-skin-sam.row
     %div#user-list
       %table#user-list-tbl
         - @users.each do |user|

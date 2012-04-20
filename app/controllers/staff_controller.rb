@@ -34,16 +34,16 @@ class StaffController < SecuredController
 
   def users
     if permit?(Role::USER_ADMINISTRATOR)
+      params[:page] ||= 1
       if params[:role]
         @users = Staff.find_by_role(params[:role])
       elsif params[:first_name] || params[:last_name] || params[:username]
         @users = Staff.where(construct_condition_string(params))
       else
-        params[:page] ||= 1
-        @users = Staff.all.sort_by(&:username).paginate(:page => params[:page], :per_page => 20)
+        @users = Staff.all.sort_by(&:username)
       end
       respond_to do |format|
-        format.html  
+        format.html { @users = @users.paginate(:page => params[:page], :per_page => 20)}
         format.xml  { render :xml => @users }
         format.json { render :json => @users }
       end
