@@ -1,9 +1,25 @@
 .breadcrumbs
   = render_breadcrumbs :separator => ' / ' 
-.section
-  .section_heading
+.block
+  = form_tag staff_index_path, :method => :get do 
+    .title
+      Search Staff
+    .row
+      = label_tag "first_name", "First Name"
+      = text_field_tag "first_name", params[:first_name]
+    .row
+      = label_tag "last_name", "Last Name"
+      = text_field_tag "last_name", params[:last_name]
+    .row
+      = label_tag "username", "#{NcsNavigator.configuration.study_center_username}"
+      = text_field_tag "username", params[:username]
+    .row
+      = submit_tag "Search", :class => "control_button"
+      = link_to 'Reset', staff_index_path, :class => "control_button"
+.block
+  .title
     = raw page_entries_info @staff_list, {:model => "Staff"}
-  %div.yui-skin-sam
+  %div.yui-skin-sam.row
     %div#staff-list
       %table#staff-list-tbl
         - @staff_list.each do |staff|
