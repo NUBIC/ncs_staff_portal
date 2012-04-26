@@ -76,6 +76,12 @@ body.ncs {
     color: black;
   }
   
+  .help_text_link {
+    margin: 0;
+    float: right;
+    width: 3.5em;
+  }
+  
   .icon_link {
     font-size: 1.1em;
     padding: 2px 2px 2px 20px;
@@ -112,6 +118,12 @@ body.ncs {
   
   .list_link, .list_link:hover {
     background: url(../../images/list.png) 0 2px no-repeat !important;
+  }
+  
+  .help_icon, .help_icon:hover {
+    padding: 2px 2px 2px 20px;
+    margin-left: 5px;
+    background: url(../../images/help.png) 0 2px no-repeat !important;
   }
   
   a:hover {

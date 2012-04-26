@@ -239,12 +239,29 @@ function check_select_for_pay_amount(select_id, other_id){
   }
 }
 
+
+
 $(document).ready(function(){
   $(".datepicker").datepicker( { 
     changeMonth: true,
     changeYear: true,
     yearRange: '1920:2020'
   } );
+  
+  $('.help_text_link').click(function(event) {
+    var help_text = $(this).next('.help_text').val();
+    var title = $(this).next('.help_text').attr('title');
+    $('<div id="dialog">' + help_text + '</div>').appendTo('body');
+      event.preventDefault();
+      $("#dialog").dialog({
+        title: title,
+        width: 600,
+        modal: true,
+        close: function(event, ui) {
+          $("#dialog").remove();
+        }
+      });
+  });
 })
 
 
