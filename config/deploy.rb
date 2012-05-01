@@ -1,7 +1,3 @@
-# developer machine will log in with username(netID) to server (either staging or production)
-# developer machine will also log in with username(netID) to code repositary to do a git ls-remote to resolve branch/tag to commit hash
-# server will log in with the same username(netID) and check out application from code repositary
-
 require 'bundler/capistrano'
 require 'bcdatabase'
 
@@ -75,10 +71,25 @@ namespace :deploy do
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
-  
+
   desc "Fix permissions"
   task :permissions do
     sudo "chmod -R g+w #{shared_path} #{current_path} #{release_path}"
+  end
+
+  desc 'Set up shared paths used by the importer'
+  task :setup_import_directories do
+    shared_import  = File.join(shared_path,  'importer_passthrough')
+    release_import = File.join(current_path, 'importer_passthrough')
+    cmds = [
+      "mkdir -p '#{shared_import}'",
+      # Only chmod if owned; this is the only case in which chmod is
+      # allowed. Will be owned if just created, which is the important
+      # case.
+      "if [ -O '#{shared_import}' ]; then chmod g+w '#{shared_import}'; fi",
+      "if [ ! -e '#{release_import}' ]; then ln -s '#{shared_import}' '#{release_import}'; fi"
+    ]
+    run cmds.join(' && ')
   end
 end
 
@@ -89,7 +100,8 @@ end
 after 'deploy:update_code', 'deploy:cleanup'
 
 # after deploying symlink, aggressively set permissions, copy images to current image config location.
-after 'deploy:symlink', 'deploy:permissions', 'config:images', 'config:static_authority'
+after 'deploy:symlink', 'deploy:permissions', 'config:images', 'config:static_authority',
+  'deploy:setup_import_directories'
 
 # Database
 namespace :db do
@@ -104,7 +116,7 @@ namespace :config do
   task :images,  :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
-  
+
   desc "Create the static auth file for the application user"
   task :static_authority, :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} static_user:create"
