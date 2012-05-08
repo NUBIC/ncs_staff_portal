@@ -8,7 +8,7 @@
 #  complete_code         :integer         not null
 #  cert_date             :string(255)
 #  background_check_code :integer         not null
-#  frequency             :string(255)
+#  frequency             :string(10)
 #  expiration_date       :date
 #  comment               :text
 #  created_at            :datetime
@@ -23,7 +23,8 @@ class StaffCertTraining < ActiveRecord::Base
   validate :valid_cert_date
   before_save :format_cert_date
   acts_as_mdes_record :public_id => :staff_cert_list_id
-
+  validates :frequency, :length => { :maximum => 10 }
+  
   def format_cert_date
     self.cert_date = cert_date.to_date.strftime("%Y-%m-%d") if !cert_date.blank? && only_date 
   end

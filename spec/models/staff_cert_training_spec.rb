@@ -8,7 +8,7 @@
 #  complete_code         :integer         not null
 #  cert_date             :string(255)
 #  background_check_code :integer         not null
-#  frequency             :string(255)
+#  frequency             :string(10)
 #  expiration_date       :date
 #  comment               :text
 #  created_at            :datetime
@@ -110,6 +110,14 @@ describe StaffCertTraining do
     it "should the format only date value" do
       training = Factory(:staff_cert_training, :cert_date => "2011-12-28")
       training.cert_date.should == "2011-12-28"
+    end
+  end
+  
+  describe "validates frequency" do
+    it "should not be more than 10 chars" do
+      training = Factory.build(:staff_cert_training, :frequency => "It is more then 10 Chars")
+      training.should_not be_valid
+      training.should have(1).error_on(:frequency)
     end
   end
 end

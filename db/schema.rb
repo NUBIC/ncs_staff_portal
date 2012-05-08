@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323161010) do
+ActiveRecord::Schema.define(:version => 20120504191721) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(:version => 20120323161010) do
     t.integer  "complete_code",                       :null => false
     t.string   "cert_date"
     t.integer  "background_check_code",               :null => false
-    t.string   "frequency"
+    t.string   "frequency",             :limit => 10
     t.date     "expiration_date"
     t.text     "comment"
     t.datetime "created_at"
