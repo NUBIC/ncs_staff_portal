@@ -36,7 +36,7 @@
     = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
   .row
     = f.label :frequency, "Frequency at which certification/training needs to be completed" 
-    = f.text_field :frequency, { :size => 10}
+    = f.text_field :frequency, { :size => 10, :maxLength => 10}
   .row
     = f.label :formatted_expiration_date, "Cerification/Training expiration date"
     = f.text_field :formatted_expiration_date, { :class => "datepicker", :size => 10, :maxLength => 10 }
