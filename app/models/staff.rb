@@ -30,9 +30,11 @@
 #  external           :boolean         default(FALSE), not null
 #  notify             :boolean         default(TRUE), not null
 #  numeric_id         :integer         not null
+#  age_group_code     :integer
 #
 
 class Staff < ActiveRecord::Base
+  include MdesRecord::ActsAsMdesRecord
   self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create
 
@@ -55,10 +57,19 @@ class Staff < ActiveRecord::Base
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
   has_many :employees, :through => :supervisor_employees, :class_name => "Staff"
-
+  
   accepts_nested_attributes_for :supervisor_employees, :allow_destroy => true
   accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
+  
+  ncs_coded_attribute :staff_type, 'STUDY_STAFF_TYPE_CL1'
+  ncs_coded_attribute :age_range, 'AGE_RANGE_CL1'
+  ncs_coded_attribute :gender, 'GENDER_CL1'
+  ncs_coded_attribute :race, 'RACE_CL1'
+  ncs_coded_attribute :subcontractor, 'CONFIRM_TYPE_CL2'
+  ncs_coded_attribute :ethnicity, 'ETHNICITY_CL1'
+  ncs_coded_attribute :experience, 'EXPERIENCE_LEVEL_CL1'
+  ncs_coded_attribute :lang, 'LANGUAGE_CL2'
   
   validate :has_roles, :if => :create_presence_required?
   def has_roles
@@ -200,21 +211,5 @@ class Staff < ActiveRecord::Base
       end
     end
     reminder_staff
-  end
-
-  ATTRIBUTE_MAPPING = {
-    :staff_type_code => "STUDY_STAFF_TYPE_CL1",
-    :age_range_code => "AGE_RANGE_CL1",
-    :gender_code => "GENDER_CL1",
-    :race_code => "RACE_CL1",
-    :subcontractor_code => "CONFIRM_TYPE_CL2",
-    :ethnicity_code => "ETHNICITY_CL1",
-    :experience_code => "EXPERIENCE_LEVEL_CL1",
-    :lang_code => "LANGUAGE_CL2",
-  }
-
-  ATTRIBUTE_MAPPING.each do |key, value|
-    rel_name = key.to_s.gsub('_code', '')
-    belongs_to rel_name, :conditions => "list_name = '#{value}'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => key
   end
 end

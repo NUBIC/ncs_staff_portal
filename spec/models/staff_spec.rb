@@ -30,6 +30,7 @@
 #  external           :boolean         default(FALSE), not null
 #  notify             :boolean         default(TRUE), not null
 #  numeric_id         :integer         not null
+#  age_group_code     :integer
 #
 
 require 'spec_helper'
