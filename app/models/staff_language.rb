@@ -12,9 +12,10 @@
 #
 
 class StaffLanguage < ActiveRecord::Base
+  include MdesRecord::ActsAsMdesRecord
   belongs_to :staff
   validates_presence_of :lang
-  belongs_to :lang, :conditions => "list_name = 'LANGUAGE_CL2'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :lang_code
+  ncs_coded_attribute :lang, 'LANGUAGE_CL2'
 
   acts_as_mdes_record :public_id => :staff_language_id
 

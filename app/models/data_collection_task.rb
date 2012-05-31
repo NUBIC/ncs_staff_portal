@@ -27,7 +27,7 @@ class DataCollectionTask < ActiveRecord::Base
   validates_with OtherEntryValidator, :entry => :task_type, :other_entry => :task_type_other
 
   belongs_to :staff_weekly_expense
-  belongs_to :task_type, :conditions => "list_name = 'STUDY_DATA_CLLCTN_TSK_TYPE_CL1'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :task_type_code
+  ncs_coded_attribute :task_type, 'STUDY_DATA_CLLCTN_TSK_TYPE_CL1'
 
   acts_as_mdes_record :public_id => :staff_exp_data_coll_task_id
 

@@ -17,6 +17,7 @@
 #
 
 class StaffCertTraining < ActiveRecord::Base
+  include MdesRecord::ActsAsMdesRecord
   validates_presence_of :certificate_type, :complete, :background_check
   belongs_to :staff
   validates_date :expiration_date, :allow_blank => true
@@ -24,6 +25,10 @@ class StaffCertTraining < ActiveRecord::Base
   before_save :format_cert_date
   acts_as_mdes_record :public_id => :staff_cert_list_id
   validates :frequency, :length => { :maximum => 10 }
+  
+  ncs_coded_attribute :certificate_type, 'CERTIFICATE_TYPE_CL1'
+  ncs_coded_attribute :complete, 'CONFIRM_TYPE_CL2'
+  ncs_coded_attribute :background_check, 'BACKGROUND_CHCK_LVL_CL1'
   
   def format_cert_date
     self.cert_date = cert_date.to_date.strftime("%Y-%m-%d") if !cert_date.blank? && only_date 
