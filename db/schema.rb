@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504191721) do
+ActiveRecord::Schema.define(:version => 20120531162313) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -52,6 +52,19 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
 
   add_index "management_tasks", ["staff_exp_mgmt_task_id"], :name => "uq_management_tasks_staff_exp_mgmt_task_id", :unique => true
 
+  create_table "miscellaneous_expenses", :force => true do |t|
+    t.integer  "staff_weekly_expense_id"
+    t.date     "expense_date"
+    t.decimal  "expenses",                              :precision => 10, :scale => 2
+    t.decimal  "miles",                                 :precision => 5,  :scale => 2
+    t.string   "staff_misc_exp_id",       :limit => 36,                                :null => false
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "miscellaneous_expenses", ["staff_misc_exp_id"], :name => "uq_miscellaneous_expenses_staff_misc_exp_id", :unique => true
+
   create_table "ncs_area_ssus", :force => true do |t|
     t.integer "ncs_area_id"
     t.string  "ssu_id",      :null => false
@@ -73,21 +86,32 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
     t.datetime "updated_at"
   end
 
-  create_table "outreach_evaluations", :force => true do |t|
-    t.integer  "outreach_event_id"
-    t.integer  "evaluation_code",   :null => false
-    t.string   "evaluation_other"
+  create_table "ncs_tsus", :force => true do |t|
+    t.string   "psu_id",     :limit => 36, :null => false
+    t.string   "tsu_id",     :limit => 36, :null => false
+    t.string   "tsu_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "outreach_evaluations", :force => true do |t|
+    t.integer  "outreach_event_id"
+    t.integer  "evaluation_code",                      :null => false
+    t.string   "evaluation_other"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "outreach_event_eval_id", :limit => 36, :null => false
+  end
+
+  add_index "outreach_evaluations", ["outreach_event_eval_id"], :name => "uq_outreach_evaluations_outreach_event_eval_id", :unique => true
+
   create_table "outreach_events", :force => true do |t|
     t.date     "event_date"
-    t.integer  "mode_code",              :null => false
+    t.integer  "mode_code",                            :null => false
     t.string   "mode_other"
-    t.integer  "outreach_type_code",     :null => false
+    t.integer  "outreach_type_code",                   :null => false
     t.string   "outreach_type_other"
-    t.integer  "tailored_code",          :null => false
+    t.integer  "tailored_code",                        :null => false
     t.integer  "language_specific_code"
     t.integer  "race_specific_code"
     t.integer  "culture_specific_code"
@@ -95,14 +119,17 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
     t.string   "culture_other"
     t.decimal  "cost"
     t.integer  "no_of_staff"
-    t.integer  "evaluation_result_code", :null => false
+    t.integer  "evaluation_result_code",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
     t.integer  "letters_quantity"
     t.integer  "attendees_quantity"
     t.integer  "created_by"
+    t.string   "outreach_event_id",      :limit => 36, :null => false
   end
+
+  add_index "outreach_events", ["outreach_event_id"], :name => "uq_outreach_events_outreach_event_id", :unique => true
 
   create_table "outreach_items", :force => true do |t|
     t.integer  "outreach_event_id"
@@ -115,19 +142,25 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
 
   create_table "outreach_languages", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "language_code",     :null => false
+    t.integer  "language_code",                   :null => false
     t.string   "language_other"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "outreach_lang2_id", :limit => 36, :null => false
   end
+
+  add_index "outreach_languages", ["outreach_lang2_id"], :name => "uq_outreach_languages_outreach_lang2_id", :unique => true
 
   create_table "outreach_races", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "race_code",         :null => false
+    t.integer  "race_code",                       :null => false
     t.string   "race_other"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "outreach_race_id",  :limit => 36, :null => false
   end
+
+  add_index "outreach_races", ["outreach_race_id"], :name => "uq_outreach_races_outreach_race_id", :unique => true
 
   create_table "outreach_segments", :force => true do |t|
     t.integer  "outreach_event_id"
@@ -141,15 +174,21 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
     t.integer  "outreach_event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "outreach_event_staff_id", :limit => 36, :null => false
   end
+
+  add_index "outreach_staff_members", ["outreach_event_staff_id"], :name => "uq_outreach_staff_members_outreach_event_staff_id", :unique => true
 
   create_table "outreach_targets", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "target_code",       :null => false
+    t.integer  "target_code",                      :null => false
     t.string   "target_other"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "outreach_target_id", :limit => 36, :null => false
   end
+
+  add_index "outreach_targets", ["outreach_target_id"], :name => "uq_outreach_targets_outreach_target_id", :unique => true
 
   create_table "roles", :force => true do |t|
     t.string "name", :null => false
@@ -183,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20120504191721) do
     t.boolean  "external",                                                        :default => false, :null => false
     t.boolean  "notify",                                                          :default => true,  :null => false
     t.integer  "numeric_id",                                                                         :null => false
+    t.integer  "age_group_code"
   end
 
   add_index "staff", ["numeric_id"], :name => "uq_staff_numeric_id", :unique => true
