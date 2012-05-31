@@ -119,18 +119,26 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         describe 'age range' do
-          [
-            [16, 1], [23, 2], [34, 3], [40, 4], [46, 5], [63, 6], [72, 7]
-          ].each do |age, expected_code|
-            it "is #{expected_code} when the staff member is #{age}" do
-              sp_record.update_attribute(:birth_date, Time.now - age.years)
-              results.last.staff_age_range.should == expected_code.to_s
-            end
+          it "is set same as of age group code if age group code is set" do
+            expected_code = 3
+            sp_record.update_attribute(:age_group_code, expected_code)
+            results.last.staff_age_range.should == expected_code.to_s
           end
+          
+          describe "computed from date of birth" do
+            [
+              [16, 1], [23, 2], [34, 3], [40, 4], [46, 5], [63, 6], [72, 7]
+            ].each do |age, expected_code|
+              it "is #{expected_code} when the staff member is #{age}" do
+                sp_record.update_attribute(:birth_date, Time.now - age.years)
+                results.last.staff_age_range.should == expected_code.to_s
+              end
+            end
 
-          it 'is blank when unknown' do
-            sp_record.update_attribute(:birth_date, nil)
-            results.last.staff_age_range.should be_nil
+            it 'is blank when unknown' do
+              sp_record.update_attribute(:birth_date, nil)
+              results.last.staff_age_range.should be_nil
+            end
           end
         end
       end

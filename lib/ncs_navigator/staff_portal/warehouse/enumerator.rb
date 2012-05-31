@@ -4,7 +4,6 @@ module NcsNavigator::StaffPortal::Warehouse
   class Enumerator
     include NcsNavigator::Warehouse::Transformers::Database
     include NcsNavigator::Warehouse::Models::TwoPointZero
-
     bcdatabase :name => 'ncs_staff_portal'
 
     on_unused_columns :fail
@@ -17,14 +16,18 @@ module NcsNavigator::StaffPortal::Warehouse
           to_char(birth_date, 'YYYY') staff_yob,
           to_char(zipcode, 'FM00000') staff_zip,
           CASE
-            WHEN birth_date IS NULL THEN NULL
-            WHEN #{age_expression} < 18 THEN 1
-            WHEN #{age_expression} < 25 THEN 2
-            WHEN #{age_expression} < 35 THEN 3
-            WHEN #{age_expression} < 45 THEN 4
-            WHEN #{age_expression} < 50 THEN 5
-            WHEN #{age_expression} < 65 THEN 6
-            ELSE 7
+            WHEN age_group_code IS NOT NULL THEN age_group_code
+            ELSE
+              CASE
+                WHEN birth_date IS NULL THEN NULL
+                WHEN #{age_expression} < 18 THEN 1
+                WHEN #{age_expression} < 25 THEN 2
+                WHEN #{age_expression} < 35 THEN 3
+                WHEN #{age_expression} < 45 THEN 4
+                WHEN #{age_expression} < 50 THEN 5
+                WHEN #{age_expression} < 65 THEN 6
+                ELSE 7
+              END
           END AS staff_age_range
         FROM staff s
         WHERE s.zipcode IS NOT NULL
@@ -37,7 +40,8 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
         hourly_rate pay_type pay_amount
-        study_center ncs_active_date ncs_inactive_date external notify numeric_id
+        study_center ncs_active_date ncs_inactive_date 
+        external notify numeric_id age_group_code
       )
     )
 
@@ -151,7 +155,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :query => %Q(
         SELECT
           dc.*,
-          COALESCE(dc.hours, '0.0') AS hours_or_zero,
+          COALESCE(dc.hours, '0.0') AS data_coll_tasks_hrs,
           swe.weekly_exp_id AS public_id_for_staff_weekly_expenses
         FROM data_collection_tasks dc
           INNER JOIN staff_weekly_expenses swe ON dc.staff_weekly_expense_id=swe.id
@@ -162,7 +166,6 @@ module NcsNavigator::StaffPortal::Warehouse
       :column_map => {
         :comment => :data_coll_task_comment,
         :cases => :data_coll_task_cases,
-        :hours_or_zero => :data_coll_tasks_hrs,
         :public_id_for_staff_weekly_expenses => :staff_weekly_expense_id
       },
       :ignored_columns => %w(hours expenses miles task_date staff_weekly_expense_id)
@@ -220,7 +223,7 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:outreach_languages, OutreachLang2,
       :query => outreach_join('outreach_languages', 'L'),
       # in MDES 2.0, language other is in the main OE record for some reason
-      :ignored_columns => %w(language_other outreach_event_id),
+      :ignored_columns => %w(language_other outreach_event_id outreach_lang2_id),
       :column_map => {
         :language_code => :outreach_lang2,
         :public_id_for_outreach_events => :outreach_event_id,
@@ -230,7 +233,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     produce_one_for_one(:outreach_races, OutreachRace,
       :query => outreach_join('outreach_races', 'R'),
-      :ignored_columns => %w(outreach_event_id),
+      :ignored_columns => %w(outreach_event_id outreach_race_id),
       :column_map => {
         :race_code => :outreach_race2,
         :race_other => :outreach_race_oth,
@@ -265,7 +268,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     produce_one_for_one(:outreach_targets, OutreachTarget,
       :query => outreach_join('outreach_targets', 'T'),
-      :ignored_columns => %w(outreach_event_id),
+      :ignored_columns => %w(outreach_event_id outreach_target_id),
       :column_map => {
         :target_code => :outreach_target_ms,
         :target_other => :outreach_target_ms_oth,
@@ -276,7 +279,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     produce_one_for_one(:outreach_evaluations, OutreachEval,
       :query => outreach_join('outreach_evaluations', 'E'),
-      :ignored_columns => %w(outreach_event_id),
+      :ignored_columns => %w(outreach_event_id outreach_event_eval_id),
       :column_map => {
         :evaluation_code => :outreach_eval,
         :evaluation_other => :outreach_eval_oth,
@@ -287,7 +290,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     produce_one_for_one(:outreach_staff_members, OutreachStaff,
       :query => outreach_join('outreach_staff_members', 'S', :staff => true),
-      :ignored_columns => %w(outreach_event_id staff_id),
+      :ignored_columns => %w(outreach_event_id staff_id outreach_event_staff_id),
       :column_map => {
         :public_id_for_outreach_events => :outreach_event_id,
         :public_id_for_this_table => :outreach_event_staff_id,
