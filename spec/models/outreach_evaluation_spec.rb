@@ -2,12 +2,13 @@
 #
 # Table name: outreach_evaluations
 #
-#  id                :integer         not null, primary key
-#  outreach_event_id :integer
-#  evaluation_code   :integer         not null
-#  evaluation_other  :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                     :integer         not null, primary key
+#  outreach_event_id      :integer
+#  evaluation_code        :integer         not null
+#  evaluation_other       :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  outreach_event_eval_id :string(36)      not null
 #
 
 require 'spec_helper'

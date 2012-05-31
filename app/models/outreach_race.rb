@@ -8,12 +8,15 @@
 #  race_other        :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
+#  outreach_race_id  :string(36)      not null
 #
 
 class OutreachRace < ActiveRecord::Base
+  include MdesRecord::ActsAsMdesRecord
+  acts_as_mdes_record :public_id => :outreach_race_id
+  ncs_coded_attribute :race, 'RACE_CL3'
   belongs_to :outreach_event
   validates_presence_of :race
-  belongs_to :race, :conditions => "list_name = 'RACE_CL3'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :race_code
   
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
 end

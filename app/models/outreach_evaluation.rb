@@ -2,18 +2,21 @@
 #
 # Table name: outreach_evaluations
 #
-#  id                :integer         not null, primary key
-#  outreach_event_id :integer
-#  evaluation_code   :integer         not null
-#  evaluation_other  :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                     :integer         not null, primary key
+#  outreach_event_id      :integer
+#  evaluation_code        :integer         not null
+#  evaluation_other       :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  outreach_event_eval_id :string(36)      not null
 #
 
 class OutreachEvaluation < ActiveRecord::Base
+  include MdesRecord::ActsAsMdesRecord
+  acts_as_mdes_record :public_id => :outreach_event_eval_id
+  ncs_coded_attribute :evaluation, 'OUTREACH_EVAL_CL1'
   belongs_to :outreach_event
   validates_presence_of :evaluation
-  belongs_to :evaluation, :conditions => "list_name = 'OUTREACH_EVAL_CL1'", :class_name => 'NcsCode', :primary_key => :local_code, :foreign_key => :evaluation_code
-  
+    
   validates_with OtherEntryValidator, :entry => :evaluation, :other_entry => :evaluation_other
 end

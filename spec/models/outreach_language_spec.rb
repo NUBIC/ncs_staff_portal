@@ -8,6 +8,7 @@
 #  language_other    :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
+#  outreach_lang2_id :string(36)      not null
 #
 
 require 'spec_helper'

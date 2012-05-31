@@ -23,6 +23,7 @@
 #  letters_quantity       :integer
 #  attendees_quantity     :integer
 #  created_by             :integer
+#  outreach_event_id      :string(36)      not null
 #
 
 require 'spec_helper'
