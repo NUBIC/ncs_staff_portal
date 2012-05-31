@@ -21,7 +21,8 @@ Spork.prefork do
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
   require 'factory_girl'
-
+  require 'rspec/rails'
+  
   RSpec.configure do |config|
     config.treat_symbols_as_metadata_keys_with_true_values = true
 
@@ -37,6 +38,7 @@ Spork.prefork do
     config.before(:all) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
+      NcsNavigator::StaffPortal::MdesCodeListLoader.new.load_from_yaml
     end
 
     config.before(:each, :clean_with_truncation) do
