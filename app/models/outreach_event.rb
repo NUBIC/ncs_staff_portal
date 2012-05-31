@@ -48,6 +48,8 @@ class OutreachEvent < ActiveRecord::Base
   has_many :outreach_languages, :dependent => :destroy
   has_many :ncs_areas, :through => :outreach_segments
   has_many :staff, :through => :outreach_staff_members
+  has_many :outreach_tsus, :dependent => :destroy
+  has_many :ncs_tsus, :through => :outreach_tsus
    
   accepts_nested_attributes_for :outreach_staff_members, :allow_destroy => true
   accepts_nested_attributes_for :outreach_races, :allow_destroy => true
@@ -56,6 +58,7 @@ class OutreachEvent < ActiveRecord::Base
   accepts_nested_attributes_for :outreach_segments, :allow_destroy => true
   accepts_nested_attributes_for :outreach_items, :allow_destroy => true
   accepts_nested_attributes_for :outreach_languages, :allow_destroy => true
+  accepts_nested_attributes_for :outreach_tsus, :allow_destroy => true
    
   validates_presence_of :outreach_staff_members, :message => "can't be blank. Please add one or more staff members", :unless => :imported_mode
   validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluations", :unless => :imported_mode

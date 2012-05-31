@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531162313) do
+ActiveRecord::Schema.define(:version => 20120531181632) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -189,6 +189,13 @@ ActiveRecord::Schema.define(:version => 20120531162313) do
   end
 
   add_index "outreach_targets", ["outreach_target_id"], :name => "uq_outreach_targets_outreach_target_id", :unique => true
+
+  create_table "outreach_tsus", :force => true do |t|
+    t.integer  "outreach_event_id"
+    t.integer  "ncs_tsu_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.string "name", :null => false

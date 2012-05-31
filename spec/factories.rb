@@ -79,6 +79,7 @@ FactoryGirl.define do
     event.outreach_evaluations {|a| [a.association(:outreach_evaluation)]}
     event.outreach_targets {|a| [a.association(:outreach_target)]}
     event.outreach_segments {|a| [a.association(:outreach_segment)]}
+    event.outreach_tsus {|a| [a.association(:outreach_tsu)]}
     event.ncs_areas {|a| [a.association(:ncs_area)]}
   end
 
@@ -114,7 +115,7 @@ FactoryGirl.define do
     area.psu_id "0012345"
     area.name {Factory.next(:area_name)}
   end
-
+  
   factory :ncs_area_ssu do |ssu|
     ssu.ssu_id "0012"
     ssu.ssu_name "test_ssu"
@@ -124,9 +125,23 @@ FactoryGirl.define do
   factory :outreach_segment do |segment|
     segment.association :ncs_area, :factory => :ncs_area
   end
+  
+  factory :ncs_tsu do |tsu|
+    tsu.psu_id "0012345"
+    tsu.tsu_id { Factory.next(:tsu) }
+    tsu.tsu_name { Factory.next(:tsu) }
+  end
+  
+  factory :outreach_tsu do |tsu|
+    tsu.association :ncs_tsu, :factory => :ncs_tsu
+  end
 
   sequence :area_name do |n|
     "area_name#{n}"
+  end
+  
+  sequence :tsu do |n|
+    "tsu_#{n}"
   end
 
   sequence :user_name do |n|
