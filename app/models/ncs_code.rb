@@ -60,4 +60,28 @@ class NcsCode < ActiveRecord::Base
   def self.unknown_date
     return "9666-96-96"
   end
+  
+  def self.for_attribute_name_and_local_code(attribute_name, local_code)
+    NcsCode.for_list_name_and_local_code(NcsCode.attribute_lookup(attribute_name), local_code)
+  end
+
+  def self.for_list_name_and_local_code(list_name, local_code)
+    NcsCode.where(:list_name => list_name).where(:local_code => local_code.to_i).first
+  end
+
+  def self.for_list_name_and_display_text(list_name, display_text)
+    NcsCode.where(:list_name => list_name).where(:display_text => display_text).first
+  end
+  
+  def to_s
+    display_text
+  end
+
+  def to_i
+    local_code
+  end
+
+  def code
+    local_code
+  end
 end
