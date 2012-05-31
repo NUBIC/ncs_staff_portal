@@ -482,7 +482,10 @@ module NcsNavigator::StaffPortal::Warehouse
           save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap do |a|
             a.outreach_event_id = "event_id_1234567890"
+            a.outreach_quantity = 8
             save_wh(a)
+            OutreachSegment.destroy_all
+            OutreachSegment.count.should == 0
             OutreachEvent.destroy_all
             OutreachEvent.count.should == 0
           end
@@ -544,8 +547,36 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachEvent.first.evaluation_result_code.should == 1
         end
         
+        it 'has correct outreach event attendees_quantity' do
+          OutreachEvent.first.attendees_quantity.should == 8
+        end
+        
         it 'has correct outreach segment area mapped to correct ssu' do
           OutreachEvent.first.outreach_segments.first.ncs_area.ncs_area_ssus.first.ssu_id.should == "1234567890"
+        end
+        
+        describe "tsu_id" do
+          it "has not create outreach tsu if tsu_id is not set in mdes outreach" do
+            OutreachEvent.first.outreach_tsus.size.should == 0
+          end
+          
+          describe 'has correct outreach tsu ' do
+            before do
+              Factory(:ncs_tsu, :tsu_id => 'tsu_123')
+              save_wh(MdesModule::Tsu.new(:sc_id => '20000029', :tsu_id => 'tsu_123', :tsu_name =>'tsu_name_123'))
+              mdes_record.tsu_id = "tsu_123"
+              save_wh(mdes_record)
+              importer.import(:outreach_events)
+            end
+            
+            it "number" do
+              OutreachEvent.first.outreach_tsus.size.should == 1
+            end
+            
+            it "mapped to ncs_tsu" do
+              OutreachEvent.first.ncs_tsus.first.tsu_id.should == "tsu_123"
+            end
+          end
         end
       end        
     end

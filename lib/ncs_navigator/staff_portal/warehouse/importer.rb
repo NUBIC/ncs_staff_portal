@@ -101,7 +101,7 @@ module NcsNavigator::StaffPortal::Warehouse
               [
                 ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"], 
                 ["outreach_culture1", "culture_specific_code"], ["outreach_culture2", "culture_code"],
-                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"]
+                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"], ["outreach_quantity", "attendees_quantity"]
               ].each do |mdes_variable, staff_portal_attribute|
                 staff_portal_record.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
               end
@@ -119,6 +119,13 @@ module NcsNavigator::StaffPortal::Warehouse
               ncs_area = NcsAreaSsu.find_by_ssu_id(ssu_id).ncs_area
               outreach_segment = OutreachSegment.new(:ncs_area => ncs_area, :outreach_event => staff_portal_record)
               save_staff_portal_record_with_mode(outreach_segment, OutreachSegment)
+              
+              tsu_id = mdes_record.send("tsu_id")
+              if tsu_id
+                ncs_tsu = NcsTsu.find_by_tsu_id(tsu_id)
+                outreach_tsu = OutreachTsu.new(:ncs_tsu => ncs_tsu, :outreach_event => staff_portal_record)
+                save_staff_portal_record_with_mode(outreach_tsu, OutreachTsu)
+              end
             end
           end
         end
