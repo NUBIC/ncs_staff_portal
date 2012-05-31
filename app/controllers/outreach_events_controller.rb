@@ -7,7 +7,8 @@ class OutreachEventsController < SecuredController
   def index
     params[:page] ||= 1
     # @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
-    @outreach_events =  OutreachEvent.search_for(params[:search]).all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    events = OutreachEvent.search_for(params[:search]).all
+    @outreach_events = (events.select(&:event_date).sort_by(&:event_date).reverse + events.reject(&:event_date)).paginate(:page => params[:page], :per_page => 20)
     @can_delete = false
     if permit?(Role::STAFF_SUPERVISOR)
       @can_delete = true
