@@ -428,11 +428,23 @@ module NcsNavigator::StaffPortal::Warehouse
         include_context 'mapping test'
 
         let(:sp_record) { outreach_event }
-
-        it 'has a derived public ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        
+        describe "public_id" do
+          it 'uses the source_id as public_id if source_id is not nil' do
+            outreach_event.update_attribute(:source_id, "source_id_123")
+            results.first.outreach_event_id.should == "source_id_123"
+          end
+          
+          it 'has a derived public ID' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
         end
+
+        # it 'has a derived public ID' do
+        #   results.first.outreach_event_id.should ==
+        #     "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        # end
 
         include_examples 'one-to-one valid'
 
@@ -604,10 +616,29 @@ module NcsNavigator::StaffPortal::Warehouse
             :outreach_event => outreach_event, :language => Factory(:ncs_code, :local_code => 4))
         }
         let(:sp_record) { outreach_language }
+        
+        describe 'outreach event ID' do
+          it 'uses source_id of outreach_event if outreach_event source_id is set' do
+            outreach_event.update_attribute(:source_id, "source_id_event_123")
+            results.first.outreach_event_id.should == "source_id_event_123"
+          end
+          
+          it 'has the correct derived outreach event ID' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
+        end
 
-        it 'has the correct derived outreach event ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        describe 'derived record ID' do
+          it 'uses source_id if outreach_languages source_id is set' do
+            outreach_language.update_attribute(:source_id, "source_id_language_123")
+            results.first.outreach_lang2_id.should == "source_id_language_123"
+          end
+          
+          it 'has the correct derived record ID' do
+            results.first.outreach_lang2_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-L#{outreach_language.id}"
+          end
         end
 
         it 'has the correct derived record ID' do

@@ -177,12 +177,19 @@ module NcsNavigator::StaffPortal::Warehouse
       %Q{
         SELECT
           ot.*,
-          'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id  AS public_id_for_outreach_events,
-          'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id || '-#{id_prefix}' || ot.id  AS public_id_for_this_table
+          CASE
+            WHEN ot.source_id IS NOT NULL THEN ot.source_id
+            ELSE 'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id || '-#{id_prefix}' || ot.id
+          END AS public_id_for_this_table,
+          CASE
+            WHEN oe.source_id IS NOT NULL THEN oe.source_id
+            ELSE 'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id
+          END AS public_id_for_outreach_events
           #{', s.staff_id AS public_id_for_staff' if options[:staff]}
         FROM #{table_name} ot
           INNER JOIN outreach_segments os ON ot.outreach_event_id=os.outreach_event_id
           INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+          INNER JOIN outreach_events oe ON ot.outreach_event_id=oe.id
           #{'INNER JOIN staff s ON ot.staff_id=s.id' if options[:staff]}
         #{'WHERE s.zipcode IS NOT NULL' if options[:staff]}
       }
@@ -191,7 +198,10 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:outreach_events, Outreach,
       :query => %Q(
         SELECT
-          'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id,
+          CASE
+            WHEN source_id IS NOT NULL THEN source_id
+            ELSE 'staff_portal-' || oe.id || '-' || ns.ssu_id
+          END AS outreach_event_id,
           to_char(oe.event_date, 'YYYY-MM-DD') AS event_date,
           oe.outreach_type_code,
           oe.mode_code,
