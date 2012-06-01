@@ -9,6 +9,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  outreach_race_id  :string(36)      not null
+#  source_id         :string(36)
 #
 
 class OutreachRace < ActiveRecord::Base

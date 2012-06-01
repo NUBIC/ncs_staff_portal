@@ -9,6 +9,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  outreach_event_eval_id :string(36)      not null
+#  source_id              :string(36)
 #
 
 require 'spec_helper'

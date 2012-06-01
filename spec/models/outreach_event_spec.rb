@@ -24,6 +24,7 @@
 #  attendees_quantity     :integer
 #  created_by             :integer
 #  outreach_event_id      :string(36)      not null
+#  source_id              :string(36)
 #
 
 require 'spec_helper'

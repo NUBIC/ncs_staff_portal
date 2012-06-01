@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531181632) do
+ActiveRecord::Schema.define(:version => 20120601153155) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "outreach_event_eval_id", :limit => 36, :null => false
+    t.string   "source_id",              :limit => 36
   end
 
   add_index "outreach_evaluations", ["outreach_event_eval_id"], :name => "uq_outreach_evaluations_outreach_event_eval_id", :unique => true
@@ -127,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.integer  "attendees_quantity"
     t.integer  "created_by"
     t.string   "outreach_event_id",      :limit => 36, :null => false
+    t.string   "source_id",              :limit => 36
   end
 
   add_index "outreach_events", ["outreach_event_id"], :name => "uq_outreach_events_outreach_event_id", :unique => true
@@ -147,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "outreach_lang2_id", :limit => 36, :null => false
+    t.string   "source_id",         :limit => 36
   end
 
   add_index "outreach_languages", ["outreach_lang2_id"], :name => "uq_outreach_languages_outreach_lang2_id", :unique => true
@@ -158,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "outreach_race_id",  :limit => 36, :null => false
+    t.string   "source_id",         :limit => 36
   end
 
   add_index "outreach_races", ["outreach_race_id"], :name => "uq_outreach_races_outreach_race_id", :unique => true
@@ -175,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "outreach_event_staff_id", :limit => 36, :null => false
+    t.string   "source_id",               :limit => 36
   end
 
   add_index "outreach_staff_members", ["outreach_event_staff_id"], :name => "uq_outreach_staff_members_outreach_event_staff_id", :unique => true
@@ -186,6 +191,7 @@ ActiveRecord::Schema.define(:version => 20120531181632) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "outreach_target_id", :limit => 36, :null => false
+    t.string   "source_id",          :limit => 36
   end
 
   add_index "outreach_targets", ["outreach_target_id"], :name => "uq_outreach_targets_outreach_target_id", :unique => true
