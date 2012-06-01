@@ -503,6 +503,11 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachEvent.first.outreach_event_id.should == "event_id_1234567890"
         end
         
+        it "map the outreach_event_id to source_id" do
+          OutreachEvent.first.source_id.should_not be_nil
+          OutreachEvent.first.source_id.should == "event_id_1234567890"
+        end
+        
         it 'has correct outreach event date' do
           OutreachEvent.first.event_date.to_s.should == "05/12/2012"
         end 
@@ -612,6 +617,11 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachRace.count.should == 1
         end
         
+        it "map the outreach_race_id to source_id" do
+          OutreachRace.first.source_id.should_not be_nil
+          OutreachRace.first.source_id.should == OutreachRace.first.outreach_race_id
+        end
+        
         it 'has correct outreach race code' do
           OutreachRace.first.race_code.should == 1
         end 
@@ -652,6 +662,11 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachTarget.count.should == 1
         end
         
+        it "map the outreach_target_id to source_id" do
+          OutreachTarget.first.source_id.should_not be_nil
+          OutreachTarget.first.source_id.should == OutreachTarget.first.outreach_target_id
+        end
+        
         it 'has correct outreach target code' do
           OutreachTarget.first.target_code.should == 10
         end 
@@ -690,6 +705,11 @@ module NcsNavigator::StaffPortal::Warehouse
 
         it 'creates a new record' do
           OutreachEvaluation.count.should == 10
+        end
+        
+        it "map the outreach_event_eval_id to source_id" do
+          OutreachEvaluation.first.source_id.should_not be_nil
+          OutreachEvaluation.first.source_id.should == OutreachEvaluation.first.outreach_event_eval_id
         end
         
         it 'has correct outreach evaluation code' do
@@ -737,6 +757,11 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachStaffMember.count.should == 1
         end
         
+        it "map the outreach_event_staff_id to source_id" do
+          OutreachStaffMember.first.source_id.should_not be_nil
+          OutreachStaffMember.first.source_id.should == OutreachStaffMember.first.outreach_event_staff_id
+        end
+        
         it 'has correct outreach event mapping' do
           OutreachStaffMember.first.outreach_event.id.should == sp_outreach.id
         end 
@@ -765,7 +790,6 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:mdes_record) {
           Factory(:outreach_language,
             :outreach_event => sp_outreach)
-            # , :language_other => 'Babylonian'
           enumerator.to_a(:outreach_languages).first.tap do |a|
             a.outreach_event_id = mdes_outreach.outreach_event_id
             save_wh(a)
@@ -780,6 +804,11 @@ module NcsNavigator::StaffPortal::Warehouse
 
         it 'creates a new record' do
           OutreachLanguage.count.should == 1
+        end
+        
+        it "map the outreach_lang2_id to source_id" do
+          OutreachLanguage.first.outreach_lang2_id.should_not be_nil
+          OutreachLanguage.first.outreach_lang2_id.should == OutreachLanguage.first.outreach_lang2_id
         end
         
         it 'has correct outreach language code mapping' do
