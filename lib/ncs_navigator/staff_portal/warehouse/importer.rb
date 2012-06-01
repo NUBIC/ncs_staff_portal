@@ -26,7 +26,6 @@ module NcsNavigator::StaffPortal::Warehouse
       @wh_config = wh_config
       @staff_portal_models_indexed_by_table = {}
       @public_id_indexes = {}
-      @failed_associations = []
     end
     
     def import(*tables)
@@ -57,6 +56,7 @@ module NcsNavigator::StaffPortal::Warehouse
         staff_portal_model.transaction do
           mdes_model.all(:limit => BLOCK_SIZE, :offset => offset).each do |mdes_record|
             staff_portal_record = apply_mdes_record_to_staff_portal(staff_portal_model, mdes_record)
+
             if mdes_producer.name == :staff
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
@@ -101,7 +101,8 @@ module NcsNavigator::StaffPortal::Warehouse
               [
                 ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"], 
                 ["outreach_culture1", "culture_specific_code"], ["outreach_culture2", "culture_code"],
-                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"], ["outreach_quantity", "attendees_quantity"]
+                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"], 
+                ["outreach_quantity", "attendees_quantity"], ["outreach_event_id", "source_id"]
               ].each do |mdes_variable, staff_portal_attribute|
                 staff_portal_record.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
               end
@@ -112,7 +113,14 @@ module NcsNavigator::StaffPortal::Warehouse
             if mdes_producer.name == :outreach_languages
                outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
                staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
+               staff_portal_record.send("source_id=", mdes_record.send("outreach_lang2_id"))
             end
+            
+            staff_portal_record.send("source_id=", mdes_record.send("outreach_race_id")) if mdes_producer.name == :outreach_races
+            staff_portal_record.send("source_id=", mdes_record.send("outreach_target_id")) if mdes_producer.name == :outreach_targets
+            staff_portal_record.send("source_id=", mdes_record.send("outreach_event_eval_id")) if mdes_producer.name == :outreach_evaluations
+            staff_portal_record.send("source_id=", mdes_record.send("outreach_event_staff_id")) if mdes_producer.name == :outreach_staff_members
+            
             staff_portal_record = save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")
@@ -162,6 +170,10 @@ module NcsNavigator::StaffPortal::Warehouse
             associated_public_id = mdes_record.send(mdes_variable)
             new_association_id = public_id_index(associated_model)[associated_public_id]
             staff_portal_record.send("#{staff_portal_model_association_id}=", new_association_id)
+          end
+          
+          if associated_table.to_s == "this_table" 
+            staff_portal_record.send("#{mdes_variable}=", mdes_record.send(mdes_variable))
           end
         elsif staff_portal_attribute =~ /_code$/
           mdes_value = mdes_record.send(mdes_variable)
