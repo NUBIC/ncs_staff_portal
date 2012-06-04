@@ -441,11 +441,6 @@ module NcsNavigator::StaffPortal::Warehouse
           end
         end
 
-        # it 'has a derived public ID' do
-        #   results.first.outreach_event_id.should ==
-        #     "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
-        # end
-
         include_examples 'one-to-one valid'
 
         [
@@ -623,7 +618,7 @@ module NcsNavigator::StaffPortal::Warehouse
             results.first.outreach_event_id.should == "source_id_event_123"
           end
           
-          it 'has the correct derived outreach event ID' do
+          it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
               "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
           end
@@ -635,7 +630,7 @@ module NcsNavigator::StaffPortal::Warehouse
             results.first.outreach_lang2_id.should == "source_id_language_123"
           end
           
-          it 'has the correct derived record ID' do
+          it 'has the correct derived record ID if outreach_languages source_id is not set' do
             results.first.outreach_lang2_id.should ==
               "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-L#{outreach_language.id}"
           end
@@ -678,14 +673,28 @@ module NcsNavigator::StaffPortal::Warehouse
         }
         let(:sp_record) { outreach_race }
 
-        it 'has the correct derived outreach event ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        describe 'outreach event ID' do
+          it 'uses source_id of outreach_event if outreach_event source_id is set' do
+            outreach_event.update_attribute(:source_id, "source_id_event_123")
+            results.first.outreach_event_id.should == "source_id_event_123"
+          end
+          
+          it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
         end
 
-        it 'has the correct derived record ID' do
-          results.first.outreach_race_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-R#{outreach_race.id}"
+        describe 'derived record ID' do
+          it 'uses source_id if outreach_languages source_id is set' do
+            outreach_race.update_attribute(:source_id, "source_id_race_123")
+            results.first.outreach_race_id.should == "source_id_race_123"
+          end
+          
+          it 'has the correct derived record ID if outreach_races source_id is not set' do
+            results.first.outreach_race_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-R#{outreach_race.id}"
+          end
         end
 
         include_examples 'one-to-one valid'
@@ -721,14 +730,28 @@ module NcsNavigator::StaffPortal::Warehouse
 
         let(:sp_record) { outreach_event.outreach_targets.first }
 
-        it 'has the correct derived outreach event ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        describe 'outreach event ID' do
+          it 'uses source_id of outreach_event if outreach_event source_id is set' do
+            outreach_event.update_attribute(:source_id, "source_id_event_123")
+            results.first.outreach_event_id.should == "source_id_event_123"
+          end
+          
+          it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
         end
 
-        it 'has the correct derived record ID' do
-          results.first.outreach_target_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-T#{outreach_event.outreach_targets.first.id}"
+        describe 'derived record ID' do
+          it 'uses source_id if outreach_targets source_id is set' do
+            sp_record.update_attribute(:source_id, "source_id_target_123")
+            results.first.outreach_target_id.should == "source_id_target_123"
+          end
+          
+          it 'has the correct derived record ID if outreach_targets source_id is not set' do
+            results.first.outreach_target_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-T#{outreach_event.outreach_targets.first.id}"
+          end
         end
 
         include_examples 'one-to-one valid'
@@ -766,15 +789,29 @@ module NcsNavigator::StaffPortal::Warehouse
           outreach_event.outreach_evaluations.first
         }
         let(:sp_record) { outreach_evaluation }
-
-        it 'has the correct derived outreach event ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        
+        describe 'outreach event ID' do
+          it 'uses source_id of outreach_event if outreach_event source_id is set' do
+            outreach_event.update_attribute(:source_id, "source_id_event_123")
+            results.first.outreach_event_id.should == "source_id_event_123"
+          end
+          
+          it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
         end
 
-        it 'has the correct derived record ID' do
-          results.first.outreach_event_eval_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-E#{outreach_evaluation.id}"
+        describe 'derived record ID' do
+          it 'uses source_id if outreach_evaluations source_id is set' do
+            outreach_evaluation.update_attribute(:source_id, "source_id_evaluation_123")
+            results.first.outreach_event_eval_id.should == "source_id_evaluation_123"
+          end
+          
+          it 'has the correct derived record ID if outreach_evaluations source_id is not set' do
+            results.first.outreach_event_eval_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-E#{outreach_evaluation.id}"
+          end
         end
 
         include_examples 'one-to-one valid'
@@ -816,15 +853,29 @@ module NcsNavigator::StaffPortal::Warehouse
         before do
           outreach_staff_member.update_attribute(:staff, staff)
         end
-
-        it 'has the correct derived outreach event ID' do
-          results.first.outreach_event_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+        
+        describe 'outreach event ID' do
+          it 'uses source_id of outreach_event if outreach_event source_id is set' do
+            outreach_event.update_attribute(:source_id, "source_id_event_123")
+            results.first.outreach_event_id.should == "source_id_event_123"
+          end
+          
+          it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
+            results.first.outreach_event_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+          end
         end
 
-        it 'has the correct derived record ID' do
-          results.first.outreach_event_staff_id.should ==
-            "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-S#{outreach_staff_member.id}"
+        describe 'derived record ID' do
+          it 'uses source_id if outreach_staff_members source_id is set' do
+            outreach_staff_member.update_attribute(:source_id, "source_id_outreach_staff_123")
+            results.first.outreach_event_staff_id.should == "source_id_outreach_staff_123"
+          end
+          
+          it 'has the correct derived record ID if outreach_staff_members source_id is not set' do
+            results.first.outreach_event_staff_id.should ==
+              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}-S#{outreach_staff_member.id}"
+          end
         end
 
         it 'uses the public ID for the staff member' do
