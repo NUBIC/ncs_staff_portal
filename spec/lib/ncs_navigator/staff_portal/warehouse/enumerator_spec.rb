@@ -303,8 +303,9 @@ module NcsNavigator::StaffPortal::Warehouse
           it 'sums across all tasks' do
             task1.update_attributes(:expenses =>  '9.99')
             task2.update_attributes(:expenses => '10.08')
+            task3.update_attributes(:expenses => '11.08')
 
-            results.first.staff_expenses.should == '20.07'
+            results.first.staff_expenses.should == '31.15'
           end
 
           it 'uses 0.00 if there are no expenses' do
@@ -316,8 +317,9 @@ module NcsNavigator::StaffPortal::Warehouse
           it 'sums across all tasks' do
             task1.update_attributes(:miles =>  '52.02')
             task2.update_attributes(:miles => '150.21')
+            task3.update_attributes(:miles => '50.21')
 
-            results.first.staff_miles.should == '202.23'
+            results.first.staff_miles.should == '252.44'
           end
 
           it 'uses 0.00 if there are no miles' do
@@ -329,6 +331,7 @@ module NcsNavigator::StaffPortal::Warehouse
       describe 'with management tasks' do
         let!(:task1) { Factory(:management_task, :staff_weekly_expense => sp_record) }
         let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
+        let!(:task3) { Factory(:management_task, :staff_weekly_expense => sp_record) }
 
         include_examples 'summed attributes'
       end
@@ -336,13 +339,15 @@ module NcsNavigator::StaffPortal::Warehouse
       describe 'with data collection tasks' do
         let!(:task1) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
         let!(:task2) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
+        let!(:task3) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
 
         include_examples 'summed attributes'
       end
 
-      describe 'with both kinds of tasks' do
+      describe 'with both kinds of tasks and miscellaneous_expense' do
         let!(:task1) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
         let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
+        let!(:task3) { Factory(:miscellaneous_expense, :staff_weekly_expense => sp_record) }
 
         include_examples 'summed attributes'
       end
