@@ -11,7 +11,7 @@
     %em *
     = f.select :certificate_type_code, NcsCode.ncs_code_lookup(:certificate_type_code), :prompt => 'Select Certification/Training Type'
   .row
-    = f.label :complete_code, "Does the staff member completed training?"
+    = f.label :complete_code, "Did the staff member complete training?"
     %em *
     = f.select :complete_code, NcsCode.ncs_code_lookup(:complete_code), {:prompt => 'Select Completed Status'}, {:id => "complete_status"}
   .row
