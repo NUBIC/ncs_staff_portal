@@ -64,7 +64,11 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:staff_languages_other, StaffLanguage,
       :query => %Q(
         SELECT
-          min(sl.staff_language_id) staff_language_id,
+          (SELECT sl.staff_language_id FROM staff_languages sl 
+          WHERE sl.id = (SELECT max(sl1.id) FROM staff_languages sl1 
+          INNER JOIN staff s ON sl1.staff_id = s.id  
+          WHERE sl1.lang_code = -5 AND s.zipcode IS NOT NULL 
+          GROUP BY s.staff_id, sl1.lang_code)) AS staff_language_id,
           string_agg(sl.lang_other, ',') staff_lang_oth,
           sl.lang_code AS staff_lang,
           s.staff_id AS public_id_for_staff

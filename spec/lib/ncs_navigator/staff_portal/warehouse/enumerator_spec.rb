@@ -197,8 +197,10 @@ module NcsNavigator::StaffPortal::Warehouse
           results.collect(&:staff_lang_oth).should == ['Esperanto,Aramaic']
         end
 
-        it 'uses the lexically earliest staff_language_id' do
-          results.collect(&:staff_language_id).should == ['A']
+        it 'uses the staff_language_id of the record whose id is max among all the ids of the other languages for staff' do
+          Factory(:staff_language, :lang => other_code, :lang_other => 'Aramaic', :staff => staff,
+            :staff_language_id => 'B')
+          results.collect(&:staff_language_id).should == ['B']
         end
 
         it 'includes the other code' do
