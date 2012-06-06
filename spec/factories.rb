@@ -67,6 +67,13 @@ FactoryGirl.define do
     task.expenses nil
     task.association :staff_weekly_expense, :factory => :staff_weekly_expense
   end
+  
+  factory :miscellaneous_expense do |m_expense|
+    m_expense.expense_date  Date.today
+    m_expense.miles nil
+    m_expense.expenses nil
+    m_expense.association :staff_weekly_expense, :factory => :staff_weekly_expense
+  end
 
   factory :outreach_event do |event|
     event.name "test"

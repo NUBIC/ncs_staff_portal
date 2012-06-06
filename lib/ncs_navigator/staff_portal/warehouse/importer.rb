@@ -40,9 +40,7 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     def self.automatic_producers
-      Enumerator.record_producers.reject { |rp|
-        %w(outreach_untailored_automatic).include?(rp.name.to_s) 
-      }
+      Enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" }
     end
     
     private
@@ -56,14 +54,13 @@ module NcsNavigator::StaffPortal::Warehouse
         staff_portal_model.transaction do
           mdes_model.all(:limit => BLOCK_SIZE, :offset => offset).each do |mdes_record|
             staff_portal_record = apply_mdes_record_to_staff_portal(staff_portal_model, mdes_record)
-
-            if mdes_producer.name == :staff
+            
+            case mdes_producer.name
+            when :staff
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
               staff_portal_record.send("zipcode=", mdes_record.staff_zip.to_i)
-            end
-            
-            if mdes_producer.name == :staff_languages  
+            when :staff_languages
               mdes_value = mdes_record.send("staff_lang_oth")
               if mdes_value && mdes_value =~ /,/
                 mdes_values = mdes_value.split(",")
@@ -78,9 +75,7 @@ module NcsNavigator::StaffPortal::Warehouse
                   count += 1
                 end
               end
-            end
-            
-            if mdes_producer.name == :staff_weekly_expenses
+            when :staff_weekly_expenses 
               miscellaneous_expense = MiscellaneousExpense.new
               [
                 ["week_start_date", "expense_date"], ["staff_expenses", "expenses"], ["staff_miles", "miles"]
@@ -89,15 +84,11 @@ module NcsNavigator::StaffPortal::Warehouse
               end
               miscellaneous_expense.send("comment=", "Imported to staff portal")
               save_staff_portal_record_with_mode(miscellaneous_expense, staff_portal_model)
-            end
-            
-            if mdes_producer.name == :management_tasks || mdes_producer.name == :data_collection_tasks
+            when :management_tasks, :data_collection_tasks
               mdes_variable = mdes_producer.name == :management_tasks ? "mgmt_task_hrs" : "data_coll_tasks_hrs"
               staff_portal_record.send("hours=", mdes_record.send(mdes_variable))
               staff_portal_record.send("task_date=", staff_portal_record.staff_weekly_expense.week_start_date)
-            end
-          
-            if mdes_producer.name == :outreach_events
+            when :outreach_events 
               [
                 ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"], 
                 ["outreach_culture1", "culture_specific_code"], ["outreach_culture2", "culture_code"],
@@ -108,19 +99,20 @@ module NcsNavigator::StaffPortal::Warehouse
               end
               staff_portal_record.send("import=", "true")
               staff_portal_record.send("name=", "Imported to staff portal")
+            when :outreach_languages
+              outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
+              staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
+              staff_portal_record.send("source_id=", mdes_record.send("outreach_lang2_id"))
+            when :outreach_races
+              staff_portal_record.send("source_id=", mdes_record.send("outreach_race_id"))
+            when :outreach_targets
+              staff_portal_record.send("source_id=", mdes_record.send("outreach_target_id"))
+            when :outreach_evaluations
+              staff_portal_record.send("source_id=", mdes_record.send("outreach_event_eval_id"))
+            when :outreach_staff_members
+              staff_portal_record.send("source_id=", mdes_record.send("outreach_event_staff_id"))
             end
-            
-            if mdes_producer.name == :outreach_languages
-               outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
-               staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
-               staff_portal_record.send("source_id=", mdes_record.send("outreach_lang2_id"))
-            end
-            
-            staff_portal_record.send("source_id=", mdes_record.send("outreach_race_id")) if mdes_producer.name == :outreach_races
-            staff_portal_record.send("source_id=", mdes_record.send("outreach_target_id")) if mdes_producer.name == :outreach_targets
-            staff_portal_record.send("source_id=", mdes_record.send("outreach_event_eval_id")) if mdes_producer.name == :outreach_evaluations
-            staff_portal_record.send("source_id=", mdes_record.send("outreach_event_staff_id")) if mdes_producer.name == :outreach_staff_members
-            
+          
             staff_portal_record = save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")

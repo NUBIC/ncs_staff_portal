@@ -704,7 +704,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         it 'creates a new record' do
-          OutreachEvaluation.count.should == 10
+          OutreachEvaluation.count.should == 1
         end
         
         it "map the outreach_event_eval_id to source_id" do
@@ -713,7 +713,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach evaluation code' do
-          OutreachEvaluation.first.evaluation_code.should == 10
+          OutreachEvaluation.first.evaluation_code.should == 1
         end 
         it 'creates a new outreach evaluation record with correct outreach entity associations' do
           OutreachEvaluation.first.outreach_event.id.should == sp_outreach.id
