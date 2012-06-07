@@ -1,15 +1,15 @@
 # == Schema Information
 #
-# Table name: ncs_tsus
+# Table name: ncs_ssus
 #
 #  id         :integer         not null, primary key
 #  psu_id     :string(36)      not null
-#  tsu_id     :string(36)      not null
-#  tsu_name   :string(255)
+#  ssu_id     :string(36)      not null
+#  ssu_name   :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
 
-class NcsTsu < ActiveRecord::Base
-  validates_presence_of :tsu_id, :psu_id
+class NcsSsu < ActiveRecord::Base
+  validates_presence_of :ssu_id, :psu_id
 end

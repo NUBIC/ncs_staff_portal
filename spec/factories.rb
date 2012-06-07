@@ -123,10 +123,15 @@ FactoryGirl.define do
     area.name {Factory.next(:area_name)}
   end
   
+  factory :ncs_ssu do |ssu|
+    ssu.psu_id "0012345"
+    ssu.ssu_id { Factory.next(:ssu) }
+    ssu.ssu_name { Factory.next(:ssu) }
+  end
+  
   factory :ncs_area_ssu do |ssu|
-    ssu.ssu_id "0012"
-    ssu.ssu_name "test_ssu"
     ssu.association :ncs_area, :factory => :ncs_area
+    ssu.association :ncs_ssu, :factory => :ncs_ssu
   end
 
   factory :outreach_segment do |segment|
@@ -142,6 +147,8 @@ FactoryGirl.define do
   factory :outreach_tsu do |tsu|
     tsu.association :ncs_tsu, :factory => :ncs_tsu
   end
+  
+
 
   sequence :area_name do |n|
     "area_name#{n}"
@@ -149,6 +156,10 @@ FactoryGirl.define do
   
   sequence :tsu do |n|
     "tsu_#{n}"
+  end
+  
+  sequence :ssu do |n|
+    "ssu_#{n}"
   end
 
   sequence :user_name do |n|

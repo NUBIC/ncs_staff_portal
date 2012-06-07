@@ -4,8 +4,7 @@
 #
 #  id          :integer         not null, primary key
 #  ncs_area_id :integer
-#  ssu_id      :string(255)     not null
-#  ssu_name    :string(255)
+#  ncs_ssu_id  :integer
 #
 
 require 'spec_helper'
@@ -16,7 +15,7 @@ describe NcsAreaSsu do
     ssu.should_not be_nil
   end
   
-  it { should validate_presence_of(:ssu_id) }
+  it { should validate_presence_of(:ncs_ssu_id) }
   
   it { should validate_presence_of(:ncs_area_id) }
   

@@ -13,5 +13,12 @@
 require 'spec_helper'
 
 describe NcsTsu do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should create a new instance given valid attributes" do
+    ssu = Factory(:ncs_tsu)
+    ssu.should_not be_nil
+  end
+
+  it { should validate_presence_of(:psu_id) }
+
+  it { should validate_presence_of(:tsu_id) }
 end

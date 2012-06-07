@@ -18,6 +18,7 @@ namespace :psu do
             NcsAreaSsu.create(:ssu_id => ssu.id, 
                               :ssu_name => ssu.name,
                               :ncs_area => ncs_area)
+            
           end
         end
       end
@@ -25,5 +26,18 @@ namespace :psu do
     end
     puts "There are #{NcsArea.all.count} NcsAreas."
     puts "There are #{NcsAreaSsu.all.count} NcsAreaSsus."
+  end
+  
+  task :load_ncs_ssus => :environment do
+    NcsNavigator.configuration.psus.each do |psu|
+      psu.areas.each do |area|
+        area.ssus.each do |ssu|
+          NcsSsu.create(:ssu_id => ssu.id, 
+                        :ssu_name => ssu.name,
+                        :psu_id => psu.id)
+        end
+      end
+    end
+    puts "There are #{NcsSsu.all.count} NcsSsus."
   end
 end
