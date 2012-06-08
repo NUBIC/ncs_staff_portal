@@ -39,7 +39,7 @@ module ApplicationHelper
   
   def display_segments(segments)
     list = segments.map do |segment|
-        segment.ncs_area.name
+        segment.ncs_ssu.ssu_name
     end
     list.join(', ')
   end

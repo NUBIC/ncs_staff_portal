@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607164113) do
+ActiveRecord::Schema.define(:version => 20120608154348) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -175,9 +175,10 @@ ActiveRecord::Schema.define(:version => 20120607164113) do
 
   create_table "outreach_segments", :force => true do |t|
     t.integer  "outreach_event_id"
-    t.integer  "ncs_area_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ncs_ssu_id"
+    t.integer  "ncs_tsu_id"
   end
 
   create_table "outreach_staff_members", :force => true do |t|

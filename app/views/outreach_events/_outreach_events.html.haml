@@ -30,8 +30,10 @@
       = text_field_tag "", StaffPortal.psu_name, :readonly => true
     .row
       Outreach Segments
-      = select_tag("outreach_event[ncs_area_ids][]", options_for_select(NcsArea.all.sort_by(&:name).map {|a| [a.name, a.id]}, @outreach_event.outreach_segments.collect { |os| os.ncs_area_id }),
-                        {:multiple=>true, :id => "outreach_segments", :class => "outreach_segments"})
+      = select_tag("outreach_event[ncs_ssu_ids][]", grouped_options_for_select(NcsArea.all.sort_by(&:name).map {|arear| [area.name, 
+                  area.ncs_ssus.sort_by(&:ssu_name).map{|ssu| [ssu.ssu_name, ssu.id]}]}, @outreach_event.outreach_segments.collect { |os| os.ncs_ssu_id }),
+                  {:multiple => true, :id => "outreach_segments", :class => "outreach_segments"})
+
   .block
     .title
       Outreach Details
@@ -169,7 +171,7 @@
           %em * 
           (Click the 'Add staff member' link to add one or more staff members)
       %tbody.nested_records_outreach_staff_members
-        - f.fields_for :outreach_staff_members do |outreach_staff_member|
+        = f.fields_for :outreach_staff_members do |outreach_staff_member|
           = render :partial => 'outreach_events/outreach_staff_members', :locals => { :f => outreach_staff_member }
       %tfoot
         %tr.row

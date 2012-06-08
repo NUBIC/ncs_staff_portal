@@ -47,7 +47,7 @@ class OutreachEvent < ActiveRecord::Base
   has_many :outreach_segments, :dependent => :destroy
   has_many :outreach_items, :dependent => :destroy
   has_many :outreach_languages, :dependent => :destroy
-  has_many :ncs_areas, :through => :outreach_segments
+  has_many :ncs_ssus, :through => :outreach_segments
   has_many :staff, :through => :outreach_staff_members
   has_many :outreach_tsus, :dependent => :destroy
   has_many :ncs_tsus, :through => :outreach_tsus
@@ -72,11 +72,11 @@ class OutreachEvent < ActiveRecord::Base
    
   validate :has_segments, :unless => :imported_mode
   def has_segments
-    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_areas.blank?
+    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_ssus.blank?
   end
    
   scoped_search :on => [:name, :event_date]
-  scoped_search :in => :ncs_areas, :on => :name
+  # scoped_search :in => :ncs_ssus, :on => :ssu_name
   scoped_search :in => :staff, :on => [:first_name, :last_name]
    
   belongs_to :created_by_user, :class_name => 'Staff', :foreign_key => :created_by
