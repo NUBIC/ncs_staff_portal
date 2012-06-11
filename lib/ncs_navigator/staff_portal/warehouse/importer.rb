@@ -116,16 +116,15 @@ module NcsNavigator::StaffPortal::Warehouse
             staff_portal_record = save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")
-              ncs_area = NcsAreaSsu.find_by_ssu_id(ssu_id).ncs_area
-              outreach_segment = OutreachSegment.new(:ncs_area => ncs_area, :outreach_event => staff_portal_record)
-              save_staff_portal_record_with_mode(outreach_segment, OutreachSegment)
-              
+              ncs_ssu = NcsSsu.find_by_ssu_id(ssu_id)
+              outreach_segment = OutreachSegment.new(:ncs_ssu => ncs_ssu, :outreach_event => staff_portal_record)
+
               tsu_id = mdes_record.send("tsu_id")
               if tsu_id
                 ncs_tsu = NcsTsu.find_by_tsu_id(tsu_id)
-                outreach_tsu = OutreachTsu.new(:ncs_tsu => ncs_tsu, :outreach_event => staff_portal_record)
-                save_staff_portal_record_with_mode(outreach_tsu, OutreachTsu)
+                outreach_segment.ncs_tsu = ncs_tsu
               end
+              save_staff_portal_record_with_mode(outreach_segment, OutreachSegment)
             end
           end
         end

@@ -87,7 +87,7 @@ FactoryGirl.define do
     event.outreach_targets {|a| [a.association(:outreach_target)]}
     event.outreach_segments {|a| [a.association(:outreach_segment)]}
     event.outreach_tsus {|a| [a.association(:outreach_tsu)]}
-    event.ncs_areas {|a| [a.association(:ncs_area)]}
+    event.ncs_ssus {|a| [a.association(:ncs_ssu)]}
   end
 
   factory :outreach_staff_member do |member|
@@ -135,7 +135,7 @@ FactoryGirl.define do
   end
 
   factory :outreach_segment do |segment|
-    segment.association :ncs_area, :factory => :ncs_area
+    segment.association :ncs_ssu, :factory => :ncs_ssu
   end
   
   factory :ncs_tsu do |tsu|

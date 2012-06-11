@@ -13,4 +13,5 @@
 class OutreachSegment < ActiveRecord::Base
   belongs_to :outreach_event
   belongs_to :ncs_ssu
+  belongs_to :ncs_tsu
 end

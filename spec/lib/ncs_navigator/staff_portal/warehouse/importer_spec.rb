@@ -473,9 +473,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach event' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
 
         let!(:mdes_record) {
           Factory(:outreach_event, :outreach_segments => [outreach_segment], :no_of_staff => 2, :cost => 100)
@@ -557,34 +556,47 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach segment area mapped to correct ssu' do
-          OutreachEvent.first.outreach_segments.first.ncs_area.ncs_area_ssus.first.ssu_id.should == "1234567890"
+          OutreachEvent.first.outreach_segments.first.ncs_ssu.ssu_id.should == "1234567890"
         end
         
-        describe "tsu_id" do
-          it "has not create outreach tsu if tsu_id is not set in mdes outreach" do
-            OutreachEvent.first.outreach_tsus.size.should == 0
-          end
-          
-          describe 'has correct outreach tsu ' do
-            before do
-              Factory(:ncs_tsu, :tsu_id => 'tsu_123')
-              save_wh(MdesModule::Tsu.new(:sc_id => '20000029', :tsu_id => 'tsu_123', :tsu_name =>'tsu_name_123'))
-              mdes_record.tsu_id = "tsu_123"
-              save_wh(mdes_record)
-              importer.import(:outreach_events)
-            end
-            
-            it "number" do
-              OutreachEvent.first.outreach_tsus.size.should == 1
-            end
-            
-            it "mapped to ncs_tsu" do
-              OutreachEvent.first.ncs_tsus.first.tsu_id.should == "tsu_123"
-            end
-          end
+        it "has not create outreach segment tsu if tsu_id is not set in mdes outreach" do
+           OutreachEvent.first.outreach_segments.first.ncs_tsu.should be_nil
         end
-      end        
-    end
+      end 
+      
+      describe 'for tsu_id is set in mdes outreach' do
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:ncs_tsu) { Factory(:ncs_tsu, :tsu_id => 'tsu_123') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
+
+        let!(:mdes_record) {
+          Factory(:outreach_event, :outreach_segments => [outreach_segment])
+          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(MdesModule::Tsu.new(:sc_id => '20000029', :tsu_id => 'tsu_123', :tsu_name =>'tsu_123'))
+          enumerator.to_a(:outreach_events).first.tap do |a|
+            a.outreach_event_id = "event_id_1234567890"
+            a.tsu_id = 'tsu_123'
+            save_wh(a)
+            OutreachSegment.destroy_all
+            OutreachSegment.count.should == 0
+            OutreachEvent.destroy_all
+            OutreachEvent.count.should == 0
+          end
+        }
+
+        before do
+          importer.import(:outreach_events)
+        end
+        
+        it "outreach segment tsu is not null" do
+           OutreachEvent.first.outreach_segments.first.ncs_tsu.should_not be_nil
+        end
+        
+        it "outreach segment tsu has correct tsu_id" do
+           OutreachEvent.first.outreach_segments.first.ncs_tsu.tsu_id.should == "tsu_123"
+        end
+      end  
+    end     
     
     describe 'conversion for outreach race' do
       describe 'of a completely new record' do

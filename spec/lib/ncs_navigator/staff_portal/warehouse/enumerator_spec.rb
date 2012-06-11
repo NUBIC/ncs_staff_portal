@@ -424,9 +424,8 @@ module NcsNavigator::StaffPortal::Warehouse
       let(:producer_names) { [:outreach_events] }
       let(:sp_model) { OutreachEvent }
 
-      let!(:ncs_area) { Factory(:ncs_area) }
-      let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-      let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+      let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+      let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
       let!(:outreach_event) {
         Factory(:outreach_event, :outreach_segments => [outreach_segment])
       }
@@ -444,7 +443,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has a derived public ID' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_area_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
           end
         end
 
@@ -476,21 +475,6 @@ module NcsNavigator::StaffPortal::Warehouse
 
         it 'always uses "no" for incidents (until incidents are supported)' do
           results.first.outreach_incident.should == '2'
-        end
-
-        it 'produces one record per SSU in the area' do
-          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '42')
-          Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '7')
-
-          results.size.should == 3
-        end
-
-        it 'produces one record per SSU per area' do
-          area2 = Factory(:ncs_area)
-          Factory(:ncs_area_ssu, :ncs_area => area2, :ssu_id => '5')
-          Factory(:outreach_segment, :outreach_event => outreach_event, :ncs_area => area2)
-
-          results.size.should == 2
         end
 
         it 'gives each separate record a unique ID' do

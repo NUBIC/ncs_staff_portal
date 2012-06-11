@@ -194,7 +194,7 @@ module NcsNavigator::StaffPortal::Warehouse
           #{', s.staff_id AS public_id_for_staff' if options[:staff]}
         FROM #{table_name} ot
           INNER JOIN outreach_segments os ON ot.outreach_event_id=os.outreach_event_id
-          INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+          INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
           INNER JOIN outreach_events oe ON ot.outreach_event_id=oe.id
           #{'INNER JOIN staff s ON ot.staff_id=s.id' if options[:staff]}
         #{'WHERE s.zipcode IS NOT NULL' if options[:staff]}
@@ -227,7 +227,7 @@ module NcsNavigator::StaffPortal::Warehouse
           CASE oe.tailored_code WHEN 2 THEN -7 ELSE COALESCE(oe.culture_code,           -4) END AS outreach_culture2
         FROM outreach_events oe
          INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
-         INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+         INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
          LEFT JOIN (
            SELECT outreach_event_id, language_other
            FROM outreach_languages WHERE language_other IS NOT NULL AND length(trim(language_other)) > 0
@@ -264,7 +264,7 @@ module NcsNavigator::StaffPortal::Warehouse
           'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id
         FROM outreach_events oe
          INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
-         INNER JOIN ncs_area_ssus ns ON os.ncs_area_id=ns.ncs_area_id
+         INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
         WHERE oe.tailored_code=2
       )
     ) do |oe_id|
