@@ -63,19 +63,20 @@ module NcsNavigator::StaffPortal::Warehouse
     # Per PO dictum, combine all "others" into one row. See #1526.
     produce_one_for_one(:staff_languages_other, StaffLanguage,
       :query => %Q(
-        SELECT
-          (SELECT sl.staff_language_id FROM staff_languages sl 
-          WHERE sl.id = (SELECT max(sl1.id) FROM staff_languages sl1 
-          INNER JOIN staff s ON sl1.staff_id = s.id  
-          WHERE sl1.lang_code = -5 AND s.zipcode IS NOT NULL 
-          GROUP BY s.staff_id, sl1.lang_code)) AS staff_language_id,
-          string_agg(sl.lang_other, ',') staff_lang_oth,
-          sl.lang_code AS staff_lang,
-          s.staff_id AS public_id_for_staff
-        FROM staff_languages sl
-          INNER JOIN staff s ON sl.staff_id = s.id
-        WHERE sl.lang_code = -5 AND s.zipcode IS NOT NULL
-        GROUP BY s.staff_id, sl.lang_code
+        SELECT a.staff_language_id, b.staff_lang_oth, b.staff_lang, b.public_id_for_staff
+          FROM  (SELECT sl.staff_language_id, s.staff_id AS public_id_for_staff FROM
+                staff_languages sl INNER JOIN staff s ON sl.staff_id = s.id
+                WHERE sl.id  in (SELECT max(sl1.id) FROM staff_languages sl1 INNER JOIN staff s
+                ON sl1.staff_id = s.id WHERE sl1.lang_code = -5 AND s.zipcode
+                IS NOT NULL GROUP BY sl1.staff_id, sl1.lang_code) )
+          AS a
+          INNER JOIN
+                (SELECT string_agg(sl.lang_other, ',') staff_lang_oth, sl.lang_code AS staff_lang,
+                s.staff_id AS public_id_for_staff FROM staff_languages sl INNER JOIN staff s
+                ON sl.staff_id = s.id WHERE sl.lang_code = -5 AND s.zipcode
+                IS NOT NULL GROUP BY s.staff_id, sl.lang_code)
+          AS b
+          ON a.public_id_for_staff = b.public_id_for_staff
       ),
       :column_map => {
         :public_id_for_staff => :staff_id,
