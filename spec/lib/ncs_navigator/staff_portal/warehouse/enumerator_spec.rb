@@ -481,6 +481,11 @@ module NcsNavigator::StaffPortal::Warehouse
           Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '7'), :outreach_event => outreach_event)
           results.collect(&:outreach_event_id).uniq.size.should == 3
         end
+        
+        it 'includes tsu_id if event has any tsu associated' do
+           outreach_segment.update_attribute(:ncs_tsu, Factory(:ncs_tsu, :tsu_id => 'tsu_id1'))
+           results.first.tsu_id.should == 'tsu_id1'
+        end
       end
 
       describe 'when tailored' do
