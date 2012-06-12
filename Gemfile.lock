@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/bmabey/database_cleaner.git
+  revision: 205331686d4c42c36c3fbbb4194ac6362446d93a
+  specs:
+    database_cleaner (0.7.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -82,7 +88,6 @@ GEM
       nokogiri (>= 1.5.0)
     data_objects (0.10.8)
       addressable (~> 2.1)
-    database_cleaner (0.6.7)
     diff-lcs (1.1.3)
     dm-aggregates (1.2.0)
       dm-core (~> 1.2.0)
@@ -128,6 +133,8 @@ GEM
     growl (1.0.3)
     guard (0.8.8)
       thor (~> 0.14.6)
+    guard-rspec (0.5.11)
+      guard (>= 0.8.4)
     guard-spork (0.3.1)
       guard (>= 0.8.4)
       spork (>= 0.8.4)
@@ -274,12 +281,13 @@ DEPENDENCIES
   compass (~> 0.10.6)
   cucumber
   cucumber-rails
-  database_cleaner (~> 0.6.6)
+  database_cleaner!
   exception_notification
   factory_girl_rails (~> 1.1.rc1)
   fastercsv
   growl
   guard
+  guard-rspec
   guard-spork
   haml (~> 3.0.25)
   haml-rails

@@ -35,13 +35,15 @@ group :development, :test, :ci do
   gem 'launchy'
   gem "json_spec"
   gem 'cucumber-rails', :require => false
-  gem 'database_cleaner', '~>0.6.6'
+  # database_cleaner 0.6.7 doesn't work with DataMapper on PostgreSQL
+  gem 'database_cleaner', :git => 'git://github.com/bmabey/database_cleaner.git'
   gem 'factory_girl_rails', '~> 1.1.rc1'
   gem 'shoulda'
   gem 'ci_reporter', '~> 1.6'
   gem 'annotate'
   gem 'guard'
   gem 'guard-spork'
+  gem 'guard-rspec'
   gem 'spork', '> 0.9.0.rc'
   gem 'rb-fsevent'
   gem 'growl'
