@@ -38,4 +38,23 @@ namespace :psu do
     end
     puts "There are #{NcsSsu.all.count} NcsSsus."
   end
+  
+  task :load_ncs_tsus => :environment do
+    NcsNavigator.configuration.psus.each do |psu|
+      psu.areas.each do |area|
+        area.ssus.each do |ssu|
+          ssu.tsus.each do |tsu|
+            if tsu.id != "."
+              unless NcsTsu.find(:first, :conditions => {:tsu_id  => tsu.id})
+                NcsTsu.create(:tsu_id => tsu.id,
+                          :tsu_name => tsu.name,
+                          :psu_id => psu.id)
+              end
+            end
+          end
+        end
+      end
+    end
+    puts "There are #{NcsTsu.all.count} NcsTsus."
+  end
 end
