@@ -72,7 +72,7 @@ class OutreachEvent < ActiveRecord::Base
    
   validate :has_segments, :unless => :imported_mode
   def has_segments
-    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_ssus.blank?
+    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.outreach_segments.blank?
   end
    
   scoped_search :on => [:name, :event_date]

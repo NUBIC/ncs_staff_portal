@@ -39,7 +39,7 @@ describe OutreachEvent do
   
   it { should have_many(:outreach_staff_members) }
   
-  it { should have_many(:ncs_areas).through(:outreach_segments) }
+  it { should have_many(:ncs_ssus).through(:outreach_segments) }
   
   it { should validate_presence_of(:name) }
   

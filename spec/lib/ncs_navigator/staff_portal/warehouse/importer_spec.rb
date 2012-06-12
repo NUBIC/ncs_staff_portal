@@ -600,9 +600,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach race' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
@@ -645,9 +644,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach target' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
@@ -690,9 +688,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach evaluation' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
@@ -735,9 +732,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach staff' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
@@ -786,9 +782,8 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'conversion for outreach languages' do
       describe 'of a completely new record' do
-        let!(:ncs_area) { Factory(:ncs_area) }
-        let!(:ncs_area_ssu) { Factory(:ncs_area_ssu, :ncs_area => ncs_area, :ssu_id => '1234567890') }
-        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_area => ncs_area) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
