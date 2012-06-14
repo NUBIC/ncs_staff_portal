@@ -40,7 +40,7 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     def self.automatic_producers
-      Enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" }
+      Enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" || rp.name.to_s == "staff_languages_other" }
     end
     
     private
@@ -154,7 +154,7 @@ module NcsNavigator::StaffPortal::Warehouse
       column_map(staff_portal_model).each do |staff_portal_attribute, mdes_variable|
         if staff_portal_attribute =~ /^public_id_for_/
           associated_table=
-            (staff_portal_attribute.scan /^public_id_for_(.*)$/).first
+            (staff_portal_attribute.scan /^public_id_for_(.*)$/).first.first
           if associated_table.to_s != "this_table"
             staff_portal_model_association_id = associated_table.to_s.singularize + "_id"
             associated_model = staff_portal_model_for_table(associated_table)
