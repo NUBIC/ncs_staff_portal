@@ -38,7 +38,7 @@ module NcsNavigator::StaffPortal::Warehouse
     
     describe 'strategy selection' do
       it 'handles most models automatically' do
-        Importer.automatic_producers.size.should == 13
+        Importer.automatic_producers.size.should == 12
       end
     end
     
@@ -564,6 +564,30 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end 
       
+      describe 'if ncs_ssu with outreach ssu_id is not found' do
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
+
+        let!(:mdes_record) {
+          Factory(:outreach_event, :outreach_segments => [outreach_segment])
+          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          enumerator.to_a(:outreach_events).first.tap do |a|
+            a.outreach_event_id = "event_id_1234567890"
+            save_wh(a)
+            NcsSsu.destroy_all
+            NcsSsu.count.should == 0
+            OutreachSegment.destroy_all
+            OutreachSegment.count.should == 0
+            OutreachEvent.destroy_all
+            OutreachEvent.count.should == 0
+          end
+        }
+
+        it "will not create outreach segment" do
+           expect { importer.import(:outreach_events) }.should raise_error
+        end
+      end
+       
       describe 'for tsu_id is set in mdes outreach' do
         let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
         let!(:ncs_tsu) { Factory(:ncs_tsu, :tsu_id => 'tsu_123') }

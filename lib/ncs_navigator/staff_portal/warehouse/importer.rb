@@ -117,8 +117,10 @@ module NcsNavigator::StaffPortal::Warehouse
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")
               ncs_ssu = NcsSsu.find_by_ssu_id(ssu_id)
+              unless ncs_ssu
+                raise "There is no NcsSsu created with ssu_id = #{ssu_id}. Please load the NcsSsu first and then try import again."
+              end
               outreach_segment = OutreachSegment.new(:ncs_ssu => ncs_ssu, :outreach_event => staff_portal_record)
-
               tsu_id = mdes_record.send("tsu_id")
               if tsu_id
                 ncs_tsu = NcsTsu.find_by_tsu_id(tsu_id)
