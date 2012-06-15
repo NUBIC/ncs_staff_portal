@@ -219,7 +219,9 @@ module NcsNavigator::StaffPortal::Warehouse
           oe.evaluation_result_code AS outreach_eval_result,
           (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
           ns.ssu_id,
-          nt.tsu_id,
+          CASE 
+            WHEN os.ncs_tsu_id IS NOT NULL THEN (SELECT tsu_id FROM ncs_tsus WHERE id = os.ncs_tsu_id)
+          END AS tsu_id,
           ol.language_other AS lang_other,
           2 AS outreach_incident,
           oe.tailored_code,
@@ -230,7 +232,6 @@ module NcsNavigator::StaffPortal::Warehouse
         FROM outreach_events oe
          INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
          INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
-         INNER JOIN ncs_tsus nt ON os.ncs_tsu_id=nt.id
          LEFT JOIN (
            SELECT outreach_event_id, language_other
            FROM outreach_languages WHERE language_other IS NOT NULL AND length(trim(language_other)) > 0
