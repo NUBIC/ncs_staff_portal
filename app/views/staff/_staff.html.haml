@@ -12,10 +12,10 @@
     = text_field_tag "name", @staff.name, :readonly => true
   .field
     = f.label :email
-    = f.text_field :email,:readonly => true
+    = f.text_field :email, :readonly => true
   .field
     = f.label :username, NcsNavigator.configuration.study_center_username
-    = f.text_field :username,:readonly => true
+    = f.text_field :username, :readonly => true
   .field
     = label_tag "Study center"
     = text_field_tag "study_center", StaffPortal.study_center_name, :readonly => true

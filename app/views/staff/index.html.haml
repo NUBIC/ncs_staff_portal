@@ -24,7 +24,7 @@
       %table#staff-list-tbl
         - @staff_list.each do |staff|
           %tr
-            %td= link_to staff.username, staff
+            %td= link_to staff.display_username, staff
             %td= staff.name
             - if staff.staff_type_code.blank?
               %td= ""

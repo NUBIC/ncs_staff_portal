@@ -26,7 +26,7 @@
       %table#user-list-tbl
         - @users.each do |user|
           %tr
-            %td= link_to user.username,edit_users_path(user)
+            %td= link_to user.display_username, edit_users_path(user)
             %td= user.name
             %td= display_roles(user.roles)
             %td= user.is_active ? "Active" : "Disabled"

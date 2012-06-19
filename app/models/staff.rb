@@ -212,4 +212,8 @@ class Staff < ActiveRecord::Base
     end
     reminder_staff
   end
+  
+  def display_username
+    username ? username : staff_id
+  end
 end

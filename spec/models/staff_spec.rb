@@ -119,6 +119,17 @@ describe Staff do
       FactoryGirl.create(:staff).numeric_id.should_not == FactoryGirl.create(:staff).numeric_id
     end
   end
+  
+  describe 'display_username' do
+    it 'displays username if username is set' do
+      FactoryGirl.create(:staff, :username => "test123").display_username.should == "test123"
+    end
+
+    it 'displays staff_id if username is null' do
+      FactoryGirl.create(:staff, :username => nil, :staff_id => "staff_id_123").display_username.should == "staff_id_123"
+    end
+    
+  end
 
   describe "weekly_task_reminder" do
     before(:each) do
