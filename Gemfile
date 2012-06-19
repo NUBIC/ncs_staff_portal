@@ -24,6 +24,7 @@ gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'ncs_mdes_warehouse', '0.6'
+gem "nilify_blanks"
 # gem 'ncs_mdes_warehouse', '~> 0.1',
 #   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
 # gem 'ncs_mdes_warehouse', '~> 0.1', :path => '../ncs_mdes_warehouse'
