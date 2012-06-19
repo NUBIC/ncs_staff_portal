@@ -20,7 +20,6 @@
       Outreach Description
     .row
       = f.label :formatted_event_date, "Event Date"
-      %em *
       = f.text_field :formatted_event_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
       = f.label :name, "Event Name"
       %em *
@@ -30,7 +29,7 @@
       = text_field_tag "", StaffPortal.psu_name, :readonly => true
     .row
       Outreach Segments
-      = select_tag("outreach_event[ncs_ssu_ids][]", grouped_options_for_select(NcsArea.all.sort_by(&:name).map {|arear| [area.name, 
+      = select_tag("outreach_event[ncs_ssu_ids][]", grouped_options_for_select(NcsArea.all.sort_by(&:name).map {|area| [area.name, 
                   area.ncs_ssus.sort_by(&:ssu_name).map{|ssu| [ssu.ssu_name, ssu.id]}]}, @outreach_event.outreach_segments.collect { |os| os.ncs_ssu_id }),
                   {:multiple => true, :id => "outreach_segments", :class => "outreach_segments"})
 
