@@ -20,7 +20,7 @@ class StaffController < SecuredController
       else
         @staff = @current_staff.visible_employees
       end
-      @staff_list = @staff.sort_by(&:username).select { |s| s.is_active }
+      @staff_list = (@staff.select(&:username).sort_by(&:username) + @staff.reject(&:username)).select { |s| s.is_active }
       respond_to do |format|
         format.html { @staff_list = @staff_list.paginate(:page => params[:page], :per_page => 20)}
         format.xml  { render :xml => @staff_list }
@@ -44,7 +44,8 @@ class StaffController < SecuredController
       elsif params[:first_name] || params[:last_name] || params[:username]
         @users = Staff.where(construct_condition_string(params))
       else
-        @users = Staff.all.sort_by(&:username)
+        all_users = Staff.all
+        @users = all_users.select(&:username).sort_by(&:username) + all_users.reject(&:username)
       end
       respond_to do |format|
         format.html { @users = @users.paginate(:page => params[:page], :per_page => 20)}
