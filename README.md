@@ -101,13 +101,13 @@ the configuration file. `bootstrap_user` and `psc_user_password` are mandatory;
 all others are optional.
 
     # The initial user for Staff Portal. This user will automatically
-    # granted the User Administrator role and will thus be able to
-    # provision more users. The username must be one that can be
-    # authenticated with the CAS server that Staff Portal uses.
+    # granted the User Administrator and System Administrator roles. Thus he will be able to
+    # provision more users and finish the initial PSC setup for NCS Navigator. The username 
+    # must be one that can be authenticated with the CAS server that Staff Portal uses.
     bootstrap_user = jrp
     
     # The psc user password for Staff Portal. There will be application 
-    # user with username as "psc_application"which will be used for 
+    # user with username as "psc_application" which will be used for 
     # communication between Patient Study Calendar and Staff Portal.
     psc_user_password = "password"
     
