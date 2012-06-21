@@ -17,7 +17,10 @@
           - @outreach_events.each do |outreach_event|
             %tr
               %td= link_to outreach_event.formatted_event_date, edit_outreach_event_path(outreach_event)
-              %td= outreach_event.name_text
+              - if outreach_event.formatted_event_date.blank?
+                %td= link_to outreach_event.name_text, edit_outreach_event_path(outreach_event)
+              - else
+                %td= outreach_event.name_text
               %td= display_segments(outreach_event.outreach_segments)
               %td= outreach_event.evaluation_result.display_text
               %td= outreach_event.mode_text
