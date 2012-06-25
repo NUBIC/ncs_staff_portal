@@ -168,6 +168,50 @@ module NcsNavigator::StaffPortal::Warehouse
           Staff.first.gender_code.should == 2
         end        
       end
+      
+      describe 'of a completely new record with race value is other and race_other is null' do
+        let!(:sp_staff) { Factory(:valid_staff) }
+        let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p|
+          p.staff_race = "-5" 
+          p.staff_race_oth = nil
+          save_wh(p) 
+          Staff.destroy_all
+          Staff.count.should == 0 } }
+          
+        before do
+          importer.import(:staff)
+        end
+        
+        it 'creates a new record' do
+          Staff.count.should == 1
+        end
+        
+        it 'creates a new record with race_other value filled by importer' do
+          Staff.first.race_other.should == "Missing in Error - Other value"   
+        end
+      end
+      
+      describe 'of a completely new record with staff_type value is other and staff_type_other is null' do
+        let!(:sp_staff) { Factory(:valid_staff) }
+        let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p|
+          p.staff_type = "-5" 
+          p.staff_type_oth = nil
+          save_wh(p) 
+          Staff.destroy_all
+          Staff.count.should == 0 } }
+          
+        before do
+          importer.import(:staff)
+        end
+        
+        it 'creates a new record' do
+          Staff.count.should == 1
+        end
+        
+        it 'creates a new record with race_other value filled by importer' do
+          Staff.first.staff_type_other.should == "Missing in Error - Other value"   
+        end
+      end
     end
     
     describe 'conversion for staff_languages' do
@@ -312,6 +356,35 @@ module NcsNavigator::StaffPortal::Warehouse
           StaffLanguage.all.third.lang_other.should == 'Esperanto'         
         end     
       end
+      
+      describe 'of a completely new record with language value is other and lang_other is null' do
+        let(:other_code) { Factory(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "Other", :local_code => -5) }
+        let!(:sp_staff) { Factory(:valid_staff) }
+        let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p| 
+          save_wh(p) } }
+
+        let!(:mdes_record) {
+          Factory(:staff_language, :lang => other_code, :lang_other => 'temp', :staff => sp_staff)
+          enumerator.to_a(:staff_languages_other).first.tap do |a|
+            a.staff_lang_oth = nil
+            save_wh(a)
+            StaffLanguage.destroy_all
+            StaffLanguage.count.should == 0
+          end
+        }
+          
+        before do
+          importer.import(:staff_languages)
+        end
+        
+        it 'creates a new record' do
+          StaffLanguage.count.should == 1
+        end
+        
+        it 'creates a new record with lang_other value filled by importer' do
+          StaffLanguage.first.lang_other.should == "Missing in Error - Other value"
+        end 
+      end
     end
     
     describe 'conversion for staff weekly expense' do
@@ -356,8 +429,8 @@ module NcsNavigator::StaffPortal::Warehouse
             MiscellaneousExpense.first.miles.should == 15.7
           end
           
-          it "records comment inidicating imported to staff portal" do
-            MiscellaneousExpense.first.comment.should == "Imported to staff portal"
+          it "records comment inidicating imported to system" do
+            MiscellaneousExpense.first.comment.should == "Imported to the system"
           end
         end
       end
@@ -396,7 +469,39 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'creates a new record with correct code associations for task type' do
           ManagementTask.first.task_type_code.should == 1
         end
-      end        
+      end  
+      
+      describe 'of a completely new record with task_type value is other and task_type_other value is null' do
+        let(:other_code) { Factory(:ncs_code, :list_name => "STUDY_MNGMNT_TSK_TYPE_CL1", :display_text => "Other", :local_code => -5) }
+        let!(:sp_staff) { Factory(:valid_staff) }
+        let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p| 
+          save_wh(p) } }
+        
+        let!(:sp_expense) { Factory(:staff_weekly_expense, :staff => sp_staff) }
+        let!(:mdes_expense) { enumerator.to_a(:staff_weekly_expenses).first.tap { |p| 
+          save_wh(p) } }
+        let!(:mdes_record) {
+          Factory(:management_task, :task_type => other_code, :task_type_other => 'temp', :staff_weekly_expense => sp_expense)
+          enumerator.to_a(:management_tasks).first.tap do |a|
+            a.mgmt_task_type_oth = nil
+            save_wh(a)
+            ManagementTask.destroy_all
+            ManagementTask.count.should == 0
+          end
+        }
+
+        before do
+          importer.import(:management_tasks)
+        end
+
+        it 'creates a new record' do
+          ManagementTask.count.should == 1
+        end
+        
+        it 'creates a new record with task_type_other value filled by importer' do
+          ManagementTask.first.task_type_other.should == "Missing in Error - Other value"
+        end
+      end      
     end
     
     describe 'conversion for data collection task' do
@@ -432,11 +537,10 @@ module NcsNavigator::StaffPortal::Warehouse
         it 'creates a new record with correct code associations for task type' do
           DataCollectionTask.first.task_type_code.should == 1
         end
-      end        
-    end
-    
-    describe 'conversion for data collection task' do
-      describe 'of a completely new record' do
+      end 
+      
+      describe 'of a completely new record with task_type value is other and task_type_other value is null' do
+        let(:other_code) { Factory(:ncs_code, :list_name => "STUDY_DATA_CLLCTN_TSK_TYPE_CL1", :display_text => "Other", :local_code => -5) }
         let!(:sp_staff) { Factory(:valid_staff) }
         let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p| 
           save_wh(p) } }
@@ -445,8 +549,9 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:mdes_expense) { enumerator.to_a(:staff_weekly_expenses).first.tap { |p| 
           save_wh(p) } }
         let!(:mdes_record) {
-          Factory(:data_collection_task, :staff_weekly_expense => sp_expense, :hours => 5.5)
+          Factory(:data_collection_task, :task_type => other_code, :task_type_other => 'temp', :staff_weekly_expense => sp_expense)
           enumerator.to_a(:data_collection_tasks).first.tap do |a|
+            a.data_coll_task_type_oth = nil
             save_wh(a)
             DataCollectionTask.destroy_all
             DataCollectionTask.count.should == 0
@@ -461,14 +566,10 @@ module NcsNavigator::StaffPortal::Warehouse
           DataCollectionTask.count.should == 1
         end
         
-        it 'creates a new record with correct hours' do
-          DataCollectionTask.first.hours.should == 5.5
-        end 
-        
-        it 'creates a new record with correct code associations for task type' do
-          DataCollectionTask.first.task_type_code.should == 1
+        it 'creates a new record with task_type_other value filled by importer' do
+          DataCollectionTask.first.task_type_other.should == "Missing in Error - Other value"
         end
-      end        
+      end       
     end
     
     describe 'conversion for outreach event' do
@@ -588,6 +689,47 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end
        
+      describe "for other coded value to 'other' and corresponding other value is null" do
+        let(:other_mode_code) { Factory(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "Other", :local_code => -5) }
+        let(:other_type_code) { Factory(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "Other", :local_code => -5) }
+        let(:other_culture_code) { Factory(:ncs_code, :list_name => "CULTURE_CL1", :display_text => "Other", :local_code => -5) }
+        let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
+        let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
+
+        let!(:mdes_record) {
+          Factory(:outreach_event, :outreach_segments => [outreach_segment], 
+                  :mode => other_mode_code, :mode_other => "temp",
+                  :outreach_type => other_type_code, :outreach_type_other => "temp", 
+                  :culture => other_culture_code, :culture_other => "temp")
+          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          enumerator.to_a(:outreach_events).first.tap do |a|
+            a.outreach_event_id = "event_id_1234567890"
+            a.outreach_mode_oth = nil
+            a.outreach_type_oth = nil
+            a.outreach_culture_oth = nil
+            save_wh(a)
+            OutreachEvent.destroy_all
+            OutreachEvent.count.should == 0
+          end
+        }
+
+        before do
+          importer.import(:outreach_events)
+        end
+        
+        it 'creates a new record with mode_other value filled by importer' do
+           OutreachEvent.first.mode_other.should == "Missing in Error - Other value"
+        end
+        
+        it 'creates a new record with outreach_type_other value filled by importer' do
+           OutreachEvent.first.outreach_type_other.should == "Missing in Error - Other value"
+        end
+        
+        it 'creates a new record with culture_other value filled by importer' do
+           OutreachEvent.first.culture_other.should == "Missing in Error - Other value"
+        end
+      end 
+      
       describe 'for tsu_id is set in mdes outreach' do
         let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
         let!(:ncs_tsu) { Factory(:ncs_tsu, :tsu_id => 'tsu_123') }
@@ -619,7 +761,7 @@ module NcsNavigator::StaffPortal::Warehouse
         it "outreach segment tsu has correct tsu_id" do
            OutreachEvent.first.outreach_segments.first.ncs_tsu.tsu_id.should == "tsu_123"
         end
-      end  
+      end 
     end     
     
     describe 'conversion for outreach race' do
@@ -635,9 +777,12 @@ module NcsNavigator::StaffPortal::Warehouse
             save_wh(p) } 
         }
         let!(:mdes_record) {
-          Factory(:outreach_race, :outreach_event => sp_outreach)
+          Factory(:outreach_race, :outreach_event => sp_outreach, 
+          :race => Factory(:ncs_code, :list_name => "RACE_CL3", :display_text => "Other", :local_code => -5),
+          :race_other => "temp")
           enumerator.to_a(:outreach_races).first.tap do |a|
             a.outreach_event_id = mdes_outreach.outreach_event_id
+            a.outreach_race_oth = nil
             save_wh(a)
             OutreachRace.destroy_all
             OutreachRace.count.should == 0
@@ -658,8 +803,13 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach race code' do
-          OutreachRace.first.race_code.should == 1
+          OutreachRace.first.race_code.should == -5
         end 
+        
+        it 'has race_other value filled by importer' do
+           OutreachRace.first.race_other.should == "Missing in Error - Other value"
+        end
+        
         it 'creates a new outreach race record with correct outreach entity associations' do
           OutreachRace.first.outreach_event.id. == sp_outreach.id
         end
@@ -679,9 +829,12 @@ module NcsNavigator::StaffPortal::Warehouse
             save_wh(p) } 
         }
         let!(:mdes_record) {
-          Factory(:outreach_target, :outreach_event => sp_outreach)
+          Factory(:outreach_target, :outreach_event => sp_outreach,
+          :target => Factory(:ncs_code, :list_name => "OUTREACH_TARGET_CL1", :display_text => "Other", :local_code => -5),
+          :target_other => "temp")
           enumerator.to_a(:outreach_targets).first.tap do |a|
             a.outreach_event_id = mdes_outreach.outreach_event_id
+            a.outreach_target_ms_oth = nil
             save_wh(a)
             OutreachTarget.destroy_all
             OutreachTarget.count.should == 0
@@ -702,8 +855,13 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach target code' do
-          OutreachTarget.first.target_code.should == 10
+          OutreachTarget.first.target_code.should == -5
         end 
+        
+        it 'has target_other value filled by importer' do
+           OutreachTarget.first.target_other.should == "Missing in Error - Other value"
+        end
+        
         it 'creates a new outreach target record with correct outreach entity associations' do
           OutreachTarget.first.outreach_event.id. == sp_outreach.id
         end
@@ -715,7 +873,7 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
         let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
-        let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
+        let!(:sp_outreach) { Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890") }
         let!(:mdes_outreach) {
           save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
@@ -723,9 +881,13 @@ module NcsNavigator::StaffPortal::Warehouse
             save_wh(p) } 
         }
         let!(:mdes_record) {
-          Factory(:outreach_evaluation, :outreach_event => sp_outreach)
+          Factory(:outreach_evaluation, :outreach_event => sp_outreach,
+          :evaluation => Factory(:ncs_code, :list_name => "OUTREACH_EVAL_CL1", :display_text => "Other", :local_code => -5),
+          :evaluation_other => "temp"
+          )
           enumerator.to_a(:outreach_evaluations).first.tap do |a|
             a.outreach_event_id = mdes_outreach.outreach_event_id
+            a.outreach_eval_oth = nil
             save_wh(a)
             OutreachEvaluation.destroy_all
             OutreachEvaluation.count.should == 0
@@ -746,8 +908,13 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach evaluation code' do
-          OutreachEvaluation.first.evaluation_code.should == 1
+          OutreachEvaluation.first.evaluation_code.should == -5
         end 
+        
+        it 'has evaluation_other value filled by importer' do
+           OutreachEvaluation.first.evaluation_other.should == "Missing in Error - Other value"
+        end
+        
         it 'creates a new outreach evaluation record with correct outreach entity associations' do
           OutreachEvaluation.first.outreach_event.id.should == sp_outreach.id
         end
@@ -759,7 +926,7 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
         let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
         
-        let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
+        let!(:sp_outreach) { Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890") }
         let!(:mdes_outreach) {
           save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
@@ -819,8 +986,7 @@ module NcsNavigator::StaffPortal::Warehouse
         }
 
         let!(:mdes_record) {
-          Factory(:outreach_language,
-            :outreach_event => sp_outreach)
+          Factory(:outreach_language, :outreach_event => sp_outreach)
           enumerator.to_a(:outreach_languages).first.tap do |a|
             a.outreach_event_id = mdes_outreach.outreach_event_id
             save_wh(a)

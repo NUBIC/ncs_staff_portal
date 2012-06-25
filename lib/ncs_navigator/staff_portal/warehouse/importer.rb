@@ -60,6 +60,11 @@ module NcsNavigator::StaffPortal::Warehouse
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
               staff_portal_record.send("zipcode=", mdes_record.staff_zip.to_i)
+              [
+                ["staff_type_code", "staff_type_other"], ["race_code", "race_other"]
+              ].each do |code_attribute_name, other_attribute_name|
+                staff_portal_record = apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
+              end
             when :staff_languages
               mdes_value = mdes_record.send("staff_lang_oth")
               if mdes_value && mdes_value =~ /,/
@@ -75,6 +80,7 @@ module NcsNavigator::StaffPortal::Warehouse
                   count += 1
                 end
               end
+              staff_portal_record = apply_other_value(staff_portal_record, "lang_code", "lang_other")
             when :staff_weekly_expenses 
               miscellaneous_expense = MiscellaneousExpense.new
               [
@@ -82,12 +88,13 @@ module NcsNavigator::StaffPortal::Warehouse
               ].each do |mdes_variable, staff_portal_attribute|
                 miscellaneous_expense.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
               end
-              miscellaneous_expense.send("comment=", "Imported to staff portal")
+              miscellaneous_expense.send("comment=", "Imported to the system")
               save_staff_portal_record_with_mode(miscellaneous_expense, staff_portal_model)
             when :management_tasks, :data_collection_tasks
               mdes_variable = mdes_producer.name == :management_tasks ? "mgmt_task_hrs" : "data_coll_tasks_hrs"
               staff_portal_record.send("hours=", mdes_record.send(mdes_variable))
               staff_portal_record.send("task_date=", staff_portal_record.staff_weekly_expense.week_start_date)
+              staff_portal_record = apply_other_value(staff_portal_record, "task_type_code", "task_type_other")
             when :outreach_events 
               [
                 ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"], 
@@ -98,17 +105,31 @@ module NcsNavigator::StaffPortal::Warehouse
                 staff_portal_record.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
               end
               staff_portal_record.send("import=", "true")
-              staff_portal_record.send("name=", "Imported to staff portal")
+              staff_portal_record.send("name=", "Imported to the system")
+              [
+                ["mode_code", "mode_other"], ["outreach_type_code", "outreach_type_other"], ["culture_code", "culture_other"]
+              ].each do |code_attribute_name, other_attribute_name|
+                staff_portal_record = apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
+              end
+              
+            # :evaluation, :other_entry => :evaluation_other
+            # :language, :other_entry => :language_other
+            # :entry => :race, :other_entry => :race_other
+            # :entry => :target, :other_entry => :target_other
             when :outreach_languages
               outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
               staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
               staff_portal_record.send("source_id=", mdes_record.send("outreach_lang2_id"))
+              staff_portal_record = apply_other_value(staff_portal_record, "language_code", "language_other")
             when :outreach_races
               staff_portal_record.send("source_id=", mdes_record.send("outreach_race_id"))
+              staff_portal_record = apply_other_value(staff_portal_record, "race_code", "race_other")
             when :outreach_targets
               staff_portal_record.send("source_id=", mdes_record.send("outreach_target_id"))
+              staff_portal_record = apply_other_value(staff_portal_record, "target_code", "target_other")
             when :outreach_evaluations
               staff_portal_record.send("source_id=", mdes_record.send("outreach_event_eval_id"))
+              staff_portal_record = apply_other_value(staff_portal_record, "evaluation_code", "evaluation_other")
             when :outreach_staff_members
               staff_portal_record.send("source_id=", mdes_record.send("outreach_event_staff_id"))
             end
@@ -217,7 +238,6 @@ module NcsNavigator::StaffPortal::Warehouse
       @column_maps ||= {}
     end
 
-
     def staff_portal_model_for_table(name)
       name = name.to_s
       @staff_portal_models_indexed_by_table[name] ||= Object.const_get(name.singularize.camelize)
@@ -252,6 +272,13 @@ module NcsNavigator::StaffPortal::Warehouse
 
     def ncs_code_lists
       @ncs_code_lists ||= {}
+    end
+    
+    def apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
+      if staff_portal_record.send("#{code_attribute_name}") == -5 && staff_portal_record.send("#{other_attribute_name}").blank?
+        staff_portal_record.send("#{other_attribute_name}=", "Missing in Error - Other value")
+      end
+      staff_portal_record
     end
   end
 end
