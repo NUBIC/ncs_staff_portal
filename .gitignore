@@ -9,5 +9,3 @@ vendor/cache
 .idea
 public/images/config
 reports
-lib/aker/static_auth.yml
-
