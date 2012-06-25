@@ -101,8 +101,7 @@ end
 after 'deploy:update_code', 'deploy:cleanup'
 
 # after deploying symlink, aggressively set permissions, copy images to current image config location.
-after 'deploy:symlink', 'deploy:permissions', 'config:images', 'config:static_authority',
-  'deploy:setup_import_directories'
+after 'deploy:symlink', 'deploy:permissions', 'config:images', 'deploy:setup_import_directories'
 
 # Database
 namespace :db do
@@ -116,11 +115,6 @@ namespace :config do
   desc "Copy configurable images to /public/images/config folder"
   task :images,  :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
-  end
-
-  desc "Create the static auth file for the application user"
-  task :static_authority, :roles => :app do
-    run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} static_user:create"
   end
 end
 
