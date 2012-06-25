@@ -51,7 +51,11 @@ NcsStaffPortal::Application.configure do
     Aker.configure do
       staff_portal = Aker::Authorities::StaffPortal.new
       if File.exists?("#{Rails.root}/lib/aker/static_auth.yml") 
-        authorities :cas, staff_portal, Aker::Authorities::Static.from_file("#{Rails.root}/lib/aker/static_auth.yml") 
+        psc_user_password = NcsNavigator.configuration.staff_portal['psc_user_password']
+        raise "Please specify a psc user password (see README)." unless psc_user_password
+        static = Aker::Authorities::Static.from_file("#{Rails.root}/lib/aker/static_auth.yml")
+        static.valid_credentials!(:user, "psc_application", psc_user_password)
+        authorities :cas, staff_portal, static
       else
         authorities :cas, staff_portal
       end

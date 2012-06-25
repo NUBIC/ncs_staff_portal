@@ -1,0 +1,10 @@
+users:
+  psc_application: 
+    portals: 
+    - NCSNavigator: 
+      - Staff Supervisor
+      - User Administrator
+groups: 
+  NCSNavigator:
+    - User Administrator
+    - Staff Supervisor
