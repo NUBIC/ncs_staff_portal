@@ -156,7 +156,7 @@ class StaffController < SecuredController
         format.xml  { head :ok }
       else
         format.html { 
-          if params[:return_path] == "users_index_path"
+          if params[:return_path] == "users_path"
             @user = @staff
             render :action => "edit_user", :location => @user
           else
