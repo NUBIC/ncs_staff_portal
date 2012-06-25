@@ -204,13 +204,6 @@ ActiveRecord::Schema.define(:version => 20120608154348) do
 
   add_index "outreach_targets", ["outreach_target_id"], :name => "uq_outreach_targets_outreach_target_id", :unique => true
 
-  create_table "outreach_tsus", :force => true do |t|
-    t.integer  "outreach_event_id"
-    t.integer  "ncs_tsu_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "roles", :force => true do |t|
     t.string "name", :null => false
   end
@@ -287,10 +280,10 @@ ActiveRecord::Schema.define(:version => 20120608154348) do
     t.integer  "staff_id"
     t.date     "week_start_date",                                             :null => false
     t.decimal  "rate",                          :precision => 5, :scale => 2
+    t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "weekly_exp_id",   :limit => 36,                               :null => false
-    t.text     "comment"
   end
 
   add_index "staff_weekly_expenses", ["weekly_exp_id"], :name => "uq_staff_weekly_expenses_weekly_exp_id", :unique => true
