@@ -12,7 +12,7 @@ module ApplicationHelper
     elsif cert_date == NcsCode.unknown_date
       haml_tag :td,"Don't Know"
     elsif !cert_date.blank?
-      haml_tag :td,cert_date.to_date.strftime("%m/%d/%Y") 
+      haml_tag :td,cert_date 
     else
       haml_tag :td
     end
