@@ -8,7 +8,7 @@ class OutreachEventsController < SecuredController
     params[:page] ||= 1
     # @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
     events = OutreachEvent.search_for(params[:search]).all
-    @outreach_events = (events.select(&:event_date).sort_by(&:event_date).reverse + events.reject(&:event_date)).paginate(:page => params[:page], :per_page => 20)
+    @outreach_events = (events.select(&:event_date_date).sort_by(&:event_date_date).reverse + events.reject(&:event_date_date)).paginate(:page => params[:page], :per_page => 20)
     @can_delete = false
     if permit?(Role::STAFF_SUPERVISOR)
       @can_delete = true
@@ -37,7 +37,7 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events/1/edit
   def edit
     @outreach_event = OutreachEvent.find(params[:id])
-    add_breadcrumb "Edit outreach event[#{@outreach_event.formatted_event_date} - #{@outreach_event.name_text}]", edit_outreach_event_path(@outreach_event)
+    add_breadcrumb "Edit outreach event[#{@outreach_event.event_date} - #{@outreach_event.name_text}]", edit_outreach_event_path(@outreach_event)
   end
 
   # POST /outreach_events

@@ -86,6 +86,7 @@ FactoryGirl.define do
     event.outreach_evaluations {|a| [a.association(:outreach_evaluation)]}
     event.outreach_targets {|a| [a.association(:outreach_target)]}
     event.outreach_segments {|a| [a.association(:outreach_segment)]}
+    event.import "true"
   end
 
   factory :outreach_staff_member do |member|

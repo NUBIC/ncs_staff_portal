@@ -209,7 +209,7 @@ module NcsNavigator::StaffPortal::Warehouse
             WHEN source_id IS NOT NULL THEN source_id
             ELSE 'staff_portal-' || oe.id || '-' || ns.ssu_id
           END AS outreach_event_id,
-          to_char(oe.event_date, 'YYYY-MM-DD') AS event_date,
+          oe.event_date,
           oe.outreach_type_code,
           oe.mode_code,
           oe.mode_other,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608154348) do
+ActiveRecord::Schema.define(:version => 20120626154635) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(:version => 20120608154348) do
   add_index "outreach_evaluations", ["outreach_event_eval_id"], :name => "uq_outreach_evaluations_outreach_event_eval_id", :unique => true
 
   create_table "outreach_events", :force => true do |t|
-    t.date     "event_date"
     t.integer  "mode_code",                            :null => false
     t.string   "mode_other"
     t.integer  "outreach_type_code",                   :null => false
@@ -136,6 +135,8 @@ ActiveRecord::Schema.define(:version => 20120608154348) do
     t.integer  "created_by"
     t.string   "outreach_event_id",      :limit => 36, :null => false
     t.string   "source_id",              :limit => 36
+    t.string   "event_date",             :limit => 10
+    t.date     "event_date_date"
   end
 
   add_index "outreach_events", ["outreach_event_id"], :name => "uq_outreach_events_outreach_event_id", :unique => true

@@ -3,7 +3,6 @@
 # Table name: outreach_events
 #
 #  id                     :integer         not null, primary key
-#  event_date             :date
 #  mode_code              :integer         not null
 #  mode_other             :string(255)
 #  outreach_type_code     :integer         not null
@@ -25,6 +24,8 @@
 #  created_by             :integer
 #  outreach_event_id      :string(36)      not null
 #  source_id              :string(36)
+#  event_date             :string(10)
+#  event_date_date        :date
 #
 
 class OutreachEvent < ActiveRecord::Base
@@ -62,14 +63,20 @@ class OutreachEvent < ActiveRecord::Base
   validates_presence_of :outreach_evaluations, :message => "can't be blank. Please add one or more evaluations", :unless => :imported_mode
   validates_presence_of :outreach_targets, :message => "can't be blank. Please add one or more targets", :unless => :imported_mode
   validates_presence_of :name, :mode, :outreach_type, :tailored, :evaluation_result 
-  validates_date :event_date, :on_or_before => :today, :allow_blank => true
+
   validates_with OtherEntryValidator, :entry => :mode, :other_entry => :mode_other
   validates_with OtherEntryValidator, :entry => :outreach_type, :other_entry => :outreach_type_other
   validates_with OtherEntryValidator, :entry => :culture, :other_entry => :culture_other
-   
+  validate :valid_event_date 
   validate :has_segments, :unless => :imported_mode
+  before_save :convert_date
+  
+  def valid_event_date
+    validates_date :event_date, :on_or_before => :today, :allow_blank => true if only_date
+  end
+  
   def has_segments
-    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.outreach_segments.blank?
+    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_ssus.blank?
   end
    
   scoped_search :on => [:name, :event_date]
@@ -81,15 +88,7 @@ class OutreachEvent < ActiveRecord::Base
   def imported_mode 
     import == "true" ? true : false
   end
-   
-  def formatted_event_date
-    event_date.nil? ? "" : event_date.to_s
-  end
 
-  def formatted_event_date=(event_date)
-    self.event_date = event_date
-  end
-   
   def mode_text
     self.mode.display_text == "Other" ? self.mode_other : self.mode.display_text
   end
@@ -105,5 +104,18 @@ class OutreachEvent < ActiveRecord::Base
   def name_text
     self.name.blank? ? nil : self.name
   end
+  
+  private
+   def only_date
+     begin
+       Date.parse(event_date)
+       true
+     rescue
+       false
+     end
+   end
    
+   def convert_date
+     self.event_date_date = only_date ? event_date : nil
+   end
 end

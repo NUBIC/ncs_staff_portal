@@ -16,8 +16,8 @@
         %table#event-list-tbl
           - @outreach_events.each do |outreach_event|
             %tr
-              %td= link_to outreach_event.formatted_event_date, edit_outreach_event_path(outreach_event)
-              - if outreach_event.formatted_event_date.blank?
+              %td= link_to outreach_event.event_date, edit_outreach_event_path(outreach_event)
+              - if outreach_event.event_date.blank?
                 %td= link_to outreach_event.name_text, edit_outreach_event_path(outreach_event)
               - else
                 %td= outreach_event.name_text
