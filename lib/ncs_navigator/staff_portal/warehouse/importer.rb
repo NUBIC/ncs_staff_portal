@@ -111,11 +111,6 @@ module NcsNavigator::StaffPortal::Warehouse
               ].each do |code_attribute_name, other_attribute_name|
                 staff_portal_record = apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
               end
-              
-            # :evaluation, :other_entry => :evaluation_other
-            # :language, :other_entry => :language_other
-            # :entry => :race, :other_entry => :race_other
-            # :entry => :target, :other_entry => :target_other
             when :outreach_languages
               outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
               staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
