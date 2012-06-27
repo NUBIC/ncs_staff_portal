@@ -214,4 +214,8 @@ class Staff < ActiveRecord::Base
   def display_username
     username ? username : staff_id
   end
+  
+  def display_name
+    name.blank? ? staff_id : name
+  end
 end

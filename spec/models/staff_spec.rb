@@ -128,7 +128,16 @@ describe Staff do
     it 'displays staff_id if username is null' do
       FactoryGirl.create(:staff, :staff_id => "staff_id_123").display_username.should == "staff_id_123"
     end
-    
+  end
+  
+  describe 'display_name' do
+    it 'displays name if name is not blank' do
+      FactoryGirl.build(:staff).display_name.should == "FName LName"
+    end
+
+    it 'displays staff_id if name is blank' do
+      FactoryGirl.create(:staff, :first_name => nil, :last_name => nil, :staff_id => "staff_id_123").display_name.should == "staff_id_123"
+    end
   end
 
   describe "weekly_task_reminder" do
