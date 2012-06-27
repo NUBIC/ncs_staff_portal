@@ -8,28 +8,24 @@
   - @supervisorEmployeesTemplate = generate_nested_attributes_template(f, :supervisor_employees, 'staff/supervisor_employees')
   = hidden_field_tag "return_path", "users_path"
   = f.hidden_field :validate_update, :value => false
-  = f.hidden_field :validate_create, :value => true
   .block
     .title
       General Information
     .row
       = f.label :first_name
-      %em *
       = f.text_field :first_name
     .row
       = f.label :last_name
-      %em *
       = f.text_field :last_name
     .row
       = f.label :email
-      %em *
       = f.text_field :email
     .row
       = f.label :username, NcsNavigator.configuration.study_center_username
-      %em *
       = f.text_field :username
     .row
       = f.label :staff_id, "Staff ID"
+      %em *
       = f.text_field :staff_id, {:class => "staff_id", :id => "staff_id", :readonly => true}
       = link_to "Edit", "#", :class => "edit_link icon_link", :id => "edit_staff_id"
       = link_to "Save", "#", :class => "save_link icon_link", :id => "save_staff_id"

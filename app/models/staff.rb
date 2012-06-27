@@ -37,12 +37,10 @@ class Staff < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
   nilify_blanks
   self.include_root_in_json = false
-  attr_accessor :validate_update, :validate_create
-
-  validates_presence_of :first_name, :last_name, :username, :study_center, :if => :create_presence_required?
+  attr_accessor :validate_update
   validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
-  validates :email, :presence => true, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }, :if => :create_presence_required?
+  validates :email, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :message => "is required when user have #{NcsNavigator.configuration.study_center_username}." }, :if => :email_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   validates_date :ncs_inactive_date, :allow_blank => true
@@ -71,10 +69,15 @@ class Staff < ActiveRecord::Base
   ncs_coded_attribute :experience, 'EXPERIENCE_LEVEL_CL1'
   ncs_coded_attribute :lang, 'LANGUAGE_CL2'
   
-  validate :has_roles, :if => :create_presence_required?
+  validate :has_roles
   def has_roles
-    errors.add(:roles, "can not be empty. User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank?
+    errors.add(:roles, "can not be empty when user have #{NcsNavigator.configuration.study_center_username}.User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank? && !self.username.blank?
   end
+  
+  def email_required?
+    username.blank? ? false : true
+  end
+  
   before_save :calculate_hourly_rate, :update_employees
 
   acts_as_mdes_record :public_id => :staff_id
@@ -163,13 +166,8 @@ class Staff < ActiveRecord::Base
     (ncs_inactive_date.nil?) || (ncs_inactive_date != nil && ncs_inactive_date >= Time.now.to_date) ? true : false
   end
 
-
   def update_presence_required?
     validate_update == "false" ? false : true
-  end
-
-  def create_presence_required?
-    validate_create == "true" ? true : false
   end
 
   def name

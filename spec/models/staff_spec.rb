@@ -122,11 +122,11 @@ describe Staff do
   
   describe 'display_username' do
     it 'displays username if username is set' do
-      FactoryGirl.create(:staff, :username => "test123").display_username.should == "test123"
+      FactoryGirl.build(:staff, :username => "test123").display_username.should == "test123"
     end
 
     it 'displays staff_id if username is null' do
-      FactoryGirl.create(:staff, :username => nil, :staff_id => "staff_id_123").display_username.should == "staff_id_123"
+      FactoryGirl.create(:staff, :staff_id => "staff_id_123").display_username.should == "staff_id_123"
     end
     
   end
@@ -226,14 +226,13 @@ describe Staff do
     end
 
     describe "presence" do
-      it "first_name, last_name, email, studycenter and alteast one role is required if validate_create is true" do
-        staff = FactoryGirl.build(:staff, :username => "test123", :first_name => nil, :last_name => nil, :email => nil , :study_center => nil, :validate_create => "true")
+      it "email and alteast one role is required when user have username assigned" do
+        staff = FactoryGirl.build(:staff, :username => "test123", :email => nil)
         staff.should_not be_valid
-        staff.should have(1).error_on(:first_name)
-        staff.should have(1).error_on(:last_name)
-        staff.should have(1).error_on(:study_center)
+        staff.should have(1).error_on(:email)
         staff.should have(1).error_on(:roles)
-        staff.errors[:roles].should == ["can not be empty. User must have atleast one role assigned. Please select one or more roles."]
+        staff.errors[:email].should == ["is required when user have Username."]
+        staff.errors[:roles].should == ["can not be empty when user have Username.User must have atleast one role assigned. Please select one or more roles."]
       end
 
       it "staff_type, birth_date, gender, race, ethnicity, zipcode, subcontractor, experience is required if validate_update is not set" do
@@ -557,7 +556,7 @@ describe Staff do
         @staff.as_json["languages"].count.should == 0
       end
 
-      it "should contain languages name for assigned roles" do
+      it "should contain languages name" do
         @staff.staff_languages << FactoryGirl.create(:staff_language)
         json_languages = @staff.as_json["languages"]
         json_languages.count.should == 1
@@ -639,7 +638,7 @@ describe Staff do
       end
       
       it "for multiple roles" do
-        staff1 = FactoryGirl.create(:valid_staff, :username => "1234")
+        staff1 = FactoryGirl.create(:valid_staff)
         staff1.roles << @user_admin
         staff1.roles << @staff_supervisor
         search_staff = Staff.find_by_role([Role::USER_ADMINISTRATOR, Role::STAFF_SUPERVISOR])
