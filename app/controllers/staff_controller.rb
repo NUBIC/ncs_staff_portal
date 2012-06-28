@@ -20,7 +20,7 @@ class StaffController < SecuredController
       else
         @staff = @current_staff.visible_employees
       end
-      @staff_list = (@staff.select(&:username).sort_by(&:username) + @staff.reject(&:username)).select { |s| s.is_active }
+      @staff_list = @staff.select(&:username).sort_by(&:username) + @staff.reject(&:username)
       respond_to do |format|
         format.html { @staff_list = @staff_list.paginate(:page => params[:page], :per_page => 20)}
         format.xml  { render :xml => @staff_list }
