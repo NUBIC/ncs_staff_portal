@@ -166,7 +166,19 @@ module NcsNavigator::StaffPortal::Warehouse
         
         it 'creates a new record with correct code associations' do
           Staff.first.gender_code.should == 2
-        end        
+        end 
+        
+        it 'makes staff as external user to the application by default' do
+          Staff.first.external.should == true
+        end 
+        
+        it 'makes staff notify (used for weekly reminder e-mail) to set false by default' do
+          Staff.first.notify.should == false
+        end   
+        
+        it 'set staff inactive date as of imported date which might be always today date' do
+          Staff.first.ncs_inactive_date.should == Date.today
+        end   
       end
       
       describe 'of a completely new record with race value is other and race_other is null' do

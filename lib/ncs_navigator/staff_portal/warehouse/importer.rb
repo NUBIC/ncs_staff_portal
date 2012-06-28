@@ -60,6 +60,9 @@ module NcsNavigator::StaffPortal::Warehouse
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
               staff_portal_record.send("zipcode=", mdes_record.staff_zip.to_i)
+              staff_portal_record.send("external=", true)
+              staff_portal_record.send("notify=", false)
+              staff_portal_record.send("ncs_inactive_date=", Date.today)
               [
                 ["staff_type_code", "staff_type_other"], ["race_code", "race_other"]
               ].each do |code_attribute_name, other_attribute_name|
@@ -275,5 +278,7 @@ module NcsNavigator::StaffPortal::Warehouse
       end
       staff_portal_record
     end
+    
+    def map_staff
   end
 end
