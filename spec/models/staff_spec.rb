@@ -605,13 +605,30 @@ describe Staff do
         @staff.roles << @user_admin
         @staff.belongs_to_management_group.should == true
       end
+      
+      it "returns true if staff has any management_tasks" do
+        expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
+        expense.management_tasks << FactoryGirl.create(:management_task, :staff_weekly_expense => expense)
+        expense.save!
+        @staff.belongs_to_management_group.should == true
+      end 
+      
+      it "returns true if staff has any role from management_group and has any management_tasks" do
+        @staff.roles << @user_admin
+        expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
+        expense.management_tasks << FactoryGirl.create(:management_task, :staff_weekly_expense => expense)
+        expense.save!
+        @staff.belongs_to_management_group.should == true
+      end     
 
-      it "returns false if staff has no role" do
+      it "returns false if staff has no role and has no management_tasks" do
+        @staff.management_tasks.empty?.should == true
         @staff.belongs_to_management_group.should == false
       end
 
-      it "returns false if staff has no any role from management_group" do
+      it "returns false if staff has no any role from management_group and has no management_tasks" do
         @staff.roles << @data_collection_group
+        @staff.management_tasks.empty?.should == true
         @staff.belongs_to_management_group.should == false
       end
     end
@@ -621,13 +638,30 @@ describe Staff do
         @staff.roles << @data_collection_group
         @staff.belongs_to_data_collection_group.should == true
       end
+      
+      it "returns true if staff has any data_collection_tasks" do
+        expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
+        expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :staff_weekly_expense => expense)
+        expense.save!
+        @staff.belongs_to_data_collection_group.should == true
+      end
+      
+      it "returns true if staff has any role from data_collection_group and has any data_collection_tasks" do
+        @staff.roles << @data_collection_group
+        expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
+        expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :staff_weekly_expense => expense)
+        expense.save!
+        @staff.belongs_to_data_collection_group.should == true
+      end
 
-      it "returns false if staff has no role" do
+      it "returns false if staff has no role and has no data_collection_tasks" do
+        @staff.data_collection_tasks.empty?.should == true
         @staff.belongs_to_data_collection_group.should == false
       end
 
-      it "returns false if staff has no any role from data_collection_group" do
+      it "returns false if staff has no any role from data_collection_group and has no data_collection_tasks" do
         @staff.roles << @user_admin
+        @staff.data_collection_tasks.empty?.should == true
         @staff.belongs_to_data_collection_group.should == false
       end
     end

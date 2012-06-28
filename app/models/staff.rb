@@ -151,11 +151,11 @@ class Staff < ActiveRecord::Base
   end
 
   def belongs_to_management_group
-    Role.management_group.any? { |role| self.has_role(role) }
+    Role.management_group.any? { |role| self.has_role(role) } || !self.management_tasks.empty?
   end
 
   def belongs_to_data_collection_group
-    Role.data_collection_group.any? { |role| self.has_role(role) }
+    Role.data_collection_group.any? { |role| self.has_role(role) } || !self.data_collection_tasks.empty?
   end
 
   def has_role(role_name)
