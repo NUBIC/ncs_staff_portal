@@ -17,7 +17,6 @@ FactoryGirl.define do
   factory :valid_staff, :class => Staff do |s|
     s.first_name 'Josephine'
     s.last_name  'Hull'
-    s.email      'jh@example.net'
     s.study_center 2900092
     s.birth_date Date.new(1977, 1, 3)
     s.staff_type    { |a| a.association(:ncs_code, :list_name => 'STUDY_STAFF_TYPE_CL1', :local_code => 12, :display_text => 'Telephone Center Staff') }

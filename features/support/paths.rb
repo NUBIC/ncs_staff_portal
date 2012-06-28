@@ -20,6 +20,9 @@ module NavigationHelpers
     when /the default page/
       dashboard_path
 
+    when /the staff information page for staff without role/
+      staff_path(existing_staff_without_role($1))
+      
     when /^a data collection task entry page for (\S+?)$/
       new_staff_data_collection_task_path(existing_staff($1))
 
@@ -57,9 +60,13 @@ module NavigationHelpers
   end
 
   def existing_staff(username)
-    Staff.find_by_username(username).tap { |s| s.should_not be_nil }
+    status = Staff.find_by_username(username).tap { |s| s.should_not be_nil }
   end
-  private :existing_staff
+  
+  def existing_staff_without_role(name)
+    status = Staff.find_by_first_name(name).tap { |s| s.should_not be_nil }
+  end
+  private :existing_staff, :existing_staff_without_role
 end
 
 World(NavigationHelpers)

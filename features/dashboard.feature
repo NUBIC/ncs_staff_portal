@@ -1,7 +1,7 @@
 Feature: Dashboard
 
 Scenario Outline: Default page for various roles
-  Given staff with username zw108
+  Given staff with name zw108
     And staff member zw108 has role "<role>"
    When I go to the default page
     And I log in as "zw108"
@@ -21,8 +21,8 @@ Scenario Outline: Default page for various roles
     | Data Reader                   | the staff information page        |
 
 Scenario: Default page for a staff member with no roles
-  Given staff with username zw108
+  Given staff with name zw108
     And staff member zw108 has no roles
    When I go to the default page
     And I log in as "zw108"
-   Then I should be on the staff information page for zw108
+   Then I should be on the default page for staff without role
