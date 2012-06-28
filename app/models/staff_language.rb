@@ -14,7 +14,7 @@
 class StaffLanguage < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
   belongs_to :staff
-  # validates_presence_of :lang
+  validates_presence_of :lang
   ncs_coded_attribute :lang, 'LANGUAGE_CL2'
 
   acts_as_mdes_record :public_id => :staff_language_id
