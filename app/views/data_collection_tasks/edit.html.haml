@@ -3,7 +3,7 @@
   .section_gap
   .section
     .section_heading
-      Edit data collection task[#{@data_collection_task.task_date} - #{@data_collection_task.task_type_text}] for #{@staff.name}
+      Edit data collection task[#{@data_collection_task.task_date} - #{@data_collection_task.task_type_text}] for #{@staff.display_name}
     = render 'data_collection_task'
   .section_gap
   = render 'data_collection_tasks'

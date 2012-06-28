@@ -1,7 +1,7 @@
 - if @staff.external?
   %p.warning
     %em Warning: 
-    #{@staff.name} is an external user and should not be using the application for time and expense entry.
+    #{@staff.display_name} is an external user and should not be using the application for time and expense entry.
 = form_for [@staff, @data_collection_task] do |f|
   -if @data_collection_task.errors.any?
     #error_explanation
@@ -72,7 +72,7 @@
   - if @staff.staff_type_code.blank?
     %p.warning
       %em Warning: 
-      #{@staff.name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
       record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
   
   :javascript

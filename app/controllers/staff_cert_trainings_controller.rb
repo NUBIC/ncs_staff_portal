@@ -85,7 +85,7 @@ class StaffCertTrainingsController < SecuredController
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
-      add_breadcrumb "#{@staff.name}", staff_path(@staff)
+      add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
     end
   end
 end

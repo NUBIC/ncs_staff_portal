@@ -17,7 +17,7 @@
             - @staff_weekly_expenses.each do |staff_weekly_expense|
               %tr
                 %td= link_to staff_weekly_expense.week_start_date, staff_weekly_expense.staff
-                %td= staff_weekly_expense.staff.name
+                %td= staff_weekly_expense.staff.display_name
                 %td= staff_weekly_expense.total_hours
                 %td= staff_weekly_expense.total_miles
                 %td= staff_weekly_expense.total_expenses

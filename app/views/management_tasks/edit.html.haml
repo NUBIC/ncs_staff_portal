@@ -3,7 +3,7 @@
   .section_gap
   .section
     .section_heading
-      Edit management task [#{@management_task.task_date} - #{@management_task.task_type_text}] for #{@staff.name}
+      Edit management task [#{@management_task.task_date} - #{@management_task.task_type_text}] for #{@staff.display_name}
     = render 'management_task'
   .section_gap
   = render 'management_tasks'
