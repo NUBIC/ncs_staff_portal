@@ -10,7 +10,6 @@ FactoryGirl.define do
   factory :staff do |s|
     s.first_name "FName"
     s.last_name "LName"
-    s.username {Factory.next(:user_name)}
     s.email {Factory.next(:email)}
     s.study_center 123456
   end
@@ -18,7 +17,6 @@ FactoryGirl.define do
   factory :valid_staff, :class => Staff do |s|
     s.first_name 'Josephine'
     s.last_name  'Hull'
-    s.username   'jh540'
     s.email      'jh@example.net'
     s.study_center 2900092
     s.birth_date Date.new(1977, 1, 3)
