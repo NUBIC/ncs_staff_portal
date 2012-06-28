@@ -139,6 +139,10 @@ body.ncs {
     background-color: white;
     padding: 20px 40px;
     margin: 1em auto;
+    
+    select {
+      width: 20em;
+    }
 
     #header, #footer {
       @include column($blueprint-grid-columns);

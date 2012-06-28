@@ -619,6 +619,10 @@ body.ncs #container {
   margin: 1em auto;
 }
 /* line 143, ../../../app/stylesheets/screen.scss */
+body.ncs #container select {
+  width: 20em;
+}
+/* line 147, ../../../app/stylesheets/screen.scss */
 body.ncs #container #header, body.ncs #container #footer {
   display: inline;
   float: left;
@@ -629,7 +633,7 @@ body.ncs #container #header, body.ncs #container #footer {
 * html body.ncs #container #header, * html body.ncs #container #footer {
   overflow-x: hidden;
 }
-/* line 147, ../../../app/stylesheets/screen.scss */
+/* line 151, ../../../app/stylesheets/screen.scss */
 body.ncs #container #header {
   background-color: #ccd3e8;
   border-radius: 1em;
@@ -639,28 +643,28 @@ body.ncs #container #header {
   padding-bottom: 0.5em;
   border: 2px solid #520063;
 }
-/* line 154, ../../../app/stylesheets/screen.scss */
+/* line 158, ../../../app/stylesheets/screen.scss */
 body.ncs #container #header #current_user {
   float: right;
   padding-left: 48.75px;
   padding-right: 48.75px;
 }
-/* line 160, ../../../app/stylesheets/screen.scss */
+/* line 164, ../../../app/stylesheets/screen.scss */
 body.ncs #container #header #app_name {
   padding-left: 48.75px;
   padding-right: 48.75px;
   font-size: 2.0em;
 }
-/* line 167, ../../../app/stylesheets/screen.scss */
+/* line 171, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer {
   background-color: transparent;
   font-size: 1.1em;
 }
-/* line 171, ../../../app/stylesheets/screen.scss */
+/* line 175, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer div {
   min-height: 1px;
 }
-/* line 175, ../../../app/stylesheets/screen.scss */
+/* line 179, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer .footer_logo_front {
   display: inline;
   float: left;
@@ -671,7 +675,7 @@ body.ncs #container #footer .footer_logo_front {
 * html body.ncs #container #footer .footer_logo_front {
   overflow-x: hidden;
 }
-/* line 179, ../../../app/stylesheets/screen.scss */
+/* line 183, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer .contact_info {
   margin-top: 1em;
   display: inline;
@@ -684,7 +688,7 @@ body.ncs #container #footer .contact_info {
 * html body.ncs #container #footer .contact_info {
   overflow-x: hidden;
 }
-/* line 185, ../../../app/stylesheets/screen.scss */
+/* line 189, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer .footer_logo_back {
   margin-top: 1em;
   display: inline;
@@ -696,7 +700,7 @@ body.ncs #container #footer .footer_logo_back {
 * html body.ncs #container #footer .footer_logo_back {
   overflow-x: hidden;
 }
-/* line 190, ../../../app/stylesheets/screen.scss */
+/* line 194, ../../../app/stylesheets/screen.scss */
 body.ncs #container #footer .app_version {
   color: #999;
   display: inline;
@@ -709,7 +713,7 @@ body.ncs #container #footer .app_version {
 * html body.ncs #container #footer .app_version {
   overflow-x: hidden;
 }
-/* line 198, ../../../app/stylesheets/screen.scss */
+/* line 202, ../../../app/stylesheets/screen.scss */
 body.ncs #main {
   padding-bottom: 4em;
   display: inline;
@@ -728,7 +732,7 @@ body.ncs #main {
 * html body.ncs #main {
   overflow-x: hidden;
 }
-/* line 207, ../../../app/stylesheets/screen.scss */
+/* line 211, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation {
   display: inline;
   float: left;
@@ -739,22 +743,22 @@ body.ncs #main #tab_navigation {
 * html body.ncs #main #tab_navigation {
   overflow-x: hidden;
 }
-/* line 209, ../../../app/stylesheets/screen.scss */
+/* line 213, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation ul {
   list-style-type: none;
 }
-/* line 213, ../../../app/stylesheets/screen.scss */
+/* line 217, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation ul li {
   display: inline;
   float: left;
   padding: 1em 0.5em 0 0.5em;
 }
-/* line 219, ../../../app/stylesheets/screen.scss */
+/* line 223, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation li a {
   background-color: #406cd5;
   color: #f0f0f0;
 }
-/* line 224, ../../../app/stylesheets/screen.scss */
+/* line 228, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation li a, body.ncs #main #tab_navigation li.current a {
   display: block;
   width: 12em;
@@ -770,12 +774,12 @@ body.ncs #main #tab_navigation li a, body.ncs #main #tab_navigation li.current a
   border-bottom: 0px;
   text-align: center;
 }
-/* line 235, ../../../app/stylesheets/screen.scss */
+/* line 239, ../../../app/stylesheets/screen.scss */
 body.ncs #main #tab_navigation li.current a {
   background-color: white;
   color: #333333;
 }
-/* line 241, ../../../app/stylesheets/screen.scss */
+/* line 245, ../../../app/stylesheets/screen.scss */
 body.ncs #main #welcome {
   display: inline;
   float: left;
@@ -787,7 +791,7 @@ body.ncs #main #welcome {
 * html body.ncs #main #welcome {
   overflow-x: hidden;
 }
-/* line 246, ../../../app/stylesheets/screen.scss */
+/* line 250, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content {
   display: inline;
   float: left;
@@ -806,7 +810,7 @@ body.ncs #main #content {
 * html body.ncs #main #content {
   overflow-x: hidden;
 }
-/* line 255, ../../../app/stylesheets/screen.scss */
+/* line 259, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content table td.col1 {
   display: inline;
   float: left;
@@ -817,7 +821,7 @@ body.ncs #main #content table td.col1 {
 * html body.ncs #main #content table td.col1 {
   overflow-x: hidden;
 }
-/* line 259, ../../../app/stylesheets/screen.scss */
+/* line 263, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content table td.col2 {
   display: inline;
   float: left;
@@ -828,7 +832,7 @@ body.ncs #main #content table td.col2 {
 * html body.ncs #main #content table td.col2 {
   overflow-x: hidden;
 }
-/* line 263, ../../../app/stylesheets/screen.scss */
+/* line 267, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .block {
   background-color: #e8e8e8;
   margin-bottom: 1em;
@@ -837,37 +841,37 @@ body.ncs #main #content .block {
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
 }
-/* line 270, ../../../app/stylesheets/screen.scss */
+/* line 274, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .block .title {
   font-weight: bold;
   font-style: normal;
 }
-/* line 275, ../../../app/stylesheets/screen.scss */
+/* line 279, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .row, body.ncs #main #content .block, body.ncs #main #content .title, body.ncs #main #content table tr, body.ncs #main #content table td {
   padding: 0.2em 0.2em;
 }
-/* line 279, ../../../app/stylesheets/screen.scss */
+/* line 283, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content em {
   font-weight: bold;
   font-style: normal;
 }
-/* line 284, ../../../app/stylesheets/screen.scss */
+/* line 288, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .warning {
   color: red;
 }
-/* line 288, ../../../app/stylesheets/screen.scss */
+/* line 292, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .search {
   padding: 1em 0;
 }
-/* line 292, ../../../app/stylesheets/screen.scss */
+/* line 296, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .breadcrumbs {
   padding: 0 0 1em 0;
 }
-/* line 296, ../../../app/stylesheets/screen.scss */
+/* line 300, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .content_body {
   background-color: #f0f0f0;
 }
-/* line 300, ../../../app/stylesheets/screen.scss */
+/* line 304, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .current_tab, body.ncs #main #content .other_tab {
   display: inline-block;
   width: 12em;
@@ -883,17 +887,17 @@ body.ncs #main #content .current_tab, body.ncs #main #content .other_tab {
   color: #333333;
   border: 1px solid #ccd3e8;
 }
-/* line 311, ../../../app/stylesheets/screen.scss */
+/* line 315, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .current_tab {
   background-color: #f0f0f0;
   border-bottom: 0px;
 }
-/* line 316, ../../../app/stylesheets/screen.scss */
+/* line 320, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .other_tab {
   background-color: #ccd3e8;
   border: 1px solid #ccd3e8;
 }
-/* line 321, ../../../app/stylesheets/screen.scss */
+/* line 325, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .section {
   background-color: #e8e8e8;
   border-radius: 1em;
@@ -902,21 +906,21 @@ body.ncs #main #content .section {
   border: 1px solid #cccccc;
   padding: 1em;
 }
-/* line 328, ../../../app/stylesheets/screen.scss */
+/* line 332, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .section_heading {
   text-decoration: none;
   padding-bottom: 1em;
   font-weight: bold;
 }
-/* line 334, ../../../app/stylesheets/screen.scss */
+/* line 338, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content .section_gap {
   padding: 1em;
 }
-/* line 338, ../../../app/stylesheets/screen.scss */
+/* line 342, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content p {
   padding: 0;
 }
-/* line 342, ../../../app/stylesheets/screen.scss */
+/* line 346, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical {
   display: inline;
   float: left;
@@ -928,17 +932,17 @@ body.ncs #main #content #tab_vertical {
 * html body.ncs #main #content #tab_vertical {
   overflow-x: hidden;
 }
-/* line 345, ../../../app/stylesheets/screen.scss */
+/* line 349, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-/* line 351, ../../../app/stylesheets/screen.scss */
+/* line 355, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical ul li {
   padding: 0.5em;
 }
-/* line 355, ../../../app/stylesheets/screen.scss */
+/* line 359, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical li a {
   display: block;
   width: 12em;
@@ -949,7 +953,7 @@ body.ncs #main #content #tab_vertical li a {
   text-align: center;
   color: #f0f0f0;
 }
-/* line 366, ../../../app/stylesheets/screen.scss */
+/* line 370, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical li.current span {
   display: block;
   width: 12em;
@@ -960,7 +964,7 @@ body.ncs #main #content #tab_vertical li.current span {
   text-align: center;
   color: #333333;
 }
-/* line 378, ../../../app/stylesheets/screen.scss */
+/* line 382, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #content_vertical {
   display: inline;
   float: left;
