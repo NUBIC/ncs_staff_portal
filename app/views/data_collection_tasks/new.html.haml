@@ -1,9 +1,10 @@
 = render 'tabs'  
 .content_body
-  .section_gap
-  .section
-    .section_heading
-      New data collection task for #{@staff.name}
-    = render 'data_collection_task'
+  - if !@staff.external?
+    .section_gap
+    .section
+      .section_heading
+        New data collection task for #{@staff.name}
+      = render 'data_collection_task'
   .section_gap
   = render 'data_collection_tasks'
