@@ -54,12 +54,12 @@ describe Staff do
       staff.hourly_rate.should == 25.00
     end
 
-    it "should put hourly_rate as 'amount/no.of hours worked in year' if pay_type is 'Yearly'" do
+    it "should put hourly_rate as 'amount/no.of hours(2080) worked in year' if pay_type is 'Yearly'" do
       staff= FactoryGirl.build(:staff)
       staff.pay_type = "Yearly"
       staff.pay_amount = 50000
       staff.save
-      staff.hourly_rate.should == 28.57
+      staff.hourly_rate.should == 24.04
     end
 
     it "should set hourly_rate as 0 and pay_amount as 0 if pay_type is 'Voluntary'" do

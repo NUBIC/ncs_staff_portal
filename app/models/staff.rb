@@ -178,7 +178,7 @@ class Staff < ActiveRecord::Base
     if pay_type == "Hourly"
       self.hourly_rate = pay_amount unless pay_amount.blank?
     elsif pay_type == "Yearly"
-      self.hourly_rate = (pay_amount/1750).round(2) unless pay_amount.blank?
+      self.hourly_rate = (pay_amount/2080).round(2) unless pay_amount.blank?
     elsif pay_type == "Voluntary"
       self.hourly_rate = 0
       self.pay_amount = 0
