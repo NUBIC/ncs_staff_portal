@@ -279,6 +279,5 @@ module NcsNavigator::StaffPortal::Warehouse
       staff_portal_record
     end
     
-    def map_staff
   end
 end
