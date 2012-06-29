@@ -64,7 +64,7 @@ NcsStaffPortal::Application.configure do
   end
   
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[NCS Staff Portal] ",
+    :email_prefix => "[NCS Navigator Ops] ",
     :sender_address => NcsNavigator.configuration.staff_portal['mail_from'],
     :exception_recipients => NcsNavigator.configuration.staff_portal['exception_recipients'].split(",") if NcsNavigator.configuration.staff_portal['exception_recipients']
 end

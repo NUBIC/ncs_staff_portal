@@ -7,10 +7,10 @@ require 'forwardable'
 module NcsNavigator::StaffPortal::Warehouse
   ##
   # A utility that takes the entire contents of an MDES Warehouse
-  # instance and initializes or updates this Staff Portal deployment's
+  # instance and initializes or updates this NCS Navigator Ops deployment's
   # operational tables to match its contents.
   #
-  # The mappings from the MDES Warehouse to Staff Portal tables are defined in
+  # The mappings from the MDES Warehouse to NCS Navigator Ops tables are defined in
   # {Enumerator}.
   class Importer
     extend Forwardable
@@ -160,7 +160,7 @@ module NcsNavigator::StaffPortal::Warehouse
         save_staff_portal_record(staff_portal_record)
       end
     end
-    # @return a staff portal record corresponding to the MDES record. It may
+    # @return a NCS Navigator Ops record corresponding to the MDES record. It may
     #   or may not be a record that already exists in core. Whether or
     #   not it is, it will have been sync'd with the input MDES record
     #   but not saved.

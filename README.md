@@ -1,9 +1,9 @@
-NCS Navigator Staff Portal
+NCS Navigator Ops
 ==========================
 
-Staff Portal keeps track of the staff information including
+NCS Navigator Ops keeps track of the staff information including
 demographic information, time, hours, expenses. It also keeps track of
-all the outreach activities for the study center. Staff Portal's data
+all the outreach activities for the study center. NCS Navigator Ops's data
 model is based on the Master Data Element Specification of the
 National Children Study, version 2.0.
 
@@ -41,7 +41,7 @@ Setup
 
 #### Database setup
 
-Staff Portal uses [bcdatabase][] to discover the database
+NCS Navigator Ops uses [bcdatabase][] to discover the database
 configuration to use. Bcdatabase looks for a [YAML][] file with a
 particular structure under `/etc/nubic/db`.
 
@@ -64,7 +64,7 @@ Example:
 
 #### Authentication setup
 
-Staff Portal uses [Aker-Rails][] and [Aker][] for authentication.
+NCS Navigator Ops uses [Aker-Rails][] and [Aker][] for authentication.
 
 [Aker-Rails]: https://github.com/NUBIC/aker-rails/
 [Aker]: http://rubydoc.info/github/NUBIC/aker/
@@ -86,32 +86,32 @@ Second, define a bootstrap user in
 
 #### Center-specific setup
 
-Staff Portal uses [ncs_navigator_configuration][] for shared
+NCS Navigator Ops uses [ncs_navigator_configuration][] for shared
 configuration of the NCS Navigator suite applications. Most
 configuration properties are documented in its [sample
-configuration][ncsn_conf_sample]. Staff Portal looks for the
+configuration][ncsn_conf_sample]. NCS Navigator Ops looks for the
 configuration in its default location, `/etc/nubic/ncs/navigator.ini`.
 
 [ncs_navigator_configuration]: https://github.com/NUBIC/ncs_navigator_configuration
 [ncsn_conf_sample]: http://rubydoc.info/gems/ncs_navigator_configuration/file/sample_configuration.ini
 
-To further customize Staff Portal for your center, add one or more of
+To further customize NCS Navigator Ops for your center, add one or more of
 the following configuration elements to the `[Staff Portal]` section of
 the configuration file. `bootstrap_user` and `psc_user_password` are mandatory; 
 all others are optional.
 
-    # The initial user for Staff Portal. This user will automatically
+    # The initial user for NCS Navigator Ops. This user will automatically
     # granted the User Administrator and System Administrator roles. Thus he will be able to
     # provision more users and finish the initial PSC setup for NCS Navigator. The username 
-    # must be one that can be authenticated with the CAS server that Staff Portal uses.
+    # must be one that can be authenticated with the CAS server that NCS Navigator Ops uses.
     bootstrap_user = jrp
     
-    # The psc user password for Staff Portal. There will be application 
+    # The psc user password for NCS Navigator Ops. There will be application 
     # user with username as "psc_application" which will be used for 
-    # communication between Patient Study Calendar and Staff Portal.
+    # communication between Patient Study Calendar and NCS Navigator Ops.
     psc_user_password = "password"
     
-    # The exception notification e-mail address for Staff Portal for any exceptions/errors. 
+    # The exception notification e-mail address for NCS Navigator Ops for any exceptions/errors. 
     # exception_recipients can be multiple email addresses sepearted by ','
     exception_recipients = "developer@example.com"
 
@@ -121,12 +121,12 @@ all others are optional.
     # weekly email reminder can be enable or disable for the particular deployment.
     email_reminder = false
 
-    # Google Analytics account number to analyze staff portal's traffic data
+    # Google Analytics account number to analyze NCS Navigator Ops's traffic data
     google_analytics_number = "UA-1234"
 
 ### Deployment
 
-Staff Portal is deployed with [capistrano][cap] from a workstation. On
+NCS Navigator Ops is deployed with [capistrano][cap] from a workstation. On
 the workstation, you need to create a configuration file
 `/etc/nubic/db/ncs_deploy.yml` to describe where it should be
 deployed to.
@@ -136,7 +136,7 @@ deployed to.
 Example:
 
     ncs_staff_portal:
-      # Repository for staff portal. This will always be this value
+      # Repository for NCS Navigator Ops. This will always be this value
       # unless you wish to deploy your own fork.
       repo: "git://github.com/NUBIC/ncs_staff_portal.git"
       # path on the server where application will be deployed
@@ -175,7 +175,7 @@ if you make changes to the footer logo paths in navigator.ini in between deploys
 
 #### Deployment user
 
-As currently configured, Staff Portal will be deployed as the user you
+As currently configured, NCS Navigator Ops will be deployed as the user you
 use to connect to the application server. The target directory must be
 writable by that user, and (by way of Passenger) the software will be
 executed with that users' permissions.
@@ -191,13 +191,13 @@ detailed discussion of this option.
 
 ### Initialization
 
-Staff Portal relies on many lists of data. It ships with [rake][]
+NCS Navigator Ops relies on many lists of data. It ships with [rake][]
 tasks which will populate these lists from outside sources, usually
 CSV files.
 
 All the tasks should be executed from the application root on the
 server where the application is deployed. Each one will need to be run
-at least once for each environment in which Staff Portal is deployed.
+at least once for each environment in which NCS Navigator Ops is deployed.
 
 RAILS_ENV needs to be set to the appropriate value (production, staging) when running the various setup rake tasks for production or staging environment.
 e.g `bundle exec rake mdes:load_codes_from_schema_20 RAILS_ENV=production`
@@ -228,5 +228,5 @@ Load giveaway items:
     $ bundle exec rake giveaway_items:load_all[/path/to/giveaways.csv]
 
 This will load all the giveaway items for the outreach activities in
-the Staff Portal. The file must be a single column CSV file with all
+the NCS Navigator Ops. The file must be a single column CSV file with all
 items listed in the column `NAME`. This is not the mandatory task though because MDES doesn't require any giveaway items data and it is not being submitted to VDR.

@@ -70,7 +70,7 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     shared_examples 'one-to-one valid' do
-      it 'produces a single valid warehouse record from a valid staff portal record' do
+      it 'produces a single valid warehouse record from a valid NCS Navigator Ops record' do
         sp_record.should be_valid
         record_should_be_valid(results.first)
       end

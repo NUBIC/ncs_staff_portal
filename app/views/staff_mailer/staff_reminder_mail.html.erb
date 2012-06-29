@@ -1,5 +1,5 @@
 <p>Hi <%= @staff.name%>,</p>
 
-<p>This is a weekly reminder that you need to input task data in the Staff Portal. No task has been added for the week starting <%= Date.today.monday%>.<p>
+<p>This is a weekly reminder that you need to input task data in the NCS Navigator Ops. No task has been added for the week starting <%= Date.today.monday%>.<p>
 
-<p>Please login into <%= link_to "Staff Portal", new_staff_management_task_url(@staff.id) %> to enter task.<p>
+<p>Please login into <%= link_to "NCS Navigator Ops", new_staff_management_task_url(@staff.id) %> to enter task.<p>

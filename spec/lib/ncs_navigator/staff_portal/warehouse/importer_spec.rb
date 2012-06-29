@@ -73,7 +73,7 @@ module NcsNavigator::StaffPortal::Warehouse
             importer.import(:staff_cert_trainings)
           end
 
-          it 'updates that scalar field in staff portal' do
+          it 'updates that scalar field in NCS Navigator Ops' do
             StaffCertTraining.first.frequency.should == "10 Times"
           end
 

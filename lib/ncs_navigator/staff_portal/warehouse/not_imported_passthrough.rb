@@ -10,7 +10,7 @@ module NcsNavigator::StaffPortal::Warehouse
   #
   # This class is very similar to the "unused" table passthroughs in
   # NCS Navigator Core. The difference is that this passthrough is an
-  # alternative to doing a staff portal import rather than a
+  # alternative to doing a NCS Navigator Ops import rather than a
   # complement for preserving data that isn't imported in a normal
   # import.
   class NotImportedPassthrough

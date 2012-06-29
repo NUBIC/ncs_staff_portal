@@ -27,7 +27,7 @@ namespace :import do
     pass.import
   end
   
-  # Import all the staff, expense and outreach operation data to staff portal.
+  # Import all the staff, expense and outreach operation data to NCS Navigator Ops.
   desc 'Import operational data'
   task :operational => [:warehouse_setup, :environment] do
     require 'ncs_navigator/staff_portal'

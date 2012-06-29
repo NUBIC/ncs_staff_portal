@@ -20,9 +20,9 @@ namespace :users do
     end
     unless counter == 0
       if counter == 1 
-        puts "#{counter} user is added to the staff portal"
+        puts "#{counter} user is added to the NCS Navigator Ops"
       elsif
-        puts "#{counter} users are added to the staff portal"
+        puts "#{counter} users are added to the NCS Navigator Ops"
       end
     end
   end

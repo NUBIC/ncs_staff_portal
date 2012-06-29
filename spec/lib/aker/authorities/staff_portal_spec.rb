@@ -13,15 +13,15 @@ describe StaffPortal do
       @return_user = @staff_portal.user("lee");
     end
     
-    it "copies first name from staff portal user" do
+    it "copies first name from NCS Navigator Ops user" do
       @return_user.first_name.should == @staff.first_name
     end
     
-    it "copies last name from staff portal user" do
+    it "copies last name from NCS Navigator Ops user" do
       @return_user.last_name.should == @staff.last_name
     end
     
-    it "copies email from staff portal user" do
+    it "copies email from NCS Navigator Ops user" do
       @return_user.email.should == @staff.email
     end
     
