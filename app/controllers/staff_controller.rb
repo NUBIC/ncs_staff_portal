@@ -97,7 +97,7 @@ class StaffController < SecuredController
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
       @user = Staff.find(params[:id])
-      add_breadcrumb "Edit user[#{@user.username} - #{@user.name}]", edit_users_path(@user)
+      add_breadcrumb "Edit user - #{@user.display_name}", edit_users_path(@user)
     end
   end
 
