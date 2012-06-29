@@ -55,18 +55,18 @@ describe OutreachEvent do
   describe "validates" do
     describe "event_date" do
       it "should not be valid if outreach event date is after today" do
-        event = FactoryGirl.build(:outreach_event, :event_date => Date.today + 2.days)
+        event = FactoryGirl.build(:outreach_event, :event_date => (Date.today + 2.days).to_s)
         event.should_not be_valid
         event.should have(1).error_on(:event_date)
       end
   
       it "should be valid if outreach event date is before today" do
-        event = FactoryGirl.build(:outreach_event, :event_date => Date.today - 2.days)
+        event = FactoryGirl.build(:outreach_event, :event_date => (Date.today - 2.days).to_s)
         event.should be_valid
       end
   
       it "should be valid if outreach event date is as today" do
-        event = FactoryGirl.build(:outreach_event, :event_date => Date.today)
+        event = FactoryGirl.build(:outreach_event, :event_date => Date.today.to_s)
         event.should be_valid
       end
     end
