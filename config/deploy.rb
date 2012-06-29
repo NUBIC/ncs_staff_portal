@@ -74,34 +74,33 @@ namespace :deploy do
   desc "Fix permissions"
   task :permissions do
     unless ENV['NO_FIX_PERMISSIONS']
-      sudo "chmod -R g+w #{shared_path} #{current_path} #{release_path}"
+      sudo "chmod -R g+w #{shared_path} #{release_path}"
     end
   end
-
-  desc 'Set up shared paths used by the importer'
+  
   task :setup_import_directories do
-    shared_import  = File.join(shared_path,  'importer_passthrough')
-    release_import = File.join(current_path, 'importer_passthrough')
-    cmds = [
-      "mkdir -p '#{shared_import}'",
-      # Only chmod if owned; this is the only case in which chmod is
-      # allowed. Will be owned if just created, which is the important
-      # case.
-      "if [ -O '#{shared_import}' ]; then chmod g+w '#{shared_import}'; fi",
-      "if [ ! -e '#{release_import}' ]; then ln -s '#{shared_import}' '#{release_import}'; fi"
-    ]
-    run cmds.join(' && ')
+    unless ENV['NO_IMPORT_DIRECTORY']
+      shared_import  = File.join(shared_path,  'importer_passthrough')
+      release_import = File.join(release_path, 'importer_passthrough')
+      cmds = [
+        "mkdir -p '#{shared_import}'",
+        # Only chmod if owned; this is the only case in which chmod is
+        # allowed. Will be owned if just created, which is the important
+        # case.
+        "if [ -O '#{shared_import}' ]; then chmod g+w '#{shared_import}'; fi",
+        "if [ ! -e '#{release_import}' ]; then ln -s '#{shared_import}' '#{release_import}'; fi"
+      ]
+      run cmds.join(' && ')
+    end
   end
 end
 
 # backup the database before migrating
 # before 'deploy:migrate', 'db:backup'
 
-# after deploying, generate static pages, copy over uploads and results, cleanup old deploys
-after 'deploy:update_code', 'deploy:cleanup'
-
-# after deploying symlink, aggressively set permissions, copy images to current image config location.
-after 'deploy:symlink', 'deploy:permissions', 'config:images', 'deploy:setup_import_directories'
+# after deploying, generate static pages, copy over uploads and results, cleanup old deploys,
+# aggressively set permissions, copy images to current image config location.
+after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions', 'config:images', 'deploy:setup_import_directories'
 
 # Database
 namespace :db do
@@ -114,7 +113,7 @@ end
 namespace :config do
   desc "Copy configurable images to /public/images/config folder"
   task :images,  :roles => :app do
-    run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
+    run "cd #{release_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
 end
 
