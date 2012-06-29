@@ -61,6 +61,7 @@ Given %r{^staff member (\S+) has role \"([^\"]+)\"$} do |username, role|
   staff.should_not be_nil
   role = Role.find_or_create_by_name(role)
   staff.staff_roles.build(:role => role)
+  staff.roles << role
   staff = set_additional_info(staff, username)
   staff.save!
 end
@@ -90,7 +91,9 @@ def valid_staff(username, name_flag = nil)
   else
     staff = Factory(:valid_staff, :first_name => username, :last_name => username, :study_center => 1234)
   end
-  staff.staff_roles.build(:role => Role.find_or_create_by_name(Role::ADMINISTRATIVE_STAFF))
+  role = Role.find_or_create_by_name(Role::ADMINISTRATIVE_STAFF)
+  staff.staff_roles.build(:role => role)
+  staff.roles << role
   staff.username = username
   staff.email = "#{username}@test.com" 
   staff.save!
