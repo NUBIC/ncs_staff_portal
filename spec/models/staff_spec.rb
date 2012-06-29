@@ -236,7 +236,7 @@ describe Staff do
 
     describe "presence" do
       it "email and alteast one role is required when user have username assigned" do
-        staff = FactoryGirl.build(:staff, :username => "test123", :email => nil)
+        staff = FactoryGirl.build(:staff, :username => "test123", :email => nil, :validate_create => "true")
         staff.should_not be_valid
         staff.should have(1).error_on(:email)
         staff.should have(1).error_on(:roles)
