@@ -2,14 +2,12 @@
 #
 # Table name: ncs_codes
 #
-#  id               :integer         not null, primary key
-#  list_name        :string(255)     not null
-#  list_description :string(255)
-#  display_text     :string(255)     not null
-#  local_code       :integer         not null
-#  global_code      :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id           :integer         not null, primary key
+#  list_name    :string(255)     not null
+#  display_text :string(255)     not null
+#  local_code   :integer         not null
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 class NcsCode < ActiveRecord::Base
