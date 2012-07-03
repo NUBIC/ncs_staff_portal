@@ -2,7 +2,6 @@
 FactoryGirl.define do
   factory :ncs_code do |code|
     code.list_name        "CONFIRM_TYPE_CL2"
-    code.list_description "Description"
     code.display_text     "YES"
     code.local_code       1
   end
