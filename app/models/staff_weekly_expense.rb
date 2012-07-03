@@ -6,10 +6,10 @@
 #  staff_id        :integer
 #  week_start_date :date            not null
 #  rate            :decimal(5, 2)
+#  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime
 #  weekly_exp_id   :string(36)      not null
-#  comment         :text
 #
 
 class StaffWeeklyExpense < ActiveRecord::Base

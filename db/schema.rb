@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626154635) do
+ActiveRecord::Schema.define(:version => 20120703164924) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -76,14 +76,16 @@ ActiveRecord::Schema.define(:version => 20120626154635) do
   end
 
   create_table "ncs_codes", :force => true do |t|
-    t.string   "list_name",        :null => false
-    t.string   "list_description"
-    t.string   "display_text",     :null => false
-    t.integer  "local_code",       :null => false
-    t.string   "global_code"
+    t.string   "list_name",    :null => false
+    t.string   "display_text", :null => false
+    t.integer  "local_code",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ncs_codes", ["list_name"], :name => "idx_ncs_codes_list"
+  add_index "ncs_codes", ["local_code", "list_name"], :name => "un_ncs_codes_code_and_list", :unique => true
+  add_index "ncs_codes", ["local_code"], :name => "idx_ncs_codes_code"
 
   create_table "ncs_ssus", :force => true do |t|
     t.string   "psu_id",     :limit => 36, :null => false
@@ -114,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120626154635) do
   add_index "outreach_evaluations", ["outreach_event_eval_id"], :name => "uq_outreach_evaluations_outreach_event_eval_id", :unique => true
 
   create_table "outreach_events", :force => true do |t|
+    t.string   "event_date",             :limit => 10
     t.integer  "mode_code",                            :null => false
     t.string   "mode_other"
     t.integer  "outreach_type_code",                   :null => false
@@ -135,7 +138,6 @@ ActiveRecord::Schema.define(:version => 20120626154635) do
     t.integer  "created_by"
     t.string   "outreach_event_id",      :limit => 36, :null => false
     t.string   "source_id",              :limit => 36
-    t.string   "event_date",             :limit => 10
     t.date     "event_date_date"
   end
 

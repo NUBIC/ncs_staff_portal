@@ -3,6 +3,7 @@
 # Table name: outreach_events
 #
 #  id                     :integer         not null, primary key
+#  event_date             :string(10)
 #  mode_code              :integer         not null
 #  mode_other             :string(255)
 #  outreach_type_code     :integer         not null
@@ -24,7 +25,6 @@
 #  created_by             :integer
 #  outreach_event_id      :string(36)      not null
 #  source_id              :string(36)
-#  event_date             :string(10)
 #  event_date_date        :date
 #
 
