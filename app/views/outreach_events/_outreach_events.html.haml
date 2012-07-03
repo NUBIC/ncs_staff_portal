@@ -29,6 +29,7 @@
       = text_field_tag "", StaffPortal.psu_name, :readonly => true
     .row
       Outreach Segments
+      %em *
       - if NcsArea.all.count > 0 && NcsAreaSsu.all.count > 0
         = select_tag("outreach_event[ncs_ssu_ids][]", grouped_options_for_select(NcsArea.all.sort_by(&:name).map {|area| [area.name, 
                   area.ncs_ssus.sort_by(&:ssu_name).map{|ssu| [ssu.ssu_name, ssu.id]}]}, @outreach_event.outreach_segments.collect { |os| os.ncs_ssu_id }),
