@@ -6,8 +6,8 @@ class OutreachEventsController < SecuredController
   # GET /outreach_events.xml
   def index
     params[:page] ||= 1
-    # @outreach_events = OutreachEvent.all.sort_by(&:event_date).reverse.paginate(:page => params[:page], :per_page => 20)
-    events = OutreachEvent.search_for(params[:search]).all
+    @q = OutreachEvent.search(params[:q])
+    events = @q.result(:distinct => true)
     @outreach_events = (events.select(&:event_date_date).sort_by(&:event_date_date).reverse + events.reject(&:event_date_date)).paginate(:page => params[:page], :per_page => 20)
     @can_delete = false
     if permit?(Role::STAFF_SUPERVISOR)

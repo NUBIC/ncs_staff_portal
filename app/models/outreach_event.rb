@@ -79,10 +79,6 @@ class OutreachEvent < ActiveRecord::Base
     errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_ssus.blank?
   end
    
-  scoped_search :on => [:name, :event_date]
-  # scoped_search :in => :ncs_ssus, :on => :ssu_name
-  scoped_search :in => :staff, :on => [:first_name, :last_name]
-   
   belongs_to :created_by_user, :class_name => 'Staff', :foreign_key => :created_by
   
   def imported_mode 

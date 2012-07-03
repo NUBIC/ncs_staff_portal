@@ -1,11 +1,29 @@
 .content_body
   .section
     = link_to 'Add new outreach activity/event', new_outreach_event_path, :class => "add_link icon_link"
-    .search
-      = form_tag outreach_events_path, :method => :get do 
-        = text_field_tag "search", params[:search]
-        = submit_tag "Search", :class => "control_button"
-        = label_tag "(Search by 'event name' or 'segment' or 'staff member')"
+    = search_form_for @q do |f|
+      %table
+        %tr
+          %td{ :colspan => "2" }
+            %em Search Outreach event
+        %tr
+          %td
+            = f.label :event_date_cont, "Event Date"
+            = f.text_field :event_date_cont, :class => 'datepicker'
+          %td
+            = f.label :ncs_ssus_ssu_name_cont, "Segment Name"
+            = f.text_field :ncs_ssus_ssu_name_cont
+        %tr
+          %td
+            = f.label :name_cont, "Name"
+            = f.text_field :name_cont
+          %td
+            = f.label :staff_first_name_or_staff_last_name_or_staff_staff_id_cont, "Staff member"
+            = f.text_field :staff_first_name_or_staff_last_name_or_staff_staff_id_cont
+        %tr
+          %td
+            = f.submit "Search",:class => "control_button"
+            = link_to 'Reset', outreach_events_path, :class => "control_button"
   .section_gap
   .section
     .section_heading

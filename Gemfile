@@ -18,13 +18,13 @@ gem 'aker'
 gem 'mail', '2.2.19'
 gem 'whenever', :require => false
 gem "will_paginate", "~> 3.0.pre4"
-gem "scoped_search"
 gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'ncs_mdes_warehouse', '0.6'
 gem "nilify_blanks"
+gem "ransack"
 # gem 'ncs_mdes_warehouse', '~> 0.1',
 #   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
 # gem 'ncs_mdes_warehouse', '~> 0.1', :path => '../ncs_mdes_warehouse'
