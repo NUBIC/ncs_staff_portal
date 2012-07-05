@@ -2,21 +2,29 @@
   = render_breadcrumbs :separator => ' / '
 .block
   = link_to 'Add new user', new_users_path, :class => "add_link icon_link"
-  = form_tag users_path, :method => :get do 
-    .title
-      Search Users
-    .row
-      = label_tag "first_name", "First Name"
-      = text_field_tag "first_name", params[:first_name]
-    .row
-      = label_tag "last_name", "Last Name"
-      = text_field_tag "last_name", params[:last_name]
-    .row
-      = label_tag "username", "#{NcsNavigator.configuration.study_center_username}"
-      = text_field_tag "username", params[:username]
-    .row
-      = submit_tag "Search", :class => "control_button"
-      = link_to 'Reset', users_path, :class => "control_button"
+  = search_form_for @q, :url => users_path do |f|
+    %table
+      %tr
+        %td{ :colspan => "2" }
+          %em Search Users
+      %tr
+        %td
+          = f.label :first_name_cont, "First Name"
+          = f.text_field :first_name_cont
+        %td
+          = f.label :username_cont, "#{NcsNavigator.configuration.study_center_username}"
+          = f.text_field :username_cont
+      %tr
+        %td
+          = f.label :last_name_cont, "Last Name"
+          = f.text_field :last_name_cont
+        %td
+          = f.label :staff_id_cont, "Staff ID"
+          = f.text_field :staff_id_cont
+      %tr
+        %td
+          = f.submit "Search",:class => "control_button"
+          = link_to 'Reset', users_path, :class => "control_button"
 .block
   .title
     - model_name = (@users.size == 1 ? "User" : "Users")
