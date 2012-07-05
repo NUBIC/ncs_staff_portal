@@ -15,11 +15,8 @@ class StaffController < SecuredController
   def index
     if permit?(Role::STAFF_SUPERVISOR)
       params[:page] ||= 1
-      if params[:first_name] || params[:last_name] || params[:username]
-        @staff = @current_staff.visible_employees & Staff.where(construct_condition_string(params))
-      else
-        @staff = @current_staff.visible_employees
-      end
+      @q = Staff.search(params[:q])
+      @staff = @current_staff.visible_employees & @q.result(:distinct => true)
       @staff_list = @staff.select(&:username).sort_by(&:username) + @staff.reject(&:username)
       respond_to do |format|
         format.html { @staff_list = @staff_list.paginate(:page => params[:page], :per_page => 20)}
@@ -44,7 +41,8 @@ class StaffController < SecuredController
       elsif params[:first_name] || params[:last_name] || params[:username]
         @users = Staff.where(construct_condition_string(params))
       else
-        all_users = Staff.all
+        @q = Staff.search(params[:q])
+        all_users = @q.result(:distinct => true)
         @users = all_users.select(&:username).sort_by(&:username) + all_users.reject(&:username)
       end
       respond_to do |format|
