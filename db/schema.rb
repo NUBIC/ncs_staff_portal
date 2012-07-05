@@ -83,10 +83,6 @@ ActiveRecord::Schema.define(:version => 20120703164924) do
     t.datetime "updated_at"
   end
 
-  add_index "ncs_codes", ["list_name"], :name => "idx_ncs_codes_list"
-  add_index "ncs_codes", ["local_code", "list_name"], :name => "un_ncs_codes_code_and_list", :unique => true
-  add_index "ncs_codes", ["local_code"], :name => "idx_ncs_codes_code"
-
   create_table "ncs_ssus", :force => true do |t|
     t.string   "psu_id",     :limit => 36, :null => false
     t.string   "ssu_id",     :limit => 36, :null => false
