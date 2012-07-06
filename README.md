@@ -214,12 +214,17 @@ Initialize the code lists from the MDES using [ncs_mdes][]:
 
 #### Secondary sampling units
 
-Load SSUs:
+Load SSUs with Areas:
 
     $ bundle exec rake psu:load_ncs_area_ssus
 
-This creates SSU and area records that reflect in the provided
-CSV from the [ncs_navigator_configuration][] file which describes the sampling units for the study center.
+This creates SSU and area records that reflect in the provided CSV from the [ncs_navigator_configuration][] file which describes the sampling units for the study center.
+
+Load SSUs:
+
+    $ bundle exec rake psu:load_ncs_ssus
+    
+This creates SSU records that reflect in the provided CSV from the [ncs_navigator_configuration][] file which describes the sampling units for the study center.
 
 #### Giveaway items
 
@@ -230,3 +235,16 @@ Load giveaway items:
 This will load all the giveaway items for the outreach activities in
 the NCS Navigator Ops. The file must be a single column CSV file with all
 items listed in the column `NAME`. This is not the mandatory task though because MDES doesn't require any giveaway items data and it is not being submitted to VDR.
+
+#### Load users
+
+Load new users or map existing users with staff_id:
+
+    $ bundle exec rake users:load[/path/to/users.csv]
+    
+The CSV must have the following header (along with the contents it implies):
+`USERNAME`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `STAFF_ID`
+
+If `STAFF_ID` is specify then staff record with particular `STAFF_ID` will be updated for attributes like `username`, `first_name`, `last_name` and `email`.
+
+If `STAFF_ID` is not specify for some rows, NCS Navigator Ops will consider those entries as new staff records and will create new entries in the NCS Navigator Ops.
