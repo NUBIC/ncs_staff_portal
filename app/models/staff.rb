@@ -40,7 +40,7 @@ class Staff < ActiveRecord::Base
   attr_accessor :validate_update, :validate_create
   validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
-  validates :email, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :message => "is required when user have #{NcsNavigator.configuration.study_center_username}." }, :if => :email_required? && :create_presence_required?
+  validates :email, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :message => "is required when user have #{NcsNavigator.configuration.study_center_username}." }, :if => :email_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
   validates_date :ncs_inactive_date, :allow_blank => true
@@ -75,7 +75,7 @@ class Staff < ActiveRecord::Base
   end
   
   def email_required?
-    username.blank? ? false : true
+    !username.blank? && create_presence_required? ? true : false
   end
   
   before_save :calculate_hourly_rate, :update_employees
