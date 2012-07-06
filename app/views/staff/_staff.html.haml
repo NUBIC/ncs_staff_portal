@@ -9,16 +9,16 @@
   = hidden_field_tag "return_path", "staff_index_path"
   .field
     = label_tag "Name"
-    = text_field_tag "name", @staff.name, :readonly => true
+    = text_field_tag "name", @staff.name, :disabled => true
   .field
     = f.label :email
-    = f.text_field :email, :readonly => true
+    = f.text_field :email, :disabled => true
   .field
     = f.label :username, NcsNavigator.configuration.study_center_username
-    = text_field_tag "username", @staff.display_username, :readonly => true
+    = text_field_tag "username", @staff.display_username, :disabled => true
   .field
     = label_tag "Study center"
-    = text_field_tag "study_center", StaffPortal.study_center_name, :readonly => true
+    = text_field_tag "study_center", StaffPortal.study_center_name, :disabled => true
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
   .field
     = f.label :staff_type_code, "Staff Type" 
