@@ -177,6 +177,7 @@ body.ncs {
       }
     
       .footer_logo_front {
+        @include prepend-top(1em);
         @include column(6);
       }
   
