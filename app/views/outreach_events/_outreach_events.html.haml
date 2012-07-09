@@ -120,7 +120,7 @@
       = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
       = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), {:prompt => "Select"}, {:class => "tailored_group", :id => "culture_group"} 
     .row
-      = f.label :culture_code, "Targerted cultural group"
+      = f.label :culture_code, "Targeted cultural group"
       = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), {:prompt => "Select"}, {:class => "culture_group tailored_group_other", :id => "outreach_culture"}  
       = f.label :culture_other, "Cultural group - other specify"
       = f.text_field :culture_other, {:class => "tailored_group_other culture_group_other", :id => "outreach_culture_other"}
