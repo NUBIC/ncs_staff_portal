@@ -29,8 +29,7 @@ class AddPublicIdsToAllOutreachTables < ActiveRecord::Migration
         :unique => true, :name => "uq_#{model.table_name}_#{public_id_name}"
       model.reset_column_information
       model.find(:all).each do |instance|
-        instance.update_attribute public_id_name,
-          MdesRecord::ActsAsMdesRecord.create_public_id_string
+        execute "UPDATE #{instance.class.table_name} SET #{public_id_name}='#{MdesRecord::ActsAsMdesRecord.create_public_id_string}' WHERE id=#{instance.id}"
       end
       change_column model.table_name, public_id_name, :string, :limit => 36, :null => false
     end
