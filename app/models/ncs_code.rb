@@ -42,9 +42,10 @@ class NcsCode < ActiveRecord::Base
 
   def self.ncs_code_lookup(attribute_name)
     list_name = attribute_lookup(attribute_name)
-    NcsCode.find_all_by_list_name(list_name).map do |n| 
+    list = NcsCode.find_all_by_list_name(list_name).map do |n| 
       [n.display_text, n.local_code]
-    end    
+    end 
+    list.select{ |pos| pos[1] >= 0 } + list.select{ |neg| neg[1] < 0 }   
   end
   
   def self.attribute_lookup(attribute_name)
