@@ -17,6 +17,7 @@ begin
     desc "Run specs for CI (without database setup steps)"
     RSpec::Core::RakeTask.new(:spec => 'ci:setup:rspec') do |t|
       t.pattern = "spec/**/*_spec.rb"
+      t.rspec_opts = "-t ~warehouse"
     end
 
     Cucumber::Rake::Task.new(:cucumber, 'Run features for CI (without database setup steps)') do |t|
