@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module NcsNavigator::StaffPortal::Warehouse
-  describe Enumerator, :clean_with_truncation, :slow do
+  describe Enumerator, :clean_with_truncation, :slow, :warehouse do
     MdesModule = NcsNavigator::Warehouse::Models::TwoPointZero
 
     let(:wh_config) {

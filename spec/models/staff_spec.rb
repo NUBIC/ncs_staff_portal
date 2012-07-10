@@ -241,7 +241,7 @@ describe Staff do
         staff.should have(1).error_on(:email)
         staff.should have(1).error_on(:roles)
         staff.errors[:email].should == ["is required when user have Username."]
-        staff.errors[:roles].should == ["can not be empty when user have Username.User must have atleast one role assigned. Please select one or more roles."]
+        staff.errors[:roles].should == ["can not be empty when user has Username.User must have atleast one role assigned. Please select one or more roles."]
       end
 
       it "staff_type, birth_date, gender, race, ethnicity, zipcode, subcontractor, experience is required if validate_update is not set" do
