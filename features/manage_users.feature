@@ -6,6 +6,11 @@ Feature: Users API
     When I send a GET request for "/staff/staff.json"
     Then the request is successful
     And has correct JSON response
+    
+  Scenario: Valid authenticated staff get 404 if user is unknown
+    Given a valid API user with default supervisor
+    When I send a GET request for "/staff/unknown.json"
+    Then not found
 
   Scenario: Valid authenticated staff can not get other staff information
     Given a valid API user with username staff1
