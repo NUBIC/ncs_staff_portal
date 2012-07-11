@@ -60,6 +60,7 @@ class StaffController < SecuredController
   def show
     @staff = find_staff
     add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
+    
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -171,21 +172,25 @@ class StaffController < SecuredController
   def check_staff_access
     @staff = find_staff
     check_user_access(@staff)
-    if same_as_current_user(@staff)
-      set_tab :my_info
+    if @staff
+      if same_as_current_user(@staff)
+        set_tab :my_info
+      else
+        set_tab :admin
+        add_breadcrumb "Admin", :administration_index_path
+        add_breadcrumb "Manage staff details", :staff_index_path
+      end
     else
-      set_tab :admin
-      add_breadcrumb "Admin", :administration_index_path
-      add_breadcrumb "Manage staff details", :staff_index_path
+      render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
   
   def find_staff
-    begin
-      staff = Staff.find_by_username(params[:id]) || Staff.find_by_numeric_id(params[:id]) || Staff.find(params[:id]) 
-    rescue ActiveRecord::RecordNotFound
-      render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
+    staff = Staff.find_by_username(params[:id]) 
+    unless staff 
+      staff = Staff.find_by_numeric_id(params[:id]) || Staff.find(params[:id]) if params[:id].is_a? Integer
     end
+    staff
   end
   
   def render_staff

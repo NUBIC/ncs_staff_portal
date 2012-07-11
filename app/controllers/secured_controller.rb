@@ -22,9 +22,11 @@ class SecuredController < ApplicationController
   end
   
   def check_user_access(requested_staff)
-    unless current_user.username == 'psc_application' or requested_staff.id == @current_staff.id or @current_staff.visible_employees.map(&:id).include?(requested_staff.id) 
-      throw :warden
-    end   
+    if requested_staff
+      unless current_user.username == 'psc_application' or requested_staff.id == @current_staff.id or @current_staff.visible_employees.map(&:id).include?(requested_staff.id)
+        throw :warden
+      end
+    end
   end
   
   def same_as_current_user(requested_staff)

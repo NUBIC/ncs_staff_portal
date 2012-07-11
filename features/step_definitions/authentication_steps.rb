@@ -31,6 +31,10 @@ Then /^the request is successful$/ do
   last_response.status.should == 200
 end
 
+Then /^not found$/ do
+  last_response.status.should == 404
+end
+
 Then /^access is forbidden$/ do
   last_response.status.should == 403
   last_response.body.should =~ /may not use this page./
