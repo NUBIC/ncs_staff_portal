@@ -77,7 +77,7 @@ FactoryGirl.define do
     event.outreach_type {|a| a.association(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "Letters", :local_code => 1) }
     event.tailored {|a| a.association(:ncs_code, :list_name => "CONFIRM_TYPE_CL2", :display_text => "Yes", :local_code => 1) }
     event.evaluation_result {|a| a.association(:ncs_code, :list_name => "SUCCESS_LEVEL_CL1", :display_text => "Very Successful", :local_code => 1) }
-    event.event_date Date.new(2012, 5, 12)
+    event.event_date "2012-05-12"
     event.outreach_staff_members {|a| [a.association(:outreach_staff_member)]}
     event.outreach_evaluations {|a| [a.association(:outreach_evaluation)]}
     event.outreach_targets {|a| [a.association(:outreach_target)]}
