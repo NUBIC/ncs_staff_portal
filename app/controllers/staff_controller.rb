@@ -187,8 +187,12 @@ class StaffController < SecuredController
   
   def find_staff
     staff = Staff.find_by_username(params[:id]) 
-    unless staff 
-      staff = Staff.find_by_numeric_id(params[:id]) || Staff.find(params[:id]) if params[:id].is_a? Integer
+    unless staff
+      begin
+        staff = Staff.find_by_numeric_id(params[:id].to_i) || Staff.find(params[:id].to_i) 
+      rescue ActiveRecord::RecordNotFound
+        staff = nil
+      end 
     end
     staff
   end

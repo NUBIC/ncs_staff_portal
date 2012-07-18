@@ -30,6 +30,9 @@
 
 class OutreachEvent < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  
+  MDES_DATE_FORMAT = '^\d{4}-(9[13467]-(9[13467]|(0[1-9]|1[0-9]|2[0-9]|3[01]))|(0[1-9]|1[0-2])-(9[13467]|(0[1-9]|1[0-9]|2[0-9]))|(0[13578]|1[02])-31|(0[1,3-9]|1[0-2])-30)$'
+  
   acts_as_mdes_record :public_id => :outreach_event_id
   attr_accessor :import
   ncs_coded_attribute :mode, 'OUTREACH_MODE_CL1'
@@ -71,7 +74,7 @@ class OutreachEvent < ActiveRecord::Base
   before_save :convert_date
   
   def valid_event_date
-    validates_date :event_date, :on_or_before => :today, :allow_blank => true if only_date
+    errors.add(:event_date, "#{event_date} is not the valid mdes format date.") unless mdes_formatted_date
   end
    
   belongs_to :created_by_user, :class_name => 'Staff', :foreign_key => :created_by
@@ -97,16 +100,21 @@ class OutreachEvent < ActiveRecord::Base
   end
   
   private
-   def only_date
-     begin
-       Date.parse(event_date)
-       true
-     rescue
-       false
-     end
-   end
+    def only_date
+      begin
+        Date.parse(event_date)
+        true
+      rescue
+        false
+      end
+    end
+    
+    #TODO: move mdes_formatted_date to the MdesRecord module
+    def mdes_formatted_date
+      event_date.blank? ? true : only_date || event_date.match(MDES_DATE_FORMAT) ? true : false
+    end
    
-   def convert_date
-     self.event_date_date = only_date ? event_date : nil
-   end
+    def convert_date
+      self.event_date_date = only_date ? event_date : nil
+    end
 end
