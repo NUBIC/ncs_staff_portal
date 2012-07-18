@@ -38,10 +38,15 @@ module ApplicationHelper
   end
   
   def display_segments(segments)
-    list = segments.map do |segment|
-        segment.ncs_ssu.ssu_name
+    if segments.count == NcsAreaSsu.all.count
+      list = "All #{segments.count} segments"
+    else
+      list = segments.map do |segment|
+          segment.ncs_ssu.ssu_name
+      end
+      list.join(', ')
     end
-    list.join(', ')
+    list
   end
   
   def display_supervisors(supervisors)
