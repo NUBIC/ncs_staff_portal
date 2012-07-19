@@ -5,7 +5,8 @@ require "whenever/capistrano"
 set :whenever_command, "bundle exec whenever"
 
 # Using the bcdatabase gem for server config
-bcconf = Bcdatabase.load[:ncs_deploy, :ncs_staff_portal]
+deploy_file = ENV['STUDY_CENTER'] || "ncs"
+bcconf = Bcdatabase.load["#{deploy_file}_deploy", :ncs_staff_portal]
 set :application, "ncs_staff_portal"
 
 # User

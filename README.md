@@ -131,6 +131,13 @@ the workstation, you need to create a configuration file
 `/etc/nubic/db/ncs_deploy.yml` to describe where it should be
 deployed to.
 
+For multiple SC deployment, you can create file for each study center and pass the file with the environment variable `STUDY_CENTER`.
+
+e.g `STUDY_CENTER=umn cap production deploy`. 
+
+This will read the configuration parameters from the 'umn_deploy.yml' file. By default file will be always `ncs_deploy.yml`
+
+
 [cap]: https://github.com/capistrano/capistrano/wiki/
 
 Example:
@@ -172,6 +179,10 @@ and capistrano will try to tell you why it cannot deploy.
 if you make changes to the footer logo paths in navigator.ini in between deploys, you have to run rake task to copy images
     
     $ bundle exec cap production config:images
+    
+you can seed the data to the database (MDES codes, Roles creation) with following command
+
+    $ bundle exec cap production db:seed
 
 #### Deployment user
 
