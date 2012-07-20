@@ -5,7 +5,8 @@ require "whenever/capistrano"
 set :whenever_command, "bundle exec whenever"
 
 # Using the bcdatabase gem for server config
-bcconf = Bcdatabase.load[:ncs_deploy, :ncs_staff_portal]
+deploy_file = ENV['STUDY_CENTER'] || "ncs"
+bcconf = Bcdatabase.load["#{deploy_file}_deploy", :ncs_staff_portal]
 set :application, "ncs_staff_portal"
 
 # User
@@ -105,8 +106,13 @@ after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions', 'config:imag
 # Database
 namespace :db do
   desc "Backup Database"
-  task :backup,  :roles => :app do
+  task :backup, :roles => :app do
     run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:backup"
+  end
+  
+  desc "Seed Data"
+  task :seed, :roles => :app do
+    run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} db:seed"
   end
 end
 
