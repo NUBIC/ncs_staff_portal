@@ -71,17 +71,12 @@ class OutreachEvent < ActiveRecord::Base
   validates_with OtherEntryValidator, :entry => :outreach_type, :other_entry => :outreach_type_other
   validates_with OtherEntryValidator, :entry => :culture, :other_entry => :culture_other
   validate :valid_event_date 
-  validate :has_segments, :unless => :imported_mode
   before_save :convert_date
   
   def valid_event_date
     errors.add(:event_date, "#{event_date} is not the valid mdes format date.") unless mdes_formatted_date
   end
   
-  def has_segments
-    errors.add(:base, "Outreach event must have atleast one segment. Please select one or more segments") if self.ncs_ssus.blank?
-  end
-   
   belongs_to :created_by_user, :class_name => 'Staff', :foreign_key => :created_by
   
   def imported_mode 
