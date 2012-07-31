@@ -22,7 +22,7 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
-gem 'ncs_mdes_warehouse', '0.6'
+gem 'ncs_mdes_warehouse', '~> 0.6', '>= 0.6.1'
 gem "nilify_blanks"
 gem "ransack"
 # gem 'ncs_mdes_warehouse', '~> 0.1',
