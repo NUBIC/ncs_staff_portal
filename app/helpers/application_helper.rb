@@ -46,7 +46,6 @@ module ApplicationHelper
       end
       list.join(', ')
     end
-    list
   end
   
   def display_supervisors(supervisors)
