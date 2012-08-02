@@ -16,12 +16,14 @@
           %table#weekly-expense-tbl
             - @staff_weekly_expenses.each do |staff_weekly_expense|
               %tr
-                %td= link_to staff_weekly_expense.week_start_date, staff_weekly_expense.staff
+                %td= staff_weekly_expense.week_start_date
                 %td= staff_weekly_expense.staff.display_name
+                %td
+                  - display_tasks(staff_weekly_expense)
                 %td= staff_weekly_expense.total_hours
                 %td= staff_weekly_expense.total_miles
                 %td= staff_weekly_expense.total_expenses
-                %td= staff_weekly_expense.total_tasks
+
                 %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
       :javascript
           $(document).ready(function() {
@@ -32,10 +34,10 @@
             var columnDefs = [
                 { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
                 { key: "staff_name", label: "Staff Name", sortable: true},
-                { key: "hours", label: "Time (hours)" },
+                { key: "task_reported", label: "Task Reported" },
+                { key: "hours", label: "Total Hours" },
                 { key: "miles", label: "Miles" },
                 { key: "expenses", label: "Expenses ($USD)" },
-                { key: "task_reported", label: "Task Reported" },
                 { key: "controls", label: "Controls" }
             ];
             var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
@@ -44,10 +46,10 @@
               fields: [
                 { key: "week_start_date"},
                 { key: "staff_name" },
+                { key: "task_reported"},
                 { key: "hours" },
                 { key: "miles" },
                 { key: "expenses" },
-                { key: "task_reported"},
                 { key: "controls" }
               ]
             };
