@@ -3,7 +3,11 @@ NcsStaffPortal::Application.routes.draw do
 
   #resources :management_tasks
 
-  resources :staff_weekly_expenses
+  resources :staff_weekly_expenses do
+    collection do
+      get 'by_staff'
+    end
+  end
 
   # resources :staff_cert_trainings
 

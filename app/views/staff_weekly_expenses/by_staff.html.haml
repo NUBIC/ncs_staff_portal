@@ -1,0 +1,79 @@
+.breadcrumbs
+  = render_breadcrumbs :separator => ' / ' 
+.content_tab
+  - if @staff.belongs_to_management_group
+    = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "other_tab"
+  - if @staff.belongs_to_data_collection_group
+    = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab"
+  %span.current_tab
+    My Weekly Entries
+  - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
+    = link_to 'Weekly Staff Summary', staff_weekly_expenses_path, :class => "other_tab"
+.content_body
+  .section_gap
+  .section
+    .section_heading
+      = raw page_entries_info @staff_weekly_expenses, {:model => "Weekly time and expenses for #{@staff.display_name}"}
+    %div.yui-skin-sam
+      %div#weekly-expense-list
+        %table#weekly-expense-tbl
+          - @staff_weekly_expenses.each do |staff_weekly_expense|
+            %tr
+              %td= staff_weekly_expense.week_start_date
+              %td
+                - display_tasks(staff_weekly_expense)
+              %td= staff_weekly_expense.total_hours
+              %td= staff_weekly_expense.total_miles
+              %td= staff_weekly_expense.total_expenses
+              %td
+                %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
+                  = staff_weekly_expense.comment
+              %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
+    :javascript
+        $(document).ready(function() {
+          displayWeeklyExpenseList()
+          $(".comment").each( function(i) {
+            expense_id = $(this).attr('expense_id')
+            url = "/staff_weekly_expenses/" +expense_id+".json"
+            $(this).editable(url, {
+            indicator : 'Saving...',
+            tooltip   : 'Double-click to edit...',
+            method: 'PUT',
+            type      : 'textarea',
+            rows      : 4,
+            name : 'comment',
+            cancel    : 'Cancel',
+            submit    : 'OK',
+            })
+          });
+
+        });
+  
+        function displayWeeklyExpenseList() {
+          var columnDefs = [
+              { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+              { key: "task_reported", label: "Task Reported" },
+              { key: "hours", label: "Total Hours" },
+              { key: "miles", label: "Miles" },
+              { key: "expenses", label: "Expenses ($USD)" },
+              { key: "comment", label: "Comment" },
+              { key: "controls", label: "Controls" }
+          ];
+          var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
+          dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+          dataSource.responseSchema = {
+            fields: [
+              { key: "week_start_date"},
+              { key: "task_reported"},
+              { key: "hours" },
+              { key: "miles" },
+              { key: "expenses" },
+              { key: "comment"},
+              { key: "controls" }
+            ]
+          };
+          new YAHOO.widget.DataTable("weekly-expense-list", columnDefs, dataSource, {
+              sortedBy: { key: "week_start_date", dir: YAHOO.widget.DataTable.CLASS_DESC}
+          });
+        }
+  = will_paginate @staff_weekly_expenses, :previous_label => "Previous", :next_label => "Next"
