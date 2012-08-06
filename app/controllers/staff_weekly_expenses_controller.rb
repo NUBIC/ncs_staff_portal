@@ -12,6 +12,24 @@ class StaffWeeklyExpensesController < SecuredController
     end
   end
 
+  # PUT /staff_weekly_expenses/1
+  # PUT /staff_weekly_expenses/1.xml
+  def update
+    @staff_weekly_expense = StaffWeeklyExpense.find(params[:id])
+    @staff_weekly_expense.comment = params[:comment]
+    @staff_weekly_expense.save!
+
+    respond_to do |format|
+      format.json { 
+        if request.xhr?
+          render :json => @staff_weekly_expense.comment
+        else
+          render :json => @staff_weekly_expense
+        end
+      }
+    end
+  end
+
   # DELETE /staff_weekly_expenses/1
   # DELETE /staff_weekly_expenses/1.xml
   def destroy

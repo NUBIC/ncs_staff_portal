@@ -23,11 +23,28 @@
                 %td= staff_weekly_expense.total_hours
                 %td= staff_weekly_expense.total_miles
                 %td= staff_weekly_expense.total_expenses
-
+                %td
+                  %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
+                    = staff_weekly_expense.comment
                 %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
       :javascript
           $(document).ready(function() {
             displayWeeklyExpenseList()
+            $(".comment").each( function(i) {
+              expense_id = $(this).attr('expense_id')
+              url = "/staff_weekly_expenses/" +expense_id+".json"
+              $(this).editable(url, {
+              indicator : 'Saving...',
+              tooltip   : 'Double-click to edit...',
+              method: 'PUT',
+              type      : 'textarea',
+              rows      : 4,
+              name : 'comment',
+              cancel    : 'Cancel',
+              submit    : 'OK',
+              })
+            });
+
           });
     
           function displayWeeklyExpenseList() {
@@ -38,6 +55,7 @@
                 { key: "hours", label: "Total Hours" },
                 { key: "miles", label: "Miles" },
                 { key: "expenses", label: "Expenses ($USD)" },
+                { key: "comment", label: "Comment" },
                 { key: "controls", label: "Controls" }
             ];
             var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
@@ -50,6 +68,7 @@
                 { key: "hours" },
                 { key: "miles" },
                 { key: "expenses" },
+                { key: "comment"},
                 { key: "controls" }
               ]
             };
