@@ -236,6 +236,13 @@
                 } else {
                     input_content = self.revert; 
                 }
+                try {
+                    input_content = input_content.trim();
+                }
+                catch(e) {
+                    // DO NOTHING
+                }
+
                 content.apply(form, [input_content, settings, self]);
 
                 input.attr('name', settings.name);
