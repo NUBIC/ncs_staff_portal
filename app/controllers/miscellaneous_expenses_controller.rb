@@ -32,17 +32,10 @@ class MiscellaneousExpensesController < SecuredController
   # POST /miscellaneous_expenses.xml
   def create
     @staff = Staff.find(params[:staff_id])
-    @miscellaneous_expense_temp  = MiscellaneousExpense.new(params[:miscellaneous_expense])
-    @start_date = @miscellaneous_expense_temp.expense_date.monday unless @miscellaneous_expense_temp.expense_date.blank?
-
-    @staff_weekly_expense = StaffWeeklyExpense.find_by_week_start_date_and_staff_id(@start_date, @staff)
-    if @staff_weekly_expense.nil?
-       @staff_weekly_expense = @staff.staff_weekly_expenses.build
-       @staff_weekly_expense.week_start_date = @start_date
-       @staff_weekly_expense.rate = @staff.hourly_rate
-       @staff_weekly_expense.save
-    end
-    @miscellaneous_expense = @staff_weekly_expense.miscellaneous_expenses.build(params[:miscellaneous_expense])
+    miscellaneous_expense_temp = MiscellaneousExpense.new(params[:miscellaneous_expense])
+    start_date = miscellaneous_expense_temp.expense_date.beginning_of_week unless miscellaneous_expense_temp.expense_date.blank?
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    @miscellaneous_expense = staff_weekly_expense.miscellaneous_expenses.build(params[:miscellaneous_expense])
 
     respond_to do |format|
       if @miscellaneous_expense.save
@@ -59,7 +52,16 @@ class MiscellaneousExpensesController < SecuredController
   # PUT /miscellaneous_expenses/1
   # PUT /miscellaneous_expenses/1.xml
   def update
+    @staff = Staff.find(params[:staff_id])
     @miscellaneous_expense = MiscellaneousExpense.find(params[:id])
+    miscellaneous_expense_temp  = MiscellaneousExpense.new(params[:miscellaneous_expense])
+    unless miscellaneous_expense_temp.expense_date == @miscellaneous_expense.expense_date
+      start_date = miscellaneous_expense_temp.expense_date.beginning_of_week unless miscellaneous_expense_temp.expense_date.blank?
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
+      unless @miscellaneous_expense.staff_weekly_expense == staff_weekly_expense
+        @miscellaneous_expense.staff_weekly_expense = staff_weekly_expense
+      end 
+    end
     respond_to do |format|
       if @miscellaneous_expense.update_attributes(params[:miscellaneous_expense])
         format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff), :notice => 'miscellaneous_expense was successfully updated.') }
