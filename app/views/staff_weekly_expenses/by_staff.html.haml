@@ -29,7 +29,7 @@
               %td
                 %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
                   = staff_weekly_expense.comment
-              %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
+              %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
     :javascript
         $(document).ready(function() {
           displayWeeklyExpenseList()
@@ -58,7 +58,7 @@
               { key: "miles", label: "Miles" },
               { key: "expenses", label: "Expenses ($USD)" },
               { key: "comment", label: "Comment" },
-              { key: "controls", label: "Controls" }
+              { key: "controls", label: "" }
           ];
           var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
           dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
