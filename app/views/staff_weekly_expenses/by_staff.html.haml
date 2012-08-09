@@ -38,11 +38,11 @@
             url = "/staff_weekly_expenses/" +expense_id+".json"
             $(this).editable(url, {
             indicator : 'Saving...',
-            tooltip   : 'Double-click to edit...',
-            method: 'PUT',
+            tooltip   : 'Click to edit...',
+            method    : 'PUT',
             type      : 'textarea',
             rows      : 4,
-            name : 'comment',
+            name      : 'comment',
             cancel    : 'Cancel',
             submit    : 'OK',
             })

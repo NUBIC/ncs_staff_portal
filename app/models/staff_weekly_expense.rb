@@ -30,20 +30,20 @@ class StaffWeeklyExpense < ActiveRecord::Base
   end
 
   def total_hours
-    self.management_tasks.map(&:hours).compact.inject(0) { |total, hours| total + hours } +
-      self.data_collection_tasks.map(&:hours).compact.inject(0) { |total, hours| total + hours }
+    self.management_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours } +
+      self.data_collection_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours }
   end
 
   def total_miles
-    self.management_tasks.map(&:miles).compact.inject(0) { |total, miles| total + miles} +
-      self.data_collection_tasks.map(&:miles).compact.inject(0) { |total, miles| total + miles } +
-      self.miscellaneous_expenses.map(&:miles).compact.inject(0) { |total, miles| total + miles }
+    self.management_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles} +
+      self.data_collection_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles } +
+      self.miscellaneous_expenses.map(&:miles).compact.inject(0.0) { |total, miles| total + miles }
   end
 
   def total_expenses
-    self.management_tasks.map(&:expenses).compact.inject(0) { |total, expenses| total + expenses } +
-      self.data_collection_tasks.map(&:expenses).compact.inject(0) { |total, expenses| total + expenses } +
-      self.miscellaneous_expenses.map(&:expenses).compact.inject(0) { |total, expenses| total + expenses }
+    self.management_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
+      self.data_collection_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
+      self.miscellaneous_expenses.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses }
   end
 
   def total_tasks
