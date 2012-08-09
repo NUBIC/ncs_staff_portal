@@ -28,7 +28,7 @@
                 %td
                   %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
                     = staff_weekly_expense.comment
-                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
+                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id}, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
       :javascript
           $(document).ready(function() {
             displayWeeklyExpenseList()

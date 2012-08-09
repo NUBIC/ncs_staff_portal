@@ -44,12 +44,17 @@ class StaffWeeklyExpensesController < SecuredController
   # DELETE /staff_weekly_expenses/1
   # DELETE /staff_weekly_expenses/1.xml
   def destroy
-    @staff = Staff.find(params[:staff_id])
-    @staff_weekly_expense = @staff.staff_weekly_expenses.find(params[:id])
+    @staff_weekly_expense = StaffWeeklyExpense.find(params[:id])
     @staff_weekly_expense.destroy
 
     respond_to do |format|
-      format.html { redirect_to(staff_weekly_expenses_url) }
+      format.html {
+      if params[:staff_id] 
+        redirect_to(by_staff_staff_weekly_expenses_url(:staff_id => params[:staff_id]))
+      else
+        redirect_to(staff_weekly_expenses_url) 
+      end
+      }
       format.xml  { head :ok }
     end
   end
