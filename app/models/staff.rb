@@ -209,9 +209,7 @@ class Staff < ActiveRecord::Base
   def self.by_task_reminder(by_date)
     reminder_staff = []
     Staff.all.each do |s|
-      if (s.staff_weekly_expenses.blank? || !s.staff_weekly_expenses.detect {|expense| expense.week_start_date == by_date.monday})
-        reminder_staff << s
-      end
+      reminder_staff << s unless StaffWeeklyExpense.find_by_week_start_date_and_staff_id(by_date.beginning_of_week, s.id)
     end
     reminder_staff
   end
