@@ -69,7 +69,9 @@ module ApplicationHelper
   end
   
   def display_segments(segments)
-    if segments.count == NcsAreaSsu.all.count
+    if segments.count == 0
+      list = []
+    elsif segments.count == NcsAreaSsu.all.count
       list = "All #{segments.count} segments"
     else
       list = segments.map do |segment|
