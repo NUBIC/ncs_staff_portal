@@ -15,7 +15,7 @@
             = f.text_field :ncs_ssus_ssu_name_cont
         %tr
           %td
-            = f.label :name_cont, "Name"
+            = f.label :name_cont, "Event Name"
             = f.text_field :name_cont
           %td
             = f.label :staff_first_name_or_staff_last_name_or_staff_staff_id_cont, "Staff member"
@@ -57,7 +57,7 @@
         function displayEventList() {
           var columnDefs = [
               { key: "date", label: "Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-              { key: "name", label: "Name", sortable: true},
+              { key: "name", label: "Event Name", sortable: true},
               { key: "segment", label: "Segments"},
               { key: "result", label: "Result" },
               { key: "mode", label: "Mode" },
