@@ -24,7 +24,7 @@
               = f.text_field :week_start_date_lteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
             %td
               = f.submit "Search",:class => "control_button"
-              = link_to 'Reset', outreach_events_path, :class => "control_button"
+              = link_to 'Reset', staff_weekly_expenses_path, :class => "control_button"
     .section_gap
     .section
       .section_heading
