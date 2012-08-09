@@ -13,7 +13,7 @@
 .content_body
   .section_gap
   .section
-    = search_form_for @q do |f|
+    = search_form_for @q, :url => by_staff_staff_weekly_expenses_path(:staff_id => @staff.id) do |f|
       %table
         %tr
           %td{ :colspan => "2" }
@@ -21,12 +21,13 @@
         %tr
           %td
             = f.label :week_start_date_gteq, "Week Start Date From"
-            = f.text_field :week_start_date_gteq, {:class => "datepicker", :size =>10, :maxlength =>10}
+            = f.text_field :week_start_date_gteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
             = f.label :week_start_date_lteq, "To "
-            = f.text_field :week_start_date_lteq, {:class => "datepicker", :size =>10, :maxlength =>10}
+            = f.text_field :week_start_date_lteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
+            = hidden_field_tag :staff_id, @staff.id
           %td
             = f.submit "Search",:class => "control_button"
-            = link_to 'Reset', outreach_events_path, :class => "control_button"
+            = link_to 'Reset', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "control_button"
   .section_gap
   .section
     .section_heading
@@ -55,7 +56,7 @@
             $(this).editable(url, {
             indicator : 'Saving...',
             tooltip   : 'Click to edit...',
-            placeholder: 'Click to add...'
+            placeholder: 'Click to add...',
             method    : 'PUT',
             type      : 'textarea',
             rows      : 4,
