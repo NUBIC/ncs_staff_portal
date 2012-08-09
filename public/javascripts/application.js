@@ -248,6 +248,22 @@ $(document).ready(function(){
     changeYear: true,
     yearRange: '1920:2020'
   } );
+
+  $(".week_datepicker").datepicker( 
+  { 
+    dateFormat: 'yy-mm-dd',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: '1920:2020',
+    beforeShowDay: function(date)
+      { 
+        if ($(this).attr('week_start_day') == "monday") {
+          return [(date.getDay() == 1), ""]
+        } else {
+          return [(date.getDay() == 0), ""]
+        }
+      }
+  } );
   
   $('.help_text_link').click(function(event) {
     var help_text = $(this).next('.help_text').val();

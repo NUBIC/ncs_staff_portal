@@ -5,7 +5,8 @@ class StaffWeeklyExpensesController < SecuredController
   # GET /staff_weekly_expenses.xml
   def index
     params[:page] ||= 1
-    @staff_weekly_expenses = StaffWeeklyExpense.visible_expenses(@current_staff.visible_employees.map(&:id)).sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    @q = StaffWeeklyExpense.search(params[:q])
+    @staff_weekly_expenses = (StaffWeeklyExpense.visible_expenses(@current_staff.visible_employees.map(&:id)) & @q.result(:distinct => true)).sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @staff_weekly_expenses }
@@ -16,7 +17,8 @@ class StaffWeeklyExpensesController < SecuredController
   def by_staff
     params[:page] ||= 1
     @staff = Staff.find(params[:staff_id])
-    @staff_weekly_expenses = @staff.staff_weekly_expenses.sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
+    @q = StaffWeeklyExpense.search(params[:q])
+    @staff_weekly_expenses = (@staff.staff_weekly_expenses & @q.result(:distinct => true)).sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html { render :layout => tasks_layout }
       format.xml  { render :xml => @staff_weekly_expenses }

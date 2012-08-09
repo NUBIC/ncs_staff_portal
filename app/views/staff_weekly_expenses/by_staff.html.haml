@@ -13,8 +13,24 @@
 .content_body
   .section_gap
   .section
+    = search_form_for @q do |f|
+      %table
+        %tr
+          %td{ :colspan => "2" }
+            %em Search Weekly Expense
+        %tr
+          %td
+            = f.label :week_start_date_gteq, "Week Start Date From"
+            = f.text_field :week_start_date_gteq, {:class => "datepicker", :size =>10, :maxlength =>10}
+            = f.label :week_start_date_lteq, "To "
+            = f.text_field :week_start_date_lteq, {:class => "datepicker", :size =>10, :maxlength =>10}
+          %td
+            = f.submit "Search",:class => "control_button"
+            = link_to 'Reset', outreach_events_path, :class => "control_button"
+  .section_gap
+  .section
     .section_heading
-      = raw page_entries_info @staff_weekly_expenses, {:model => "Weekly time and expenses for #{@staff.display_name}"}
+      = raw page_entries_info @staff_weekly_expenses, {:model => "Weekly time and expense"}
     %div.yui-skin-sam
       %div#weekly-expense-list
         %table#weekly-expense-tbl
@@ -39,6 +55,7 @@
             $(this).editable(url, {
             indicator : 'Saving...',
             tooltip   : 'Click to edit...',
+            placeholder: 'Click to add...'
             method    : 'PUT',
             type      : 'textarea',
             rows      : 4,

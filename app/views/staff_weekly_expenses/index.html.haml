@@ -11,6 +11,22 @@
   .content_body
     .section_gap
     .section
+      = search_form_for @q do |f|
+        %table
+          %tr
+            %td{ :colspan => "2" }
+              %em Search Weekly Expense
+          %tr
+            %td
+              = f.label :week_start_date_gteq, "Week Start Date From"
+              = f.text_field :week_start_date_gteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
+              = f.label :week_start_date_lteq, "To "
+              = f.text_field :week_start_date_lteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
+            %td
+              = f.submit "Search",:class => "control_button"
+              = link_to 'Reset', outreach_events_path, :class => "control_button"
+    .section_gap
+    .section
       .section_heading
         = raw page_entries_info @staff_weekly_expenses, {:model => "Weekly time and expenses"}
       %div.yui-skin-sam
@@ -41,6 +57,7 @@
               method    : 'PUT',
               type      : 'textarea',
               rows      : 4,
+              placeholder: 'Click to add...',
               name      : 'comment',
               cancel    : 'Cancel',
               submit    : 'OK',
