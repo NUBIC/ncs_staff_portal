@@ -51,6 +51,7 @@ class Staff < ActiveRecord::Base
   has_many :staff_weekly_expenses, :dependent => :destroy
   has_many :management_tasks, :through => :staff_weekly_expenses
   has_many :data_collection_tasks, :through => :staff_weekly_expenses
+  has_many :miscellaneous_expenses, :through => :staff_weekly_expenses
   has_many :staff_roles, :dependent => :destroy
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
@@ -208,9 +209,7 @@ class Staff < ActiveRecord::Base
   def self.by_task_reminder(by_date)
     reminder_staff = []
     Staff.all.each do |s|
-      if (s.staff_weekly_expenses.blank? || !s.staff_weekly_expenses.detect {|expense| expense.week_start_date == by_date.monday})
-        reminder_staff << s
-      end
+      reminder_staff << s unless StaffWeeklyExpense.find_by_week_start_date_and_staff_id(by_date.beginning_of_week, s.id)
     end
     reminder_staff
   end

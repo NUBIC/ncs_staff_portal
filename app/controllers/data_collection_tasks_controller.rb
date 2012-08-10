@@ -2,8 +2,8 @@ class DataCollectionTasksController < SecuredController
   set_tab :time_and_expenses
   layout :tasks_layout
   before_filter :check_staff_access, :only => %w(new edit) 
-  # GET /management_tasks/new
-  # GET /management_tasks/new.xml
+  # GET /data_collection_tasks/new
+  # GET /data_collection_tasks/new.xml
   def new
     params[:page] ||= 1
     @data_collection_tasks = Staff.find(params[:staff_id]).data_collection_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -16,7 +16,7 @@ class DataCollectionTasksController < SecuredController
     end
   end
 
-  # GET /management_tasks/1/edit
+  # GET /data_collection_tasks/1/edit
   def edit
     @staff = Staff.find(params[:staff_id])
     params[:page] ||= 1
@@ -28,22 +28,15 @@ class DataCollectionTasksController < SecuredController
     end
   end
 
-  # POST /management_tasks
-  # POST /management_tasks.xml
+  # POST /data_collection_tasks
+  # POST /data_collection_tasks.xml
   def create
     @staff = Staff.find(params[:staff_id])
-    @data_collection_task_temp  = DataCollectionTask.new(params[:data_collection_task])
-    @start_date = @data_collection_task_temp.task_date.monday unless @data_collection_task_temp.task_date.blank?
-
-    @staff_weekly_expense = StaffWeeklyExpense.find_by_week_start_date_and_staff_id(@start_date, @staff)
-    if @staff_weekly_expense.nil?
-       @staff_weekly_expense = @staff.staff_weekly_expenses.build
-       @staff_weekly_expense.week_start_date = @start_date
-       @staff_weekly_expense.rate = @staff.hourly_rate
-       @staff_weekly_expense.save
-    end
-    @data_collection_task = @staff_weekly_expense.data_collection_tasks.build(params[:data_collection_task])
-
+    data_collection_task_temp = DataCollectionTask.new(params[:data_collection_task])
+    start_date = data_collection_task_temp.task_date.beginning_of_week unless data_collection_task_temp.task_date.blank?
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    @data_collection_task = staff_weekly_expense.data_collection_tasks.build(params[:data_collection_task])
+    
     respond_to do |format|
       if @data_collection_task.save
         format.html { redirect_to(new_staff_data_collection_task_path(@staff), :notice => 'data_collection_task was successfully created.') }
@@ -56,10 +49,19 @@ class DataCollectionTasksController < SecuredController
     end
   end
 
-  # PUT /management_tasks/1
-  # PUT /management_tasks/1.xml
+  # PUT /data_collection_tasks/1
+  # PUT /data_collection_tasks/1.xml
   def update
+    @staff = Staff.find(params[:staff_id])
     @data_collection_task = DataCollectionTask.find(params[:id])
+    data_collection_task_temp  = DataCollectionTask.new(params[:data_collection_task])
+    unless data_collection_task_temp.task_date == @data_collection_task.task_date
+      start_date = data_collection_task_temp.task_date.beginning_of_week unless data_collection_task_temp.task_date.blank?
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
+      unless @data_collection_task.staff_weekly_expense == staff_weekly_expense
+        @data_collection_task.staff_weekly_expense = staff_weekly_expense
+      end 
+    end
     respond_to do |format|
       if @data_collection_task.update_attributes(params[:data_collection_task])
         format.html { redirect_to(new_staff_data_collection_task_path(@staff), :notice => 'data_collection_task was successfully updated.') }
@@ -72,8 +74,8 @@ class DataCollectionTasksController < SecuredController
     end
   end
 
-  # DELETE /management_tasks/1
-  # DELETE /management_tasks/1.xml
+  # DELETE /data_collection_tasks/1
+  # DELETE /data_collection_tasks/1.xml
   def destroy
     @staff = Staff.find(params[:staff_id])
     @data_collection_task = @staff.data_collection_tasks.find(params[:id])

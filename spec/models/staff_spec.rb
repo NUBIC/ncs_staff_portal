@@ -147,12 +147,13 @@ describe Staff do
       @staff3 = FactoryGirl.create(:staff)
       @staff4 = FactoryGirl.create(:staff)
 
-      @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.monday)
-      @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
-      @staff1.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
+      @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.beginning_of_week)
+      @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).beginning_of_week)
+      @staff1.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).beginning_of_week)
     end
     it "should return all the staff with no weekly task entry for the current week" do
       expected_staff = Staff.by_task_reminder(Date.today)
+      expected_staff.size.should == 3
       expected_staff.should include @staff1
       expected_staff.should include @staff2
       expected_staff.should include @staff4
@@ -160,6 +161,7 @@ describe Staff do
 
     it "should return all the staff with no weekly task entry for the previous week" do
       expected_staff = Staff.by_task_reminder(Date.today - 1.week)
+      expected_staff.size.should == 2
       expected_staff.should include @staff3
       expected_staff.should include @staff4
     end

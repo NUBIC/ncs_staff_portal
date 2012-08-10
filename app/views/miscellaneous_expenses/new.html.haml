@@ -1,0 +1,10 @@
+= render 'tabs'  
+.content_body
+  - if !@staff.external?
+    .section_gap
+    .section
+      .section_heading
+        New miscellaneous expense for #{@staff.display_name}
+      = render 'miscellaneous_expense'
+  .section_gap
+  = render 'miscellaneous_expenses'

@@ -12,7 +12,7 @@
             %td= staff_cert_training.expiration_date
             %td= staff_cert_training.background_check.display_text unless staff_cert_training.background_check_code.blank?
             %td= staff_cert_training.complete.display_text unless staff_cert_training.complete_code.blank? 
-            %td= button_to "Delete", { :action => "destroy", :id => staff_cert_training.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete  
+            %td= button_to "Delete", { :action => "destroy", :id => staff_cert_training.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the certification record. ')", :method => :delete  
   %br
 
   :javascript
@@ -27,7 +27,7 @@
             { key: "expiration_date", label: "Expiration Date" },
             { key: "check", label: "BG check" },
             { key: "complete", label: "Complete" },
-            { key: "controls", label: "Control"}
+            { key: "controls", label: ""}
         ];
         var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("certificates-list-tbl"));
         dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
