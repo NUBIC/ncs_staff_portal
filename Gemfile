@@ -36,8 +36,9 @@ group :development, :test, :ci do
   gem 'launchy'
   gem "json_spec"
   gem 'cucumber-rails', :require => false
-  # database_cleaner 0.6.7 doesn't work with DataMapper on PostgreSQL
-  gem 'database_cleaner', :git => 'git://github.com/bmabey/database_cleaner.git'
+  # See https://github.com/bmabey/database_cleaner/pull/119
+  gem 'database_cleaner',
+    :git => 'git://github.com/rsutphin/database_cleaner.git', :branch => 'dm-pg-single-trunc'
   gem 'factory_girl_rails', '~> 1.1.rc1'
   gem 'shoulda'
   gem 'ci_reporter', '~> 1.6'
