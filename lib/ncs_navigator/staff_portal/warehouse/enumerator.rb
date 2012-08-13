@@ -14,7 +14,6 @@ module NcsNavigator::StaffPortal::Warehouse
       :query => %Q(
         SELECT s.*,
           to_char(birth_date, 'YYYY') staff_yob,
-          to_char(zipcode, 'FM00000') staff_zip,
           CASE
             WHEN age_group_code IS NOT NULL THEN age_group_code
             ELSE
@@ -35,7 +34,8 @@ module NcsNavigator::StaffPortal::Warehouse
       :prefix => 'staff_',
       :column_map => {
         :staff_id => :staff_id,
-        :experience_code => :staff_exp
+        :experience_code => :staff_exp,
+        :zipcode => :staff_zip
       },
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode

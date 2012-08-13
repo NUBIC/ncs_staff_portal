@@ -21,7 +21,7 @@
 #  birth_date         :date
 #  pay_type           :string(255)
 #  pay_amount         :decimal(10, 2)
-#  zipcode            :integer
+#  zipcode            :string(5)
 #  first_name         :string(255)
 #  last_name          :string(255)
 #  ncs_active_date    :date
@@ -255,7 +255,7 @@ describe Staff do
         staff.should have(1).error_on(:gender)
         staff.should have(1).error_on(:race)
         staff.should have(1).error_on(:ethnicity)
-        staff.should have(1).error_on(:zipcode)
+        staff.should have(2).error_on(:zipcode)
         staff.should have(1).error_on(:subcontractor)
         staff.should have(1).error_on(:experience)
       end

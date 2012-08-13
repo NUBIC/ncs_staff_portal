@@ -449,7 +449,7 @@ module NcsNavigator::StaffPortal::Warehouse
         include_examples 'one-to-one valid'
 
         [
-          [:event_date, Date.new(2011, 7, 5), :outreach_event_date, '2011-07-05'],
+          [:event_date, '2011-07-05', :outreach_event_date, '2011-07-05'],
           [:mode, ncs_code(8), :outreach_mode, '8'],
           [:mode_other, 'E', :outreach_mode_oth],
           [:outreach_type, ncs_code(5), :outreach_type, '5'],

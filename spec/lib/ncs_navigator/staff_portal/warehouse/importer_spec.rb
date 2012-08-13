@@ -83,7 +83,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         describe 'when an entity association is changed' do
-          let!(:sp_second_staff) { Factory(:valid_staff, :username => "new", :email => "new@test.com", :zipcode => 33333) } 
+          let!(:sp_second_staff) { Factory(:valid_staff, :username => "new", :email => "new@test.com", :zipcode => '33333') } 
           let!(:mdes_second_staff) { enumerator.to_a(:staff).second.tap { |p| save_wh(p) } }
 
           before do
@@ -94,7 +94,7 @@ module NcsNavigator::StaffPortal::Warehouse
           end
 
           it 'updates the association to the core object' do
-            StaffCertTraining.first.staff.zipcode.should == 33333
+            StaffCertTraining.first.staff.zipcode.should == '33333'
             StaffCertTraining.first.staff.id.should_not == sp_staff.id
           end
 
@@ -157,7 +157,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'creates a new record with appropriate zipcode' do
-          Staff.first.zipcode.should == 92131         
+          Staff.first.zipcode.should == '92131'     
         end
         
         it 'creates a new record with age range set' do

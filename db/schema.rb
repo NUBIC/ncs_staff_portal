@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703164924) do
+ActiveRecord::Schema.define(:version => 20120810185448) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(:version => 20120703164924) do
     t.date     "birth_date"
     t.string   "pay_type"
     t.decimal  "pay_amount",                       :precision => 10, :scale => 2
-    t.integer  "zipcode"
+    t.string   "zipcode",            :limit => 5
     t.string   "first_name"
     t.string   "last_name"
     t.date     "ncs_active_date"

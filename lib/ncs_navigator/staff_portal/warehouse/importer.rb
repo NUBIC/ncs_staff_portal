@@ -59,7 +59,6 @@ module NcsNavigator::StaffPortal::Warehouse
             when :staff
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
-              staff_portal_record.send("zipcode=", mdes_record.staff_zip.to_i)
               staff_portal_record.send("external=", true)
               staff_portal_record.send("notify=", false)
               staff_portal_record.send("ncs_inactive_date=", Date.today)
