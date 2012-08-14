@@ -176,10 +176,6 @@ class Staff < ActiveRecord::Base
     validate_update == "false" ? false : true
   end
 
-  def name
-    [first_name, last_name].join(' ')
-  end
-
   def calculate_hourly_rate
     if pay_type == "Hourly"
       self.hourly_rate = pay_amount unless pay_amount.blank?
@@ -213,6 +209,10 @@ class Staff < ActiveRecord::Base
       reminder_staff << s unless StaffWeeklyExpense.find_by_week_start_date_and_staff_id(by_date.beginning_of_week, s.id)
     end
     reminder_staff
+  end
+
+  def name
+    [last_name, first_name].reject(&:blank?).join(', ')
   end
   
   def display_username

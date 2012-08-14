@@ -132,11 +132,29 @@ describe Staff do
   
   describe 'display_name' do
     it 'displays name if name is not blank' do
-      FactoryGirl.build(:staff).display_name.should == "FName LName"
+      FactoryGirl.build(:staff).display_name.should == "LName, FName"
     end
 
     it 'displays staff_id if name is blank' do
       FactoryGirl.create(:staff, :first_name => nil, :last_name => nil, :staff_id => "staff_id_123").display_name.should == "staff_id_123"
+    end
+  end
+
+  describe 'name' do
+    it 'should be blank if no last_name and first_name for staff' do
+      FactoryGirl.build(:staff, :first_name => nil, :last_name => nil).name.should == ""
+    end
+
+    it 'should be only last_name if first_name is blank' do
+      FactoryGirl.create(:staff, :first_name => nil, :last_name => "LName").name.should == "LName"
+    end
+
+    it 'should be only first_name if last_name is blank' do
+      FactoryGirl.create(:staff, :first_name => "FName", :last_name => nil).name.should == "FName"
+    end
+
+    it 'should last_name and first_name join with ','' do
+      FactoryGirl.create(:staff).name.should == "LName, FName"
     end
   end
 
