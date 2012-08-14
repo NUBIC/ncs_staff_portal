@@ -71,7 +71,7 @@ class OutreachEvent < ActiveRecord::Base
   validates_with OtherEntryValidator, :entry => :outreach_type, :other_entry => :outreach_type_other
   validates_with OtherEntryValidator, :entry => :culture, :other_entry => :culture_other
   validate :valid_event_date 
-  # validate :has_segments, :unless => :imported_mode
+  validate :has_segments, :unless => :imported_mode
   before_save :convert_date
   
   def valid_event_date
