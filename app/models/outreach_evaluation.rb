@@ -14,6 +14,7 @@
 
 class OutreachEvaluation < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   acts_as_mdes_record :public_id => :outreach_event_eval_id
   ncs_coded_attribute :evaluation, 'OUTREACH_EVAL_CL1'
   belongs_to :outreach_event

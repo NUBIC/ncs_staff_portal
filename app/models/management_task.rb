@@ -18,6 +18,7 @@
 
 class ManagementTask < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   validates_presence_of  :task_type
   validates_date :task_date, :allow_blank => false
   validates :hours, :numericality => {:less_than => 100.00, :greater_than_or_equal_to => 0, :allow_nil => true }
