@@ -49,7 +49,7 @@
               %td= outreach_event.outreach_type_text
               %td= outreach_event.created_by_user_text
               - if @can_delete
-                %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the outreach event record. )", :method => :delete
+                %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the outreach event record. ')", :method => :delete 
               - else
                 %td
 
