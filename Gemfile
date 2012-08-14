@@ -9,7 +9,6 @@ gem 'pg'
 gem 'haml', '~>3.0.25'
 gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
-gem 'fastercsv'
 gem 'tabs_on_rails'
 gem "breadcrumbs_on_rails"
 gem 'ncs_mdes'

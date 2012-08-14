@@ -308,7 +308,6 @@ DEPENDENCIES
   database_cleaner!
   exception_notification
   factory_girl_rails (~> 1.1.rc1)
-  fastercsv
   growl
   guard
   guard-rspec
