@@ -14,6 +14,7 @@
 
 class OutreachTarget < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   acts_as_mdes_record :public_id => :outreach_target_id
   ncs_coded_attribute :target, 'OUTREACH_TARGET_CL1'
   belongs_to :outreach_event

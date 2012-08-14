@@ -30,7 +30,7 @@
 
 class OutreachEvent < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
-  
+  strip_attributes
   MDES_DATE_FORMAT = '^\d{4}-(9[13467]-(9[13467]|(0[1-9]|1[0-9]|2[0-9]|3[01]))|(0[1-9]|1[0-2])-(9[13467]|(0[1-9]|1[0-9]|2[0-9]))|(0[13578]|1[02])-31|(0[1,3-9]|1[0-2])-30)$'
   
   acts_as_mdes_record :public_id => :outreach_event_id
@@ -71,7 +71,7 @@ class OutreachEvent < ActiveRecord::Base
   validates_with OtherEntryValidator, :entry => :outreach_type, :other_entry => :outreach_type_other
   validates_with OtherEntryValidator, :entry => :culture, :other_entry => :culture_other
   validate :valid_event_date 
-  validate :has_segments, :unless => :imported_mode
+  # validate :has_segments, :unless => :imported_mode
   before_save :convert_date
   
   def valid_event_date

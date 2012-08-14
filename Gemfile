@@ -25,9 +25,7 @@ gem 'exception_notification', :require => 'exception_notifier'
 gem 'ncs_mdes_warehouse', '~> 0.6', '>= 0.6.1'
 gem "nilify_blanks"
 gem "ransack"
-# gem 'ncs_mdes_warehouse', '~> 0.1',
-#   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
-# gem 'ncs_mdes_warehouse', '~> 0.1', :path => '../ncs_mdes_warehouse'
+gem "strip_attributes", "~> 1.0"
 
 group :development, :test, :ci do
   gem 'rspec-rails', '2.6.1'

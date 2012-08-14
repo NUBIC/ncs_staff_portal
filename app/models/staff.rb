@@ -35,6 +35,7 @@
 
 class Staff < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   nilify_blanks
   self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create

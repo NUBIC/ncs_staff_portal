@@ -18,6 +18,7 @@
 
 class StaffCertTraining < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   validates_presence_of :certificate_type, :complete, :background_check
   belongs_to :staff
   validates_date :expiration_date, :allow_blank => true
