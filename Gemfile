@@ -37,7 +37,7 @@ group :development, :test, :ci do
   gem 'database_cleaner',
     :git => 'git://github.com/rsutphin/database_cleaner.git', :branch => 'dm-pg-single-trunc'
   gem 'factory_girl_rails', '~> 1.1.rc1'
-  gem 'shoulda'
+  gem 'shoulda-matchers'
   gem 'ci_reporter', '~> 1.6'
   gem 'annotate'
   gem 'guard'
