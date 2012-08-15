@@ -140,6 +140,24 @@ describe Staff do
     end
   end
 
+  describe 'last_name_first_name' do
+    it 'should be blank if no last_name and first_name for staff' do
+      FactoryGirl.build(:staff, :first_name => nil, :last_name => nil).last_name_first_name.should == ""
+    end
+
+    it 'should be only last_name if first_name is blank' do
+      FactoryGirl.create(:staff, :first_name => nil, :last_name => "LName").last_name_first_name.should == "LName"
+    end
+
+    it 'should be only first_name if last_name is blank' do
+      FactoryGirl.create(:staff, :first_name => "FName", :last_name => nil).last_name_first_name.should == "FName"
+    end
+
+    it "should be last_name and first_name join with ','" do
+      FactoryGirl.create(:staff).last_name_first_name.should == "LName, FName"
+    end
+  end
+
   describe 'name' do
     it 'should be blank if no last_name and first_name for staff' do
       FactoryGirl.build(:staff, :first_name => nil, :last_name => nil).name.should == ""
@@ -153,8 +171,8 @@ describe Staff do
       FactoryGirl.create(:staff, :first_name => "FName", :last_name => nil).name.should == "FName"
     end
 
-    it 'should last_name and first_name join with ','' do
-      FactoryGirl.create(:staff).name.should == "LName, FName"
+    it "should be first name and last name join with space" do
+      FactoryGirl.create(:staff).name.should == "FName LName"
     end
   end
 

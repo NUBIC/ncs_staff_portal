@@ -213,6 +213,10 @@ class Staff < ActiveRecord::Base
   end
 
   def name
+    [first_name, last_name].reject(&:blank?).join(' ')
+  end
+
+  def last_name_first_name
     [last_name, first_name].reject(&:blank?).join(', ')
   end
   
@@ -221,6 +225,6 @@ class Staff < ActiveRecord::Base
   end
   
   def display_name
-    name.blank? ? staff_id : name
+    last_name_first_name.blank? ? staff_id : last_name_first_name
   end
 end
