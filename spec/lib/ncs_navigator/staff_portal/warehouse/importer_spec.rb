@@ -406,10 +406,8 @@ module NcsNavigator::StaffPortal::Warehouse
           save_wh(p) } }
 
         let!(:mdes_record) {
-          Factory(:staff_weekly_expense, :staff => sp_staff, :rate => 32.50)
+          Factory(:staff_weekly_expense, :staff => sp_staff, :rate => 32.50, :hours => 25, :expenses => 200, :miles => 15.7)
           enumerator.to_a(:staff_weekly_expenses).first.tap do |a|
-            a.staff_expenses = 200
-            a.staff_miles = 15.7
             save_wh(a)
             StaffWeeklyExpense.destroy_all
             StaffWeeklyExpense.count.should == 0
@@ -424,27 +422,23 @@ module NcsNavigator::StaffPortal::Warehouse
           StaffWeeklyExpense.count.should == 1
         end
         
-        it 'creates a new record with correct staff pay association' do
+        it 'records staff pay correctly' do
           StaffWeeklyExpense.first.rate.should == 32.50
         end 
-        
-        describe "for expenses and miles as miscellaneous expense" do
-          it 'creates a new record' do
-            MiscellaneousExpense.count.should == 1
-          end
-          
-          it "records weekly expenses correctly" do
-            MiscellaneousExpense.first.expenses.should == 200
-          end
-          
-          it "records weekly miles correctly" do
-            MiscellaneousExpense.first.miles.should == 15.7
-          end
-          
-          it "records comment inidicating imported to system" do
-            MiscellaneousExpense.first.comment.should == "Imported to the system"
-          end
+
+        it "records weekly hours correctly" do
+           StaffWeeklyExpense.first.hours.should == 25
         end
+          
+        it "records weekly expenses correctly" do
+           StaffWeeklyExpense.first.expenses.should == 200
+        end
+        
+        it "records weekly miles correctly" do
+           StaffWeeklyExpense.first.miles.should == 15.7
+        end
+        
+
       end
     end
       
