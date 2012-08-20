@@ -10,6 +10,9 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  weekly_exp_id   :string(36)      not null
+#  hours           :decimal(10, 2)
+#  miles           :decimal(10, 2)
+#  expenses        :decimal(10, 2)
 #
 
 require 'spec_helper'
@@ -67,6 +70,11 @@ describe StaffWeeklyExpense do
     end
 
     describe "hours" do
+      it "uses the weekly_expenses hours if set" do
+        @expense.update_attribute(:hours, '25')
+        @expense.total_hours.should == 25
+      end
+
       it "gives total hours of management_tasks and data_collection_task" do
         @expense.management_tasks << FactoryGirl.create(:management_task, :hours => 12)
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :hours => 15)
@@ -82,9 +90,18 @@ describe StaffWeeklyExpense do
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :hours => 18)
         @expense.total_hours.should == 18
       end
+
+      it "uses 0.0 if there are no hours" do
+        @expense.total_hours.should == 0.0
+      end
     end
 
     describe "miles" do
+      it "uses the weekly_expenses miles if set" do
+        @expense.update_attribute(:miles, '25.78')
+        @expense.total_miles.should == 25.78
+      end
+
       it "gives total miles of management_tasks and data_collection_task" do
         @expense.management_tasks << FactoryGirl.create(:management_task, :miles => 12)
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :miles => 15)
@@ -100,9 +117,18 @@ describe StaffWeeklyExpense do
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :miles => 18)
         @expense.total_miles.should == 18
       end
+
+      it "uses 0.0 if there are no miles" do
+        @expense.total_miles.should == 0.0
+      end
     end
 
     describe "expenses" do
+      it "uses the weekly_expenses expenses if set" do
+        @expense.update_attribute(:expenses, '250')
+        @expense.total_expenses.should == 250
+      end
+
       it "gives total expenses of management_tasks and data_collection_task" do
         @expense.management_tasks << FactoryGirl.create(:management_task, :expenses => 200)
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :expenses => 150)
@@ -117,6 +143,10 @@ describe StaffWeeklyExpense do
       it "gives total expenses of data_collection_tasks expenses only if no management_tasks associated with weekly_expenses" do
         @expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :expenses => 300)
         @expense.total_expenses.should == 300
+      end
+
+      it "uses 0.0 if there are no expenses" do
+        @expense.total_expenses.should == 0.0
       end
     end
 

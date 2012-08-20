@@ -10,6 +10,9 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  weekly_exp_id   :string(36)      not null
+#  hours           :decimal(10, 2)
+#  miles           :decimal(10, 2)
+#  expenses        :decimal(10, 2)
 #
 
 class StaffWeeklyExpense < ActiveRecord::Base
@@ -30,20 +33,32 @@ class StaffWeeklyExpense < ActiveRecord::Base
   end
 
   def total_hours
-    self.management_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours } +
-      self.data_collection_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours }
+    if hours
+      hours
+    else
+      self.management_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours } +
+        self.data_collection_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours }
+    end
   end
 
   def total_miles
-    self.management_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles} +
-      self.data_collection_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles } +
-      self.miscellaneous_expenses.map(&:miles).compact.inject(0.0) { |total, miles| total + miles }
+    if miles
+      miles
+    else
+      self.management_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles} +
+        self.data_collection_tasks.map(&:miles).compact.inject(0.0) { |total, miles| total + miles } +
+        self.miscellaneous_expenses.map(&:miles).compact.inject(0.0) { |total, miles| total + miles }
+    end
   end
 
   def total_expenses
-    self.management_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
-      self.data_collection_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
-      self.miscellaneous_expenses.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses }
+    if expenses
+      expenses
+    else
+      self.management_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
+        self.data_collection_tasks.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses } +
+        self.miscellaneous_expenses.map(&:expenses).compact.inject(0.0) { |total, expenses| total + expenses }
+    end
   end
 
   def total_tasks

@@ -109,9 +109,21 @@ module NcsNavigator::StaffPortal::Warehouse
         SELECT
           s.staff_id AS public_id_for_staff,
           swe.weekly_exp_id,
-          COALESCE(t.staff_hours,    '0.0') staff_hours,
-          COALESCE(t.staff_expenses, '0.0') staff_expenses,
-          COALESCE(t.staff_miles,    '0.0') staff_miles,
+          CASE
+            WHEN swe.hours IS NOT NULL THEN swe.hours
+            ELSE
+              COALESCE(t.staff_hours, '0.0')
+            END as staff_hours,
+          CASE
+            WHEN swe.expenses IS NOT NULL THEN swe.expenses
+            ELSE
+              COALESCE(t.staff_expenses, '0.0') 
+            END as staff_expenses,
+          CASE
+            WHEN swe.miles IS NOT NULL THEN swe.miles
+            ELSE
+              COALESCE(t.staff_miles, '0.0') 
+            END as staff_miles,
           to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
           swe.rate,
           swe.comment
