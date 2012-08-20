@@ -288,20 +288,32 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         describe 'hours' do
-          it 'sums across all tasks' do
+          it 'uses weekly_expense hours if set' do
+            sp_record.update_attribute(:hours, '51.25')
+            results.first.staff_hours.should == '51.25'
+          end
+
+          it 'sums across all tasks if weekly_expense hours are null' do
+            sp_record.hours.should be_nil
             task1.update_attributes(:hours => '16.02')
             task2.update_attributes(:hours => '90.00')
 
             results.first.staff_hours.should == '106.02'
           end
 
-          it 'uses 0.00 if there are no hours' do
+          it 'uses 0.0 if there are no hours' do
             results.first.staff_hours.should == '0.0'
           end
         end
 
         describe 'expenses' do
-          it 'sums across all tasks' do
+          it 'uses weekly_expense expenses if set' do
+            sp_record.update_attribute(:expenses, '153.45')
+            results.first.staff_expenses.should == '153.45'
+          end
+
+          it 'sums across all tasks if weekly_expense expenses are null' do
+            sp_record.expenses.should be_nil
             task1.update_attributes(:expenses =>  '9.99')
             task2.update_attributes(:expenses => '10.08')
             task3.update_attributes(:expenses => '11.08')
@@ -309,13 +321,19 @@ module NcsNavigator::StaffPortal::Warehouse
             results.first.staff_expenses.should == '31.15'
           end
 
-          it 'uses 0.00 if there are no expenses' do
+          it 'uses 0.0 if there are no expenses' do
             results.first.staff_expenses.should == '0.0'
           end
         end
 
         describe 'miles' do
-          it 'sums across all tasks' do
+          it 'uses weekly_expense miles if set' do
+            sp_record.update_attribute(:miles, '20.57')
+            results.first.staff_miles.should == '20.57'
+          end
+
+          it 'sums across all tasks if weekly_expense miles are null' do
+            sp_record.miles.should be_nil
             task1.update_attributes(:miles =>  '52.02')
             task2.update_attributes(:miles => '150.21')
             task3.update_attributes(:miles => '50.21')
@@ -323,7 +341,7 @@ module NcsNavigator::StaffPortal::Warehouse
             results.first.staff_miles.should == '252.44'
           end
 
-          it 'uses 0.00 if there are no miles' do
+          it 'uses 0.0 if there are no miles' do
             results.first.staff_miles.should == '0.0'
           end
         end
