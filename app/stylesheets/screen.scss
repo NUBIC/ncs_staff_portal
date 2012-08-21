@@ -48,13 +48,26 @@ body.ncs {
     border-bottom: 1px solid #AAAAAA !important;
   }
   
-  ul.ui-helper-reset, ul.ui-multiselect-checkboxes {
+  ul.ui-helper-reset, ul.ui-multiselect-checkboxes, ul.weekly_tasks {
     list-style-type: none !important;
     padding-left: 0 !important;
     font-family: inherit;
     font-size: 100%;
   }
+
+  ul.weekly_tasks {
+    display:block;
+    margin:0;
+    padding:0;
+  }
+
+  ul.weekly_tasks li{
+    font-size: 90%;
+  }
   
+  ul.weekly_tasks li.even{
+    background-color: #DBEAFF;
+  }
   .ui-datepicker {
       width: auto !important;
   }

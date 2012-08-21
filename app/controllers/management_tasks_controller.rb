@@ -31,17 +31,10 @@ class ManagementTasksController < SecuredController
   # POST /management_tasks.xml
   def create
     @staff = Staff.find(params[:staff_id])
-    @management_task_temp  = ManagementTask.new(params[:management_task])
-    @start_date = @management_task_temp.task_date.monday unless @management_task_temp.task_date.blank?
-    
-    @staff_weekly_expense = StaffWeeklyExpense.find_by_week_start_date_and_staff_id(@start_date, @staff)
-    if @staff_weekly_expense.nil?
-       @staff_weekly_expense = @staff.staff_weekly_expenses.build
-       @staff_weekly_expense.week_start_date = @start_date
-       @staff_weekly_expense.rate = @staff.hourly_rate
-       @staff_weekly_expense.save
-    end
-    @management_task = @staff_weekly_expense.management_tasks.build(params[:management_task])
+    management_task_temp  = ManagementTask.new(params[:management_task])
+    start_date = management_task_temp.task_date.beginning_of_week unless management_task_temp.task_date.blank?
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    @management_task = staff_weekly_expense.management_tasks.build(params[:management_task])
        
     respond_to do |format|
       if @management_task.save
@@ -59,6 +52,16 @@ class ManagementTasksController < SecuredController
   # PUT /management_tasks/1.xml
   def update
     @management_task = ManagementTask.find(params[:id])
+    @staff = Staff.find(params[:staff_id])
+    management_task_temp  = ManagementTask.new(params[:management_task])
+    unless management_task_temp.task_date == @management_task.task_date
+      start_date = management_task_temp.task_date.beginning_of_week unless management_task_temp.task_date.blank?
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
+      unless @management_task.staff_weekly_expense == staff_weekly_expense
+        @management_task.staff_weekly_expense = staff_weekly_expense
+      end 
+    end
+
     respond_to do |format|
       if @management_task.update_attributes(params[:management_task])
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully updated.') }

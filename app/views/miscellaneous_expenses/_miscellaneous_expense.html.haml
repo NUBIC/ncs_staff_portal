@@ -1,0 +1,51 @@
+- if @staff.external?
+  %p.warning
+    %em Warning: 
+    #{@staff.display_name} is an external user and should not be using the application for time and expense entry.
+= form_for [@staff, @miscellaneous_expense] do |f|
+  -if @miscellaneous_expense.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@miscellaneous_expense.errors.count, "error")} prohibited this miscellaneous_expense from being saved:"
+      %ul
+        - @miscellaneous_expense.errors.full_messages.each do |msg|
+          %li= msg
+  %table
+    %tr
+      %td
+        = f.label :formatted_expense_date, "Expense date"
+        %em *
+        = f.text_field :formatted_expense_date, {:size =>10, :maxlength =>10, :class => "datepicker"}
+      %td{ :colspan => "2" }
+        = f.label :comment
+        = f.text_field :comment
+    %tr
+      %td
+        = f.label :expenses, "Expense $"
+        = f.text_field :expenses, {:size =>6}
+      %td
+        = f.label :miles, "Miles driven"
+        = f.text_field :miles, {:size =>4}
+
+    %tr
+      %td
+        = f.submit 'Save', :class => "control_button"
+        = link_to 'Cancel', new_staff_miscellaneous_expense_path(params[:staff_id]), :class => "control_button"
+      %td
+  %p
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields. 
+    Miscellaneous expenses are the expenses and miles which are not related to either management task or data collection task.
+
+  - if @staff.staff_type_code.blank?
+    %p.warning
+      %em Warning: 
+      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+      record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
+  
+  :javascript
+    // For the 'other' task type field
+    // Check on pageload
+    $(document).ready(function(){
+      wire_up_select_other("#task_type","#task_type_other");
+    });

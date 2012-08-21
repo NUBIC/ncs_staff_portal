@@ -14,6 +14,7 @@
 #
 
 class MiscellaneousExpense < ActiveRecord::Base
+  strip_attributes
   validates_date :expense_date, :allow_blank => false
   validates :expenses, :numericality => {:less_than => 99999999.99, :greater_than_or_equal_to => 0, :allow_nil => true }
   validates :miles, :numericality => {:less_than => 999.99, :greater_than_or_equal_to => 0,:allow_nil => true }

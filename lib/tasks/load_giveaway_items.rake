@@ -1,3 +1,4 @@
+require 'csv'
 namespace :giveaway_items do
   desc 'Loads the inventory items for outreach activity'
   task :load_all, [:file] => [:environment] do |t, args|
@@ -5,7 +6,7 @@ namespace :giveaway_items do
     raise "Please pass the path to csv file.e.g 'rake items:load_all[path_to_file]'" unless FILE
     InventoryItem.delete_all  # Removes any previous entries of items
     counter = 0
-    FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
+    CSV.foreach("#{FILE}", :headers => true) do |csv|
       unless InventoryItem.find(:first, :conditions => {:name => csv["NAME"]})
         InventoryItem.create(:name => csv["NAME"])
         counter += 1

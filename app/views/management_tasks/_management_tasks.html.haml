@@ -13,7 +13,7 @@
             %td= display_task(management_task.miles)
             %td= display_task(management_task.expenses)
             %td= management_task.comment
-            %td= button_to "Delete", { :action => "destroy", :id => management_task.id, :staff_id => params[:staff_id] }, :class => " control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete  
+            %td= button_to "Delete", { :action => "destroy", :id => management_task.id, :staff_id => params[:staff_id] }, :class => " control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the management task record.')", :method => :delete  
   :javascript
       $(document).ready(function() {
         displayTasksList()
@@ -27,7 +27,7 @@
             { key: "miles", label: "Miles" },
             { key: "expenses", label: "Expenses" },
             { key: "comment", label: "Comment" },
-            { key: "controls", label: "Controls"}
+            { key: "controls", label: ""}
         ];
         var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("management-tasks-list"));
         dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;

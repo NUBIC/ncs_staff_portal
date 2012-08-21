@@ -1,4 +1,4 @@
-require 'fastercsv'
+require 'csv'
 
 namespace :users do
   desc "loads the new users from csv file into application. if staff_id is specified, then maps staff_id to username and updates the staff attribute."
@@ -6,7 +6,7 @@ namespace :users do
     FILE = args[:file]
     raise "Please pass the path to file with csv extension.e.g 'rake users:load_to_file[path_to_file]'" unless FILE
     counter = 0
-    FasterCSV.foreach("#{FILE}", :headers => true) do |csv|
+    CSV.foreach("#{FILE}", :headers => true) do |csv|
       if csv["STAFF_ID"]
         staff = Staff.find_by_staff_id(csv["STAFF_ID"])
         if staff

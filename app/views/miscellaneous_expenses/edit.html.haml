@@ -1,0 +1,9 @@
+= render 'tabs'
+.content_body
+  .section_gap
+  .section
+    .section_heading
+      Edit miscellaneous expense[#{@miscellaneous_expense.expense_date}] for #{@staff.display_name}
+    = render 'miscellaneous_expense'
+  .section_gap
+  = render 'miscellaneous_expenses'

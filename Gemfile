@@ -9,7 +9,6 @@ gem 'pg'
 gem 'haml', '~>3.0.25'
 gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
-gem 'fastercsv'
 gem 'tabs_on_rails'
 gem "breadcrumbs_on_rails"
 gem 'ncs_mdes'
@@ -22,12 +21,10 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
-gem 'ncs_mdes_warehouse', '~> 0.6', '>= 0.6.1'
+gem 'ncs_mdes_warehouse', '0.7.0'
 gem "nilify_blanks"
 gem "ransack"
-# gem 'ncs_mdes_warehouse', '~> 0.1',
-#   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
-# gem 'ncs_mdes_warehouse', '~> 0.1', :path => '../ncs_mdes_warehouse'
+gem "strip_attributes", "~> 1.0"
 
 group :development, :test, :ci do
   gem 'rspec-rails', '2.6.1'
@@ -36,10 +33,11 @@ group :development, :test, :ci do
   gem 'launchy'
   gem "json_spec"
   gem 'cucumber-rails', :require => false
-  # database_cleaner 0.6.7 doesn't work with DataMapper on PostgreSQL
-  gem 'database_cleaner', :git => 'git://github.com/bmabey/database_cleaner.git'
+  # See https://github.com/bmabey/database_cleaner/pull/119
+  gem 'database_cleaner',
+    :git => 'git://github.com/rsutphin/database_cleaner.git', :branch => 'dm-pg-single-trunc'
   gem 'factory_girl_rails', '~> 1.1.rc1'
-  gem 'shoulda'
+  gem 'shoulda-matchers'
   gem 'ci_reporter', '~> 1.6'
   gem 'annotate'
   gem 'guard'

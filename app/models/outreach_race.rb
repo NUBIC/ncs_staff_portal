@@ -14,6 +14,7 @@
 
 class OutreachRace < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   acts_as_mdes_record :public_id => :outreach_race_id
   ncs_coded_attribute :race, 'RACE_CL3'
   belongs_to :outreach_event

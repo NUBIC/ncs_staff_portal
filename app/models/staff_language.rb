@@ -13,6 +13,7 @@
 
 class StaffLanguage < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   belongs_to :staff
   validates_presence_of :lang
   ncs_coded_attribute :lang, 'LANGUAGE_CL2'

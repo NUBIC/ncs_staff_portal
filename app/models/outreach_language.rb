@@ -14,6 +14,7 @@
 
 class OutreachLanguage < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   acts_as_mdes_record :public_id => :outreach_lang2_id
   ncs_coded_attribute :language, 'LANGUAGE_CL2'
   belongs_to :outreach_event

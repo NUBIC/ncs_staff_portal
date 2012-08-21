@@ -59,7 +59,6 @@ module NcsNavigator::StaffPortal::Warehouse
             when :staff
               staff_portal_record.send("validate_update=", "false")
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
-              staff_portal_record.send("zipcode=", mdes_record.staff_zip.to_i)
               staff_portal_record.send("external=", true)
               staff_portal_record.send("notify=", false)
               staff_portal_record.send("ncs_inactive_date=", Date.today)
@@ -85,14 +84,11 @@ module NcsNavigator::StaffPortal::Warehouse
               end
               staff_portal_record = apply_other_value(staff_portal_record, "lang_code", "lang_other")
             when :staff_weekly_expenses 
-              miscellaneous_expense = MiscellaneousExpense.new
               [
-                ["week_start_date", "expense_date"], ["staff_expenses", "expenses"], ["staff_miles", "miles"]
+                ["staff_hours", "hours"], ["staff_expenses", "expenses"], ["staff_miles", "miles"]
               ].each do |mdes_variable, staff_portal_attribute|
-                miscellaneous_expense.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
+                staff_portal_record.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
               end
-              miscellaneous_expense.send("comment=", "Imported to the system")
-              save_staff_portal_record_with_mode(miscellaneous_expense, staff_portal_model)
             when :management_tasks, :data_collection_tasks
               mdes_variable = mdes_producer.name == :management_tasks ? "mgmt_task_hrs" : "data_coll_tasks_hrs"
               staff_portal_record.send("hours=", mdes_record.send(mdes_variable))

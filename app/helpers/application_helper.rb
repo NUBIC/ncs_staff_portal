@@ -36,9 +36,42 @@ module ApplicationHelper
     end
     list.join(', ')
   end
+
+  def display_tasks(weekly_task)
+    haml_tag 'ul.weekly_tasks' do
+      if weekly_task.management_tasks.size > 0
+        weekly_task.management_tasks.sort_by(&:task_date).reverse.map do |mgmt|
+          haml_tag :li do
+            if (mgmt.task_type.display_text == "Other")
+              haml_concat link_to(mgmt.task_type_other, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat "(#{mgmt.hours})"
+            else
+              haml_concat link_to(mgmt.task_type.display_text, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat "(#{mgmt.hours})"
+            end
+          end
+        end
+      end
+      if weekly_task.data_collection_tasks.size > 0
+        weekly_task.data_collection_tasks.map do |data_collection_task|
+          haml_tag :li do
+            if (data_collection_task.task_type.display_text == "Other")
+              haml_concat link_to(data_collection_task.task_type_other, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat "(#{data_collection_task.hours})"
+            else
+              haml_concat link_to(data_collection_task.task_type.display_text, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat "(#{data_collection_task.hours})"
+            end
+          end
+        end
+      end
+    end
+  end
   
   def display_segments(segments)
-    if segments.count == NcsAreaSsu.all.count
+    if segments.count == 0
+      list = []
+    elsif segments.count == NcsAreaSsu.all.count
       list = "All #{segments.count} segments"
     else
       list = segments.map do |segment|

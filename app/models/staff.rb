@@ -21,7 +21,7 @@
 #  birth_date         :date
 #  pay_type           :string(255)
 #  pay_amount         :decimal(10, 2)
-#  zipcode            :integer
+#  zipcode            :string(5)
 #  first_name         :string(255)
 #  last_name          :string(255)
 #  ncs_active_date    :date
@@ -35,10 +35,12 @@
 
 class Staff < ActiveRecord::Base
   include MdesRecord::ActsAsMdesRecord
+  strip_attributes
   nilify_blanks
   self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create
-  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :zipcode, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
+  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
+  validates :zipcode, :numericality => true, :presence => true, :if => :update_presence_required?, :on => :update
   validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
   validates :email, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :message => "is required when user have #{NcsNavigator.configuration.study_center_username}." }, :if => :email_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
@@ -51,6 +53,7 @@ class Staff < ActiveRecord::Base
   has_many :staff_weekly_expenses, :dependent => :destroy
   has_many :management_tasks, :through => :staff_weekly_expenses
   has_many :data_collection_tasks, :through => :staff_weekly_expenses
+  has_many :miscellaneous_expenses, :through => :staff_weekly_expenses
   has_many :staff_roles, :dependent => :destroy
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
@@ -174,10 +177,6 @@ class Staff < ActiveRecord::Base
     validate_update == "false" ? false : true
   end
 
-  def name
-    [first_name, last_name].join(' ')
-  end
-
   def calculate_hourly_rate
     if pay_type == "Hourly"
       self.hourly_rate = pay_amount unless pay_amount.blank?
@@ -208,11 +207,17 @@ class Staff < ActiveRecord::Base
   def self.by_task_reminder(by_date)
     reminder_staff = []
     Staff.all.each do |s|
-      if (s.staff_weekly_expenses.blank? || !s.staff_weekly_expenses.detect {|expense| expense.week_start_date == by_date.monday})
-        reminder_staff << s
-      end
+      reminder_staff << s unless StaffWeeklyExpense.find_by_week_start_date_and_staff_id(by_date.beginning_of_week, s.id)
     end
     reminder_staff
+  end
+
+  def name
+    [first_name, last_name].reject(&:blank?).join(' ')
+  end
+
+  def last_name_first_name
+    [last_name, first_name].reject(&:blank?).join(', ')
   end
   
   def display_username
@@ -220,6 +225,6 @@ class Staff < ActiveRecord::Base
   end
   
   def display_name
-    name.blank? ? staff_id : name
+    last_name_first_name.blank? ? staff_id : last_name_first_name
   end
 end

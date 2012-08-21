@@ -1,19 +1,17 @@
 .section
   .section_heading
-    - model_name = (@data_collection_tasks.size == 1 ? "Data collection task" : "Data collection tasks")
-    = raw page_entries_info @data_collection_tasks, {:model => model_name} 
+    - model_name = (@miscellaneous_expenses.size == 1 ? "Miscellaneous expense" : "Miscellaneous expenses")
+    = raw page_entries_info @miscellaneous_expenses, {:model => model_name} 
   %div.yui-skin-sam
     %div#tasks-list
       %table#data-collection-tasks-list
-        - @data_collection_tasks.each do |data_collection_task|
+        - @miscellaneous_expenses.each do |miscellaneous_expense|
           %tr
-            %td= link_to data_collection_task.task_date, edit_staff_data_collection_task_path(@staff, data_collection_task)
-            %td= data_collection_task.task_type_text
-            %td= display_task(data_collection_task.hours)
-            %td= display_task(data_collection_task.miles)
-            %td= display_task(data_collection_task.expenses)
-            %td= data_collection_task.comment
-            %td= button_to "Delete", { :action => "destroy", :id => data_collection_task.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the data collection task record.')", :method => :delete  
+            %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff, miscellaneous_expense)
+            %td= display_task(miscellaneous_expense.miles)
+            %td= display_task(miscellaneous_expense.expenses)
+            %td= miscellaneous_expense.comment
+            %td= button_to "Delete", { :action => "destroy", :id => miscellaneous_expense.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the expense record.')", :method => :delete  
   :javascript
       $(document).ready(function() {
         displayTasksList()
@@ -22,8 +20,6 @@
       function displayTasksList() {
         var columnDefs = [
             { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-            { key: "type", label: "Type" },
-            { key: "hours", label: "Hours" },
             { key: "miles", label: "Miles" },
             { key: "expenses", label: "Expenses" },
             { key: "comment", label: "Comment" },
@@ -34,8 +30,6 @@
         dataSource.responseSchema = {
           fields: [
             { key: "date" },
-            { key: "type" },
-            { key: "hours" },
             { key: "miles" },
             { key: "expenses" },
             { key: "comment" },
@@ -46,4 +40,4 @@
           sortedBy: { key: "date", dir: YAHOO.widget.DataTable.CLASS_DESC}
         });
       }
-  = will_paginate @data_collection_tasks, :previous_label => "Previous", :next_label => "Next"
+  = will_paginate @dmiscellaneous_expenses, :previous_label => "Previous", :next_label => "Next"

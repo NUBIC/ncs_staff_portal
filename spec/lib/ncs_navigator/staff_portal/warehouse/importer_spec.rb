@@ -83,7 +83,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         describe 'when an entity association is changed' do
-          let!(:sp_second_staff) { Factory(:valid_staff, :username => "new", :email => "new@test.com", :zipcode => 33333) } 
+          let!(:sp_second_staff) { Factory(:valid_staff, :username => "new", :email => "new@test.com", :zipcode => '33333') } 
           let!(:mdes_second_staff) { enumerator.to_a(:staff).second.tap { |p| save_wh(p) } }
 
           before do
@@ -94,7 +94,7 @@ module NcsNavigator::StaffPortal::Warehouse
           end
 
           it 'updates the association to the core object' do
-            StaffCertTraining.first.staff.zipcode.should == 33333
+            StaffCertTraining.first.staff.zipcode.should == '33333'
             StaffCertTraining.first.staff.id.should_not == sp_staff.id
           end
 
@@ -157,7 +157,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'creates a new record with appropriate zipcode' do
-          Staff.first.zipcode.should == 92131         
+          Staff.first.zipcode.should == '92131'     
         end
         
         it 'creates a new record with age range set' do
@@ -406,10 +406,8 @@ module NcsNavigator::StaffPortal::Warehouse
           save_wh(p) } }
 
         let!(:mdes_record) {
-          Factory(:staff_weekly_expense, :staff => sp_staff, :rate => 32.50)
+          Factory(:staff_weekly_expense, :staff => sp_staff, :rate => 32.50, :hours => 25, :expenses => 200, :miles => 15.7)
           enumerator.to_a(:staff_weekly_expenses).first.tap do |a|
-            a.staff_expenses = 200
-            a.staff_miles = 15.7
             save_wh(a)
             StaffWeeklyExpense.destroy_all
             StaffWeeklyExpense.count.should == 0
@@ -424,27 +422,23 @@ module NcsNavigator::StaffPortal::Warehouse
           StaffWeeklyExpense.count.should == 1
         end
         
-        it 'creates a new record with correct staff pay association' do
+        it 'records staff pay correctly' do
           StaffWeeklyExpense.first.rate.should == 32.50
         end 
-        
-        describe "for expenses and miles as miscellaneous expense" do
-          it 'creates a new record' do
-            MiscellaneousExpense.count.should == 1
-          end
-          
-          it "records weekly expenses correctly" do
-            MiscellaneousExpense.first.expenses.should == 200
-          end
-          
-          it "records weekly miles correctly" do
-            MiscellaneousExpense.first.miles.should == 15.7
-          end
-          
-          it "records comment inidicating imported to system" do
-            MiscellaneousExpense.first.comment.should == "Imported to the system"
-          end
+
+        it "records weekly hours correctly" do
+           StaffWeeklyExpense.first.hours.should == 25
         end
+          
+        it "records weekly expenses correctly" do
+           StaffWeeklyExpense.first.expenses.should == 200
+        end
+        
+        it "records weekly miles correctly" do
+           StaffWeeklyExpense.first.miles.should == 15.7
+        end
+        
+
       end
     end
       

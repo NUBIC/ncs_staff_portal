@@ -15,7 +15,7 @@
             = f.text_field :ncs_ssus_ssu_name_cont
         %tr
           %td
-            = f.label :name_cont, "Name"
+            = f.label :name_cont, "Event Name"
             = f.text_field :name_cont
           %td
             = f.label :staff_first_name_or_staff_last_name_or_staff_staff_id_cont, "Staff member"
@@ -45,7 +45,7 @@
               %td= outreach_event.outreach_type_text
               %td= outreach_event.created_by_user_text
               - if @can_delete
-                %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete?')", :method => :delete
+                %td= button_to "Delete", { :action => "destroy", :id => outreach_event.id },:class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the outreach event record. ')", :method => :delete 
               - else
                 %td
 
@@ -57,13 +57,13 @@
         function displayEventList() {
           var columnDefs = [
               { key: "date", label: "Date", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
-              { key: "name", label: "Name", sortable: true},
+              { key: "name", label: "Event Name", sortable: true},
               { key: "segment", label: "Segments"},
               { key: "result", label: "Result" },
               { key: "mode", label: "Mode" },
               { key: "type", label: "Type" },
               { key: "created_by", label: "Created By" },
-              { key: "controls", label: "Controls" }
+              { key: "controls", label: "" }
           ];
           var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("event-list-tbl"));
           dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;

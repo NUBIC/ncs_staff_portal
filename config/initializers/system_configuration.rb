@@ -39,6 +39,10 @@ module StaffPortal
     def development_email
        configuration.staff_portal['development_email']
     end
+
+    def week_start_day
+      configuration.staff_portal['week_start_day']=~ /monday/ ? "monday" : "sunday"
+    end
     
     private
     

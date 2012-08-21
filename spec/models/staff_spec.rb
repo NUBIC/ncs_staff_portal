@@ -21,7 +21,7 @@
 #  birth_date         :date
 #  pay_type           :string(255)
 #  pay_amount         :decimal(10, 2)
-#  zipcode            :integer
+#  zipcode            :string(5)
 #  first_name         :string(255)
 #  last_name          :string(255)
 #  ncs_active_date    :date
@@ -132,11 +132,47 @@ describe Staff do
   
   describe 'display_name' do
     it 'displays name if name is not blank' do
-      FactoryGirl.build(:staff).display_name.should == "FName LName"
+      FactoryGirl.build(:staff).display_name.should == "LName, FName"
     end
 
     it 'displays staff_id if name is blank' do
       FactoryGirl.create(:staff, :first_name => nil, :last_name => nil, :staff_id => "staff_id_123").display_name.should == "staff_id_123"
+    end
+  end
+
+  describe 'last_name_first_name' do
+    it 'should be blank if no last_name and first_name for staff' do
+      FactoryGirl.build(:staff, :first_name => nil, :last_name => nil).last_name_first_name.should == ""
+    end
+
+    it 'should be only last_name if first_name is blank' do
+      FactoryGirl.create(:staff, :first_name => nil, :last_name => "LName").last_name_first_name.should == "LName"
+    end
+
+    it 'should be only first_name if last_name is blank' do
+      FactoryGirl.create(:staff, :first_name => "FName", :last_name => nil).last_name_first_name.should == "FName"
+    end
+
+    it "should be last_name and first_name join with ','" do
+      FactoryGirl.create(:staff).last_name_first_name.should == "LName, FName"
+    end
+  end
+
+  describe 'name' do
+    it 'should be blank if no last_name and first_name for staff' do
+      FactoryGirl.build(:staff, :first_name => nil, :last_name => nil).name.should == ""
+    end
+
+    it 'should be only last_name if first_name is blank' do
+      FactoryGirl.create(:staff, :first_name => nil, :last_name => "LName").name.should == "LName"
+    end
+
+    it 'should be only first_name if last_name is blank' do
+      FactoryGirl.create(:staff, :first_name => "FName", :last_name => nil).name.should == "FName"
+    end
+
+    it "should be first name and last name join with space" do
+      FactoryGirl.create(:staff).name.should == "FName LName"
     end
   end
 
@@ -147,12 +183,13 @@ describe Staff do
       @staff3 = FactoryGirl.create(:staff)
       @staff4 = FactoryGirl.create(:staff)
 
-      @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.monday)
-      @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
-      @staff1.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).monday)
+      @staff3.staff_weekly_expenses.create(:week_start_date => Date.today.beginning_of_week)
+      @staff2.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).beginning_of_week)
+      @staff1.staff_weekly_expenses.create(:week_start_date => (Date.today - 1.week).beginning_of_week)
     end
     it "should return all the staff with no weekly task entry for the current week" do
       expected_staff = Staff.by_task_reminder(Date.today)
+      expected_staff.size.should == 3
       expected_staff.should include @staff1
       expected_staff.should include @staff2
       expected_staff.should include @staff4
@@ -160,6 +197,7 @@ describe Staff do
 
     it "should return all the staff with no weekly task entry for the previous week" do
       expected_staff = Staff.by_task_reminder(Date.today - 1.week)
+      expected_staff.size.should == 2
       expected_staff.should include @staff3
       expected_staff.should include @staff4
     end
@@ -253,7 +291,7 @@ describe Staff do
         staff.should have(1).error_on(:gender)
         staff.should have(1).error_on(:race)
         staff.should have(1).error_on(:ethnicity)
-        staff.should have(1).error_on(:zipcode)
+        staff.should have(2).error_on(:zipcode)
         staff.should have(1).error_on(:subcontractor)
         staff.should have(1).error_on(:experience)
       end

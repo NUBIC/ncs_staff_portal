@@ -4,9 +4,27 @@
       = link_to 'Management Task', new_staff_management_task_path(@current_staff.id), :class => "other_tab"
     - if @current_staff.belongs_to_data_collection_group
       = link_to 'Data Collection Task', new_staff_data_collection_task_path(@current_staff.id), :class => "other_tab"
+    = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@current_staff.id), :class => "other_tab"
+    = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @current_staff.id), :class => "other_tab"
     %span.current_tab
-      Staff Entries
+      Weekly Staff Summary
   .content_body
+    .section_gap
+    .section
+      = search_form_for @q do |f|
+        %table
+          %tr
+            %td{ :colspan => "2" }
+              %em Search Weekly Expense
+          %tr
+            %td
+              = f.label :week_start_date_gteq, "Week Start Date From"
+              = f.text_field :week_start_date_gteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
+              = f.label :week_start_date_lteq, "To "
+              = f.text_field :week_start_date_lteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
+            %td
+              = f.submit "Search",:class => "control_button"
+              = link_to 'Reset', staff_weekly_expenses_path, :class => "control_button"
     .section_gap
     .section
       .section_heading
@@ -16,27 +34,48 @@
           %table#weekly-expense-tbl
             - @staff_weekly_expenses.each do |staff_weekly_expense|
               %tr
-                %td= link_to staff_weekly_expense.week_start_date, staff_weekly_expense.staff
+                %td= staff_weekly_expense.week_start_date
                 %td= staff_weekly_expense.staff.display_name
+                %td
+                  - display_tasks(staff_weekly_expense)
                 %td= staff_weekly_expense.total_hours
                 %td= staff_weekly_expense.total_miles
                 %td= staff_weekly_expense.total_expenses
-                %td= staff_weekly_expense.total_tasks
-                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :confirm => "Are you sure?", :method => :delete 
+                %td
+                  %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
+                    = staff_weekly_expense.comment
+                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id}, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
       :javascript
           $(document).ready(function() {
             displayWeeklyExpenseList()
+            $(".comment").each( function(i) {
+              expense_id = $(this).attr('expense_id')
+              url = "/staff_weekly_expenses/" +expense_id+".json"
+              $(this).editable(url, {
+              indicator : 'Saving...',
+              tooltip   : 'Click to edit...',
+              method    : 'PUT',
+              type      : 'textarea',
+              rows      : 4,
+              placeholder: 'Click to add...',
+              name      : 'comment',
+              cancel    : 'Cancel',
+              submit    : 'OK',
+              })
+            });
+
           });
     
           function displayWeeklyExpenseList() {
             var columnDefs = [
                 { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
                 { key: "staff_name", label: "Staff Name", sortable: true},
-                { key: "hours", label: "Time (hours)" },
+                { key: "task_reported", label: "Task Reported" },
+                { key: "hours", label: "Total Hours" },
                 { key: "miles", label: "Miles" },
                 { key: "expenses", label: "Expenses ($USD)" },
-                { key: "task_reported", label: "Task Reported" },
-                { key: "controls", label: "Controls" }
+                { key: "comment", label: "Comment" },
+                { key: "controls", label: ""}
             ];
             var dataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("weekly-expense-tbl"));
             dataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
@@ -44,10 +83,11 @@
               fields: [
                 { key: "week_start_date"},
                 { key: "staff_name" },
+                { key: "task_reported"},
                 { key: "hours" },
                 { key: "miles" },
                 { key: "expenses" },
-                { key: "task_reported"},
+                { key: "comment"},
                 { key: "controls" }
               ]
             };

@@ -14,7 +14,6 @@ module NcsNavigator::StaffPortal::Warehouse
       :query => %Q(
         SELECT s.*,
           to_char(birth_date, 'YYYY') staff_yob,
-          to_char(zipcode, 'FM00000') staff_zip,
           CASE
             WHEN age_group_code IS NOT NULL THEN age_group_code
             ELSE
@@ -35,7 +34,8 @@ module NcsNavigator::StaffPortal::Warehouse
       :prefix => 'staff_',
       :column_map => {
         :staff_id => :staff_id,
-        :experience_code => :staff_exp
+        :experience_code => :staff_exp,
+        :zipcode => :staff_zip
       },
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
@@ -109,9 +109,21 @@ module NcsNavigator::StaffPortal::Warehouse
         SELECT
           s.staff_id AS public_id_for_staff,
           swe.weekly_exp_id,
-          COALESCE(t.staff_hours,    '0.0') staff_hours,
-          COALESCE(t.staff_expenses, '0.0') staff_expenses,
-          COALESCE(t.staff_miles,    '0.0') staff_miles,
+          CASE
+            WHEN swe.hours IS NOT NULL THEN swe.hours
+            ELSE
+              COALESCE(t.staff_hours, '0.0')
+            END as staff_hours,
+          CASE
+            WHEN swe.expenses IS NOT NULL THEN swe.expenses
+            ELSE
+              COALESCE(t.staff_expenses, '0.0') 
+            END as staff_expenses,
+          CASE
+            WHEN swe.miles IS NOT NULL THEN swe.miles
+            ELSE
+              COALESCE(t.staff_miles, '0.0') 
+            END as staff_miles,
           to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
           swe.rate,
           swe.comment
