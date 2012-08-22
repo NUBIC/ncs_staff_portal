@@ -1,14 +1,13 @@
 require 'spec_helper'
 
 module NcsNavigator::StaffPortal::Warehouse
-  describe Enumerator, :clean_with_truncation, :slow, :warehouse do
-    MdesModule = NcsNavigator::Warehouse::Models::TwoPointZero
-
-    let(:wh_config) {
+  describe 'Enumerator', :clean_with_truncation, :slow, :warehouse do
+    let!(:wh_config) {
       NcsNavigator::Warehouse::Configuration.new.tap do |config|
         config.log_file = File.join(Rails.root, 'log/wh.log')
         config.set_up_logs
         config.output_level = :quiet
+        config.mdes_version = '3.0'
       end
     }
 
@@ -139,6 +138,28 @@ module NcsNavigator::StaffPortal::Warehouse
               sp_record.update_attribute(:birth_date, nil)
               results.last.staff_age_range.should be_nil
             end
+          end
+        end
+
+        describe 'ncs_active_date' do
+          it 'is blank when not set' do
+            results.last.ncs_active_date.should be_nil
+          end
+
+          it 'is extracted when set' do
+            sp_record.update_attribute(:ncs_active_date, '2012-05-12')
+            results.last.ncs_active_date.should == '2012-05-12'
+          end
+        end
+
+        describe 'ncs_inactive_date' do
+          it 'is blank when not set' do
+            results.last.ncs_inactive_date.should be_nil
+          end
+
+          it 'is extracted when set' do
+            sp_record.update_attribute(:ncs_inactive_date, '2012-05-30')
+            results.last.ncs_inactive_date.should == '2012-05-30'
           end
         end
       end
@@ -441,10 +462,8 @@ module NcsNavigator::StaffPortal::Warehouse
       let(:producer_names) { [:outreach_events] }
       let(:sp_model) { OutreachEvent }
 
-      let!(:ncs_ssu) { Factory(:ncs_ssu, :ssu_id => '1234567890') }
-      let!(:outreach_segment) { Factory(:outreach_segment, :ncs_ssu => ncs_ssu) }
       let!(:outreach_event) {
-        Factory(:outreach_event, :outreach_segments => [outreach_segment])
+        Factory(:outreach_event)
       }
 
       shared_examples 'a basic outreach event' do
@@ -460,7 +479,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has a derived public ID' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -494,15 +513,12 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_incident.should == '2'
         end
 
-        it 'gives each separate record a unique ID' do
-          Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-          Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '7'), :outreach_event => outreach_event)
-          results.collect(&:outreach_event_id).uniq.size.should == 3
+        it 'includes ssu_id as nil as PBS Outreach event has no any ssu associated' do
+         results.first.ssu_id.should be_nil
         end
         
-        it 'includes tsu_id if event has any tsu associated' do
-           outreach_segment.update_attribute(:ncs_tsu, Factory(:ncs_tsu, :tsu_id => 'tsu_id1'))
-           results.first.tsu_id.should == 'tsu_id1'
+        it 'includes tsu_id as nil as PBS Outreach event has no any tsu associated' do
+         results.first.tsu_id.should be_nil
         end
       end
 
@@ -579,8 +595,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
         describe 'specifying language and race' do
           let(:producer_names) { [:outreach_untailored_automatic] }
-          let(:lang_results) { results.select { |r| r.is_a?(MdesModule::OutreachLang2) } }
-          let(:race_results) { results.select { |r| r.is_a?(MdesModule::OutreachRace) } }
+          let(:lang_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachLang2)) } }
+          let(:race_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachRace)) } }
 
           it 'uses English (code=1) as the language' do
             lang_results.first.outreach_lang2.should == '1'
@@ -596,20 +612,6 @@ module NcsNavigator::StaffPortal::Warehouse
 
           it 'produces a valid race record' do
             record_should_be_valid(race_results.first)
-          end
-
-          describe 'with multiple SSUs' do
-            before do
-              Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-            end
-
-            it 'produces multiple languages, each with a unique ID' do
-              lang_results.collect(&:outreach_lang2_id).uniq.size.should == 2
-            end
-
-            it 'produces multiple races, each with a unique ID' do
-              race_results.collect(&:outreach_race_id).uniq.size.should == 2
-            end
           end
         end
       end
@@ -632,7 +634,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -644,7 +646,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived record ID if outreach_languages source_id is not set' do
             results.first.outreach_lang2_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}-L#{outreach_language.id}"
+              "staff_portal-#{outreach_event.id}-L#{outreach_language.id}"
           end
         end
 
@@ -656,11 +658,6 @@ module NcsNavigator::StaffPortal::Warehouse
               :outreach_event => outreach_event,
               :language => Factory(:ncs_code, :local_code => 6))
           }
-
-          it 'produces one record per SSU per language' do
-            Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-            results.collect(&:outreach_lang2).sort.should == %w(4 4 6 6)
-          end
 
           it 'gives each language record a unique ID' do
             results.collect(&:outreach_lang2_id).uniq.size.should == 2
@@ -687,7 +684,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -699,7 +696,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived record ID if outreach_races source_id is not set' do
             results.first.outreach_race_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}-R#{outreach_race.id}"
+              "staff_portal-#{outreach_event.id}-R#{outreach_race.id}"
           end
         end
 
@@ -717,11 +714,6 @@ module NcsNavigator::StaffPortal::Warehouse
               :outreach_event => outreach_event,
               :race => Factory(:ncs_code, :local_code => 6))
           }
-
-          it 'produces one record per SSU per race' do
-            Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-            results.collect(&:outreach_race2).sort.should == %w(4 4 6 6)
-          end
 
           it 'gives each record a unique ID' do
             results.collect(&:outreach_race_id).uniq.size.should == 2
@@ -743,7 +735,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -755,7 +747,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived record ID if outreach_targets source_id is not set' do
             results.first.outreach_target_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}-T#{outreach_event.outreach_targets.first.id}"
+              "staff_portal-#{outreach_event.id}-T#{outreach_event.outreach_targets.first.id}"
           end
         end
 
@@ -773,12 +765,6 @@ module NcsNavigator::StaffPortal::Warehouse
               :outreach_event => outreach_event,
               :target => Factory(:ncs_code, :local_code => 3))
           }
-
-          it 'produces one record per SSU per target' do
-            Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-
-            results.collect(&:outreach_target_ms).sort.should == %w(10 10 3 3)
-          end
 
           it 'gives each record a unique ID' do
             results.collect(&:outreach_target_id).uniq.size.should == 2
@@ -803,7 +789,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -815,7 +801,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived record ID if outreach_evaluations source_id is not set' do
             results.first.outreach_event_eval_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}-E#{outreach_evaluation.id}"
+              "staff_portal-#{outreach_event.id}-E#{outreach_evaluation.id}"
           end
         end
 
@@ -833,12 +819,6 @@ module NcsNavigator::StaffPortal::Warehouse
               :outreach_event => outreach_event,
               :evaluation => Factory(:ncs_code, :local_code => 6))
           }
-
-          it 'produces one record per SSU per eval' do
-            Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-
-            results.collect(&:outreach_eval).sort.should == %w(1 1 6 6)
-          end
 
           it 'gives each record a unique ID' do
             results.collect(&:outreach_event_eval_id).uniq.size.should == 2
@@ -867,7 +847,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived outreach event ID if outreach_event source_id is not set' do
             results.first.outreach_event_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}"
+              "staff_portal-#{outreach_event.id}"
           end
         end
 
@@ -879,7 +859,7 @@ module NcsNavigator::StaffPortal::Warehouse
           
           it 'has the correct derived record ID if outreach_staff_members source_id is not set' do
             results.first.outreach_event_staff_id.should ==
-              "staff_portal-#{outreach_event.id}-#{ncs_ssu.ssu_id}-S#{outreach_staff_member.id}"
+              "staff_portal-#{outreach_event.id}-S#{outreach_staff_member.id}"
           end
         end
 
@@ -896,11 +876,6 @@ module NcsNavigator::StaffPortal::Warehouse
               :outreach_event => outreach_event,
               :staff => other_staff)
           }
-
-          it 'produces one record per SSU per staff' do
-            Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
-            results.size.should == 4
-          end
 
           it 'gives each record a unique ID' do
             results.collect(&:outreach_event_staff_id).uniq.size.should == 2

@@ -3,7 +3,7 @@ require 'ncs_navigator/staff_portal'
 module NcsNavigator::StaffPortal::Warehouse
   class Enumerator
     include NcsNavigator::Warehouse::Transformers::Database
-    include NcsNavigator::Warehouse::Models::TwoPointZero
+    include NcsNavigator::Warehouse::Models::ThreePointZero
     bcdatabase :name => 'ncs_staff_portal'
 
     on_unused_columns :fail
@@ -40,8 +40,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
         hourly_rate pay_type pay_amount
-        study_center ncs_active_date ncs_inactive_date 
-        external notify numeric_id age_group_code
+        study_center external notify numeric_id age_group_code
       )
     )
 
@@ -198,16 +197,14 @@ module NcsNavigator::StaffPortal::Warehouse
           ot.*,
           CASE
             WHEN ot.source_id IS NOT NULL THEN ot.source_id
-            ELSE 'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id || '-#{id_prefix}' || ot.id
+            ELSE 'staff_portal-' || ot.outreach_event_id || '-#{id_prefix}' || ot.id
           END AS public_id_for_this_table,
           CASE
             WHEN oe.source_id IS NOT NULL THEN oe.source_id
-            ELSE 'staff_portal-' || ot.outreach_event_id || '-' || ns.ssu_id
+            ELSE 'staff_portal-' || ot.outreach_event_id
           END AS public_id_for_outreach_events
           #{', s.staff_id AS public_id_for_staff' if options[:staff]}
         FROM #{table_name} ot
-          INNER JOIN outreach_segments os ON ot.outreach_event_id=os.outreach_event_id
-          INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
           INNER JOIN outreach_events oe ON ot.outreach_event_id=oe.id
           #{'INNER JOIN staff s ON ot.staff_id=s.id' if options[:staff]}
         #{'WHERE s.zipcode IS NOT NULL' if options[:staff]}
@@ -219,7 +216,7 @@ module NcsNavigator::StaffPortal::Warehouse
         SELECT
           CASE
             WHEN source_id IS NOT NULL THEN source_id
-            ELSE 'staff_portal-' || oe.id || '-' || ns.ssu_id
+            ELSE 'staff_portal-' || oe.id 
           END AS outreach_event_id,
           oe.event_date,
           oe.outreach_type_code,
@@ -230,10 +227,6 @@ module NcsNavigator::StaffPortal::Warehouse
           oe.no_of_staff AS outreach_staffing,
           oe.evaluation_result_code AS outreach_eval_result,
           (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
-          ns.ssu_id,
-          CASE 
-            WHEN os.ncs_tsu_id IS NOT NULL THEN (SELECT tsu_id FROM ncs_tsus WHERE id = os.ncs_tsu_id)
-          END AS tsu_id,
           ol.language_other AS lang_other,
           2 AS outreach_incident,
           oe.tailored_code,
@@ -242,8 +235,6 @@ module NcsNavigator::StaffPortal::Warehouse
           CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.culture_specific_code,  -4) END AS outreach_culture1,
           CASE oe.tailored_code WHEN 2 THEN -7 ELSE COALESCE(oe.culture_code,           -4) END AS outreach_culture2
         FROM outreach_events oe
-         INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
-         INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
          LEFT JOIN (
            SELECT outreach_event_id, language_other
            FROM outreach_languages WHERE language_other IS NOT NULL AND length(trim(language_other)) > 0

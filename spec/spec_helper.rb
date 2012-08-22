@@ -64,7 +64,7 @@ Spork.prefork do
   if Spork.using_spork?
     puts 'Preloading warehouse models (spork only)'
     require 'ncs_navigator/warehouse'
-    require 'ncs_navigator/warehouse/models/two_point_zero'
+    require 'ncs_navigator/warehouse/models/three_point_zero'
   end
 end
 
