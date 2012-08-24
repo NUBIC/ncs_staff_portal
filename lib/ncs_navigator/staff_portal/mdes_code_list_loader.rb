@@ -16,7 +16,7 @@ module NcsNavigator::StaffPortal
     # n.b.: if you change the way this method works, you should run
     # `rake mdes:code_lists:yaml` and commit the result.
     def create_yaml
-      yml = NcsStaffPortal.mdes.types.select(&:code_list).collect { |typ|
+      yml = StaffPortal.mdes.types.select(&:code_list).collect { |typ|
         # Merge display text for duplicate codes. In MDES 2.0, these only occur in PSU_CL1.
         code_list_index = typ.code_list.inject({}) { |i, cl_entry|
           # TODO: some display text entries have lots of random bytes
@@ -72,7 +72,7 @@ module NcsNavigator::StaffPortal
 
         partitioned[:delete].each do |entry|
           do_update(
-            %Q(DELETE FROM ncs_codes WHERE local_code=%s AND list_name='%s'),
+            %Q(DELETE FROM ncs_codes WHERE local_code=? AND list_name=?),
             %w(local_code list_name).collect { |k| entry[k] })
         end
       end

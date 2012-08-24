@@ -103,7 +103,7 @@
   display_text: Over Age 49 (NCS eligibility determined by pregnancy status)
 - local_code: 4
   list_name: AGE_ELIGIBLE_CL4
-  display_text: Age eligibility is unknown
+  display_text: Age eligibility is Unknown
 - local_code: -4
   list_name: AGE_HOME_CL1
   display_text: Missing in Error
@@ -448,7 +448,7 @@
   display_text: Refused
 - local_code: 1
   list_name: AGREEMENT_LEVEL_CL4
-  display_text: Stongly disagree
+  display_text: Strongly disagree
 - local_code: 2
   list_name: AGREEMENT_LEVEL_CL4
   display_text: Somewhat disagree
@@ -874,13 +874,13 @@
   display_text: Refused
 - local_code: 1
   list_name: BABY_FORMULA_CL2
-  display_text: "Baby\xE2\x80\x99s Only Organic Dairy"
+  display_text: Baby's Only Organic Dairy
 - local_code: 2
   list_name: BABY_FORMULA_CL2
-  display_text: "Baby\xE2\x80\x99s Only Organic Soy"
+  display_text: Baby's Only Organic Soy
 - local_code: 3
   list_name: BABY_FORMULA_CL2
-  display_text: "Baby\xE2\x80\x99s Only Organic Lactose Free"
+  display_text: Baby's Only Organic Lactose Free
 - local_code: 4
   list_name: BABY_FORMULA_CL2
   display_text: Bright Beginnings milk-based
@@ -898,121 +898,121 @@
   display_text: Bright Beginnings NeoCare
 - local_code: 9
   list_name: BABY_FORMULA_CL2
-  display_text: "Earth\xE2\x80\x99s Best Organic Infant Formula with DHA & ARA"
+  display_text: Earth's Best Organic Infant Formula with DHA & ARA
 - local_code: 10
   list_name: BABY_FORMULA_CL2
-  display_text: "Earth\xE2\x80\x99s Best Organic Soy Infant Formula with DHA & ARA"
+  display_text: Earth's Best Organic Soy Infant Formula with DHA & ARA
 - local_code: 11
   list_name: BABY_FORMULA_CL2
-  display_text: "EleCare\xC2\xAE"
+  display_text: EleCare
 - local_code: 12
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Premium with Triple Health Guard"
+  display_text: Enfamil Premium with Triple Health
 - local_code: 13
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Premium Next Step"
+  display_text: Enfamil Premium Next Step
 - local_code: 14
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE ProSobee\xC2\xAE"
+  display_text: Enfamil ProSobee
 - local_code: 15
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE RestFull"
+  display_text: Enfamil RestFull
 - local_code: 16
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil AR\xC2\xAE"
+  display_text: Enfamil AR
 - local_code: 17
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Gentlease\xC2\xAE"
+  display_text: Enfamil Gentlease
 - local_code: 18
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Gentlease\xC2\xAE Next Step"
+  display_text: Enfamil Gentlease Next Step
 - local_code: 19
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Enfacare"
+  display_text: Enfamil Enfacare
 - local_code: 20
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Premature"
+  display_text: Enfamil Premature
 - local_code: 21
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Premium Vanilla or Chocolate"
+  display_text: Enfamil Premium Vanilla or Chocolate
 - local_code: 22
   list_name: BABY_FORMULA_CL2
-  display_text: "Enfamil\xC2\xAE Soy Next Step"
+  display_text: Enfamil Soy Next Step
 - local_code: 23
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Gentle Plus"
+  display_text: Gerber Good Start Gentle Plus
 - local_code: 24
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Gentle Plus 2"
+  display_text: Gerber Good Start Gentle Plus 2
 - local_code: 25
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Protect Plus"
+  display_text: Gerber Good Start Protect Plus
 - local_code: 26
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Protect Plus 2"
+  display_text: Gerber Good Start Protect Plus 2
 - local_code: 27
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Soy Plus"
+  display_text: Gerber Good Start Soy Plus
 - local_code: 28
   list_name: BABY_FORMULA_CL2
-  display_text: "Gerber\xC2\xAE Good Start\xC2\xAE Soy Plus 2"
+  display_text: Gerber Good Start Soy Plus 2
 - local_code: 29
   list_name: BABY_FORMULA_CL2
-  display_text: "Nutramigen\xC2\xAE with Enflora LGG"
+  display_text: Nutramigen with Enflora LGG
 - local_code: 30
   list_name: BABY_FORMULA_CL2
-  display_text: "Nutramigen\xC2\xAE AA"
+  display_text: Nutramigen AA
 - local_code: 31
   list_name: BABY_FORMULA_CL2
-  display_text: "Pregestimil\xC2\xAE"
+  display_text: Pregestimil
 - local_code: 32
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Advance\xC2\xAE EarlyShield"
+  display_text: Similac Advance EarlyShield
 - local_code: 33
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac Isomil\xC2\xAE Advance\xC2\xAE"
+  display_text: Similac Isomil Advance
 - local_code: 34
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac Isomil\xC2\xAE DF"
+  display_text: Similac Isomil DF
 - local_code: 35
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Organic"
+  display_text: Similac Organic
 - local_code: 36
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Go & Grow"
+  display_text: Similac Go & Grow
 - local_code: 37
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Go & Grow EarlyShield"
+  display_text: Similac Go & Grow EarlyShield
 - local_code: 38
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Sensitive"
+  display_text: Similac Sensitive
 - local_code: 39
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Sensitive R.S."
+  display_text: Similac Sensitive R.S.
 - local_code: 40
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Alimentum\xC2\xAE"
+  display_text: Similac Alimentum
 - local_code: 41
   list_name: BABY_FORMULA_CL2
-  display_text: "Similac\xC2\xAE Neosure\xC2\xAE"
+  display_text: Similac Neosure
 - local_code: 42
   list_name: BABY_FORMULA_CL2
-  display_text: "Store brand Milk based (like Member\xE2\x80\x99s Mark, Kirkland, Target up & up)"
+  display_text: Store brand Milk based like Member's Mark, Kirkland, Target up & up
 - local_code: 43
   list_name: BABY_FORMULA_CL2
-  display_text: "Store brand Gentle or partially broken down whey protein formula (like Member\xE2\x80\x99s Mark or Target up & up))"
+  display_text: Store brand Gentle or partially broken down whey protein formula like Member's Mark or Target up & up
 - local_code: 44
   list_name: BABY_FORMULA_CL2
-  display_text: Store brand Soy based (like Target up & up)
+  display_text: Store brand Soy based like Target up & up
 - local_code: 45
   list_name: BABY_FORMULA_CL2
-  display_text: Store brand Next step (like Target up & up)
+  display_text: Store brand Next step like Target up & up
 - local_code: 46
   list_name: BABY_FORMULA_CL2
-  display_text: Store brand Lacto sensitive (like Target up & up)
+  display_text: Store brand Lacto sensitive like Target up & up
 - local_code: 47
   list_name: BABY_FORMULA_CL2
-  display_text: Store brand Prebiotic (like Target up & up)
+  display_text: Store brand Prebiotic like Target up & up
 - local_code: -4
   list_name: BABY_LIVE_WITH_CL1
   display_text: Missing in Error
@@ -1027,13 +1027,13 @@
   display_text: Refused
 - local_code: 1
   list_name: BABY_LIVE_WITH_CL1
-  display_text: "BABY\xE2\x80\x99S FATHER"
+  display_text: Baby's Father
 - local_code: 2
   list_name: BABY_LIVE_WITH_CL1
-  display_text: "BABY\xE2\x80\x99S GRANDPARENT(S)"
+  display_text: Baby's Grandparent(s)
 - local_code: 3
   list_name: BABY_LIVE_WITH_CL1
-  display_text: OTHER FAMILY MEMBER
+  display_text: Other Family Member
 - local_code: 4
   list_name: BABY_LIVE_WITH_CL1
   display_text: PLACING IN FOSTER CARE
@@ -1064,6 +1064,9 @@
 - local_code: -4
   list_name: BABY_SLEEP_ARRANGEMENT_CL1
   display_text: Missing in Error
+- local_code: -3
+  list_name: BABY_SLEEP_ARRANGEMENT_CL1
+  display_text: Legitimate Skip
 - local_code: -2
   list_name: BABY_SLEEP_ARRANGEMENT_CL1
   display_text: Don't Know
@@ -1091,6 +1094,9 @@
 - local_code: -4
   list_name: BABY_SLEEP_ROOM_CL1
   display_text: Missing in Error
+- local_code: -3
+  list_name: BABY_SLEEP_ROOM_CL1
+  display_text: Legitimate Skip
 - local_code: -2
   list_name: BABY_SLEEP_ROOM_CL1
   display_text: Don't Know
@@ -1109,6 +1115,9 @@
 - local_code: 4
   list_name: BABY_SLEEP_ROOM_CL1
   display_text: Another location
+- local_code: -7
+  list_name: BACKGROUND_CHCK_LVL_CL1
+  display_text: Not applicable
 - local_code: -4
   list_name: BACKGROUND_CHCK_LVL_CL1
   display_text: Missing in Error
@@ -1193,6 +1202,48 @@
 - local_code: 3
   list_name: BIRTH_VISIT_PLACE_CL1
   display_text: "Private doctor\xE2\x80\x99s office or HMO"
+- local_code: -4
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Missing in Error
+- local_code: -2
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Don't Know
+- local_code: -1
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Refused
+- local_code: 1
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Clinic or health center
+- local_code: 2
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Doctor's office or Health Maintenance Organization (HMO)
+- local_code: 3
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Hospital outpatient department
+- local_code: 4
+  list_name: BIRTH_VISIT_PLACE_CL2
+  display_text: Some other place
+- local_code: -5
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Some other place
+- local_code: -4
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Missing in Error
+- local_code: -2
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Don't Know
+- local_code: -1
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Refused
+- local_code: 1
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Clinic or health center
+- local_code: 2
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Doctor's office or Health Maintenance Organization (HMO)
+- local_code: 3
+  list_name: BIRTH_VISIT_PLACE_CL3
+  display_text: Hospital outpatient department
 - local_code: -5
   list_name: BLOOD_COLLEC_ISSUE_CL1
   display_text: Other
@@ -1378,7 +1429,7 @@
   display_text: Refused
 - local_code: 1
   list_name: BREAST_MILK_FEED_CL1
-  display_text: 1 Time per week
+  display_text: 1 time per week
 - local_code: 2
   list_name: BREAST_MILK_FEED_CL1
   display_text: 2 to 4 times per week
@@ -1414,7 +1465,7 @@
   display_text: Refused
 - local_code: 1
   list_name: BREAST_MILK_FEED_CL2
-  display_text: 1 Time Per Week
+  display_text: 1 time per week
 - local_code: 2
   list_name: BREAST_MILK_FEED_CL2
   display_text: 2 to 4 times per week
@@ -1444,7 +1495,7 @@
   display_text: Refused
 - local_code: 1
   list_name: BREAST_MILK_FEED_CL3
-  display_text: 1 Time per week
+  display_text: 1 time per week
 - local_code: 2
   list_name: BREAST_MILK_FEED_CL3
   display_text: 2 to 4 times per week
@@ -1480,7 +1531,7 @@
   display_text: Refused
 - local_code: 2
   list_name: BREAST_MILK_FEED_CL4
-  display_text: 1 Time Per Week
+  display_text: 1 time per week
 - local_code: 3
   list_name: BREAST_MILK_FEED_CL4
   display_text: 2 to 4 times per week
@@ -1639,7 +1690,7 @@
   display_text: Certified for NCS employment-Background Investigation
 - local_code: 21
   list_name: CERTIFICATE_TYPE_CL1
-  display_text: Certified in Shipping of Dangerous Goods (IATA Training) and Certified as a Phlebotomist
+  display_text: Certified in Shipping of Dangerous Goods (IATA Training)
 - local_code: 22
   list_name: CERTIFICATE_TYPE_CL1
   display_text: Certified as a Phlebotomist
@@ -1805,6 +1856,21 @@
 - local_code: 3
   list_name: CHILD_SLEEP_ROOM_CL1
   display_text: Both in Participant's Room and a Different Room
+- local_code: -4
+  list_name: COLLECTION_TYPE_CL1
+  display_text: Missing in Error
+- local_code: -3
+  list_name: COLLECTION_TYPE_CL1
+  display_text: Legitimate Skip
+- local_code: 1
+  list_name: COLLECTION_TYPE_CL1
+  display_text: Cord Blood Bag
+- local_code: 2
+  list_name: COLLECTION_TYPE_CL1
+  display_text: Lavendar Cap
+- local_code: 3
+  list_name: COLLECTION_TYPE_CL1
+  display_text: Red Cap
 - local_code: -4
   list_name: COMMENTS_CL1
   display_text: Missing in Error
@@ -2325,6 +2391,24 @@
   list_name: CONFIRM_TYPE_CL8
   display_text: "No"
 - local_code: -4
+  list_name: CONFIRM_TYPE_CL9
+  display_text: Missing in Error
+- local_code: -3
+  list_name: CONFIRM_TYPE_CL9
+  display_text: Legitimate Skip
+- local_code: -2
+  list_name: CONFIRM_TYPE_CL9
+  display_text: Don't Know
+- local_code: -1
+  list_name: CONFIRM_TYPE_CL9
+  display_text: Refused
+- local_code: 1
+  list_name: CONFIRM_TYPE_CL9
+  display_text: Yes, all information is correct
+- local_code: 2
+  list_name: CONFIRM_TYPE_CL9
+  display_text: No, there are errors in the listing
+- local_code: -4
   list_name: CONSENT_TYPE_CL1
   display_text: Missing in Error
 - local_code: 1
@@ -2348,6 +2432,9 @@
 - local_code: 7
   list_name: CONSENT_TYPE_CL1
   display_text: Low Intensity Consent
+- local_code: -7
+  list_name: CONSENT_TYPE_CL2
+  display_text: Not applicable
 - local_code: -4
   list_name: CONSENT_TYPE_CL2
   display_text: Missing in Error
@@ -2360,6 +2447,33 @@
 - local_code: 3
   list_name: CONSENT_TYPE_CL2
   display_text: Consent to collect genetic material
+- local_code: -7
+  list_name: CONSENT_TYPE_CL3
+  display_text: Not applicable
+- local_code: -4
+  list_name: CONSENT_TYPE_CL3
+  display_text: Missing in Error
+- local_code: 1
+  list_name: CONSENT_TYPE_CL3
+  display_text: Pregnant Woman Consent
+- local_code: 2
+  list_name: CONSENT_TYPE_CL3
+  display_text: Non-Pregnant Woman Consent
+- local_code: 3
+  list_name: CONSENT_TYPE_CL3
+  display_text: Father Consent
+- local_code: 4
+  list_name: CONSENT_TYPE_CL3
+  display_text: Child Consent Birth to 6-Months
+- local_code: 5
+  list_name: CONSENT_TYPE_CL3
+  display_text: Child Consent 6-Months to Age of Majority
+- local_code: 6
+  list_name: CONSENT_TYPE_CL3
+  display_text: New Adult Consent
+- local_code: 7
+  list_name: CONSENT_TYPE_CL3
+  display_text: Low Intensity Consent
 - local_code: -4
   list_name: CONSENT_WITHDRAW_REASON_CL1
   display_text: Missing in Error
@@ -2378,6 +2492,9 @@
 - local_code: -4
   list_name: CONSENT_WITHDRAW_REASON_CL2
   display_text: Missing in Error
+- local_code: -3
+  list_name: CONSENT_WITHDRAW_REASON_CL2
+  display_text: Legitimate Skip
 - local_code: 1
   list_name: CONSENT_WITHDRAW_REASON_CL2
   display_text: Family Reasons
@@ -2587,7 +2704,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: CONTACT_TYPE_CL1
-  display_text: In-person
+  display_text: In person
 - local_code: 2
   list_name: CONTACT_TYPE_CL1
   display_text: Mail
@@ -2614,7 +2731,7 @@
   display_text: Legitimate Skip
 - local_code: 1
   list_name: CONTACT_TYPE_CL2
-  display_text: In-person
+  display_text: In person
 - local_code: 2
   list_name: CONTACT_TYPE_CL2
   display_text: Telephone
@@ -2632,7 +2749,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: CONTACT_TYPE_CL3
-  display_text: In-person
+  display_text: In person
 - local_code: 2
   list_name: CONTACT_TYPE_CL3
   display_text: Telephone
@@ -2641,7 +2758,7 @@
   display_text: Mail
 - local_code: 4
   list_name: CONTACT_TYPE_CL3
-  display_text: Website
+  display_text: Web
 - local_code: -4
   list_name: CONTACT_TYPE_CL4
   display_text: Missing in Error
@@ -2659,7 +2776,7 @@
   display_text: Email
 - local_code: 3
   list_name: CONTACT_TYPE_CL4
-  display_text: Posted Mail
+  display_text: Postal Mail
 - local_code: 4
   list_name: CONTACT_TYPE_CL4
   display_text: Text Messaging
@@ -3115,7 +3232,7 @@
   display_text: Had an ultrasound to figure it out
 - local_code: 3
   list_name: DUE_DATE_SOURCE_CL2
-  display_text: Doctor ot other provider told me without an ultrasound
+  display_text: Doctor or other provider told me without an ultrasound
 - local_code: -4
   list_name: DU_CONFIRM_CL1
   display_text: Missing in Error
@@ -3346,7 +3463,7 @@
   display_text: Once a day
 - local_code: 3
   list_name: EMAIL_USE_FREQUENCY_CL1
-  display_text: 1-3 Times a week
+  display_text: 1-3 times a week
 - local_code: 4
   list_name: EMAIL_USE_FREQUENCY_CL1
   display_text: Less than once a week
@@ -3431,6 +3548,9 @@
 - local_code: 5
   list_name: EQUIPMENT_ISSUES_CL1
   display_text: Equipment No Longer Required
+- local_code: 6
+  list_name: EQUIPMENT_ISSUES_CL1
+  display_text: Missing Equipment
 - local_code: -7
   list_name: EQUIPMENT_ISSUES_CL2
   display_text: Not applicable
@@ -3439,7 +3559,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: EQUIPMENT_ISSUES_CL2
-  display_text: Equipment Failed Calibration/Verification
+  display_text: Failed Calibration/Verification
 - local_code: 2
   list_name: EQUIPMENT_ISSUES_CL2
   display_text: Equipment Failure
@@ -4156,10 +4276,10 @@
   display_text: Refused
 - local_code: 1
   list_name: HOME_OWNERSHIP_CL2
-  display_text: Owned or being owned by someone in your household
+  display_text: Owned or being bought by you or someone in your household
 - local_code: 2
   list_name: HOME_OWNERSHIP_CL2
-  display_text: Rented by You or Someone in Your Household
+  display_text: Rented by you or someone in your household
 - local_code: -4
   list_name: HOUSEHOLD_ELIGIBILITY_CL1
   display_text: Missing in Error
@@ -4279,7 +4399,7 @@
   display_text: Unanticipated problem
 - local_code: 3
   list_name: INCIDENT_CONSEQUENCE_CL1
-  display_text: Privacy /data loss
+  display_text: Privacy/data loss
 - local_code: 4
   list_name: INCIDENT_CONSEQUENCE_CL1
   display_text: Failure to obtain legally effective consent
@@ -4291,7 +4411,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: INCIDENT_TYPE_CL1
-  display_text: Suspected privacy or data loss (go to 8)
+  display_text: Suspected privacy or data loss
 - local_code: 2
   list_name: INCIDENT_TYPE_CL1
   display_text: Serious adverse event (21CFR312.32(a))
@@ -4342,7 +4462,7 @@
   display_text: $75,000-$99,999
 - local_code: 9
   list_name: INCOME_RANGE_CL1
-  display_text: $100,000-$199,000
+  display_text: $100,000-$199,999
 - local_code: 10
   list_name: INCOME_RANGE_CL1
   display_text: $200,000 or more
@@ -4399,7 +4519,7 @@
   display_text: $75,000-$99,999
 - local_code: 9
   list_name: INCOME_RANGE_CL3
-  display_text: $100,000-$199,000
+  display_text: $100,000-$199,999
 - local_code: 10
   list_name: INCOME_RANGE_CL3
   display_text: $200,000 or more
@@ -4663,20 +4783,13 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: INSTRUMENT_TYPE_CL1
-  display_text: !binary |
-    SG91c2Vob2xkIEVudW1lcmF0aW9uIEludGVydmlld8KgwqDCoMKgwqDCoMKg
-    wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqA=
-
+  display_text: Household Enumeration Interview
 - local_code: 2
   list_name: INSTRUMENT_TYPE_CL1
   display_text: Continuous Tracking Instrument
 - local_code: 3
   list_name: INSTRUMENT_TYPE_CL1
-  display_text: !binary |
-    UHJlZ25hbmN5IFNjcmVlbmVyIEludGVydmlldyAoRUgpwqDCoMKgwqDCoMKg
-    wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-    oA==
-
+  display_text: Pregnancy Screener Interview (EH)
 - local_code: 4
   list_name: INSTRUMENT_TYPE_CL1
   display_text: Pregnancy Screener Interview (PB)
@@ -4700,7 +4813,7 @@
   display_text: Pregnancy Visit 1 SAQ
 - local_code: 11
   list_name: INSTRUMENT_TYPE_CL1
-  display_text: "Pregnancy Visit 2 Interview\xC2\xA0"
+  display_text: Pregnancy Visit 2 Interview
 - local_code: 12
   list_name: INSTRUMENT_TYPE_CL1
   display_text: "Pregnancy Visit 2\xC2\xA0 SAQ"
@@ -4841,7 +4954,7 @@
   display_text: Arabic
 - local_code: 4
   list_name: LANGUAGE_CL2
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 5
   list_name: LANGUAGE_CL2
   display_text: French
@@ -4895,7 +5008,7 @@
   display_text: Arabic
 - local_code: 3
   list_name: LANGUAGE_CL3
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 4
   list_name: LANGUAGE_CL3
   display_text: French
@@ -4961,7 +5074,7 @@
   display_text: Arabic
 - local_code: 4
   list_name: LANGUAGE_CL4
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 5
   list_name: LANGUAGE_CL4
   display_text: French
@@ -5018,7 +5131,7 @@
   display_text: Arabic
 - local_code: 3
   list_name: LANGUAGE_CL5
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 4
   list_name: LANGUAGE_CL5
   display_text: French
@@ -5078,7 +5191,7 @@
   display_text: Arabic
 - local_code: 4
   list_name: LANGUAGE_CL6
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 5
   list_name: LANGUAGE_CL6
   display_text: French
@@ -5144,7 +5257,7 @@
   display_text: Arabic
 - local_code: 3
   list_name: LANGUAGE_CL7
-  display_text: "Chinese\xC2\xA0"
+  display_text: Chinese
 - local_code: 4
   list_name: LANGUAGE_CL7
   display_text: French
@@ -5348,7 +5461,7 @@
   display_text: Removable media
 - local_code: 3
   list_name: MEDIA_TYPE_CL1
-  display_text: "Paper documents\xC2\xA0"
+  display_text: Paper documents
 - local_code: -7
   list_name: MOVED_INFORM_RELATION_CL1
   display_text: Not applicable
@@ -5697,6 +5810,36 @@
 - local_code: 6
   list_name: NO_LOG_REASON_CL1
   display_text: Other
+- local_code: -5
+  list_name: NO_LOG_REASON_CL2
+  display_text: Other
+- local_code: -4
+  list_name: NO_LOG_REASON_CL2
+  display_text: Missing in Error
+- local_code: -3
+  list_name: NO_LOG_REASON_CL2
+  display_text: Legitimate Skip
+- local_code: -2
+  list_name: NO_LOG_REASON_CL2
+  display_text: Don't Know
+- local_code: -1
+  list_name: NO_LOG_REASON_CL2
+  display_text: Refused
+- local_code: 1
+  list_name: NO_LOG_REASON_CL2
+  display_text: Haven't had a medical visit since our last interview
+- local_code: 2
+  list_name: NO_LOG_REASON_CL2
+  display_text: Misplaced the log
+- local_code: 3
+  list_name: NO_LOG_REASON_CL2
+  display_text: Forgotten to bring it to your medical visits
+- local_code: 4
+  list_name: NO_LOG_REASON_CL2
+  display_text: The log was too much trouble to complete
+- local_code: 5
+  list_name: NO_LOG_REASON_CL2
+  display_text: The log was too difficult to understand
 - local_code: -7
   list_name: OPINION_TYPE_CL1
   display_text: Not applicable
@@ -5892,6 +6035,9 @@
 - local_code: 4
   list_name: ORGANIZATION_TYPE_CL1
   display_text: Daycare
+- local_code: -7
+  list_name: OUTREACH_EVAL_CL1
+  display_text: Not applicable
 - local_code: -5
   list_name: OUTREACH_EVAL_CL1
   display_text: Other
@@ -5918,7 +6064,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: OUTREACH_MODE_CL1
-  display_text: In-person
+  display_text: In person
 - local_code: 2
   list_name: OUTREACH_MODE_CL1
   display_text: Telephone
@@ -5951,7 +6097,7 @@
   display_text: Radio
 - local_code: 12
   list_name: OUTREACH_MODE_CL1
-  display_text: Print
+  display_text: Print Media
 - local_code: -5
   list_name: OUTREACH_TARGET_CL1
   display_text: Other
@@ -6170,7 +6316,7 @@
   display_text: Newsletters
 - local_code: 16
   list_name: OUTREACH_TYPE_CL1
-  display_text: "\xE2\x80\x9CPaycheck stuffer\xE2\x80\x9D"
+  display_text: Paycheck stuffer
 - local_code: 17
   list_name: OUTREACH_TYPE_CL1
   display_text: Billboards
@@ -6246,6 +6392,12 @@
 - local_code: 11
   list_name: PARTICIPANT_TYPE_CL1
   display_text: General Respondent
+- local_code: 12
+  list_name: PARTICIPANT_TYPE_CL1
+  display_text: Phase Zero Child
+- local_code: 13
+  list_name: PARTICIPANT_TYPE_CL1
+  display_text: Phase Zero Mother
 - local_code: -4
   list_name: PAST_PERIOD_CL1
   display_text: Missing in Error
@@ -6416,7 +6568,7 @@
   display_text: Refused
 - local_code: 1
   list_name: PERSON_PARTCPNT_RELTNSHP_CL3
-  display_text: Self
+  display_text: Participant/Self
 - local_code: 2
   list_name: PERSON_PARTCPNT_RELTNSHP_CL3
   display_text: Wife
@@ -6474,6 +6626,33 @@
 - local_code: 5
   list_name: PERSON_PARTCPNT_RELTNSHP_CL4
   display_text: Other relationship to child
+- local_code: -5
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Other relationship to child
+- local_code: -4
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Missing in Error
+- local_code: -3
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Legitimate Skip
+- local_code: -2
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Don't Know
+- local_code: -1
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Refused
+- local_code: 1
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Birth Father
+- local_code: 2
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Adoptive Father
+- local_code: 3
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Step Father
+- local_code: 4
+  list_name: PERSON_PARTCPNT_RELTNSHP_CL5
+  display_text: Foster Father or Male Guardian
 - local_code: -4
   list_name: PERSON_TREATED_CL1
   display_text: Missing in Error
@@ -6782,16 +6961,16 @@
   display_text: "Yes"
 - local_code: 2
   list_name: PREGNANCY_STATUS_CL1
-  display_text: No - No additional information provided
+  display_text: No, no additional information provided
 - local_code: 3
   list_name: PREGNANCY_STATUS_CL1
-  display_text: No- Recent Pregnancy Loss
+  display_text: No, recent pregnancy loss
 - local_code: 4
   list_name: PREGNANCY_STATUS_CL1
-  display_text: No - Recently gave Birth
+  display_text: No, recently gave birth
 - local_code: 5
   list_name: PREGNANCY_STATUS_CL1
-  display_text: No - Unable to have children
+  display_text: No, unable to have children
 - local_code: -4
   list_name: PREGNANCY_STATUS_CL2
   display_text: Missing in Error
@@ -6851,21 +7030,19 @@
   display_text: Refused
 - local_code: 1
   list_name: PREGNANCY_TRYING_STATUS_CL1
-  display_text: !binary |
-    WWVzwqA=
-
+  display_text: "Yes"
 - local_code: 2
   list_name: PREGNANCY_TRYING_STATUS_CL1
-  display_text: "No \xE2\x80\x93 no additional information provided"
+  display_text: "No \xE2\x80\x93 No additional information provided"
 - local_code: 3
   list_name: PREGNANCY_TRYING_STATUS_CL1
-  display_text: No- Recent Pregnancy Loss
+  display_text: No - Recent Pregnancy Loss
 - local_code: 4
   list_name: PREGNANCY_TRYING_STATUS_CL1
   display_text: No - Recently gave Birth
 - local_code: 5
   list_name: PREGNANCY_TRYING_STATUS_CL1
-  display_text: Unable to have children
+  display_text: No - Unable to have children
 - local_code: -4
   list_name: PREGNANCY_TRYING_STATUS_CL2
   display_text: Missing in Error
@@ -6880,21 +7057,19 @@
   display_text: Refused
 - local_code: 1
   list_name: PREGNANCY_TRYING_STATUS_CL2
-  display_text: !binary |
-    WWVzwqA=
-
+  display_text: "Yes"
 - local_code: 2
   list_name: PREGNANCY_TRYING_STATUS_CL2
-  display_text: "No \xE2\x80\x93 no additional information provided"
+  display_text: "No \xE2\x80\x93 No additional information provided"
 - local_code: 3
   list_name: PREGNANCY_TRYING_STATUS_CL2
-  display_text: No- Recent Pregnancy Loss
+  display_text: No - Recent Pregnancy Loss
 - local_code: 4
   list_name: PREGNANCY_TRYING_STATUS_CL2
   display_text: No - Recently gave Birth
 - local_code: 5
   list_name: PREGNANCY_TRYING_STATUS_CL2
-  display_text: Unable to have children
+  display_text: No - Unable to have children
 - local_code: -4
   list_name: PREGNANCY_TRYING_STATUS_CL3
   display_text: Missing in Error
@@ -6927,18 +7102,16 @@
   display_text: Refused
 - local_code: 1
   list_name: PREGNANCY_TRYING_STATUS_CL4
-  display_text: !binary |
-    WWVzwqA=
-
+  display_text: "Yes"
 - local_code: 2
   list_name: PREGNANCY_TRYING_STATUS_CL4
-  display_text: "No \xE2\x80\x93 no additional information provided"
+  display_text: No, no additional information provided
 - local_code: 3
   list_name: PREGNANCY_TRYING_STATUS_CL4
-  display_text: No- Recent Pregnancy Loss
+  display_text: No, recent pregnancy loss
 - local_code: 4
   list_name: PREGNANCY_TRYING_STATUS_CL4
-  display_text: No -Unable to have children
+  display_text: No, unable to have children
 - local_code: -4
   list_name: PREVENTIVE_CARE_PLACE_CL1
   display_text: Missing in Error
@@ -7079,7 +7252,7 @@
   display_text: Provider staff checks DU eligibility- refers patient to SC
 - local_code: 5
   list_name: PROVIDER_STUDY_ROLE_CL1
-  display_text: Provider staff checks DU eligibility- talks directly to patient about NCS
+  display_text: "Provider staff checks DU eligibility \xE2\x80\x93 talks directly to patient about NCS"
 - local_code: 6
   list_name: PROVIDER_STUDY_ROLE_CL1
   display_text: Provider talks directly to all patients about NCS regardless of DU eligibility
@@ -7817,10 +7990,10 @@
   display_text: Refused
 - local_code: 1
   list_name: REGULARITY_LEVEL_CL12
-  display_text: Everyday
+  display_text: Every day
 - local_code: 2
   list_name: REGULARITY_LEVEL_CL12
-  display_text: Most Days
+  display_text: Most days
 - local_code: 3
   list_name: REGULARITY_LEVEL_CL12
   display_text: Sometimes
@@ -7988,7 +8161,34 @@
   display_text: Often
 - local_code: 4
   list_name: REGULARITY_LEVEL_CL2
-  display_text: Very Often
+  display_text: Very often
+- local_code: -4
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Missing in Error
+- local_code: -3
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Legitimate Skip
+- local_code: -2
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Don't Know
+- local_code: -1
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Refused
+- local_code: 1
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: None of the time
+- local_code: 2
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: A little of the time
+- local_code: 3
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Some of the time
+- local_code: 4
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: Most of the time
+- local_code: 5
+  list_name: REGULARITY_LEVEL_CL3
+  display_text: All of the time
 - local_code: -4
   list_name: REGULARITY_LEVEL_CL4
   display_text: Missing in Error
@@ -8198,7 +8398,7 @@
   display_text: Missing in Error
 - local_code: 1
   list_name: RESIDENCE_TYPE_CL2
-  display_text: Single Family Home
+  display_text: Single-Family Home
 - local_code: 2
   list_name: RESIDENCE_TYPE_CL2
   display_text: Multi-Family Home
@@ -8695,6 +8895,27 @@
   list_name: SLEEP_POSITION_CL1
   display_text: Side
 - local_code: -4
+  list_name: SLEEP_POSITION_CL2
+  display_text: Missing in Error
+- local_code: -3
+  list_name: SLEEP_POSITION_CL2
+  display_text: Legitimate Skip
+- local_code: -2
+  list_name: SLEEP_POSITION_CL2
+  display_text: Don't Know
+- local_code: -1
+  list_name: SLEEP_POSITION_CL2
+  display_text: Refused
+- local_code: 1
+  list_name: SLEEP_POSITION_CL2
+  display_text: Stomach
+- local_code: 2
+  list_name: SLEEP_POSITION_CL2
+  display_text: Back
+- local_code: 3
+  list_name: SLEEP_POSITION_CL2
+  display_text: Side
+- local_code: -4
   list_name: SMOKING_ALLOWED_CL1
   display_text: Missing in Error
 - local_code: -2
@@ -8904,6 +9125,9 @@
 - local_code: 8
   list_name: SPECIMEN_STATUS_CL3
   display_text: Specimen Lost
+- local_code: -7
+  list_name: SPECIMEN_STATUS_CL4
+  display_text: Not applicable
 - local_code: -4
   list_name: SPECIMEN_STATUS_CL4
   display_text: Missing in Error
@@ -8946,6 +9170,9 @@
 - local_code: -4
   list_name: SPECIMEN_STATUS_CL6
   display_text: Missing in Error
+- local_code: -3
+  list_name: SPECIMEN_STATUS_CL6
+  display_text: Legitimate Skip
 - local_code: 1
   list_name: SPECIMEN_STATUS_CL6
   display_text: Samples shipped
@@ -9708,6 +9935,27 @@
 - local_code: 13
   list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
   display_text: Listing concurrent with Enumeration.
+- local_code: 14
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 3 Month Interview
+- local_code: 15
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 6 Month Interview
+- local_code: 16
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 9 Month Interview
+- local_code: 17
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 12 Month Interview
+- local_code: 18
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 18 Month Interview
+- local_code: 19
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: 24 Month Interview
+- local_code: 20
+  list_name: STUDY_DATA_CLLCTN_TSK_TYPE_CL1
+  display_text: Father Visit
 - local_code: -5
   list_name: STUDY_ENTRY_METHOD_CL1
   display_text: Other
@@ -10592,7 +10840,7 @@
   display_text: 5mL PPT
 - local_code: 4
   list_name: TUBE_TYPE_CL2
-  display_text: 8.5 mL P100
+  display_text: 8.5mL P100
 - local_code: -4
   list_name: TV_WATCH_FREQUENCY_CL1
   display_text: Missing in Error
@@ -10779,6 +11027,9 @@
 - local_code: 9
   list_name: VACUUM_TYPE_CL1
   display_text: Shop Vac
+- local_code: -7
+  list_name: VACUUM_USE_CL1
+  display_text: Not applicable
 - local_code: -5
   list_name: VACUUM_USE_CL1
   display_text: Other
@@ -10923,6 +11174,24 @@
 - local_code: 2
   list_name: WATER_CLLCTN_REASON_CL1
   display_text: Ran out of time
+- local_code: -5
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: Other
+- local_code: -4
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: Missing in Error
+- local_code: -3
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: Legitimate Skip
+- local_code: 1
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: Supplies missing from kit
+- local_code: 2
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: Ran out of time
+- local_code: 3
+  list_name: WATER_CLLCTN_REASON_CL2
+  display_text: None Required
 - local_code: -5
   list_name: WATER_TYPE_CL1
   display_text: Other
