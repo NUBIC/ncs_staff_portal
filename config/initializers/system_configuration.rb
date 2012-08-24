@@ -5,7 +5,7 @@ module StaffPortal
   class << self
     
     def mdes
-      @mdes ||= NcsNavigator::Mdes('2.0')
+      @mdes ||= NcsNavigator::Mdes('2.1')
     end
     
     def configuration
