@@ -5,16 +5,14 @@ require 'ncs_navigator/staff_portal/warehouse'
 require File.expand_path('../importer_warehouse_setup', __FILE__)
 
 module NcsNavigator::StaffPortal::Warehouse
-  describe Importer, :clean_with_truncation, :warehouse do
-    MdesModule = NcsNavigator::Warehouse::Models::TwoPointZero
-
+  describe 'Importer', :clean_with_truncation, :warehouse do
     include_context :importer_spec_warehouse
     
-    let(:importer) {
+    let!(:importer) {
       Importer.new(wh_config)
     }
 
-    let(:enumerator) {
+    let!(:enumerator) {
       Enumerator.new(wh_config, :bcdatabase => bcdatabase_config)
     }
 
@@ -178,7 +176,29 @@ module NcsNavigator::StaffPortal::Warehouse
         
         it 'set staff inactive date as of imported date which might be always today date' do
           Staff.first.ncs_inactive_date.should == Date.today
-        end   
+        end 
+
+        describe 'ncs_inactive_date and ncs_active_date' do
+          let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p| 
+            p.ncs_inactive_date = "2012-05-12"
+            p.ncs_active_date = "2012-03-12"
+            save_wh(p) 
+            Staff.destroy_all
+            Staff.count.should == 0 } }
+
+          before do
+            importer.import(:staff)
+          end
+
+          it 'set staff inactive date as of mdes ncs_inactive_date' do
+            Staff.first.ncs_inactive_date.to_s.should == "2012-05-12"
+          end  
+
+          it 'set staff active date as of mdes ncs_active_date' do
+            Staff.first.ncs_active_date.to_s.should == "2012-03-12"
+          end  
+        end 
+ 
       end
       
       describe 'of a completely new record with race value is other and race_other is null' do
@@ -585,7 +605,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
         let!(:mdes_record) {
           Factory(:outreach_event, :outreach_segments => [outreach_segment], :no_of_staff => 2, :cost => 100)
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap do |a|
             a.outreach_event_id = "event_id_1234567890"
             a.outreach_quantity = 8
@@ -615,7 +635,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
         
         it 'has correct outreach event date' do
-          OutreachEvent.first.event_date.to_s.should == "05/12/2012"
+          OutreachEvent.first.event_date.to_s.should == "2012-05-12"
         end 
         
         it 'has correct outreach event mode' do
@@ -662,7 +682,7 @@ module NcsNavigator::StaffPortal::Warehouse
           OutreachEvent.first.attendees_quantity.should == 8
         end
         
-        it 'has correct outreach segment area mapped to correct ssu' do
+        it 'has correct outreach segment mapped to correct ssu' do
           OutreachEvent.first.outreach_segments.first.ncs_ssu.ssu_id.should == "1234567890"
         end
         
@@ -677,7 +697,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
         let!(:mdes_record) {
           Factory(:outreach_event, :outreach_segments => [outreach_segment])
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap do |a|
             a.outreach_event_id = "event_id_1234567890"
             save_wh(a)
@@ -694,6 +714,22 @@ module NcsNavigator::StaffPortal::Warehouse
            expect { importer.import(:outreach_events) }.should raise_error
         end
       end
+
+      describe 'if ssu_id is nil' do
+        let!(:mdes_record) {
+          Factory(:outreach_event, :outreach_segments => [])
+          enumerator.to_a(:outreach_events).first.tap do |a|
+            save_wh(a)
+            OutreachEvent.destroy_all
+            OutreachEvent.count.should == 0
+          end
+        }
+
+        it 'has no outreach_segment with ssu_id created ' do
+          importer.import(:outreach_events)
+          OutreachEvent.first.outreach_segments.should be_empty
+        end
+      end
        
       describe "for other coded value to 'other' and corresponding other value is null" do
         let(:other_mode_code) { Factory(:ncs_code, :list_name => "OUTREACH_MODE_CL1", :display_text => "Other", :local_code => -5) }
@@ -707,7 +743,7 @@ module NcsNavigator::StaffPortal::Warehouse
                   :mode => other_mode_code, :mode_other => "temp",
                   :outreach_type => other_type_code, :outreach_type_other => "temp", 
                   :culture => other_culture_code, :culture_other => "temp")
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap do |a|
             a.outreach_event_id = "event_id_1234567890"
             a.outreach_mode_oth = nil
@@ -743,8 +779,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
         let!(:mdes_record) {
           Factory(:outreach_event, :outreach_segments => [outreach_segment])
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
-          save_wh(MdesModule::Tsu.new(:sc_id => '20000029', :tsu_id => 'tsu_123', :tsu_name =>'tsu_123'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Tsu).new(:sc_id => '20000029', :tsu_id => 'tsu_123', :tsu_name =>'tsu_123'))
           enumerator.to_a(:outreach_events).first.tap do |a|
             a.outreach_event_id = "event_id_1234567890"
             a.tsu_id = 'tsu_123'
@@ -777,7 +813,7 @@ module NcsNavigator::StaffPortal::Warehouse
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
             p.outreach_event_id = "event_id_1234567890"
             save_wh(p) } 
@@ -829,7 +865,7 @@ module NcsNavigator::StaffPortal::Warehouse
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
             p.outreach_event_id = "event_id_1234567890"
             save_wh(p) } 
@@ -881,7 +917,7 @@ module NcsNavigator::StaffPortal::Warehouse
         
         let!(:sp_outreach) { Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890") }
         let!(:mdes_outreach) {
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
             p.outreach_event_id = "event_id_1234567890"
             save_wh(p) } 
@@ -934,7 +970,7 @@ module NcsNavigator::StaffPortal::Warehouse
         
         let!(:sp_outreach) { Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890") }
         let!(:mdes_outreach) {
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
             p.outreach_event_id = "event_id_1234567890"
             save_wh(p) } 
@@ -984,7 +1020,7 @@ module NcsNavigator::StaffPortal::Warehouse
         
         let!(:sp_outreach) {Factory(:outreach_event, :outreach_segments => [outreach_segment], :outreach_event_id => "event_id_1234567890")}
         let!(:mdes_outreach) {
-          save_wh(MdesModule::Ssu.new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
+          save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p| 
             p.outreach_lang_oth = "Babylonian"
             p.outreach_event_id = "event_id_1234567890"

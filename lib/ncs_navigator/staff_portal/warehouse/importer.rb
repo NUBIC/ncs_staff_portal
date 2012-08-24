@@ -14,7 +14,7 @@ module NcsNavigator::StaffPortal::Warehouse
   # {Enumerator}.
   class Importer
     extend Forwardable
-    include NcsNavigator::Warehouse::Models::TwoPointZero
+    include NcsNavigator::Warehouse::Models::TwoPointOne
     BLOCK_SIZE = 2500
 
     attr_reader :wh_config
@@ -61,7 +61,11 @@ module NcsNavigator::StaffPortal::Warehouse
               staff_portal_record.send("age_group_code=", mdes_record.staff_age_range)
               staff_portal_record.send("external=", true)
               staff_portal_record.send("notify=", false)
-              staff_portal_record.send("ncs_inactive_date=", Date.today)
+              if mdes_record.ncs_inactive_date
+                staff_portal_record.send("ncs_inactive_date=", mdes_record.ncs_inactive_date)
+              else
+                staff_portal_record.send("ncs_inactive_date=", Date.today)
+              end
               [
                 ["staff_type_code", "staff_type_other"], ["race_code", "race_other"]
               ].each do |code_attribute_name, other_attribute_name|
@@ -131,17 +135,19 @@ module NcsNavigator::StaffPortal::Warehouse
             staff_portal_record = save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")
-              ncs_ssu = NcsSsu.find_by_ssu_id(ssu_id)
-              unless ncs_ssu
-                raise "There is no NcsSsu created with ssu_id = #{ssu_id}. Please load the NcsSsu first and then try import again."
+              if ssu_id
+                ncs_ssu = NcsSsu.find_by_ssu_id(ssu_id)
+                unless ncs_ssu
+                  raise "There is no NcsSsu created with ssu_id = #{ssu_id}. Please load the NcsSsu first and then try import again."
+                end
+                outreach_segment = OutreachSegment.new(:ncs_ssu => ncs_ssu, :outreach_event => staff_portal_record)
+                tsu_id = mdes_record.send("tsu_id")
+                if tsu_id
+                  ncs_tsu = NcsTsu.find_by_tsu_id(tsu_id)
+                  outreach_segment.ncs_tsu = ncs_tsu
+                end
+                save_staff_portal_record_with_mode(outreach_segment, OutreachSegment)
               end
-              outreach_segment = OutreachSegment.new(:ncs_ssu => ncs_ssu, :outreach_event => staff_portal_record)
-              tsu_id = mdes_record.send("tsu_id")
-              if tsu_id
-                ncs_tsu = NcsTsu.find_by_tsu_id(tsu_id)
-                outreach_segment.ncs_tsu = ncs_tsu
-              end
-              save_staff_portal_record_with_mode(outreach_segment, OutreachSegment)
             end
           end
         end
@@ -157,7 +163,7 @@ module NcsNavigator::StaffPortal::Warehouse
       end
     end
     # @return a NCS Navigator Ops record corresponding to the MDES record. It may
-    #   or may not be a record that already exists in core. Whether or
+    #   or may not be a record that already exists in ops. Whether or
     #   not it is, it will have been sync'd with the input MDES record
     #   but not saved.
     def apply_mdes_record_to_staff_portal(staff_portal_model, mdes_record)
