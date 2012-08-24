@@ -6,6 +6,7 @@ module NcsNavigator::StaffPortal::Spec
       @wh_config ||= NcsNavigator::Warehouse::Configuration.new.tap do |config|
         config.log_file = Rails.root + 'log/wh-import_test.log'
         config.set_up_logs
+        config.mdes_version = '2.1'
         config.output_level = :quiet
         if bcdatabase_config[:group]
           config.bcdatabase_group = bcdatabase_config[:group]
