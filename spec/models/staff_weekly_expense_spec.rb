@@ -5,7 +5,7 @@
 #  id              :integer         not null, primary key
 #  staff_id        :integer
 #  week_start_date :date            not null
-#  rate            :decimal(5, 2)
+#  rate            :decimal(10, 2)
 #  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -62,6 +62,11 @@ describe StaffWeeklyExpense do
       actaul_expenses = StaffWeeklyExpense.visible_expenses()
       actaul_expenses.count.should == 3
     end
+  end
+
+  it "allows more than 5 precision value for rate" do
+    expense = Factory(:staff_weekly_expense, :rate => 12345.56)
+    expense.rate.should == 12345.56
   end
 
   describe "total" do
