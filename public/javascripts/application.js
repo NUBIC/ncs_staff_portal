@@ -145,29 +145,54 @@ function check_select_for_yes(select_id, other_class){
     }
   }
 }
+
 function get_cert_date_value() {
+  if ($('input:radio[name=cert_date]:checked').val() != 'date') {
+    make_date_input_disable("#cert_date_temp")
+  } 
   $("#cert_date_temp").change(function(){
     $("#cert_date_value").val($("#cert_date_temp").val());
   });
   $("input:radio[name=cert_date]").click(function() {
-    if ( $(this).val() == 'date' ) {
-      make_cert_date_input_enable();
+    if ($(this).val() == 'date') {
+      make_date_input_enable("#cert_date_temp")
     } else {
       $("#cert_date_value").val($(this).val())
-	    make_cert_date_input_disable();
+      make_date_input_disable("#cert_date_temp")
     }
   });
 }
 
-function make_cert_date_input_disable() {
-  $("#cert_date_temp").attr('disabled', 'disabled');
-  $("#cert_date_temp").css('background-color', '#d0d0d0')
-  $("#cert_date_temp").val('')
+function get_dob_value() {
+  if ($('input:radio[name=dob]:checked').val() != 'date') {
+    make_date_input_disable("#birth_date_field")
+    $("#dob_value").val('')
+  }
+  $("#birth_date_field").change(function(){
+    $("#dob_value").val($("#birth_date_field").val());
+  });
+  $("input:radio[name=dob]").click(function() {
+    if ($(this).val() == 'date') {
+      $("#age_group_value").val('')
+      make_date_input_enable("#birth_date_field")
+      $("#dob_value").val($("#birth_date_field").val())
+    } else {
+      $("#age_group_value").val($(this).val())
+      make_date_input_disable("#birth_date_field")
+      $("#dob_value").val('')
+    }
+  });
 }
 
-function make_cert_date_input_enable() {
-  $("#cert_date_temp").removeAttr('disabled');
-  $("#cert_date_temp").css('background-color', '#EEF1C3')
+function make_date_input_enable(input_id) {
+  $(input_id).removeAttr('disabled');
+  $(input_id).css('background-color', '#FFFFFF')
+}
+
+function make_date_input_disable(input_id) {
+  $(input_id).attr('disabled', 'disabled');
+  $(input_id).css('background-color', '#d0d0d0')
+  $(input_id).val('')
 }
 
 function disabled_selected_options(select_class, other_flag) {
