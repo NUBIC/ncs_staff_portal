@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817192007) do
+ActiveRecord::Schema.define(:version => 20120824193548) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -279,7 +279,7 @@ ActiveRecord::Schema.define(:version => 20120817192007) do
   create_table "staff_weekly_expenses", :force => true do |t|
     t.integer  "staff_id"
     t.date     "week_start_date",                                              :null => false
-    t.decimal  "rate",                          :precision => 5,  :scale => 2
+    t.decimal  "rate",                          :precision => 10, :scale => 2
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"

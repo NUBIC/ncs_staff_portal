@@ -5,7 +5,7 @@
 #  id              :integer         not null, primary key
 #  staff_id        :integer
 #  week_start_date :date            not null
-#  rate            :decimal(5, 2)
+#  rate            :decimal(10, 2)
 #  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime

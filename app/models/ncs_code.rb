@@ -59,6 +59,14 @@ class NcsCode < ActiveRecord::Base
   def self.unknown_date
     return "9666-96-96"
   end
+
+  def self.unknown_code
+    -6
+  end
+
+  def self.refused_code
+    -1
+  end
   
   def self.for_attribute_name_and_local_code(attribute_name, local_code)
     NcsCode.for_list_name_and_local_code(NcsCode.attribute_lookup(attribute_name), local_code)

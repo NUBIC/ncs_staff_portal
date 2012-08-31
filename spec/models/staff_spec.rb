@@ -301,6 +301,23 @@ describe Staff do
         staff.save
         staff.should be_valid
       end
+
+      describe "birth_date" do
+        before(:each) do
+          @staff = FactoryGirl.create(:valid_staff, :birth_date => nil)
+        end
+
+        it "is required if age_group_code is not set" do
+          @staff.should have(1).error_on(:birth_date)
+          @staff.should_not be_valid
+          @staff.errors[:birth_date].should == [": You must enter birth date or select other option"]
+        end
+
+        it "is not required if age_group_code is set" do
+          @staff.update_attribute(:age_group_code, -6)
+          @staff.should be_valid
+        end
+      end
     end
 
     describe "pay_amount_required" do
@@ -727,6 +744,28 @@ describe Staff do
         search_staff.should include @staff
         search_staff.should include staff1
       end
+    end
+  end
+
+  describe "display_birth_date" do
+    before(:each) do
+      @staff = FactoryGirl.create(:valid_staff, :birth_date => Date.new(1980, 4, 8))
+    end
+
+    it "displays birth_date if birth_date is set" do
+      @staff.display_birth_date.should == "1980-04-08"
+    end
+
+    it "displays 'Unknown' if age_group_code is set to -6" do
+      @staff.update_attribute(:age_group_code, -6)
+      @staff.update_attribute(:birth_date, nil)
+      @staff.display_birth_date.should == "Unknown"
+    end
+
+    it "displays 'Refused' if age_group_code is set to -1" do
+      @staff.update_attribute(:age_group_code, -1)
+      @staff.update_attribute(:birth_date, nil)
+      @staff.display_birth_date.should == "Refused"
     end
   end
 end

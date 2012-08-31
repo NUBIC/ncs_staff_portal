@@ -39,9 +39,10 @@ class Staff < ActiveRecord::Base
   nilify_blanks
   self.include_root_in_json = false
   attr_accessor :validate_update, :validate_create
-  validates_presence_of :staff_type, :birth_date, :gender, :race, :ethnicity, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
+  validates_presence_of :staff_type, :gender, :race, :ethnicity, :subcontractor, :experience, :pay_type, :if => :update_presence_required?, :on => :update
   validates :zipcode, :numericality => true, :presence => true, :if => :update_presence_required?, :on => :update
-  validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year , :allow_nil => true
+  validates_date :birth_date, :before => Date.today, :after=> Date.today - 100.year, :allow_blank => true
+  validates :birth_date, :presence => {:unless => "age_group_code", :message => ": You must enter birth date or select other option"}, :if => :update_presence_required?, :on => :update
   validates :email, :format => {:with =>/^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i, :message => "is required when user have #{NcsNavigator.configuration.study_center_username}." }, :if => :email_required?
   validates_with OtherEntryValidator, :entry => :staff_type, :other_entry => :staff_type_other
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
@@ -226,5 +227,17 @@ class Staff < ActiveRecord::Base
   
   def display_name
     last_name_first_name.blank? ? staff_id : last_name_first_name
+  end
+
+  def display_birth_date
+    if formatted_birth_date.blank?
+      if age_group_code == NcsCode.refused_code
+        "Refused"
+      elsif age_group_code == NcsCode.unknown_code
+        "Unknown"
+      end
+    else
+      formatted_birth_date
+    end
   end
 end

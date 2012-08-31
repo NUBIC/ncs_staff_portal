@@ -33,9 +33,20 @@
     = f.select :pay_type, ["Hourly","Yearly", "Voluntary"], {:prompt => 'Select pay type'},{:id => "pay_type"}
     = f.text_field :pay_amount, {:id => "pay_amount", :size =>10}
   .field
-    = f.label :formatted_birth_date , "Date of Birth (mm/dd/yyyy)"
+    = f.label :formatted_birth_date , "Date of Birth (yyyy-mm-dd)"
     %em *
-    = f.text_field :formatted_birth_date , {:class => "datepicker", :size =>10, :maxlength =>10}
+    - if !@staff.formatted_birth_date.blank? || @staff.age_group_code != NcsCode.unknown_code || @staff.age_group_code != NcsCode.refused_code
+      = radio_button_tag 'dob', 'date', true, :class => "dob"
+      = text_field_tag 'birth_date_field', @staff.formatted_birth_date, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10
+    - else
+      = radio_button_tag 'dob', 'date', false, :class => "dob"
+      = text_field_tag 'birth_date_field', nil, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10 
+    = radio_button_tag 'dob', NcsCode.unknown_code, @staff.age_group_code == NcsCode.unknown_code, :class => "dob"
+    = label_tag "Unknown"
+    = radio_button_tag 'dob', NcsCode.refused_code, @staff.age_group_code == NcsCode.refused_code, :class => "dob"
+    = label_tag "Refused"
+    = f.hidden_field :age_group_code, :id => "age_group_value"
+    = f.hidden_field :birth_date, :id => "dob_value"
   .field
     = f.label :gender_code, "Gender"
     %em *
@@ -91,6 +102,7 @@
     // For the 'other'  field
     // Check on pageload
     $(document).ready(function(){
+      get_dob_value();
       wire_up_select_other("#staff_type","#staff_type_other");
       wire_up_select_other("#race","#race_other");
       wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
