@@ -398,6 +398,43 @@ module NcsNavigator::StaffPortal::Warehouse
         end 
       end
     end
+
+    describe 'conversion for staff_cert_trainings' do
+      describe 'of a completely new record' do
+        let!(:sp_staff) { Factory(:valid_staff) }
+        let!(:mdes_staff) { enumerator.to_a(:staff).first.tap { |p| 
+          save_wh(p) } }
+
+        let!(:mdes_record) {
+          Factory(:staff_cert_training, :staff => sp_staff, :expiration_date => Date.new(2012, 05, 12))
+          enumerator.to_a(:staff_cert_trainings).first.tap do |a|
+            save_wh(a)
+            StaffCertTraining.destroy_all
+            StaffCertTraining.count.should == 0
+          end
+        }
+          
+        before do
+          importer.import(:staff_cert_trainings)
+        end
+        
+        it 'creates a new record' do
+          StaffCertTraining.count.should == 1
+        end
+        
+        it 'has correct training type code' do
+          StaffCertTraining.first.certificate_type_code.should == 1
+        end 
+        
+        it 'has correct background check' do
+          StaffCertTraining.first.background_check_code.should == 1
+        end 
+
+        it 'has correct expiration date' do
+          StaffCertTraining.first.expiration_date.should == Date.new(2012, 05, 12)
+        end
+      end
+    end
     
     describe 'conversion for staff weekly expense' do
       describe 'of a completely new record' do

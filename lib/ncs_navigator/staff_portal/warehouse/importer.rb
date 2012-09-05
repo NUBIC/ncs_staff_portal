@@ -83,6 +83,8 @@ module NcsNavigator::StaffPortal::Warehouse
                 end
               end
               staff_portal_record = apply_other_value(staff_portal_record, "lang_code", "lang_other")
+            when :staff_cert_trainings
+              staff_portal_record.send("expiration_date=", mdes_record.send("cert_type_exp_date"))
             when :staff_weekly_expenses 
               [
                 ["staff_hours", "hours"], ["staff_expenses", "expenses"], ["staff_miles", "miles"]
