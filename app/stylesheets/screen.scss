@@ -179,6 +179,11 @@ body.ncs {
         @include append(1);
         font-size: 2.0em;
       }
+
+      .app_env {
+        color: $NU_PURPLE;
+        text-decoration: underline;
+      }
     } // end of header
 
     #footer {
