@@ -379,6 +379,8 @@ body.ncs {
           border: 1px solid $tab_vertical_border;
           text-align: center;
           color: $tab_nav_txt;
+          color: $tab_nav_current_txt;
+          border: 1px solid $task_tab_bg;
         }
 
         li.current span{
@@ -389,7 +391,7 @@ body.ncs {
           text-decoration: none;
           border: 1px solid $tab_vertical_border;
           text-align: center;
-          color: $tab_vertical_current_txt; 
+          //color: $tab_vertical_current_txt; 
         }
       }
       

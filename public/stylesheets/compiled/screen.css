@@ -962,24 +962,25 @@ body.ncs #main #content #tab_vertical li a {
   display: block;
   width: 12em;
   padding: 0.3em 0.3em 0.1em 0.3em;
-  background-color: #9672ff;
+  background-color: #ccd3e8;
   text-decoration: none;
-  border: 1px solid #9672ff;
+  border: 1px solid #ccd3e8;
   text-align: center;
   color: #f0f0f0;
+  color: #333333;
+  border: 1px solid #ccd3e8;
 }
-/* line 384, ../../../app/stylesheets/screen.scss */
+/* line 386, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #tab_vertical li.current span {
   display: block;
   width: 12em;
   padding: 0.3em 0.3em 0.1em 0.3em;
   background-color: #f0f0f0;
   text-decoration: none;
-  border: 1px solid #9672ff;
+  border: 1px solid #ccd3e8;
   text-align: center;
-  color: #333333;
 }
-/* line 396, ../../../app/stylesheets/screen.scss */
+/* line 398, ../../../app/stylesheets/screen.scss */
 body.ncs #main #content #content_vertical {
   display: inline;
   float: left;
