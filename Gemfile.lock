@@ -167,7 +167,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.0.4)
-    ncs_mdes (0.7.0)
+    ncs_mdes (0.8.1)
       nokogiri (~> 1.4)
     ncs_mdes_warehouse (0.7.0)
       actionmailer (~> 3.0)
@@ -314,7 +314,7 @@ DEPENDENCIES
   json_spec
   launchy
   mail (= 2.2.19)
-  ncs_mdes
+  ncs_mdes (>= 0.8.1)
   ncs_mdes_warehouse (= 0.7.0)
   ncs_navigator_configuration
   nilify_blanks

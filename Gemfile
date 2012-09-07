@@ -11,7 +11,7 @@ gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
 gem 'tabs_on_rails'
 gem "breadcrumbs_on_rails"
-gem 'ncs_mdes'
+gem 'ncs_mdes', '>= 0.8.1'
 gem 'aker-rails'
 gem 'aker'
 gem 'mail', '2.2.19'
