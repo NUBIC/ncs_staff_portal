@@ -148,19 +148,59 @@ function check_select_for_yes(select_id, other_class){
 
 function get_cert_date_value() {
   if ($('input:radio[name=cert_date]:checked').val() != 'date') {
-    make_date_input_disable("#cert_date_temp")
-  } 
+    make_cert_date_input_disable();
+  }
   $("#cert_date_temp").change(function(){
     $("#cert_date_value").val($("#cert_date_temp").val());
   });
   $("input:radio[name=cert_date]").click(function() {
-    if ($(this).val() == 'date') {
-      make_date_input_enable("#cert_date_temp")
+    if ( $(this).val() == 'date' ) {
+      make_cert_date_input_enable();
     } else {
       $("#cert_date_value").val($(this).val())
-      make_date_input_disable("#cert_date_temp")
+      make_cert_date_input_disable();
     }
   });
+}
+
+function make_cert_date_input_disable() {
+  $("#cert_date_temp").attr('disabled', 'disabled');
+  $("#cert_date_temp").css('background-color', '#d0d0d0')
+  $("#cert_date_temp").val('')
+}
+
+function make_cert_date_input_enable() {
+  $("#cert_date_temp").removeAttr('disabled');
+  $("#cert_date_temp").css('background-color', '#EEF1C3')
+}
+
+function get_exp_date_value() {
+  if ($('input:radio[name=exp_date]:checked').val() != 'date') {
+    make_exp_date_input_disable();
+    $("#exp_date_value").val('')
+  }
+  $("#exp_date_field").change(function(){
+    $("#exp_date_value").val($("#exp_date_field").val());
+  });
+  $("input:radio[name=exp_date]").click(function() {
+    if ( $(this).val() == 'date' ) {
+      make_exp_date_input_enable();
+    } else {
+      $("#exp_date_value").val($(this).val())
+      make_exp_date_input_disable();
+    }
+  });
+}
+
+function make_exp_date_input_disable() {
+  $("#exp_date_field").attr('disabled', 'disabled');
+  $("#exp_date_field").css('background-color', '#d0d0d0')
+  $("#exp_date_field").val('')
+}
+
+function make_exp_date_input_enable() {
+  $("#exp_date_field").removeAttr('disabled');
+  $("#exp_date_field").css('background-color', '#EEF1C3')
 }
 
 function get_dob_value() {

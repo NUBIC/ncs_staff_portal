@@ -37,7 +37,8 @@ class StaffWeeklyExpense < ActiveRecord::Base
       hours
     else
       self.management_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours } +
-        self.data_collection_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours }
+        self.data_collection_tasks.map(&:hours).compact.inject(0.0) { |total, hours| total + hours } +
+        self.miscellaneous_expenses.map(&:hours).compact.inject(0.0) { |total, hours| total + hours }
     end
   end
 

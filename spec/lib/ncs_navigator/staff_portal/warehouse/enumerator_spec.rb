@@ -319,8 +319,9 @@ module NcsNavigator::StaffPortal::Warehouse
             sp_record.hours.should be_nil
             task1.update_attributes(:hours => '16.02')
             task2.update_attributes(:hours => '90.00')
+            task3.update_attributes(:hours => '10.00')
 
-            results.first.staff_hours.should == '106.02'
+            results.first.staff_hours.should == '116.02'
           end
 
           it 'uses 0.0 if there are no hours' do
