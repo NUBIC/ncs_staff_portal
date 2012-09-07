@@ -137,7 +137,7 @@ module NcsNavigator::StaffPortal::Warehouse
               UNION ALL
               SELECT staff_weekly_expense_id, hours, expenses, miles FROM data_collection_tasks
               UNION ALL
-              SELECT staff_weekly_expense_id, 0.0, expenses, miles FROM miscellaneous_expenses
+              SELECT staff_weekly_expense_id, hours, expenses, miles FROM miscellaneous_expenses
             ) all_exp
             GROUP BY staff_weekly_expense_id
           ) t ON swe.id=t.staff_weekly_expense_id

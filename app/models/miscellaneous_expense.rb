@@ -11,11 +11,13 @@
 #  comment                 :text
 #  created_at              :datetime
 #  updated_at              :datetime
+#  hours                   :decimal(10, 2)
 #
 
 class MiscellaneousExpense < ActiveRecord::Base
   strip_attributes
   validates_date :expense_date, :allow_blank => false
+  validates :hours, :numericality => {:less_than => 100.00, :greater_than_or_equal_to => 0, :allow_nil => true }
   validates :expenses, :numericality => {:less_than => 99999999.99, :greater_than_or_equal_to => 0, :allow_nil => true }
   validates :miles, :numericality => {:less_than => 999.99, :greater_than_or_equal_to => 0,:allow_nil => true }
 

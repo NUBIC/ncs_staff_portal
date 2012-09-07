@@ -66,6 +66,7 @@ FactoryGirl.define do
   
   factory :miscellaneous_expense do |m_expense|
     m_expense.expense_date  Date.today
+    m_expense.hours nil
     m_expense.miles nil
     m_expense.expenses nil
     m_expense.association :staff_weekly_expense, :factory => :staff_weekly_expense
