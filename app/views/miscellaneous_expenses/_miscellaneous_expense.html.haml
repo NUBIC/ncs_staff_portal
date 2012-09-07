@@ -18,14 +18,25 @@
       %td{ :colspan => "2" }
         = f.label :comment
         = f.text_field :comment
-    %tr
+    %tr.task
+      %td
+        Your Rate:
+        - if (@staff.hourly_rate.blank?)
+          Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
+        - elsif (@staff.hourly_rate == 0)
+          Voluntary Work. #{link_to "Update", edit_staff_path(@staff.id)}
+        - else
+          $#{@staff.hourly_rate}/hr.
       %td
         = f.label :expenses, "Expense $"
         = f.text_field :expenses, {:size =>6}
+    %tr.task
+      %td
+        = f.label :hours, "Hours spent"
+        = f.text_field :hours, {:size =>4}
       %td
         = f.label :miles, "Miles driven"
         = f.text_field :miles, {:size =>4}
-
     %tr
       %td
         = f.submit 'Save', :class => "control_button"

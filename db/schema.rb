@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824193548) do
+ActiveRecord::Schema.define(:version => 20120907154724) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20120824193548) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "hours",                                 :precision => 10, :scale => 2
   end
 
   add_index "miscellaneous_expenses", ["staff_misc_exp_id"], :name => "uq_miscellaneous_expenses_staff_misc_exp_id", :unique => true

@@ -8,6 +8,7 @@
         - @miscellaneous_expenses.each do |miscellaneous_expense|
           %tr
             %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff, miscellaneous_expense)
+            %td= display_task(miscellaneous_expense.hours)
             %td= display_task(miscellaneous_expense.miles)
             %td= display_task(miscellaneous_expense.expenses)
             %td= miscellaneous_expense.comment
@@ -20,6 +21,7 @@
       function displayTasksList() {
         var columnDefs = [
             { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
+            { key: "hours", label: "Hours" },
             { key: "miles", label: "Miles" },
             { key: "expenses", label: "Expenses" },
             { key: "comment", label: "Comment" },
@@ -30,6 +32,7 @@
         dataSource.responseSchema = {
           fields: [
             { key: "date" },
+            { key: "hours" },
             { key: "miles" },
             { key: "expenses" },
             { key: "comment" },

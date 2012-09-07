@@ -17,6 +17,18 @@ module ApplicationHelper
       haml_tag :td
     end
   end
+
+  def display_exp_date(exp_date)
+    if !exp_date.blank?
+      if exp_date == "2050-01-01"
+        haml_tag :td, "Not Applicable"
+      else
+        haml_tag :td, exp_date
+      end
+    else
+      haml_tag :td
+    end
+  end
   
   def display_task(value)
     value.blank? ? "0.0" : value
@@ -69,9 +81,7 @@ module ApplicationHelper
   end
   
   def display_segments(segments)
-    if segments.count == 0
-      list = []
-    elsif segments.count == NcsAreaSsu.all.count
+    if segments.count != 0 && segments.count == NcsAreaSsu.all.count
       list = "All #{segments.count} segments"
     else
       list = segments.map do |segment|

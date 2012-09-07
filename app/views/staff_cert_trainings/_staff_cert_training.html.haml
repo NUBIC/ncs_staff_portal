@@ -39,7 +39,15 @@
     = f.text_field :frequency, { :size => 10, :maxLength => 10}
   .row
     = f.label :formatted_expiration_date, "Cerification/Training expiration date"
-    = f.text_field :formatted_expiration_date, { :class => "datepicker", :size => 10, :maxLength => 10 }
+    - if !@staff_cert_training.formatted_expiration_date.blank? || @staff_cert_training.formatted_expiration_date != "2050-01-01"
+      = radio_button_tag 'exp_date', 'date', true, :class => "exp_date"
+      = text_field_tag 'exp_date_field', @staff_cert_training.formatted_expiration_date, :class => 'datepicker', :id => "exp_date_field", :size => 10, :maxLength => 10
+    - else
+      = radio_button_tag 'exp_date', 'date', false, :class => "exp_date"
+      = text_field_tag 'exp_date_field', nil, :class => 'datepicker', :id => "exp_date_field", :size => 10, :maxLength => 10
+    = label_tag "Not Applicable"
+    = radio_button_tag 'exp_date', "2050-01-01", @staff_cert_training.formatted_expiration_date == "2050-01-01", :class => "exp_date"
+    = f.hidden_field :expiration_date, :id => "exp_date_value"
   .row
     = f.label :comment
     = f.text_field :comment
@@ -56,6 +64,7 @@
     $(document).ready(function(){
       wire_up_yes_enable_radio("#complete_status", ".cert_date");
       get_cert_date_value();
+      get_exp_date_value();
       
       $(".datepicker_cert_date").datepicker( { 
         dateFormat: 'yy-mm-dd',

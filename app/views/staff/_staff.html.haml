@@ -63,11 +63,11 @@
     %em *
     = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
   .field
-    = f.label :zipcode, "Zip Code of permanent residence of staff member"
+    = f.label :zipcode, "Home ZIP code"
     %em *
     = f.text_field :zipcode, {:size => 5, :maxLength => 5}
   .field
-    = f.label :subcontractor_code, "Does staff member work for subcontrator"
+    = f.label :subcontractor_code, "Is this a subcontractor position?"
     %em *
     = f.select :subcontractor_code, NcsCode.ncs_code_lookup(:subcontractor_code), :prompt => 'Select'
   .field
