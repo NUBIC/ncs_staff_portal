@@ -17,6 +17,18 @@ module ApplicationHelper
       haml_tag :td
     end
   end
+
+  def display_exp_date(exp_date)
+    if !exp_date.blank?
+      if exp_date == "2050-01-01"
+        haml_tag :td, "Not Applicable"
+      else
+        haml_tag :td, exp_date
+      end
+    else
+      haml_tag :td
+    end
+  end
   
   def display_task(value)
     value.blank? ? "0.0" : value
