@@ -21,7 +21,7 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
-gem 'ncs_mdes_warehouse', '0.7.0'
+gem 'ncs_mdes_warehouse', '~>0.7.3'
 gem "nilify_blanks"
 gem "ransack"
 gem "strip_attributes", "~> 1.0"
