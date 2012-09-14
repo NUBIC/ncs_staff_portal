@@ -167,7 +167,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.0.4)
-    ncs_mdes (0.8.1)
+    ncs_mdes (0.9.0)
       nokogiri (~> 1.4)
     ncs_mdes_warehouse (0.7.3)
       actionmailer (~> 3.0)
