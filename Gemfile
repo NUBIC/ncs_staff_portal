@@ -11,7 +11,7 @@ gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
 gem 'tabs_on_rails'
 gem "breadcrumbs_on_rails"
-gem 'ncs_mdes'
+gem 'ncs_mdes', '>= 0.8.1'
 gem 'aker-rails'
 gem 'aker'
 gem 'mail', '2.2.19'
@@ -21,7 +21,7 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
-gem 'ncs_mdes_warehouse', '0.7.0'
+gem 'ncs_mdes_warehouse', '~>0.7.3'
 gem "nilify_blanks"
 gem "ransack"
 gem "strip_attributes", "~> 1.0"
