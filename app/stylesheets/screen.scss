@@ -201,13 +201,14 @@ body.ncs {
   
       .contact_info {
         @include prepend-top(1em);
-        @include column(14);
+        @include column(11);
+        @include append(2.5);
         text-align: center;
       }
   
       .footer_logo_back {
         @include prepend-top(1em);
-        @include column(3,true); 
+        @include column(3,true);
       }
 
       .app_version {
