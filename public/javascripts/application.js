@@ -307,6 +307,8 @@ function check_select_for_pay_amount(select_id, other_id){
 
 
 $(document).ready(function(){
+  $(".datepicker").attr('placeholder', 'YYYY-MM-DD');
+  $(".week_datepicker").attr('placeholder', 'YYYY-MM-DD');
   $(".datepicker").datepicker( { 
     dateFormat: 'yy-mm-dd',
     changeMonth: true,
