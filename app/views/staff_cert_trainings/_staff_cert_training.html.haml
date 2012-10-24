@@ -18,7 +18,7 @@
     - if @staff_cert_training.only_date
       = radio_button_tag 'cert_date', 'date', true, :class => "cert_date"
       = label_tag "Date staff member was certified"
-      = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker_cert_date', :id => "cert_date_temp", :size => 10, :maxLength => 10 
+      = text_field_tag 'cert_date_val', @staff_cert_training.cert_date, :class => 'datepicker', :id => "cert_date_temp", :size => 10, :maxLength => 10
     - else
       = radio_button_tag 'cert_date', 'date', false, :class => "cert_date"
       = label_tag "Date staff member was certified"
@@ -65,11 +65,4 @@
       wire_up_yes_enable_radio("#complete_status", ".cert_date");
       get_cert_date_value();
       get_exp_date_value();
-      
-      $(".datepicker_cert_date").datepicker( { 
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '1920:2020'
-      } );
     });
