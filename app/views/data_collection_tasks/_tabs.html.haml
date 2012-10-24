@@ -7,6 +7,9 @@
     %span.current_tab
       Data Collection Task
     = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@staff.id), :class => "other_tab"
-    = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "other_tab"
+    - if same_as_current_user(@staff)
+      = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "other_tab"
+    - else
+      = link_to 'Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "other_tab"
     - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
       = link_to 'Weekly Staff Summary', staff_weekly_expenses_path, :class => "other_tab"
