@@ -35,12 +35,7 @@
     %tr.task
       %td
         Your Rate:
-        - if (@staff.hourly_rate.blank?)
-          Not Entered. #{link_to "Update", edit_staff_path(@staff.id)}
-        - elsif (@staff.hourly_rate == 0)
-          Voluntary Work. #{link_to "Update", edit_staff_path(@staff.id)}
-        - else
-          $#{@staff.hourly_rate}/hr.
+        - display_hourly_rate(@staff, @management_task)
       %td
         = f.label :expenses, "Expense $"
         = f.text_field :expenses, {:size =>6}
