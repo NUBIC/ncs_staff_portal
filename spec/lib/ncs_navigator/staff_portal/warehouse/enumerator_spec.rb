@@ -1,10 +1,9 @@
 require 'spec_helper'
 
 module NcsNavigator::StaffPortal::Warehouse
-  describe Enumerator, :clean_with_truncation, :slow, :warehouse do
-    MdesModule = NcsNavigator::Warehouse::Models::TwoPointZero
+  describe 'Enumerator', :clean_with_truncation, :slow, :warehouse do
 
-    let(:wh_config) {
+    let!(:wh_config) {
       NcsNavigator::Warehouse::Configuration.new.tap do |config|
         config.log_file = File.join(Rails.root, 'log/wh.log')
         config.set_up_logs
@@ -580,8 +579,8 @@ module NcsNavigator::StaffPortal::Warehouse
 
         describe 'specifying language and race' do
           let(:producer_names) { [:outreach_untailored_automatic] }
-          let(:lang_results) { results.select { |r| r.is_a?(MdesModule::OutreachLang2) } }
-          let(:race_results) { results.select { |r| r.is_a?(MdesModule::OutreachRace) } }
+          let(:lang_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachLang2)) } }
+          let(:race_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachRace)) } }
 
           it 'uses English (code=1) as the language' do
             lang_results.first.outreach_lang2.should == '1'
