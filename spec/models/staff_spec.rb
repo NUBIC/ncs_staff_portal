@@ -214,6 +214,31 @@ describe Staff do
       end
     end
 
+    describe "uniqueness for username" do
+      it "allows multiple null username" do
+        staff = FactoryGirl.create(:valid_staff)
+        staff1 = FactoryGirl.create(:valid_staff)
+        staff.username.should be_nil
+        staff1.should be_valid
+        staff1.username.should be_nil
+      end
+
+      it "allows multiple empty username" do
+        staff = FactoryGirl.create(:valid_staff, :username => "")
+        staff1 = FactoryGirl.create(:valid_staff, :username => "")
+        staff.username.should be_nil
+        staff1.should be_valid
+        staff1.username.should be_nil
+      end
+
+      it "does not allow multiple same username" do
+        staff = FactoryGirl.create(:valid_staff, :username => "Test")
+        staff1 = FactoryGirl.build(:valid_staff, :username => "Test")
+        staff1.should_not be_valid
+        staff1.should have(1).error_on(:username)
+      end
+    end
+
     describe "staff_type" do
       let(:staff_type_code) { Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Other", :local_code => -5) }
 
