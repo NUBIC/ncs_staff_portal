@@ -110,10 +110,6 @@ all others are optional.
     # user with username as "psc_application" which will be used for 
     # communication between Patient Study Calendar and NCS Navigator Ops.
     psc_user_password = "password"
-    
-    # The exception notification e-mail address for NCS Navigator Ops for any exceptions/errors. 
-    # exception_recipients can be multiple email addresses sepearted by ','
-    exception_recipients = "developer@example.com"
 
     # for any futher development, developer's email address for development testing email
     development_email = "user@example.com"
