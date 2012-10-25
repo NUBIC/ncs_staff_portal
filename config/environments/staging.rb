@@ -63,8 +63,11 @@ NcsStaffPortal::Application.configure do
     end
   end
   
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "[NCS Navigator Ops] ",
-    :sender_address => NcsNavigator.configuration.staff_portal['mail_from'],
-    :exception_recipients => NcsNavigator.configuration.exception_email_recipients unless NcsNavigator.configuration.exception_email_recipients.empty?
+  recipients = NcsNavigator.configuration.exception_email_recipients
+  unless recipients.empty?
+    config.middleware.use ExceptionNotifier,
+      :email_prefix => "[NCS Navigator Ops #{NcsNavigator.configuration.study_center_short_name} #{Rails.env.titlecase}] ",
+      :sender_address => NcsNavigator.configuration.staff_portal['mail_from'],
+      :exception_recipients => recipients
+  end
 end
