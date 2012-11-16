@@ -11,7 +11,7 @@ namespace :outreach do
         outreach = OutreachEvent.find_by_outreach_event_id(csv["OUTREACH_EVENT_ID"])
         if outreach
           outreach.send("name=", csv["OUTREACH_EVENT_NAME"])
-          outreach.save!
+          outreach.save(:validate => false)
           counter += 1
         else
           raise "No outreach record found with the OUTREACH_EVENT_ID = #{csv["OUTREACH_EVENT_ID"]}. Please make sure OUTREACH_EVENT_ID is correct."
