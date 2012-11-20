@@ -70,20 +70,29 @@ function check_select_for_yes_selector(select_id, yes_class, disabled_class){
     }
     else{
       $(yes_class).each(function(){
-	      $(this).val('');
-	      $(this).attr('disabled', 'disabled');
+        if ($(this).val()) {
+          $(this).removeAttr('disabled');
+        } else {
+          $(this).val('');
+          $(this).attr('disabled', 'disabled');
+        }
 	    })
 	    
 	    $(disabled_class).each(function(){
-	      $(this).val('');
-	      $(this).attr('disabled', 'disabled');
-	      if ($(this).get(0).tagName == "INPUT") {
-	        $(this).css('background-color', '#d0d0d0');
-	      }
-	      if ($(this).get(0).tagName == "A" || $(this).get(0).tagName == "TR") {
-	        $(this).hide();
-	        //$(this).click(function(){ return false; })
-	      }
+        if ($(this).val()) {
+          $(this).removeAttr('disabled');
+        }
+        else {
+          $(this).val('');
+          $(this).attr('disabled', 'disabled');
+
+          if ($(this).get(0).tagName == "INPUT") {
+            $(this).css('background-color', '#d0d0d0');
+          }
+          if ($(this).get(0).tagName == "A" || $(this).get(0).tagName == "TR") {
+            $(this).hide();
+          }
+        }
 	    })
     }
 }
@@ -307,6 +316,8 @@ function check_select_for_pay_amount(select_id, other_id){
 
 
 $(document).ready(function(){
+  $(".datepicker").attr('placeholder', 'YYYY-MM-DD');
+  $(".week_datepicker").attr('placeholder', 'YYYY-MM-DD');
   $(".datepicker").datepicker( { 
     dateFormat: 'yy-mm-dd',
     changeMonth: true,

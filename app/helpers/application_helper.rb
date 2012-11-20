@@ -33,6 +33,22 @@ module ApplicationHelper
   def display_task(value)
     value.blank? ? "0.0" : value
   end
+
+  def display_hourly_rate(staff, task)
+    if task && task.staff_weekly_expense
+      haml_concat "$#{task.staff_weekly_expense.rate}/hr."
+    else
+      if (staff.hourly_rate.blank?)
+        haml_concat "Not Entered."
+        haml_concat link_to "Update", edit_staff_path(staff.id)
+      elsif (@staff.hourly_rate == 0)
+        haml_concat "Voluntary Work."
+        haml_concat link_to "Update", edit_staff_path(staff.id)
+      else
+        haml_concat "$#{staff.hourly_rate}/hr."
+      end
+    end
+  end
   
   def same_as_current_user(requested_staff)
     requested_staff.id == @current_staff.id ? true : false
