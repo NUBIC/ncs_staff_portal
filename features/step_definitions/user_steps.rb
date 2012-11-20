@@ -16,6 +16,12 @@ Given /a valid API user with username (.+)$/ do |username|
   }
 end
 
+Given /an application_user with username (.+)$/ do |username|
+  steps %Q{
+    Given I am using the basic credentials "#{username}" / "#{username}"
+  }
+end
+
 Given /a valid API user with default supervisor$/ do
   username = "supervisor"
   staff = valid_staff(username)
@@ -83,6 +89,10 @@ end
 
 Then /has correct JSON response$/ do
   JSON.parse(last_response.body)['username'].should == 'staff'
+end
+
+Then /has correct JSON response with username (.+)$/ do |username|
+  JSON.parse(last_response.body)['username'].should == username
 end
 
 def valid_staff(username, name_flag = nil)

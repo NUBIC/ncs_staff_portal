@@ -36,19 +36,27 @@ class StaffController < SecuredController
   def users
     if permit?(Role::USER_ADMINISTRATOR)
       params[:page] ||= 1
+      cases_user = create_cases_application_user
+      include_cases_user = false
       if params[:role]
         @users = Staff.find_by_role(params[:role])
+        include_cases_user = true if cases_user.roles.try(:detect){ |role| params[:role].include?(role.name)}
       elsif params[:first_name] || params[:last_name] || params[:username]
         @users = Staff.where(construct_condition_string(params))
+        include_cases_user = true if cases_user.username == params[:username]
       else
         @q = Staff.search(params[:q])
         all_users = @q.result(:distinct => true)
         @users = all_users.select(&:username).sort_by(&:username) + all_users.reject(&:username)
+        include_cases_user = true
       end
       respond_to do |format|
         format.html { @users = @users.paginate(:page => params[:page], :per_page => 20)}
         format.xml  { render :xml => @users }
-        format.json { render :json => @users }
+        format.json {
+          @users << cases_user if include_cases_user
+          render :json => @users
+        }
       end
     else
       throw :warden
@@ -59,10 +67,12 @@ class StaffController < SecuredController
   # GET /staff/1.xml
   def show
     @staff = find_staff
-    add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
-    
+
     respond_to do |format|
-      format.html { render :layout => "staff_information" }
+      unless is_application_user?(@staff)
+        add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
+        format.html { render :layout => "staff_information" }
+      end
       format.xml  { render :xml => @staff }
       format.json { render :json => @staff }
     end
@@ -173,42 +183,61 @@ class StaffController < SecuredController
     @staff = find_staff
     check_user_access(@staff)
     if @staff
-      if same_as_current_user(@staff)
-        set_tab :my_info
-      else
-        set_tab :admin
-        add_breadcrumb "Admin", :administration_index_path
-        add_breadcrumb "Manage staff details", :staff_index_path
+      unless is_application_user?(@staff)
+        if same_as_current_user(@staff)
+          set_tab :my_info
+        else
+          set_tab :admin
+          add_breadcrumb "Admin", :administration_index_path
+          add_breadcrumb "Manage staff details", :staff_index_path
+        end
       end
     else
       render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
-  
+
+  def create_cases_application_user
+    aker_user = Aker.authority.find_users("ncs_navigator_cases").first
+    user = Staff.new(:username => aker_user.username)
+    aker_user.group_memberships.each do |gm|
+      user.roles << Role.find_by_name(gm.group.name)
+    end
+    user
+  end
+
+  def is_application_user?(user)
+    ['psc_application', 'ncs_navigator_cases'].include?(user.username)
+  end
+
   def find_staff
-    staff = Staff.find_by_username(params[:id]) 
-    unless staff
-      begin
-        staff = Staff.find_by_numeric_id(params[:id].to_i) || Staff.find(params[:id].to_i) 
-      rescue ActiveRecord::RecordNotFound
-        staff = nil
-      end 
+    if params[:id] == "ncs_navigator_cases"
+      staff = create_cases_application_user
+    else
+      staff = Staff.find_by_username(params[:id])
+      unless staff
+        begin
+          staff = Staff.find_by_numeric_id(params[:id].to_i) || Staff.find(params[:id].to_i)
+        rescue ActiveRecord::RecordNotFound
+          staff = nil
+        end
+      end
     end
     staff
   end
-  
+
   def render_staff
-    redirect_to(@staff, :notice => 'Staff was successfully updated.') 
+    redirect_to(@staff, :notice => 'Staff was successfully updated.')
   end
-  
+
   def render_staff_list
     redirect_to(staff_index_path)
   end
-  
+
   def render_user_list
     redirect_to(users_path)
   end
-  
+
   def construct_condition_string(params)
     operator = params[:operator] =~ /OR/ ? " OR " : " AND "
     if params[:first_name]
