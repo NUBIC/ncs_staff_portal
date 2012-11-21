@@ -5,6 +5,8 @@ users:
       - Staff Supervisor
       - User Administrator
   ncs_navigator_cases:
+    identifiers:
+      numeric_id: 1
     portals:
     - NCSNavigator:
       - Field Staff
