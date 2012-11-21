@@ -211,7 +211,7 @@ class StaffController < SecuredController
   end
 
   def find_staff
-    if params[:id] == "ncs_navigator_cases" || params[:id] == 1
+    if params[:id] == "ncs_navigator_cases" || params[:id] == "1"
       staff = create_cases_application_user
     else
       staff = Staff.find_by_username(params[:id])
