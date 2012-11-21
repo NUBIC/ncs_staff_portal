@@ -199,7 +199,7 @@ class StaffController < SecuredController
 
   def create_cases_application_user
     aker_user = Aker.authority.find_users("ncs_navigator_cases").first
-    user = Staff.new(:username => aker_user.username)
+    user = Staff.new(:username => aker_user.username, :numeric_id => aker_user.identifiers[:numeric_id])
     aker_user.group_memberships.each do |gm|
       user.roles << Role.find_by_name(gm.group.name)
     end

@@ -100,7 +100,7 @@ class Staff < ActiveRecord::Base
   end
   
   def self.generate_random_number
-    rand(2**31 - 1)
+    rand(2**31 - 11)   # Generates random number between 2**31 and 11. Keep 1..10 reserved.
   end
 
   def pay_amount_required

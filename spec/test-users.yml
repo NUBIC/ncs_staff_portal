@@ -35,6 +35,8 @@ users:
       - User Administrator
     password: psc_application
   ncs_navigator_cases:
+    identifiers:
+      numeric_id: 1
     portals:
     - NCSNavigator:
       - Field Staff
