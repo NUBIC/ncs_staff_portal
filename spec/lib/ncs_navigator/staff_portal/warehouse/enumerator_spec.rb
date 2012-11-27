@@ -549,66 +549,129 @@ module NcsNavigator::StaffPortal::Warehouse
       end
 
       describe 'when untailored' do
-        before do
+        describe 'when source_id is set' do
+          before do
           # Why does update_attribute work everywhere else but not here?
-          outreach_event.tailored = Factory(:ncs_code, :local_code => 2)
-          outreach_event.save!
-        end
-
-        it_behaves_like 'a basic outreach event'
-
-        it 'has the correct tailored value' do
-          results.first.outreach_tailored.should == '2'
-        end
-
-        it 'is not for a specific language' do
-          results.first.outreach_lang1.should == '2'
-        end
-
-        it 'is not for a specific race' do
-          results.first.outreach_race1.should == '2'
-        end
-
-        it 'is not for a specific culture' do
-          results.first.outreach_culture1.should == '2'
-        end
-
-        it 'does not designate a culture' do
-          results.first.outreach_culture2.should == '-7'
-        end
-
-        describe 'specifying language and race' do
-          let(:producer_names) { [:outreach_untailored_automatic] }
-          let(:lang_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachLang2)) } }
-          let(:race_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachRace)) } }
-
-          it 'uses English (code=1) as the language' do
-            lang_results.first.outreach_lang2.should == '1'
+            outreach_event.tailored = Factory(:ncs_code, :local_code => 2)
+            outreach_event.update_attribute(:source_id, "source_id_123")
+            outreach_event.save!
           end
 
-          it 'uses NA (code=-7) as the race' do
-            race_results.first.outreach_race2.should == '-7'
+          it 'has the correct outreach_event_id as source_id' do
+            results.first.outreach_event_id.should == 'source_id_123'
           end
 
-          it 'produces a valid language record' do
-            record_should_be_valid(lang_results.first)
+          it 'has the correct tailored value' do
+            results.first.outreach_tailored.should == '2'
           end
 
-          it 'produces a valid race record' do
-            record_should_be_valid(race_results.first)
+          [
+          %w(language outreach_lang1),
+          %w(race outreach_race1),
+          %w(culture outreach_culture1)
+          ].each do |which, wh_var|
+            describe "#{which} specificity" do
+              it 'is the set value if set' do
+                outreach_event.update_attribute(:"#{which}_specific_code", 1)
+                results.first.send(wh_var).should == '1'
+              end
+
+              it 'is the unknown value if not set' do
+                outreach_event.update_attribute(:"#{which}_specific_code", nil)
+                results.first.send(wh_var).should == '-4'
+              end
+            end
           end
 
-          describe 'with multiple SSUs' do
-            before do
-              Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
+          describe 'designate a culture' do
+            it 'is the set value if set' do
+              outreach_event.update_attribute(:culture_code, 1)
+              results.first.outreach_culture2.should == '1'
             end
 
-            it 'produces multiple languages, each with a unique ID' do
-              lang_results.collect(&:outreach_lang2_id).uniq.size.should == 2
+            it 'is the unknown value if not set' do
+              outreach_event.update_attribute(:culture_code, nil)
+              results.first.outreach_culture2.should == '-4'
+            end
+          end
+
+          describe 'specifying language and race' do
+            let(:producer_names) { [:outreach_untailored_automatic] }
+            let(:lang_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachLang2)) } }
+            let(:race_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachRace)) } }
+
+            it 'does not generate the OutreachLang2' do
+              lang_results.should be_empty
             end
 
-            it 'produces multiple races, each with a unique ID' do
-              race_results.collect(&:outreach_race_id).uniq.size.should == 2
+            it 'does not generate the OutreachRace' do
+              race_results.should be_empty
+            end
+          end
+        end
+
+        describe 'when source_id is not set' do
+          before do
+            # Why does update_attribute work everywhere else but not here?
+            outreach_event.tailored = Factory(:ncs_code, :local_code => 2)
+            outreach_event.save!
+          end
+
+          it_behaves_like 'a basic outreach event'
+
+          it 'has the correct tailored value' do
+            results.first.outreach_tailored.should == '2'
+          end
+
+          it 'is not for a specific language' do
+            results.first.outreach_lang1.should == '2'
+          end
+
+          it 'is not for a specific race' do
+            results.first.outreach_race1.should == '2'
+          end
+
+          it 'is not for a specific culture' do
+            results.first.outreach_culture1.should == '2'
+          end
+
+          it 'does not designate a culture' do
+            results.first.outreach_culture2.should == '-7'
+          end
+
+          describe 'specifying language and race' do
+            let(:producer_names) { [:outreach_untailored_automatic] }
+            let(:lang_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachLang2)) } }
+            let(:race_results) { results.select { |r| r.is_a?(wh_config.model(:OutreachRace)) } }
+
+            it 'uses English (code=1) as the language' do
+              lang_results.first.outreach_lang2.should == '1'
+            end
+
+            it 'uses NA (code=-7) as the race' do
+              race_results.first.outreach_race2.should == '-7'
+            end
+
+            it 'produces a valid language record' do
+              record_should_be_valid(lang_results.first)
+            end
+
+            it 'produces a valid race record' do
+              record_should_be_valid(race_results.first)
+            end
+
+            describe 'with multiple SSUs' do
+              before do
+                Factory(:outreach_segment, :ncs_ssu => Factory(:ncs_ssu, :ssu_id => '42'), :outreach_event => outreach_event)
+              end
+
+              it 'produces multiple languages, each with a unique ID' do
+                lang_results.collect(&:outreach_lang2_id).uniq.size.should == 2
+              end
+
+              it 'produces multiple races, each with a unique ID' do
+                race_results.collect(&:outreach_race_id).uniq.size.should == 2
+              end
             end
           end
         end
