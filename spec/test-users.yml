@@ -34,18 +34,9 @@ users:
       - Staff Supervisor
       - User Administrator
     password: psc_application
-  ncs_navigator_cases:
-    identifiers:
-      numeric_id: 1
-    portals:
-    - NCSNavigator:
-      - Field Staff
-      - Phone Staff
-    password: ncs_navigator_cases
 groups: 
   NCSNavigator:
     - User Administrator
     - Staff Supervisor
     - Outreach Staff
     - Field Staff
-    - Phone Staff

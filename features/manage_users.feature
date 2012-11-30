@@ -1,24 +1,12 @@
 @api
 Feature: Users API
 
-  Scenario: Valid authenticated staff can get its own information
+  Scenario: Valid authenticated staff can get their own information
     Given a valid API user with username staff
     When I send a GET request for "/staff/staff.json"
     Then the request is successful
     And has correct JSON response
-
-  Scenario: Valid authenticated cases_application_user can get its own information
-    Given an application_user with username ncs_navigator_cases
-    When I send a GET request for "/staff/ncs_navigator_cases.json"
-    Then the request is successful
-    And has correct JSON response with username ncs_navigator_cases
-
-  Scenario: Valid authenticated psc_application_user can get cases_application_user information
-    Given an application_user with username psc_application
-    When I send a GET request for "/staff/ncs_navigator_cases.json"
-    Then the request is successful
-    And has correct JSON response with username ncs_navigator_cases
-
+    
   Scenario: Valid authenticated staff get 404 if user is unknown
     Given a valid API user with default supervisor
     When I send a GET request for "/staff/unknown.json"
@@ -54,14 +42,6 @@ Feature: Users API
     When I send a GET request for "/staff/staff.json"
     Then unauthorized access
 
-  Scenario: Valid authenticated psc_application_user can get all the users in the system
-    Given an application_user with username psc_application
-    And staff with username test1
-    And staff with username test2
-    When I send a GET request for "/users.json"
-    Then the request is successful
-    And the JSON should have 3 user
-
   Scenario: Valid authenticated user administrator can get all the staff in the system
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -70,7 +50,7 @@ Feature: Users API
     And staff with username test3
     When I send a GET request for "/users.json"
     Then the request is successful
-    And the JSON should have 5 user #including the api user and cases application user
+    And the JSON should have 4 user
     
   Scenario: Access to get users request by the user with role other than User Administrator is not allowed
     Given a valid API user with username staff
@@ -89,7 +69,7 @@ Feature: Users API
     And staff member test3 has role "Field Staff"
     When I send a GET request for "/users.json?role%5B%5D=Phone%20Staff"
     Then the request is successful
-    And the JSON should have 3 user
+    And the JSON should have 2 user
 
   Scenario: Valid authenticated user administrator can get all the staff by role with multiple roles
     Given a valid API user with username superuser
@@ -102,7 +82,7 @@ Feature: Users API
     And staff member test3 has role "Field Staff"
     When I send a GET request for "/users.json?role%5B%5D=Phone%20Staff&role%5B%5D=Field%20Staff"
     Then the request is successful
-    And the JSON should have 3 user
+    And the JSON should have 2 user
     
   Scenario: Valid authenticated user administrator can search the staff by first_name
     Given a valid API user with username superuser
@@ -133,14 +113,6 @@ Feature: Users API
     Then the request is successful
     And the JSON should have 1 user
     And the JSON at "0/username" should be "test1"
-
-  Scenario: Valid authenticated user administrator can search the staff by username 'ncs_navigator_cases'
-    Given a valid API user with username superuser
-    And staff member superuser has role "User Administrator"
-    When I send a GET request for "/users.json?username=ncs_navigator_cases"
-    Then the request is successful
-    And the JSON should have 1 user
-    And the JSON at "0/username" should be "ncs_navigator_cases"
     
   Scenario: Valid authenticated user administrator can search the staff by first_name and last_name
     Given a valid API user with username superuser

@@ -4,16 +4,7 @@ users:
     - NCSNavigator: 
       - Staff Supervisor
       - User Administrator
-  ncs_navigator_cases:
-    identifiers:
-      numeric_id: 1
-    portals:
-    - NCSNavigator:
-      - Field Staff
-      - Phone Staff
 groups: 
   NCSNavigator:
     - User Administrator
     - Staff Supervisor
-    - Field Staff
-    - Phone Staff
