@@ -18,7 +18,7 @@ gem 'mail', '2.2.19'
 gem 'whenever', :require => false
 gem "will_paginate", "~> 3.0.pre4"
 gem 'validates_timeliness', '~> 3.0.2'
-gem 'ncs_navigator_configuration'
+gem 'ncs_navigator_configuration', :git => 'https://github.com/NUBIC/ncs_navigator_configuration.git'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
 # gem 'ncs_mdes_warehouse', '~> 0.10'
