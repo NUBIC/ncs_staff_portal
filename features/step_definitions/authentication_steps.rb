@@ -24,7 +24,7 @@ Given /^an authenticated user$/ do
 end
 
 Given /I am using the basic credentials "([^\"]*)" \/ "([^\"]*)"$/ do |username, password|
-  header "Authorization", "Basic #{["#{username}:#{password}"].pack("m*")}".strip
+  header "Authorization", "Basic #{["#{username}:#{password}"].pack("m0*")}".strip
 end
 
 Then /^the request is successful$/ do
