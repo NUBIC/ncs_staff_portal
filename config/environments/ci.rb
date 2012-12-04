@@ -1,3 +1,4 @@
+require 'aker/authorities/machine_account'
 require 'aker/authorities/staff_portal'
 
 NcsStaffPortal::Application.configure do
