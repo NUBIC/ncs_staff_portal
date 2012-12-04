@@ -1,5 +1,9 @@
-class StaffController < SecuredController
+class StaffController < StaffAuthorizedController
   layout "layouts/application"
+
+  before_filter :load_staff, :only => %w(edit edit_user show update)
+  before_filter :assert_staff, :only => %w(edit edit_user update)
+  before_filter :check_requested_staff_visibility, :only => %w(edit edit_user show update)
   before_filter :check_staff_access,  :only => %w(show edit) 
   
   set_tab :general_info, :vertical
@@ -56,9 +60,9 @@ class StaffController < SecuredController
   end
 
   # GET /staff/1
-  # GET /staff/1.xml
+  # GET /staff/username.xml
+  # GET /staff/username.json
   def show
-    @staff = find_staff
     add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
     
     respond_to do |format|
@@ -84,7 +88,6 @@ class StaffController < SecuredController
 
   # GET /staff/1/edit
   def edit
-    @staff = Staff.find(params[:id])
     add_breadcrumb "Edit - #{@staff.display_name}", edit_staff_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html { render :layout => "staff_information" }
@@ -95,9 +98,10 @@ class StaffController < SecuredController
   # GET /users/1/edit
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
-      @user = Staff.find(params[:id])
-      add_breadcrumb "Edit user - #{@user.display_name}", edit_users_path(@user)
+      add_breadcrumb "Edit user - #{@staff.display_name}", edit_users_path(@staff)
     end
+
+    @user = @staff
   end
 
   # POST /staff
@@ -121,7 +125,6 @@ class StaffController < SecuredController
   # PUT /staff/1
   # PUT /staff/1.xml
   def update
-    @staff = Staff.find(params[:id])
     respond_to do |format|
       if @staff.update_attributes(params[:staff])
         @staff.expenses_without_pay.each do |expense|
@@ -156,8 +159,7 @@ class StaffController < SecuredController
       else
         format.html { 
           if params[:return_path] == "users_path"
-            @user = @staff
-            render :action => "edit_user", :location => @user
+            render :action => "edit_user", :location => @staff
           else
             render :action => "edit"
           end
@@ -169,9 +171,8 @@ class StaffController < SecuredController
   end
 
   private
+
   def check_staff_access
-    @staff = find_staff
-    check_user_access(@staff)
     if @staff
       if same_as_current_user(@staff)
         set_tab :my_info
@@ -184,8 +185,9 @@ class StaffController < SecuredController
       render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
+ 
   def render_staff
-    redirect_to(@staff, :notice => 'Staff was successfully updated.') 
+    redirect_to(staff_path(@staff.numeric_id), :notice => 'Staff was successfully updated.')
   end
   
   def render_staff_list

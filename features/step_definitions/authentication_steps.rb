@@ -27,6 +27,11 @@ Given /I am using the basic credentials "([^\"]*)" \/ "([^\"]*)"$/ do |username,
   header "Authorization", "Basic #{["#{username}:#{password}"].pack("m0*")}".strip
 end
 
+Given /^the Cases machine account is "(.*?)" \/ "(.*?)"$/ do |username, password|
+  NcsNavigator.configuration.core_machine_account_username = username
+  NcsNavigator.configuration.core_machine_account_password = password
+end
+
 When /^an application authenticates as "(.*?)" \/ "(.*?)"$/ do |username, password|
   step %Q{I am using the basic credentials "#{username}" / "#{password}"}
 end
@@ -41,11 +46,8 @@ end
 
 Then /^access is forbidden$/ do
   last_response.status.should == 403
-  last_response.body.should =~ /may not use this page./
-  last_response.headers["Content-Type"].should == "text/html"
 end
 
 Then /^unauthorized access$/ do
   last_response.status.should == 401
-  last_response.body.should =~ /Authentication required/
 end

@@ -1,5 +1,12 @@
-class StaffWeeklyExpensesController < SecuredController
+class StaffWeeklyExpensesController < StaffAuthorizedController
   set_tab :time_and_expenses
+
+  with_options(:except => :index) do |c|
+    c.before_filter :load_staff
+    c.before_filter :assert_staff
+    c.before_filter :check_requested_staff_visibility
+  end
+
   before_filter :check_staff_access, :only => %w(by_staff) 
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
@@ -16,7 +23,6 @@ class StaffWeeklyExpensesController < SecuredController
   # GET /staff_weekly_expenses/by_staff?staff_id=
   def by_staff
     params[:page] ||= 1
-    @staff = Staff.find(params[:staff_id])
     @q = StaffWeeklyExpense.search(params[:q])
     @staff_weekly_expenses = (@staff.staff_weekly_expenses & @q.result(:distinct => true)).sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
@@ -63,8 +69,6 @@ class StaffWeeklyExpensesController < SecuredController
 
   private
     def check_staff_access
-      @staff = Staff.find(params[:staff_id])
-      check_user_access(@staff)
       if same_as_current_user(@staff)
         set_tab :time_and_expenses
       else

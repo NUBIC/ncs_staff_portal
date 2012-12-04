@@ -1,4 +1,5 @@
-= form_for @user, :html => { :id => 'user' } do |f|
+- action = @user.new_record? ? :create : :update
+= form_for @user, :html => { :id => 'user' }, :url => { :id => @user.numeric_id, :action => action } do |f|
   -if @user.errors.any?
     #error_explanation
       %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"

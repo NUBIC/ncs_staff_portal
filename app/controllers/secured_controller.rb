@@ -1,17 +1,18 @@
 class SecuredController < ApplicationController
-  protect_from_forgery
   include Aker::Rails::SecuredController 
   include NcsNavigator::StaffPortal::UserLoading
+
+  protect_from_forgery
   
   before_filter :set_current_staff
 
   def dashboard
     if permit?(*Role.management_group) 
-      redirect_to new_staff_management_task_path(@current_staff.id)
+      redirect_to new_staff_management_task_path(@current_staff.numeric_id)
     elsif permit?(*Role.data_collection_group)
-      redirect_to new_staff_data_collection_task_path(@current_staff.id)
+      redirect_to new_staff_data_collection_task_path(@current_staff.numeric_id)
     else
-      redirect_to staff_path(@current_staff)
+      redirect_to staff_path(@current_staff.numeric_id)
     end
   end
 

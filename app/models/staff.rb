@@ -73,7 +73,7 @@ class Staff < ActiveRecord::Base
   ncs_coded_attribute :ethnicity, 'ETHNICITY_CL1'
   ncs_coded_attribute :experience, 'EXPERIENCE_LEVEL_CL1'
   ncs_coded_attribute :lang, 'LANGUAGE_CL2'
-  
+
   validate :has_roles, :if => :create_presence_required?
   def has_roles
     errors.add(:roles, "can not be empty when user has #{NcsNavigator.configuration.study_center_username}.User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank? && !self.username.blank? 
