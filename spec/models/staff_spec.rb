@@ -240,26 +240,34 @@ describe Staff do
     end
 
     describe "staff_type" do
-      let(:staff_type_code) { Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Other", :local_code => -5) }
+      let(:staff_type_other_code) { Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Other", :local_code => -5) }
+      let(:staff_type_code) { Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Principal Investigator", :local_code => 1) }
 
       it "should not valid if staff type is 'Other' and staff_type_other value is nil" do
-        staff = FactoryGirl.build(:staff, :staff_type => staff_type_code)
+        staff = FactoryGirl.build(:staff, :staff_type => staff_type_other_code)
         staff.staff_type_other = nil
         staff.should_not be_valid
         staff.should have(1).error_on(:staff_type_other)
       end
 
       it "should not valid if staff type is 'Other' and staff_type_other value is blank string" do
-        staff = FactoryGirl.build(:staff, :staff_type => staff_type_code)
+        staff = FactoryGirl.build(:staff, :staff_type => staff_type_other_code)
         staff.staff_type_other = ''
         staff.should_not be_valid
         staff.should have(1).error_on(:staff_type_other)
       end
 
       it "should be valid if staff type is 'Principal Investigator' and staff_type_other value is blank string" do
-        staff = FactoryGirl.build(:staff, :staff_type => Factory(:ncs_code, :list_name => "STUDY_STAFF_TYPE_CL1", :display_text => "Principal Investigator", :local_code => 1))
+        staff = FactoryGirl.build(:staff, :staff_type => staff_type_code)
         staff.staff_type_other = ''
         staff.should be_valid
+        staff.staff_type_other.should == nil
+      end
+
+      it "should not set staff_type_other value if staff type is not 'Other'" do
+        staff = FactoryGirl.build(:staff, :staff_type => staff_type_code)
+        staff.staff_type_other = 'test'
+        staff.save!
         staff.staff_type_other.should == nil
       end
     end
