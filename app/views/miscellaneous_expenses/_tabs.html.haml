@@ -1,10 +1,10 @@
 .breadcrumbs
-  = render_breadcrumbs :separator => ' / ' 
+  = render_breadcrumbs :separator => ' / '
 .content_tab
   - if @staff.belongs_to_management_group
     = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "other_tab"
   - if @staff.belongs_to_data_collection_group
-    = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab" 
+    = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab"
   %span.current_tab
     Miscellaneous Expense
   - if same_as_current_user(@staff)

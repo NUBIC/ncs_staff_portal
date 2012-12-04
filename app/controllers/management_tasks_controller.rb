@@ -5,7 +5,7 @@ class ManagementTasksController < StaffAuthorizedController
   before_filter :load_staff
   before_filter :assert_staff
   before_filter :check_requested_staff_visibility
-  before_filter :check_staff_access, :only => %w(new edit) 
+  before_filter :check_staff_access, :only => %w(new edit)
 
   # GET /management_tasks/new
   # GET /management_tasks/new.xml
@@ -14,7 +14,7 @@ class ManagementTasksController < StaffAuthorizedController
     @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.build
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @management_task }
     end
   end
@@ -25,7 +25,7 @@ class ManagementTasksController < StaffAuthorizedController
     @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @management_task = @staff.management_tasks.find(params[:id])
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @management_task }
     end
   end
@@ -35,9 +35,9 @@ class ManagementTasksController < StaffAuthorizedController
   def create
     management_task_temp  = ManagementTask.new(params[:management_task])
     start_date = management_task_temp.task_date.beginning_of_week unless management_task_temp.task_date.blank?
-    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
     @management_task = staff_weekly_expense.management_tasks.build(params[:management_task])
-       
+
     respond_to do |format|
       if @management_task.save
         format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully created.') }
@@ -60,7 +60,7 @@ class ManagementTasksController < StaffAuthorizedController
       staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @management_task.staff_weekly_expense.rate)
       unless @management_task.staff_weekly_expense == staff_weekly_expense
         @management_task.staff_weekly_expense = staff_weekly_expense
-      end 
+      end
     end
 
     respond_to do |format|
@@ -87,7 +87,7 @@ class ManagementTasksController < StaffAuthorizedController
     end
   end
   private
-  
+
   def check_staff_access
     if same_as_current_user(@staff)
       set_tab :time_and_expenses
@@ -99,7 +99,7 @@ class ManagementTasksController < StaffAuthorizedController
       add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
     end
   end
-  
+
   def tasks_layout
     same_as_current_user(@staff) ? "layouts/application" : "layouts/staff_information"
   end

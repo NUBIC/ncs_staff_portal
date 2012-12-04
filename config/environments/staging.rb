@@ -62,7 +62,7 @@ NcsStaffPortal::Application.configure do
 
     central '/etc/nubic/ncs/aker-staging.yml'
   end
-  
+
   recipients = NcsNavigator.configuration.exception_email_recipients
   unless recipients.empty?
     config.middleware.use ExceptionNotifier,

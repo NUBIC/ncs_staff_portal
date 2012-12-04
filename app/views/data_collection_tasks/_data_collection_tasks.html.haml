@@ -1,7 +1,7 @@
 .section
   .section_heading
     - model_name = (@data_collection_tasks.size == 1 ? "Data collection task" : "Data collection tasks")
-    = raw page_entries_info @data_collection_tasks, {:model => model_name} 
+    = raw page_entries_info @data_collection_tasks, {:model => model_name}
   %div.yui-skin-sam
     %div#tasks-list
       %table#data-collection-tasks-list
@@ -13,12 +13,12 @@
             %td= display_task(data_collection_task.miles)
             %td= display_task(data_collection_task.expenses)
             %td= data_collection_task.comment
-            %td= button_to "Delete", { :action => "destroy", :id => data_collection_task.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the data collection task record.')", :method => :delete  
+            %td= button_to "Delete", { :action => "destroy", :id => data_collection_task.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the data collection task record.')", :method => :delete
   :javascript
       $(document).ready(function() {
         displayTasksList()
       });
-    
+
       function displayTasksList() {
         var columnDefs = [
             { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},

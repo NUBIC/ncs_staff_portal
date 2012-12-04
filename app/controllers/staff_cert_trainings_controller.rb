@@ -71,9 +71,9 @@ class StaffCertTrainingsController < StaffAuthorizedController
       format.xml  { head :ok }
     end
   end
-  
+
   def check_staff_access
-    # TODO: write in helper file and reuse everywhere 
+    # TODO: write in helper file and reuse everywhere
     if @staff && (@staff.id == @current_staff.id)
       set_tab :my_info
     else

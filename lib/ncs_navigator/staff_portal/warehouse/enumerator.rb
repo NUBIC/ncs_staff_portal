@@ -39,7 +39,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
         hourly_rate pay_type pay_amount
-        study_center ncs_active_date ncs_inactive_date 
+        study_center ncs_active_date ncs_inactive_date
         external notify numeric_id age_group_code
       )
     )
@@ -116,12 +116,12 @@ module NcsNavigator::StaffPortal::Warehouse
           CASE
             WHEN swe.expenses IS NOT NULL THEN swe.expenses
             ELSE
-              COALESCE(t.staff_expenses, '0.0') 
+              COALESCE(t.staff_expenses, '0.0')
             END as staff_expenses,
           CASE
             WHEN swe.miles IS NOT NULL THEN swe.miles
             ELSE
-              COALESCE(t.staff_miles, '0.0') 
+              COALESCE(t.staff_miles, '0.0')
             END as staff_miles,
           to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
           swe.rate,
@@ -230,7 +230,7 @@ module NcsNavigator::StaffPortal::Warehouse
           oe.evaluation_result_code AS outreach_eval_result,
           (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
           ns.ssu_id,
-          CASE 
+          CASE
             WHEN os.ncs_tsu_id IS NOT NULL THEN (SELECT tsu_id FROM ncs_tsus WHERE id = os.ncs_tsu_id)
           END AS tsu_id,
           ol.language_other AS lang_other,

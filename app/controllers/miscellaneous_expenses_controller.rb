@@ -5,7 +5,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
   before_filter :load_staff
   before_filter :assert_staff
   before_filter :check_requested_staff_visibility
-  before_filter :check_staff_access, :only => %w(new edit) 
+  before_filter :check_staff_access, :only => %w(new edit)
 
   # GET /miscellaneous_expenses/new
   # GET /miscellaneous_expenses/new.xml
@@ -15,7 +15,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
     @miscellaneous_expense = @staff.miscellaneous_expenses.build
 
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @miscellaneous_expense }
     end
   end
@@ -26,7 +26,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
     @miscellaneous_expenses = @staff.miscellaneous_expenses.sort_by(&:expense_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @miscellaneous_expense = @staff.miscellaneous_expenses.find(params[:id])
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @miscellaneous_expense }
     end
   end
@@ -36,7 +36,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
   def create
     miscellaneous_expense_temp = MiscellaneousExpense.new(params[:miscellaneous_expense])
     start_date = miscellaneous_expense_temp.expense_date.beginning_of_week unless miscellaneous_expense_temp.expense_date.blank?
-    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
     @miscellaneous_expense = staff_weekly_expense.miscellaneous_expenses.build(params[:miscellaneous_expense])
 
     respond_to do |format|
@@ -61,7 +61,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
       staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @miscellaneous_expense.staff_weekly_expense.rate)
       unless @miscellaneous_expense.staff_weekly_expense == staff_weekly_expense
         @miscellaneous_expense.staff_weekly_expense = staff_weekly_expense
-      end 
+      end
     end
     respond_to do |format|
       if @miscellaneous_expense.update_attributes(params[:miscellaneous_expense])
@@ -86,7 +86,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
       format.xml  { head :ok }
     end
   end
-  
+
   private
 
   def check_staff_access

@@ -10,10 +10,7 @@
       #main
         = render('partials/horizontal_tabs')
         #content
-          = yield 
+          = yield
       #footer
         = render('partials/footer')
     = render('partials/include_google_analytics') if Rails.env.production? && NcsNavigator.configuration.staff_portal['google_analytics_number']
-    
-
-

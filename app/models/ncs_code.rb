@@ -12,7 +12,7 @@
 
 class NcsCode < ActiveRecord::Base
   validates_presence_of :list_name, :display_text, :local_code
-  ATTRIBUTE_MAPPING = { 
+  ATTRIBUTE_MAPPING = {
     :staff_type_code => "STUDY_STAFF_TYPE_CL1",
     :age_range_code => "AGE_RANGE_CL1",
     :gender_code => "GENDER_CL1",
@@ -42,20 +42,20 @@ class NcsCode < ActiveRecord::Base
 
   def self.ncs_code_lookup(attribute_name)
     list_name = attribute_lookup(attribute_name)
-    list = NcsCode.find_all_by_list_name(list_name).map do |n| 
+    list = NcsCode.find_all_by_list_name(list_name).map do |n|
       [n.display_text, n.local_code]
-    end 
-    list.select{ |pos| pos[1] >= 0 } + list.select{ |neg| neg[1] < 0 }   
+    end
+    list.select{ |pos| pos[1] >= 0 } + list.select{ |neg| neg[1] < 0 }
   end
-  
+
   def self.attribute_lookup(attribute_name)
      ATTRIBUTE_MAPPING[attribute_name]
   end
-  
+
   def self.not_applicable_date
     return "9777-97-97"
   end
-  
+
   def self.unknown_date
     return "9666-96-96"
   end
@@ -67,7 +67,7 @@ class NcsCode < ActiveRecord::Base
   def self.refused_code
     -1
   end
-  
+
   def self.for_attribute_name_and_local_code(attribute_name, local_code)
     NcsCode.for_list_name_and_local_code(NcsCode.attribute_lookup(attribute_name), local_code)
   end
@@ -79,7 +79,7 @@ class NcsCode < ActiveRecord::Base
   def self.for_list_name_and_display_text(list_name, display_text)
     NcsCode.where(:list_name => list_name).where(:display_text => display_text).first
   end
-  
+
   def to_s
     display_text
   end

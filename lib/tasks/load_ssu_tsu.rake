@@ -5,7 +5,7 @@ namespace :psu do
     NcsNavigator.configuration.psus.each do |psu|
       psu.areas.each do |area|
         unless NcsArea.find(:first, :conditions => {:psu_id  => psu.id, :name => area.name})
-          ncs_area = NcsArea.create(:psu_id => psu.id, 
+          ncs_area = NcsArea.create(:psu_id => psu.id,
                                     :name => area.name)
           area.ssus.each do |ssu|
             ncs_ssu = NcsSsu.find_by_ssu_id(ssu.id)
@@ -23,7 +23,7 @@ namespace :psu do
     puts "There are #{NcsArea.all.count} NcsAreas."
     puts "There are #{NcsAreaSsu.all.count} NcsAreaSsus."
   end
-  
+
   task :load_ncs_ssus => :environment do
     NcsNavigator.configuration.psus.each do |psu|
       psu.areas.each do |area|
@@ -38,7 +38,7 @@ namespace :psu do
     end
     puts "There are #{NcsSsu.all.count} NcsSsus."
   end
-  
+
   task :load_ncs_tsus => :environment do
     NcsNavigator.configuration.psus.each do |psu|
       psu.areas.each do |area|

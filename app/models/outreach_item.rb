@@ -15,7 +15,7 @@ class OutreachItem < ActiveRecord::Base
   belongs_to :outreach_event
   validates_presence_of :item_name, :item_quantity
   validate :other_item_check
-  
+
   def other_item_check
     if !item_name.blank? && item_name.match(/\bother\b/i)
       if item_other.blank?

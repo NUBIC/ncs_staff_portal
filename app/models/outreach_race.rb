@@ -19,6 +19,6 @@ class OutreachRace < ActiveRecord::Base
   ncs_coded_attribute :race, 'RACE_CL3'
   belongs_to :outreach_event
   validates_presence_of :race
-  
+
   validates_with OtherEntryValidator, :entry => :race, :other_entry => :race_other
 end

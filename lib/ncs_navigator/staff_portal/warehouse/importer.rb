@@ -26,7 +26,7 @@ module NcsNavigator::StaffPortal::Warehouse
       @staff_portal_models_indexed_by_table = {}
       @public_id_indexes = {}
     end
-    
+
     def import(*tables)
       begin
         automatic_producers.
@@ -41,19 +41,19 @@ module NcsNavigator::StaffPortal::Warehouse
     def self.automatic_producers
       Enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" || rp.name.to_s == "staff_languages_other" }
     end
-    
+
     private
-    
+
     def create_simply_mapped_staff_portal_records(mdes_producer)
       staff_portal_model = staff_portal_model_for_table(mdes_producer.name)
       mdes_model = mdes_producer.model(wh_config)
       count = mdes_model.count
       offset = 0
-      while offset < count 
+      while offset < count
         staff_portal_model.transaction do
           mdes_model.all(:limit => BLOCK_SIZE, :offset => offset).each do |mdes_record|
             staff_portal_record = apply_mdes_record_to_staff_portal(staff_portal_model, mdes_record)
-            
+
             case mdes_producer.name
             when :staff
               staff_portal_record.send("validate_update=", "false")
@@ -84,7 +84,7 @@ module NcsNavigator::StaffPortal::Warehouse
               staff_portal_record = apply_other_value(staff_portal_record, "lang_code", "lang_other")
             when :staff_cert_trainings
               staff_portal_record.send("expiration_date=", mdes_record.send("cert_type_exp_date"))
-            when :staff_weekly_expenses 
+            when :staff_weekly_expenses
               [
                 ["staff_hours", "hours"], ["staff_expenses", "expenses"], ["staff_miles", "miles"]
               ].each do |mdes_variable, staff_portal_attribute|
@@ -95,11 +95,11 @@ module NcsNavigator::StaffPortal::Warehouse
               staff_portal_record.send("hours=", mdes_record.send(mdes_variable))
               staff_portal_record.send("task_date=", staff_portal_record.staff_weekly_expense.week_start_date)
               staff_portal_record = apply_other_value(staff_portal_record, "task_type_code", "task_type_other")
-            when :outreach_events 
+            when :outreach_events
               [
-                ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"], 
+                ["outreach_lang1", "language_specific_code"], ["outreach_race1", "race_specific_code"],
                 ["outreach_culture1", "culture_specific_code"], ["outreach_culture2", "culture_code"],
-                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"], 
+                ["outreach_eval_result", "evaluation_result_code"], ["outreach_staffing", "no_of_staff"],
                 ["outreach_quantity", "attendees_quantity"], ["outreach_event_id", "source_id"]
               ].each do |mdes_variable, staff_portal_attribute|
                 staff_portal_record.send("#{staff_portal_attribute}=", mdes_record.send(mdes_variable))
@@ -128,7 +128,7 @@ module NcsNavigator::StaffPortal::Warehouse
             when :outreach_staff_members
               staff_portal_record.send("source_id=", mdes_record.send("outreach_event_staff_id"))
             end
-          
+
             staff_portal_record = save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
             if mdes_producer.name == :outreach_events
               ssu_id = mdes_record.send("ssu_id")
@@ -149,7 +149,7 @@ module NcsNavigator::StaffPortal::Warehouse
         offset += BLOCK_SIZE
       end
     end
-    
+
     def save_staff_portal_record_with_mode(staff_portal_record, staff_portal_model)
       if staff_portal_model.respond_to?(:importer_mode)
         staff_portal_model.importer_mode { save_staff_portal_record(staff_portal_record) }
@@ -180,8 +180,8 @@ module NcsNavigator::StaffPortal::Warehouse
             new_association_id = public_id_index(associated_model)[associated_public_id]
             staff_portal_record.send("#{staff_portal_model_association_id}=", new_association_id)
           end
-          
-          if associated_table.to_s == "this_table" 
+
+          if associated_table.to_s == "this_table"
             staff_portal_record.send("#{mdes_variable}=", mdes_record.send(mdes_variable))
           end
         elsif staff_portal_attribute =~ /_code$/
@@ -219,7 +219,7 @@ module NcsNavigator::StaffPortal::Warehouse
       public_id_index(staff_portal_record.class)[staff_portal_record.public_id] = staff_portal_record.id if staff_portal_record.class.method_defined? :public_id
       staff_portal_record
     end
-    
+
     def find_producer(name)
       Enumerator.record_producers.find { |rp| rp.name.to_sym == name.to_sym }
     end
@@ -236,13 +236,13 @@ module NcsNavigator::StaffPortal::Warehouse
     def staff_portal_model_for_table(name)
       name = name.to_s
       @staff_portal_models_indexed_by_table[name] ||= Object.const_get(name.singularize.camelize)
-    end    
-    
+    end
+
     def public_id_index(staff_portal_model)
       @public_id_indexes[staff_portal_model.table_name] ||= build_public_id_index(staff_portal_model)
     end
 
-    def build_public_id_index(staff_portal_model)      
+    def build_public_id_index(staff_portal_model)
       index_query =
         "SELECT id, #{staff_portal_model.public_id_attribute_name} AS public_id FROM #{staff_portal_model.table_name}"
       ActiveRecord::Base.connection.
@@ -252,7 +252,7 @@ module NcsNavigator::StaffPortal::Warehouse
         idx
       end
     end
-    
+
     def ncs_code_object_for(local_code, list_name)
       ncs_code_list(list_name).detect { |cl| cl.local_code == local_code.to_i }
     end
@@ -268,13 +268,13 @@ module NcsNavigator::StaffPortal::Warehouse
     def ncs_code_lists
       @ncs_code_lists ||= {}
     end
-    
+
     def apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
       if staff_portal_record.send("#{code_attribute_name}") == -5 && staff_portal_record.send("#{other_attribute_name}").blank?
         staff_portal_record.send("#{other_attribute_name}=", "Missing in Error - Other value")
       end
       staff_portal_record
     end
-    
+
   end
 end

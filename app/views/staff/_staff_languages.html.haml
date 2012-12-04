@@ -3,6 +3,6 @@
     = f.label :lang_code, "Language"
     = f.select :lang_code, NcsCode.ncs_code_lookup(:lang_code), {:prompt => 'Select language'} , {:class => "nested_attribute_selector staff_languages_selector"}
     = f.label :lang_other, "Other language", {:class => "nested_attribute_other_label"}
-    = f.text_field :lang_other, {:size =>20 ,:class => "nested_attribute_other"} 
+    = f.text_field :lang_other, {:size =>20 ,:class => "nested_attribute_other"}
   %td
     = link_to_remove_fields 'Remove', f, :staff_languages

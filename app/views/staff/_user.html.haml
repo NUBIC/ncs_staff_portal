@@ -35,14 +35,14 @@
         (Warning: Assigned Staff Id should not be modified for existing staff.)
     .row
       = f.label :formatted_ncs_inactive_date, "Inactive Date"
-      = f.text_field :formatted_ncs_inactive_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"} 
+      = f.text_field :formatted_ncs_inactive_date, {:class => "datepicker", :size =>10, :maxlength =>10, :id => "pickdate"}
       = label_tag "(Leave blank to have it never expire, or set it in the past to have it expire immediately.)"
     .row
       = f.label :external, "External User"
       = f.check_box :external
-      = label_tag "(Check if user is not using NCS Navigator Ops for the time and expense entry)" 
+      = label_tag "(Check if user is not using NCS Navigator Ops for the time and expense entry)"
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
-    
+
   .block
     .title
       Role(s)
@@ -51,7 +51,7 @@
         .field
           = check_box_tag "staff[role_ids][]",r.id, @user.roles.map(&:id).include?(r.id)
           = r.name
-        
+
   - if @user.has_role(Role::STAFF_SUPERVISOR)
     .block
       .title
@@ -90,13 +90,13 @@
   %p
     Note: Fields mark as (
     %em *
-    ) are mandatory fields 
+    ) are mandatory fields
   :javascript
     $(document).ready(function() {
       edit_staff_id();
       supervisorEmployeesTemplateUI = new NCSPortal.SupervisorEmployees.UI({supervisorEmployeesTemplate: '#{@supervisorEmployeesTemplate}' });
     })
-    
+
     function edit_staff_id() {
       var staff_id = $("#staff_id");
       $("#save_staff_id").hide();

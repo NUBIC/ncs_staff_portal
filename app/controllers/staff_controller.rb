@@ -4,15 +4,14 @@ class StaffController < StaffAuthorizedController
   before_filter :load_staff, :only => %w(edit edit_user show update)
   before_filter :assert_staff, :only => %w(edit edit_user update)
   before_filter :check_requested_staff_visibility, :only => %w(edit edit_user show update)
-  before_filter :check_staff_access,  :only => %w(show edit) 
-  
+  before_filter :check_staff_access,  :only => %w(show edit)
+
   set_tab :general_info, :vertical
   set_tab :admin, :only => %w(index users new edit_user)
 
-  add_breadcrumb "Admin", :administration_index_path, :only => %w(index users new edit_user) 
+  add_breadcrumb "Admin", :administration_index_path, :only => %w(index users new edit_user)
   add_breadcrumb "Administer user accounts", :users_path, :only => %w(new users edit_user)
   add_breadcrumb "Manage staff details", :staff_index_path, :only => %w(index)
-
 
   # GET /staff
   # GET /staff.xml
@@ -28,7 +27,7 @@ class StaffController < StaffAuthorizedController
       end
     end
   end
-  
+
   # GET /users
   # GET /users.xml
   # GET /users.json
@@ -64,7 +63,7 @@ class StaffController < StaffAuthorizedController
   # GET /staff/username.json
   def show
     add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
-    
+
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -80,7 +79,7 @@ class StaffController < StaffAuthorizedController
       add_breadcrumb "new user", :new_users_path
       @user = Staff.new
       respond_to do |format|
-        format.html 
+        format.html
         format.xml  { render :xml => @user }
       end
     end
@@ -94,7 +93,7 @@ class StaffController < StaffAuthorizedController
       format.xml  { render :xml => @staff }
     end
   end
-  
+
   # GET /users/1/edit
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
@@ -114,7 +113,7 @@ class StaffController < StaffAuthorizedController
         if @user.save
           format.html { redirect_to(users_path) }
           format.xml  { render :xml => @user, :status => :created, :location => @user }
-        else               
+        else
           format.html { render :action => "new" }
           format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
         end
@@ -147,7 +146,7 @@ class StaffController < StaffAuthorizedController
               end
             else
               render_staff_list
-            end 
+            end
           elsif permit?(Role::USER_ADMINISTRATOR)
             render_user_list
           else
@@ -157,7 +156,7 @@ class StaffController < StaffAuthorizedController
         format.json { head :ok }
         format.xml  { head :ok }
       else
-        format.html { 
+        format.html {
           if params[:return_path] == "users_path"
             render :action => "edit_user", :location => @staff
           else
@@ -185,19 +184,19 @@ class StaffController < StaffAuthorizedController
       render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
- 
+
   def render_staff
     redirect_to(staff_path(@staff.numeric_id), :notice => 'Staff was successfully updated.')
   end
-  
+
   def render_staff_list
     redirect_to(staff_index_path)
   end
-  
+
   def render_user_list
     redirect_to(users_path)
   end
-  
+
   def construct_condition_string(params)
     operator = params[:operator] =~ /OR/ ? " OR " : " AND "
     if params[:first_name]
@@ -221,7 +220,7 @@ class StaffController < StaffAuthorizedController
     end
     conditions
   end
-  
+
   def get_search_string(key, value)
     Staff.arel_table[key].matches("%#{value}%").to_sql
   end

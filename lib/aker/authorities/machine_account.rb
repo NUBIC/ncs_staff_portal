@@ -18,7 +18,7 @@ module Aker::Authorities
   # 1. the PSC -> Ops user, which is currently hardcoded as "psc_application"
   # 2. the Cases -> PSC user, which is configured in the NCS Navigator
   #    configuration
-  # 
+  #
   # It supplies portal and role information for both users.
   class MachineAccount
     extend Forwardable

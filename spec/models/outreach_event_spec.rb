@@ -35,54 +35,54 @@ describe OutreachEvent do
     event = Factory.create(:outreach_event)
     event.should_not be_nil
   end
-  
+
   it { should have_many(:outreach_segments) }
-  
+
   it { should have_many(:outreach_staff_members) }
-  
+
   it { should have_many(:ncs_ssus).through(:outreach_segments) }
-  
+
   it { should validate_presence_of(:name) }
-  
+
   it { should validate_presence_of(:mode) }
-  
+
   it { should validate_presence_of(:outreach_type) }
-    
+
   it { should validate_presence_of(:tailored) }
-      
+
   it { should validate_presence_of(:evaluation_result) }
-  
+
   describe "validates" do
     describe "event_date" do
       it "should be valid if valid date" do
         event = FactoryGirl.build(:outreach_event, :event_date => "2012-12-12")
         event.should be_valid
       end
-      
+
       it "should be valid for valid for mdes options (9777-96-91)" do
         event = FactoryGirl.build(:outreach_event, :event_date => "9777-96-91")
         event.should be_valid
       end
-      
+
       it "should be valid for valid date and valid mdes options (9777-12-91)" do
         event = FactoryGirl.build(:outreach_event, :event_date => "9777-12-91")
         event.should be_valid
       end
-      
+
       it "should not be valid for if date has month which not valid month or not in mdes option" do
         event = FactoryGirl.build(:outreach_event, :event_date => "9777-14-91")
         event.should_not be_valid
         event.should have(1).error_on(:event_date)
         event.errors[:event_date].should == ["9777-14-91 is not the valid mdes format date."]
       end
-      
+
       it "should not be valid for if date has day which not valid date or not in mdes option" do
         event = FactoryGirl.build(:outreach_event, :event_date => "9777-12-34")
         event.should_not be_valid
         event.should have(1).error_on(:event_date)
         event.errors[:event_date].should == ["9777-12-34 is not the valid mdes format date."]
       end
-      
+
       it "should not be valid for if date is random string" do
         event = FactoryGirl.build(:outreach_event, :event_date => "abcd")
         event.should_not be_valid
@@ -90,7 +90,7 @@ describe OutreachEvent do
         event.errors[:event_date].should == ["abcd is not the valid mdes format date."]
       end
     end
-    
+
     describe "culture_other" do
       let(:culture_code) { Factory(:ncs_code, :list_name => "CULTURE_CL1", :display_text => "Other", :local_code => -5) }
 
@@ -139,7 +139,7 @@ describe OutreachEvent do
         outreach_event.mode_other.should == nil
       end
     end
-    
+
     describe "outreach_type_other" do
       let(:outreach_type_code) { Factory(:ncs_code, :list_name => "OUTREACH_TYPE_CL1", :display_text => "Other", :local_code => -5) }
 

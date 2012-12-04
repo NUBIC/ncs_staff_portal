@@ -34,7 +34,7 @@ module MdesRecord
       attr_accessor :public_id_attribute_name
       attr_accessor :attribute_names
     end
-    
+
     class NcsCodedAttribute
       attr_reader :attribute_name, :list_name
 
@@ -69,7 +69,7 @@ module MdesRecord
       def public_id=(value)
         self.send("#{self.class.public_id_attribute_name}=", value)
       end
-      
+
       def get_attribute_names
         (self.attribute_names - ["id"]).sort
       end
@@ -79,7 +79,6 @@ module MdesRecord
         self.public_id = ActsAsMdesRecord.create_public_id_string
       end
       private :generate_public_id
-      
 
     end
   end
@@ -88,7 +87,7 @@ module MdesRecord
     self.send(:include, ActsAsMdesRecord)
     self.public_id_attribute_name = options[:public_id]
   end
-  
+
   def ncs_coded_attribute(attribute_name, list_name)
     ncs_coded_attributes[attribute_name.to_sym] =
       ::MdesRecord::ActsAsMdesRecord::NcsCodedAttribute.new(self, attribute_name, list_name)

@@ -6,7 +6,7 @@ Feature: Machine accounts
   This feature uses values from the following sources:
 
   1. spec/machine-users.yml for username/password pairs in test
-  2. lib/aker/authorities/machine_accounts.yml.erb for machine 
+  2. lib/aker/authorities/machine_accounts.yml.erb for machine
 
   # See spec/test-users.yml for username / password pairs.
   Scenario: The PSC -> Ops user can retrieve user data

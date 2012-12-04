@@ -6,7 +6,7 @@ Feature: Users API
     When I send a GET request for "/staff/staff.json"
     Then the request is successful
     And has correct JSON response
-    
+
   Scenario: Valid authenticated staff get 404 if user is unknown
     Given a valid API user with default supervisor
     When I send a GET request for "/staff/unknown.json"
@@ -51,13 +51,13 @@ Feature: Users API
     When I send a GET request for "/users.json"
     Then the request is successful
     And the JSON should have 4 user
-    
+
   Scenario: Access to get users request by the user with role other than User Administrator is not allowed
     Given a valid API user with username staff
     And staff member staff has role "Staff Supervisor"
     When I send a GET request for "/users.json"
     Then access is forbidden
-    
+
   Scenario: Valid authenticated user administrator can get all the staff by role with single role
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -83,7 +83,7 @@ Feature: Users API
     When I send a GET request for "/users.json?role%5B%5D=Phone%20Staff&role%5B%5D=Field%20Staff"
     Then the request is successful
     And the JSON should have 2 user
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -93,7 +93,7 @@ Feature: Users API
     Then the request is successful
     And the JSON should have 1 user
     And the JSON at "0/first_name" should be "fname_test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by last_name
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -103,7 +103,7 @@ Feature: Users API
     Then the request is successful
     And the JSON should have 1 user
     And the JSON at "0/last_name" should be "lname_test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -113,7 +113,7 @@ Feature: Users API
     Then the request is successful
     And the JSON should have 1 user
     And the JSON at "0/username" should be "test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name and last_name
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -124,7 +124,7 @@ Feature: Users API
     And the JSON should have 1 user
     And the JSON at "0/first_name" should be "fname_test1"
     And the JSON at "0/last_name" should be "lname_test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name and username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -135,7 +135,7 @@ Feature: Users API
     And the JSON should have 1 user
     And the JSON at "0/first_name" should be "fname_test1"
     And the JSON at "0/username" should be "test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by last_name and username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -146,7 +146,7 @@ Feature: Users API
     And the JSON should have 1 user
     And the JSON at "0/last_name" should be "lname_test1"
     And the JSON at "0/username" should be "test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name and last_name and username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -158,7 +158,7 @@ Feature: Users API
     And the JSON at "0/first_name" should be "fname_test1"
     And the JSON at "0/last_name" should be "lname_test1"
     And the JSON at "0/username" should be "test1"
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name or last_name
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -167,7 +167,7 @@ Feature: Users API
     When I send a GET request for "/users.json?first_name=fname_test1&last_name=lname_test2&operator=OR"
     Then the request is successful
     And the JSON should have 2 user
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name or username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"
@@ -176,7 +176,7 @@ Feature: Users API
     When I send a GET request for "/users.json?first_name=fname_test1&username=test2&operator=OR"
     Then the request is successful
     And the JSON should have 2 user
-    
+
   Scenario: Valid authenticated user administrator can search the staff by first_name or last_name or username
     Given a valid API user with username superuser
     And staff member superuser has role "User Administrator"

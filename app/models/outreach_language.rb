@@ -19,6 +19,6 @@ class OutreachLanguage < ActiveRecord::Base
   ncs_coded_attribute :language, 'LANGUAGE_CL2'
   belongs_to :outreach_event
   validates_presence_of :language
-  
+
   validates_with OtherEntryValidator, :entry => :language, :other_entry => :language_other
 end

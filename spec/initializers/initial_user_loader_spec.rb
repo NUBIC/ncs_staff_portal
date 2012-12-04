@@ -26,7 +26,7 @@ describe InitialUserLoader do
       user = InitialUserLoader.create
       user.roles.should include @user_admin_role
     end
-    
+
     it "assigns 'System Administrator' role if existing user has no 'System Administrator' role" do
       user = Staff.create!(:username => "testuser", :validate_create => "false")
       user.should_not be_nil

@@ -95,7 +95,7 @@ def valid_staff(username, name_flag = nil)
   staff.staff_roles.build(:role => role)
   staff.roles << role
   staff.username = username
-  staff.email = "#{username}@test.com" 
+  staff.email = "#{username}@test.com"
   staff.save!
   staff
 end

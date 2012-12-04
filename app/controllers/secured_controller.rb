@@ -1,13 +1,13 @@
 class SecuredController < ApplicationController
-  include Aker::Rails::SecuredController 
+  include Aker::Rails::SecuredController
   include NcsNavigator::StaffPortal::UserLoading
 
   protect_from_forgery
-  
+
   before_filter :set_current_staff
 
   def dashboard
-    if permit?(*Role.management_group) 
+    if permit?(*Role.management_group)
       redirect_to new_staff_management_task_path(@current_staff.numeric_id)
     elsif permit?(*Role.data_collection_group)
       redirect_to new_staff_data_collection_task_path(@current_staff.numeric_id)
@@ -21,13 +21,13 @@ class SecuredController < ApplicationController
 
     throw :warden unless @current_staff.try(:is_active)
   end
-  
+
   def check_user_access(requested_staff)
     if requested_staff
       throw :warden unless @current_staff.can_see_staff?(requested_staff)
     end
   end
-  
+
   def same_as_current_user(requested_staff)
     if @current_staff
       requested_staff.id == @current_staff.id ? true : false

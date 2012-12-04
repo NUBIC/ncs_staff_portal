@@ -5,7 +5,7 @@ class DataCollectionTasksController < StaffAuthorizedController
   before_filter :load_staff
   before_filter :assert_staff
   before_filter :check_requested_staff_visibility
-  before_filter :check_staff_access, :only => %w(new edit) 
+  before_filter :check_staff_access, :only => %w(new edit)
 
   # GET /data_collection_tasks/new
   # GET /data_collection_tasks/new.xml
@@ -15,7 +15,7 @@ class DataCollectionTasksController < StaffAuthorizedController
     @data_collection_task = @staff.data_collection_tasks.build
 
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @data_collection_task }
     end
   end
@@ -26,7 +26,7 @@ class DataCollectionTasksController < StaffAuthorizedController
     @data_collection_tasks = @staff.data_collection_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
     @data_collection_task = @staff.data_collection_tasks.find(params[:id])
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @data_collection_task }
     end
   end
@@ -36,9 +36,9 @@ class DataCollectionTasksController < StaffAuthorizedController
   def create
     data_collection_task_temp = DataCollectionTask.new(params[:data_collection_task])
     start_date = data_collection_task_temp.task_date.beginning_of_week unless data_collection_task_temp.task_date.blank?
-    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate) 
+    staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
     @data_collection_task = staff_weekly_expense.data_collection_tasks.build(params[:data_collection_task])
-    
+
     respond_to do |format|
       if @data_collection_task.save
         format.html { redirect_to(new_staff_data_collection_task_path(@staff), :notice => 'data_collection_task was successfully created.') }
@@ -61,7 +61,7 @@ class DataCollectionTasksController < StaffAuthorizedController
       staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => data_collection_task.staff_weekly_expense.rate)
       unless @data_collection_task.staff_weekly_expense == staff_weekly_expense
         @data_collection_task.staff_weekly_expense = staff_weekly_expense
-      end 
+      end
     end
     respond_to do |format|
       if @data_collection_task.update_attributes(params[:data_collection_task])
@@ -86,7 +86,7 @@ class DataCollectionTasksController < StaffAuthorizedController
       format.xml  { head :ok }
     end
   end
-  
+
   private
 
   def check_staff_access

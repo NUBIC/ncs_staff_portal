@@ -7,7 +7,7 @@ class StaffWeeklyExpensesController < StaffAuthorizedController
     c.before_filter :check_requested_staff_visibility
   end
 
-  before_filter :check_staff_access, :only => %w(by_staff) 
+  before_filter :check_staff_access, :only => %w(by_staff)
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
   def index
@@ -39,7 +39,7 @@ class StaffWeeklyExpensesController < StaffAuthorizedController
     @staff_weekly_expense.save!
 
     respond_to do |format|
-      format.json { 
+      format.json {
         if request.xhr?
           render :json => @staff_weekly_expense.comment
         else
@@ -57,10 +57,10 @@ class StaffWeeklyExpensesController < StaffAuthorizedController
 
     respond_to do |format|
       format.html {
-      if params[:staff_id] 
+      if params[:staff_id]
         redirect_to(by_staff_staff_weekly_expenses_url(:staff_id => params[:staff_id]))
       else
-        redirect_to(staff_weekly_expenses_url) 
+        redirect_to(staff_weekly_expenses_url)
       end
       }
       format.xml  { head :ok }

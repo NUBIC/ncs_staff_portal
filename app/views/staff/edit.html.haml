@@ -25,15 +25,15 @@
     = text_field_tag "study_center", StaffPortal.study_center_name, :disabled => true
     = f.hidden_field :study_center, :value => StaffPortal.study_center_id
   .field
-    = f.label :staff_type_code, "Staff Type" 
-    %em * 
+    = f.label :staff_type_code, "Staff Type"
+    %em *
     = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
   .field
     = f.label :staff_type_other, "Other staff type"
-    = f.text_field :staff_type_other, {:size => 20 ,:id => "staff_type_other"} 
+    = f.text_field :staff_type_other, {:size => 20 ,:id => "staff_type_other"}
   .field
     = f.label :pay_amount, "Pay amount (in US Dollars)"
-    %em * 
+    %em *
     = f.select :pay_type, ["Hourly","Yearly", "Voluntary"], {:prompt => 'Select pay type'},{:id => "pay_type"}
     = f.text_field :pay_amount, {:id => "pay_amount", :size =>10}
   .field
@@ -44,7 +44,7 @@
       = text_field_tag 'birth_date_field', @staff.formatted_birth_date, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10
     - else
       = radio_button_tag 'dob', 'date', false, :class => "dob"
-      = text_field_tag 'birth_date_field', nil, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10 
+      = text_field_tag 'birth_date_field', nil, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10
     = radio_button_tag 'dob', NcsCode.unknown_code, @staff.age_group_code == NcsCode.unknown_code, :class => "dob"
     = label_tag "Unknown"
     = radio_button_tag 'dob', NcsCode.refused_code, @staff.age_group_code == NcsCode.refused_code, :class => "dob"
@@ -61,7 +61,7 @@
     = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), {:prompt => 'Select Race'}, {:id => "race"}
   .field
     = f.label :race_other, "Other race type"
-    = f.text_field :race_other, {:size =>20 ,:id => "race_other"} 
+    = f.text_field :race_other, {:size =>20 ,:id => "race_other"}
   .field
     = f.label :ethnicity_code, "Ethnicity"
     %em *
@@ -113,6 +113,3 @@
       disabled_selected_options(".staff_languages_selector");
       wire_up_pay_amount("#pay_type", "#pay_amount")
     });
-
-
-

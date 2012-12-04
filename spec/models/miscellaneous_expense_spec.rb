@@ -49,7 +49,7 @@ describe MiscellaneousExpense do
         task.should_not be_valid
         task.should have(1).error_on(:hours)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:miscellaneous_expense, :hours => 0)
         task.should be_valid
@@ -74,7 +74,7 @@ describe MiscellaneousExpense do
         task.should_not be_valid
         task.should have(1).error_on(:expenses)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:miscellaneous_expense, :expenses => 0)
         task.should be_valid
@@ -100,7 +100,7 @@ describe MiscellaneousExpense do
         task.should_not be_valid
         task.should have(1).error_on(:miles)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:miscellaneous_expense, :miles => 0)
         task.should be_valid

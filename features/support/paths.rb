@@ -22,7 +22,7 @@ module NavigationHelpers
 
     when /the staff information page for staff without role/
       staff_path(existing_staff_without_role($1).numeric_id)
-      
+
     when /^a data collection task entry page for (\S+?)$/
       new_staff_data_collection_task_path(existing_staff($1).numeric_id)
 
@@ -31,13 +31,13 @@ module NavigationHelpers
 
     when /^the staff information page for (\S+?)$/
       staff_path(existing_staff($1).numeric_id)
-      
+
     when /the manage staff details page/
       staff_index_path
-      
+
     when /the staff edit page for (\S+?)$/
       edit_staff_path(existing_staff($1).numeric_id)
-      
+
     when /the user edit page for (\S+?)$/
       edit_users_path(existing_staff($1).numeric_id)
 
@@ -62,7 +62,7 @@ module NavigationHelpers
   def existing_staff(username)
     status = Staff.find_by_username(username).tap { |s| s.should_not be_nil }
   end
-  
+
   def existing_staff_without_role(name)
     status = Staff.find_by_first_name(name).tap { |s| s.should_not be_nil }
   end
