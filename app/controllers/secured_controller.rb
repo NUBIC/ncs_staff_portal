@@ -1,6 +1,7 @@
 class SecuredController < ApplicationController
   protect_from_forgery
   include Aker::Rails::SecuredController 
+  include NcsNavigator::StaffPortal::UserLoading
   
   before_filter :set_current_staff
 
@@ -15,17 +16,14 @@ class SecuredController < ApplicationController
   end
 
   def set_current_staff
-    @current_staff = Staff.find_by_username(current_user.username)
-    unless (@current_staff && @current_staff.is_active) || current_user.username == 'psc_application'
-      throw :warden
-    end
+    @current_staff = find_by_username(current_user.username)
+
+    throw :warden unless @current_staff.try(:is_active)
   end
   
   def check_user_access(requested_staff)
     if requested_staff
-      unless current_user.username == 'psc_application' or requested_staff.id == @current_staff.id or @current_staff.visible_employees.map(&:id).include?(requested_staff.id)
-        throw :warden
-      end
+      throw :warden unless @current_staff.can_see_staff?(requested_staff)
     end
   end
   

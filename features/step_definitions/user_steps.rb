@@ -4,7 +4,7 @@ Given /^the following users:$/ do |table|
   end
 end
 
-When /^I send a GET request for "([^\"]*)"$/ do |path|
+When /^(?:I send|sends) a GET request for "([^\"]*)"$/ do |path|
   header 'Content-Type', 'application/json'
   get path
 end

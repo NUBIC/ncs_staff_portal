@@ -1,0 +1,22 @@
+users:
+  psc_application:
+<% if psc_user_password %>
+    password: '<%= psc_user_password %>'
+<% end %>
+    identifiers:
+      machine_account: true
+      numeric_id: -1
+    portals: 
+    - NCSNavigator: 
+      - Staff Supervisor
+      - User Administrator
+<% if cases_account_username %>
+  <%= cases_account_username %>:
+    identifiers:
+      machine_account: true
+      numeric_id: -2
+    portals:
+      - NCSNavigator:
+        - Field Staff
+        - Phone Staff
+<% end %>

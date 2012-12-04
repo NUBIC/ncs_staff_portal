@@ -1,3 +1,5 @@
+require 'aker/authorities/machine_account'
+
 NcsStaffPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -22,14 +24,15 @@ NcsStaffPortal::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
-  config.after_initialize do
-    Aker.configure do
-      static = Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
-      staff_portal = Aker::Authorities::StaffPortal.new
-      authorities :cas, staff_portal, static
-      central '/etc/nubic/ncs/aker-local.yml'
-    end
+
+  # Load configuration
+  config.ncs_navigator.load
+
+  config.aker do
+    static = Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
+
+    authorities :cas, static, Aker::Authorities::MachineAccount
+    central '/etc/nubic/ncs/aker-local.yml'
   end
 end
 

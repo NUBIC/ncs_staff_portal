@@ -1,4 +1,7 @@
+require 'aker/authorities/machine_account'
+require 'aker/authorities/staff_portal'
 require 'ncs_navigator/configuration'
+
 NcsStaffPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -47,20 +50,17 @@ NcsStaffPortal::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  config.after_initialize do
-    Aker.configure do
-      staff_portal = Aker::Authorities::StaffPortal.new
-      if File.exists?("#{Rails.root}/lib/aker/static_auth.yml") 
-        psc_user_password = NcsNavigator.configuration.staff_portal['psc_user_password']
-        raise "Please specify a psc user password (see README)." unless psc_user_password
-        static = Aker::Authorities::Static.from_file("#{Rails.root}/lib/aker/static_auth.yml")
-        static.valid_credentials!(:user, "psc_application", psc_user_password)
-        authorities :cas, staff_portal, static
-      else
-        authorities :cas, staff_portal
-      end
-      central '/etc/nubic/ncs/aker-staging.yml'
-    end
+
+  # Load configuration
+  config.ncs_navigator.load
+
+  config.aker do
+    authorities \
+      :cas,
+      Aker::Authorities::StaffPortal,
+      Aker::Authorities::MachineAccount
+
+    central '/etc/nubic/ncs/aker-staging.yml'
   end
   
   recipients = NcsNavigator.configuration.exception_email_recipients

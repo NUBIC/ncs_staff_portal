@@ -27,6 +27,10 @@ Given /I am using the basic credentials "([^\"]*)" \/ "([^\"]*)"$/ do |username,
   header "Authorization", "Basic #{["#{username}:#{password}"].pack("m0*")}".strip
 end
 
+When /^an application authenticates as "(.*?)" \/ "(.*?)"$/ do |username, password|
+  step %Q{I am using the basic credentials "#{username}" / "#{password}"}
+end
+
 Then /^the request is successful$/ do
   last_response.status.should == 200
 end

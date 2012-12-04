@@ -184,19 +184,6 @@ class StaffController < SecuredController
       render :status => :not_found, :text => "Unknown Staff #{params[:id]}"
     end
   end
-  
-  def find_staff
-    staff = Staff.find_by_username(params[:id]) 
-    unless staff
-      begin
-        staff = Staff.find_by_numeric_id(params[:id].to_i) || Staff.find(params[:id].to_i) 
-      rescue ActiveRecord::RecordNotFound
-        staff = nil
-      end 
-    end
-    staff
-  end
-  
   def render_staff
     redirect_to(@staff, :notice => 'Staff was successfully updated.') 
   end

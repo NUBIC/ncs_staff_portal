@@ -793,4 +793,53 @@ describe Staff do
       @staff.display_birth_date.should == "Refused"
     end
   end
+
+  describe '#can_see_staff?' do
+    let(:staff) { Factory(:valid_staff) }
+    let(:other) { Factory(:valid_staff) }
+    let(:ua) { Role.find_by_name(Roles::USER_ADMINISTRATOR) }
+    let(:ss) { Role.find_by_name(Roles::STAFF_SUPERVISOR) }
+
+    describe 'if #employees is empty' do
+      before do
+        staff.employees.clear
+      end
+
+      describe 'and the staff member is a user administrator' do
+        before do
+          staff.roles << ua
+        end
+
+        it 'returns true' do
+          staff.can_see_staff?(other).should be_true
+        end
+      end
+
+      describe 'and the staff member is a staff supervisor' do
+        before do
+          staff.roles << ss
+        end
+
+        it 'returns true' do
+          staff.can_see_staff?(other).should be_true
+        end
+      end
+    end
+
+    it 'returns true when given itself' do
+      staff.can_see_staff?(staff).should be_true
+    end
+
+    it 'returns true if #employees contains the given staff member' do
+      staff.employees << other
+
+      staff.can_see_staff?(other).should be_true
+    end
+
+    it 'returns false if #employees does not contain the given staff member' do
+      other = FactoryGirl.create(:valid_staff)
+
+      staff.can_see_staff?(other).should be_false
+    end
+  end
 end

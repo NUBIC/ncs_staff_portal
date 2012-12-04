@@ -150,9 +150,19 @@ class Staff < ActiveRecord::Base
   end
 
   def visible_employees
-    visible_employees = self.employees
-    visible_employees = Staff.all if visible_employees.empty? && has_role(Role::STAFF_SUPERVISOR)
-    visible_employees
+    @visible_employees ||= if employees.empty? && has_role(Role::STAFF_SUPERVISOR)
+                             Staff.all
+                           else
+                             employees
+                           end
+  end
+
+  def can_see_staff?(staff)
+    if has_role(Roles::USER_ADMINISTRATOR)
+      true
+    else
+      staff == self || visible_employees.any? { |e| e == staff }
+    end
   end
 
   def belongs_to_management_group
