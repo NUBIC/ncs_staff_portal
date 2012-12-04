@@ -124,7 +124,6 @@
     form.submit();
   }
 
-
   document.on("click", "*[data-confirm]", function(event, element) {
     var message = element.readAttribute('data-confirm');
     if (!confirm(message)) event.stop();

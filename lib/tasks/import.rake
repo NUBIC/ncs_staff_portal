@@ -26,7 +26,7 @@ namespace :import do
     pass = NcsNavigator::StaffPortal::Warehouse::NotImportedPassthrough.new(import_wh_config)
     pass.import
   end
-  
+
   # Import all the staff, expense and outreach operation data to NCS Navigator Ops.
   desc 'Import operational data'
   task :operational => [:warehouse_setup, :environment] do

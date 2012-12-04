@@ -14,7 +14,7 @@
   - @outreachEvaluationsTemplate = generate_nested_attributes_template(f, :outreach_evaluations, 'outreach_events/outreach_evaluations')
   - @outreachItemsTemplate = generate_nested_attributes_template(f, :outreach_items, 'outreach_events/outreach_items')
   - @outreachLanguagesTemplate = generate_nested_attributes_template(f, :outreach_languages, 'outreach_events/outreach_languages')
-  
+
   .block
     .title
       Outreach Description
@@ -44,7 +44,7 @@
       Outreach Details
     .row
       = f.label :mode_code, "Outreach mode"
-      %em * 
+      %em *
       = f.select :mode_code, NcsCode.ncs_code_lookup(:mode_code), {:prompt => "Select"}, {:id => "outreach_mode"}
       = f.label :mode_other, "Other mode"
       = f.text_field :mode_other, {:id => "outreach_mode_other"}
@@ -57,8 +57,8 @@
     %table{ :class => 'records outreach_targets row' }
       %tr.row
         %td
-          Primary outreach target 
-          %em * 
+          Primary outreach target
+          %em *
           (Click the 'Add target' link to add one or more targets)
         %td
       %tbody.nested_records_outreach_targets
@@ -104,7 +104,7 @@
       = f.select :tailored_code, NcsCode.ncs_code_lookup(:tailored_code), {:prompt => "Select"}, {:id => "tailored_group"}
     .row
       = f.label :language_specific_code, "Was the outreach language specific?"
-      = f.select :language_specific_code, NcsCode.ncs_code_lookup(:language_specific_code), {:prompt => "Select"}, {:class => "tailored_group", :id => "language_group"} 
+      = f.select :language_specific_code, NcsCode.ncs_code_lookup(:language_specific_code), {:prompt => "Select"}, {:class => "tailored_group", :id => "language_group"}
     %table{ :class => 'records outreach_languages row' }
       %tr.row.tailored_group_other.language_group
         %td
@@ -119,10 +119,10 @@
             = link_to_add_fields "Add language", :outreach_languages
     .row
       = f.label :culture_specific_code, "Was the outreach targeted to a specific cultural group?"
-      = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), {:prompt => "Select"}, {:class => "tailored_group", :id => "culture_group"} 
+      = f.select :culture_specific_code, NcsCode.ncs_code_lookup(:culture_specific_code), {:prompt => "Select"}, {:class => "tailored_group", :id => "culture_group"}
     .row
       = f.label :culture_code, "Targeted cultural group"
-      = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), {:prompt => "Select"}, {:class => "culture_group tailored_group_other", :id => "outreach_culture"}  
+      = f.select :culture_code, NcsCode.ncs_code_lookup(:culture_code), {:prompt => "Select"}, {:class => "culture_group tailored_group_other", :id => "outreach_culture"}
       = f.label :culture_other, "Cultural group - other specify"
       = f.text_field :culture_other, {:class => "tailored_group_other culture_group_other", :id => "outreach_culture_other"}
     .row
@@ -152,7 +152,7 @@
       %tr.row
         %td
           Outreach Evaluations
-          %em * 
+          %em *
           (Click the 'Add evaluation' link to add one or more evaluations)
         %td
       %tbody.nested_records_outreach_evaluations
@@ -172,8 +172,8 @@
     %table{ :class => 'records outreach_staff_members row' }
       %tr.row
         %td
-          Staff Members participating in Outreach Event 
-          %em * 
+          Staff Members participating in Outreach Event
+          %em *
           (Click the 'Add staff member' link to add one or more staff members)
       %tbody.nested_records_outreach_staff_members
         = f.fields_for :outreach_staff_members do |outreach_staff_member|
@@ -200,16 +200,16 @@
       disabled_selected_options(".outreach_segments_selector", true)
       disabled_selected_options(".outreach_items_selector", true)
       disabled_selected_options(".outreach_languages_selector", false)
-      
+
       wire_up_select_other("#outreach_mode","#outreach_mode_other");
       wire_up_select_other("#outreach_type","#outreach_type_other");
       wire_up_select_other("#outreach_culture","#outreach_culture_other");
-      
+
       wire_up_select_yes_selector("#tailored_group", ".tailored_group", ".tailored_group_other")
       wire_up_select_yes_selector("#culture_group", ".culture_group", ".culture_group_other")
       wire_up_select_yes_nested_attribute("#race_group", ".race_group")
       wire_up_select_yes_nested_attribute("#language_group", ".language_group")
-      
+
       outreachStaffMembersTemplateUI = new NCSPortal.OutreachStaffMembers.UI({outreachStaffMembersTemplate: '#{@outreachStaffMembersTemplate}' });
       outreachRacesTemplateUI = new NCSPortal.OutreachRaces.UI({outreachRacesTemplate: '#{@outreachRacesTemplate}' });
       outreachTargetsTemplateUI = new NCSPortal.OutreachTargets.UI({outreachTargetsTemplate: '#{@outreachTargetsTemplate}' });
@@ -217,5 +217,3 @@
       outreachItemsTemplateUI = new NCSPortal.OutreachItems.UI({outreachItemsTemplate: '#{@outreachItemsTemplate}' });
       outreachLanguagesTemplateUI = new NCSPortal.OutreachLanguages.UI({outreachLanguagesTemplate: '#{@outreachLanguagesTemplate}' });
      })
-
-    

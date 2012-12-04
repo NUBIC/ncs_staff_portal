@@ -4,19 +4,13 @@ Given /^the following users:$/ do |table|
   end
 end
 
-When /^I send a GET request for "([^\"]*)"$/ do |path|
+When /^(?:I send|sends) a GET request for "([^\"]*)"$/ do |path|
   header 'Content-Type', 'application/json'
   get path
 end
 
 Given /a valid API user with username (.+)$/ do |username|
   staff = valid_staff(username)
-  steps %Q{
-    Given I am using the basic credentials "#{username}" / "#{username}"
-  }
-end
-
-Given /an application_user with username (.+)$/ do |username|
   steps %Q{
     Given I am using the basic credentials "#{username}" / "#{username}"
   }
@@ -91,10 +85,6 @@ Then /has correct JSON response$/ do
   JSON.parse(last_response.body)['username'].should == 'staff'
 end
 
-Then /has correct JSON response with username (.+)$/ do |username|
-  JSON.parse(last_response.body)['username'].should == username
-end
-
 def valid_staff(username, name_flag = nil)
   if name_flag
     staff = Factory(:valid_staff, :first_name => "fname_" + username, :last_name => "lname_" + username, :study_center => 1234)
@@ -105,7 +95,7 @@ def valid_staff(username, name_flag = nil)
   staff.staff_roles.build(:role => role)
   staff.roles << role
   staff.username = username
-  staff.email = "#{username}@test.com" 
+  staff.email = "#{username}@test.com"
   staff.save!
   staff
 end

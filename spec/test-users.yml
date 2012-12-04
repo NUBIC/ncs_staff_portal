@@ -1,51 +1,41 @@
+# This file provides (username, password) pairs for user accounts in test
+# environments.
+#
+# Do NOT put machine account credentials here.  Put those in
+# spec/machine-users.yml.
 users:
-  superuser: 
+  superuser:
     password: superuser
     first_name: FName1
     last_name: LName1
-    portals: 
-      - NCSNavigator: 
+    portals:
+      - NCSNavigator:
         - User Administrator
         - Staff Supervisor
-  staff: 
+  staff:
     password: staff
     first_name: FName2
     last_name: LName2
     portals:
       - NCSNavigator:
         - Outreach Staff
-  staff1: 
+  staff1:
     password: staff1
     first_name: FName2
     last_name: LName2
     portals:
       - NCSNavigator:
         - Field Staff
-  supervisor: 
+  supervisor:
     password: supervisor
     first_name: FName2
     last_name: LName2
     portals:
       - NCSNavigator:
         - Staff Supervisor
-  psc_application: 
-    portals: 
-    - NCSNavigator: 
-      - Staff Supervisor
-      - User Administrator
-    password: psc_application
-  ncs_navigator_cases:
-    identifiers:
-      numeric_id: 1
-    portals:
-    - NCSNavigator:
-      - Field Staff
-      - Phone Staff
-    password: ncs_navigator_cases
-groups: 
+groups:
   NCSNavigator:
     - User Administrator
     - Staff Supervisor
     - Outreach Staff
     - Field Staff
-    - Phone Staff

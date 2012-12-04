@@ -11,7 +11,7 @@ namespace :users do
         staff = Staff.find_by_staff_id(csv["STAFF_ID"])
         if staff
           [
-            ["first_name", csv["FIRST_NAME"]], ["last_name", csv["LAST_NAME"]], 
+            ["first_name", csv["FIRST_NAME"]], ["last_name", csv["LAST_NAME"]],
             ["username", csv["USERNAME"]], ["email", csv["EMAIL"]],
             ["study_center", StaffPortal.study_center_id], ["validate_update", "false"]
           ].each do |staff_portal_attribute, csv_record|
@@ -24,7 +24,7 @@ namespace :users do
         end
       else
         unless Staff.find(:first, :conditions => {:username => csv["USERNAME"]})
-          Staff.create( :first_name => csv["FIRST_NAME"], 
+          Staff.create( :first_name => csv["FIRST_NAME"],
                         :last_name => csv["LAST_NAME"],
                         :username => csv["USERNAME"],
                         :email => csv["EMAIL"],
@@ -34,7 +34,7 @@ namespace :users do
       end
     end
     unless counter == 0
-      if counter == 1 
+      if counter == 1
         puts "#{counter} user is added/updated to the NCS Navigator Ops"
       elsif
         puts "#{counter} users are added/updated to the NCS Navigator Ops"
@@ -42,4 +42,3 @@ namespace :users do
     end
   end
 end
-

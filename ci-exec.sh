@@ -2,7 +2,7 @@
 
 export RAILS_ENV=ci
 
-BUNDLER_VERSION=1.1.4
+BUNDLER_VERSION=1.2.2
 GEMSET=ncs_staff_portal
 
 if [ -z $CI_RUBY ]; then

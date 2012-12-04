@@ -115,12 +115,12 @@ module NcsNavigator::StaffPortal::Warehouse
           CASE
             WHEN swe.expenses IS NOT NULL THEN swe.expenses
             ELSE
-              COALESCE(t.staff_expenses, '0.0') 
+              COALESCE(t.staff_expenses, '0.0')
             END as staff_expenses,
           CASE
             WHEN swe.miles IS NOT NULL THEN swe.miles
             ELSE
-              COALESCE(t.staff_miles, '0.0') 
+              COALESCE(t.staff_miles, '0.0')
             END as staff_miles,
           to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
           swe.rate,
@@ -229,10 +229,26 @@ module NcsNavigator::StaffPortal::Warehouse
           ol.language_other AS lang_other,
           2 AS outreach_incident,
           oe.tailored_code,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.language_specific_code, -4) END AS outreach_lang1,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.race_specific_code,     -4) END AS outreach_race1,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.culture_specific_code,  -4) END AS outreach_culture1,
-          CASE oe.tailored_code WHEN 2 THEN -7 ELSE COALESCE(oe.culture_code,           -4) END AS outreach_culture2
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.language_specific_code, -4)
+            END
+          AS outreach_lang1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.race_specific_code, -4)
+            END
+          AS outreach_race1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.culture_specific_code, -4)
+            END
+          AS outreach_culture1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN -7
+            ELSE COALESCE(oe.culture_code, -4)
+            END
+          AS outreach_culture2
         FROM outreach_events oe
          LEFT JOIN (
            SELECT outreach_event_id, language_other
@@ -267,11 +283,15 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_records(:outreach_untailored_automatic,
       :query => %Q(
         SELECT
-          'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id
+          CASE
+            WHEN oe.source_id IS NOT NULL THEN oe.source_id
+            ELSE 'staff_portal-' || oe.id || '-' || ns.ssu_id
+            END
+          AS outreach_event_id
         FROM outreach_events oe
          INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
          INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
-        WHERE oe.tailored_code=2
+        WHERE oe.tailored_code=2 AND oe.source_id IS NULL
       )
     ) do |oe_id, meta_data|
       [

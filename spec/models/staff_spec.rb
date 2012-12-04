@@ -44,7 +44,6 @@ describe Staff do
     @staff_supervisor  = FactoryGirl.create(:role, :name => Role::STAFF_SUPERVISOR) unless @staff_supervisor
   end
 
-
   describe "calculate_hourly_rate" do
     it "should put hourly_rate as it is as pay_amount if pay_type is 'Hourly'" do
       staff= FactoryGirl.build(:staff)
@@ -105,7 +104,7 @@ describe Staff do
       Staff.new.staff_id.should_not == Staff.new.staff_id
     end
   end
-  
+
   describe '#numeric_id' do
     it 'is automatically set if not set' do
       FactoryGirl.create(:staff).numeric_id.should_not be_nil
@@ -114,12 +113,12 @@ describe Staff do
     it 'is left alone if already set' do
       Staff.new(:numeric_id => 1234).numeric_id.should == 1234
     end
-    
+
     it 'is set to a different value for each staff record' do
       FactoryGirl.create(:staff).numeric_id.should_not == FactoryGirl.create(:staff).numeric_id
     end
   end
-  
+
   describe 'display_username' do
     it 'displays username if username is set' do
       FactoryGirl.build(:staff, :username => "test123").display_username.should == "test123"
@@ -129,7 +128,7 @@ describe Staff do
       FactoryGirl.create(:staff, :staff_id => "staff_id_123").display_username.should == "staff_id_123"
     end
   end
-  
+
   describe 'display_name' do
     it 'displays name if name is not blank' do
       FactoryGirl.build(:staff).display_name.should == "LName, FName"
@@ -204,7 +203,7 @@ describe Staff do
   end
 
   describe "validates" do
-    
+
     describe "email" do
       it "should not be unique" do
         FactoryGirl.create(:staff, :email => "test@email.com")
@@ -287,7 +286,7 @@ describe Staff do
         staff.should be_valid
         staff.race_other.should == nil
       end
-      
+
       it "should be valid if staff race is 'Native Hawaiian or Other Pacific Islander' and race_other value is nil" do
         staff = FactoryGirl.build(:staff, :race => Factory(:ncs_code, :list_name => "RACE_CL1", :display_text => "Native Hawaiian or Other Pacific Islander", :local_code => 1))
         staff.race_other = ''
@@ -685,21 +684,21 @@ describe Staff do
         @staff.roles << @user_admin
         @staff.belongs_to_management_group.should == true
       end
-      
+
       it "returns true if staff has any management_tasks" do
         expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
         expense.management_tasks << FactoryGirl.create(:management_task, :staff_weekly_expense => expense)
         expense.save!
         @staff.belongs_to_management_group.should == true
-      end 
-      
+      end
+
       it "returns true if staff has any role from management_group and has any management_tasks" do
         @staff.roles << @user_admin
         expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
         expense.management_tasks << FactoryGirl.create(:management_task, :staff_weekly_expense => expense)
         expense.save!
         @staff.belongs_to_management_group.should == true
-      end     
+      end
 
       it "returns false if staff has no role and has no management_tasks" do
         @staff.management_tasks.empty?.should == true
@@ -718,14 +717,14 @@ describe Staff do
         @staff.roles << @data_collection_group
         @staff.belongs_to_data_collection_group.should == true
       end
-      
+
       it "returns true if staff has any data_collection_tasks" do
         expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
         expense.data_collection_tasks << FactoryGirl.create(:data_collection_task, :staff_weekly_expense => expense)
         expense.save!
         @staff.belongs_to_data_collection_group.should == true
       end
-      
+
       it "returns true if staff has any role from data_collection_group and has any data_collection_tasks" do
         @staff.roles << @data_collection_group
         expense = FactoryGirl.create(:staff_weekly_expense, :staff => @staff)
@@ -746,20 +745,20 @@ describe Staff do
       end
     end
   end
-  
+
   describe "find_by_role" do
     before(:each) do
       @staff = FactoryGirl.create(:valid_staff)
       @staff.roles << @user_admin
     end
-    
+
     describe "returns the all the staff" do
       it "for one role" do
         search_staff = Staff.find_by_role(Role::USER_ADMINISTRATOR)
         search_staff.should_not be_nil
         search_staff.should include @staff
       end
-      
+
       it "for multiple roles" do
         staff1 = FactoryGirl.create(:valid_staff)
         staff1.roles << @user_admin
@@ -791,6 +790,55 @@ describe Staff do
       @staff.update_attribute(:age_group_code, -1)
       @staff.update_attribute(:birth_date, nil)
       @staff.display_birth_date.should == "Refused"
+    end
+  end
+
+  describe '#can_see_staff?' do
+    let(:staff) { Factory(:valid_staff) }
+    let(:other) { Factory(:valid_staff) }
+    let(:ua) { Role.find_by_name(Roles::USER_ADMINISTRATOR) }
+    let(:ss) { Role.find_by_name(Roles::STAFF_SUPERVISOR) }
+
+    describe 'if #employees is empty' do
+      before do
+        staff.employees.clear
+      end
+
+      describe 'and the staff member is a user administrator' do
+        before do
+          staff.roles << ua
+        end
+
+        it 'returns true' do
+          staff.can_see_staff?(other).should be_true
+        end
+      end
+
+      describe 'and the staff member is a staff supervisor' do
+        before do
+          staff.roles << ss
+        end
+
+        it 'returns true' do
+          staff.can_see_staff?(other).should be_true
+        end
+      end
+    end
+
+    it 'returns true when given itself' do
+      staff.can_see_staff?(staff).should be_true
+    end
+
+    it 'returns true if #employees contains the given staff member' do
+      staff.employees << other
+
+      staff.can_see_staff?(other).should be_true
+    end
+
+    it 'returns false if #employees does not contain the given staff member' do
+      other = FactoryGirl.create(:valid_staff)
+
+      staff.can_see_staff?(other).should be_false
     end
   end
 end

@@ -1,12 +1,12 @@
 class UpdateExistingOutreachSegmentRecords < ActiveRecord::Migration
   class OutreachSegmentMigration < ActiveRecord::Base
-    set_table_name "outreach_segments" 
+    set_table_name "outreach_segments"
     belongs_to :outreach_event
-    belongs_to :ncs_area     
+    belongs_to :ncs_area
   end
-  
+
   def self.up
-    OutreachSegmentMigration.all.each do |segment| 
+    OutreachSegmentMigration.all.each do |segment|
       if segment.ncs_area
         segment.ncs_area.ncs_area_ssus.each do |area_ssu|
           OutreachSegment.create!(:outreach_event => segment.outreach_event, :ncs_ssu => area_ssu.ncs_ssu)

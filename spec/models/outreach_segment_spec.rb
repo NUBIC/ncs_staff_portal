@@ -17,6 +17,6 @@ describe OutreachSegment do
     segment = Factory(:outreach_segment)
     segment.should_not be_nil
   end
-  
+
   it { should belong_to(:ncs_ssu) }
 end
