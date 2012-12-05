@@ -62,10 +62,13 @@ class StaffController < StaffAuthorizedController
   # GET /staff/username.xml
   # GET /staff/username.json
   def show
-    add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
-
     respond_to do |format|
-      format.html { render :layout => "staff_information" }
+      format.html do
+        add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
+
+        render :layout => "staff_information"
+      end
+
       format.xml  { render :xml => @staff }
       format.json { render :json => @staff }
     end
