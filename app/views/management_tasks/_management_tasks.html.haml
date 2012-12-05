@@ -7,7 +7,7 @@
       %table#management-tasks-list
         - @management_tasks.each do |management_task|
           %tr
-            %td= link_to management_task.task_date, edit_staff_management_task_path(@staff, management_task)
+            %td= link_to management_task.task_date, edit_staff_management_task_path(@staff.numeric_id, management_task)
             %td= management_task.task_type_text
             %td= display_task(management_task.hours)
             %td= display_task(management_task.miles)

@@ -62,7 +62,7 @@ class StaffController < StaffAuthorizedController
   # GET /staff/username.xml
   # GET /staff/username.json
   def show
-    add_breadcrumb "#{@staff.display_name}", staff_path(@staff) unless same_as_current_user(@staff)
+    add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id) unless same_as_current_user(@staff)
 
     respond_to do |format|
       format.html { render :layout => "staff_information" }
@@ -87,7 +87,7 @@ class StaffController < StaffAuthorizedController
 
   # GET /staff/1/edit
   def edit
-    add_breadcrumb "Edit - #{@staff.display_name}", edit_staff_path(@staff) unless same_as_current_user(@staff)
+    add_breadcrumb "Edit - #{@staff.display_name}", edit_staff_path(@staff.numeric_id) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html { render :layout => "staff_information" }
       format.xml  { render :xml => @staff }
@@ -97,7 +97,7 @@ class StaffController < StaffAuthorizedController
   # GET /users/1/edit
   def edit_user
     if permit?(Role::USER_ADMINISTRATOR)
-      add_breadcrumb "Edit user - #{@staff.display_name}", edit_users_path(@staff)
+      add_breadcrumb "Edit user - #{@staff.display_name}", edit_users_path(@staff.numeric_id)
     end
 
     @user = @staff

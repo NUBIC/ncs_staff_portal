@@ -2,7 +2,8 @@
   %p.warning
     %em Warning:
     #{@staff.display_name} is an external user and should not be using the application for time and expense entry.
-= form_for [@staff, @management_task] do |f|
+- action = @management_task.new_record? ? :create : :update
+= form_for @management_task, :html => { :id => 'management_task' }, :url => { :staff_id => @staff.numeric_id, :id => @management_task.id, :action => action } do |f|
   -if @management_task.errors.any?
     #error_explanation
       %h2= "#{pluralize(@management_task.errors.count, "error")} prohibited this management_task from being saved:"

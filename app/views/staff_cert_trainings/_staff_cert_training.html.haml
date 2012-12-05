@@ -1,4 +1,5 @@
-= form_for [@staff, @staff_cert_training] do |f|
+- action = @staff_cert_training.new_record? ? :create : :update
+= form_for @staff_cert_training, :html => { :id => 'staff_cert_training' }, :url => { :staff_id => @staff.numeric_id, :id => @staff_cert_training.id, :action => action } do |f|
   -if @staff_cert_training.errors.any?
     #error_explanation
       %h2= "#{pluralize(@staff_cert_training.errors.count, "error")} prohibited this staff_cert_training from being saved:"

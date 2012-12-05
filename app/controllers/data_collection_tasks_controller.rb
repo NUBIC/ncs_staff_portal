@@ -41,7 +41,7 @@ class DataCollectionTasksController < StaffAuthorizedController
 
     respond_to do |format|
       if @data_collection_task.save
-        format.html { redirect_to(new_staff_data_collection_task_path(@staff), :notice => 'data_collection_task was successfully created.') }
+        format.html { redirect_to(new_staff_data_collection_task_path(@staff.numeric_id), :notice => 'data_collection_task was successfully created.') }
         format.xml  { render :xml => @data_collection_task, :status => :created, :location => @data_collection_task }
       else
         @data_collection_tasks = @staff.data_collection_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -65,7 +65,7 @@ class DataCollectionTasksController < StaffAuthorizedController
     end
     respond_to do |format|
       if @data_collection_task.update_attributes(params[:data_collection_task])
-        format.html { redirect_to(new_staff_data_collection_task_path(@staff), :notice => 'data_collection_task was successfully updated.') }
+        format.html { redirect_to(new_staff_data_collection_task_path(@staff.numeric_id), :notice => 'data_collection_task was successfully updated.') }
         format.xml  { head :ok }
       else
         @data_collection_tasks = @staff.data_collection_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -82,7 +82,7 @@ class DataCollectionTasksController < StaffAuthorizedController
     @data_collection_task.destroy
 
     respond_to do |format|
-      format.html { redirect_to(new_staff_data_collection_task_path(@staff))}
+      format.html { redirect_to(new_staff_data_collection_task_path(@staff.numeric_id))}
       format.xml  { head :ok }
     end
   end
@@ -97,7 +97,7 @@ class DataCollectionTasksController < StaffAuthorizedController
       set_tab :time_and_expenses, :vertical
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
-      add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+      add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
     end
   end
 

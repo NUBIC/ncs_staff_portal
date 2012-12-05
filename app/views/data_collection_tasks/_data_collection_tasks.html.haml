@@ -7,7 +7,7 @@
       %table#data-collection-tasks-list
         - @data_collection_tasks.each do |data_collection_task|
           %tr
-            %td= link_to data_collection_task.task_date, edit_staff_data_collection_task_path(@staff, data_collection_task)
+            %td= link_to data_collection_task.task_date, edit_staff_data_collection_task_path(@staff.numeric_id, data_collection_task)
             %td= data_collection_task.task_type_text
             %td= display_task(data_collection_task.hours)
             %td= display_task(data_collection_task.miles)

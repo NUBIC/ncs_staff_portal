@@ -32,7 +32,7 @@
       %table#staff-list-tbl
         - @staff_list.each do |staff|
           %tr
-            %td= link_to staff.display_username, staff
+            %td= link_to staff.display_username, staff_path(staff.numeric_id)
             %td= staff.name
             - if staff.staff_type_code.blank?
               %td= ""
@@ -42,7 +42,7 @@
               - else
                 %td= staff.staff_type.display_text
             %td
-              = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
+              = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.numeric_id }
   :javascript
       $(document).ready(function() {
         displayStaffList()

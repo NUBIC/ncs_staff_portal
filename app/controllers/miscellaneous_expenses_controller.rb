@@ -41,7 +41,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
 
     respond_to do |format|
       if @miscellaneous_expense.save
-        format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff), :notice => 'miscellaneous_expense was successfully created.') }
+        format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff.numeric_id), :notice => 'miscellaneous_expense was successfully created.') }
         format.xml  { render :xml => @miscellaneous_expense, :status => :created, :location => @miscellaneous_expense }
       else
         @miscellaneous_expenses = @staff.miscellaneous_expenses.sort_by(&:expense_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -65,7 +65,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
     end
     respond_to do |format|
       if @miscellaneous_expense.update_attributes(params[:miscellaneous_expense])
-        format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff), :notice => 'miscellaneous_expense was successfully updated.') }
+        format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff.numeric_id), :notice => 'miscellaneous_expense was successfully updated.') }
         format.xml  { head :ok }
       else
         @miscellaneous_expenses = @staff.miscellaneous_expenses.sort_by(&:expense_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -82,7 +82,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
     @miscellaneous_expense.destroy
 
     respond_to do |format|
-      format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff))}
+      format.html { redirect_to(new_staff_miscellaneous_expense_path(@staff.numeric_id))}
       format.xml  { head :ok }
     end
   end
@@ -97,7 +97,7 @@ class MiscellaneousExpensesController < StaffAuthorizedController
       set_tab :time_and_expenses, :vertical
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
-      add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+      add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
     end
   end
 

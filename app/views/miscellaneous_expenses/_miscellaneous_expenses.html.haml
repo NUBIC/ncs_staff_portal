@@ -7,7 +7,7 @@
       %table#data-collection-tasks-list
         - @miscellaneous_expenses.each do |miscellaneous_expense|
           %tr
-            %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff, miscellaneous_expense)
+            %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff.numeric_id, miscellaneous_expense)
             %td= display_task(miscellaneous_expense.hours)
             %td= display_task(miscellaneous_expense.miles)
             %td= display_task(miscellaneous_expense.expenses)

@@ -7,7 +7,7 @@
       %table#certificates-list-tbl
         - @staff_cert_trainings.each do |staff_cert_training|
           %tr
-            %td= link_to staff_cert_training.certificate_type.display_text, edit_staff_staff_cert_training_path(@staff, staff_cert_training)
+            %td= link_to staff_cert_training.certificate_type.display_text, edit_staff_staff_cert_training_path(@staff.numeric_id, staff_cert_training)
             - display_cert_date(staff_cert_training.cert_date)
             - display_exp_date(staff_cert_training.formatted_expiration_date)
             %td= staff_cert_training.background_check.display_text unless staff_cert_training.background_check_code.blank?
