@@ -7,7 +7,7 @@ class OtherEntryValidator < ActiveModel::Validator
       if other_entry.blank?
         record.errors[options[:other_entry]] = "can't be blank. Please enter any value for other #{options[:entry]}."
       end
-    elsif other_entry.blank?
+    elsif other_entry.blank? || (!entry.blank? && entry.local_code != -5)
       record["#{options[:other_entry]}"] = nil
     end
   end
