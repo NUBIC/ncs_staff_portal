@@ -90,9 +90,6 @@ def valid_staff(username, name_flag = nil)
   else
     staff = Factory(:valid_staff, :first_name => username, :last_name => username, :study_center => 1234)
   end
-  role = Role.find_or_create_by_name(Role::ADMINISTRATIVE_STAFF)
-  staff.staff_roles.build(:role => role)
-  staff.roles << role
   staff.username = username
   staff.email = "#{username}@test.com"
   staff.save!
