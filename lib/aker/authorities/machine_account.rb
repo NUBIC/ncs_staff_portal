@@ -25,7 +25,7 @@ module Aker::Authorities
 
     attr_reader :static_auth
 
-    def_delegators :static_auth, :find_users, :amplify!
+    def_delegators :static_auth, :find_users, :amplify!, :valid_credentials?
 
     ##
     # Name of the file containing machine account data.
