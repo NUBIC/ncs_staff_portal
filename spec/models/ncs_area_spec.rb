@@ -14,16 +14,16 @@ describe NcsArea do
     area = Factory(:ncs_area)
     area.should_not be_nil
   end
-  
+
   it { should validate_presence_of(:psu_id) }
-  
+
   it { should validate_presence_of(:name) }
-  
+
   it "should require name to be unique per psu" do
     area = FactoryGirl.create(:ncs_area, :name => "testing")
     area1 = FactoryGirl.build(:ncs_area, :name => "testing")
     area1.save
     area1.should_not be_valid
   end
-  
+
 end

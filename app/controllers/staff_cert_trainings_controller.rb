@@ -1,14 +1,17 @@
-class StaffCertTrainingsController < SecuredController
+class StaffCertTrainingsController < StaffAuthorizedController
   layout "layouts/staff_information"
   set_tab :cert_trainings, :vertical
+
+  before_filter :load_staff
+  before_filter :assert_staff
+  before_filter :check_requested_staff_visibility
   before_filter :check_staff_access
 
   # GET /staff_cert_trainings/new
   # GET /staff_cert_trainings/new.xml
   def new
     params[:page] ||= 1
-    @staff_cert_trainings = Staff.find(params[:staff_id]).staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
-    @staff = Staff.find(params[:staff_id])
+    @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff_cert_training = @staff.staff_cert_trainings.build
     add_breadcrumb "Certificates/Trainings", new_staff_staff_cert_training_path(@staff) unless same_as_current_user(@staff)
     respond_to do |format|
@@ -20,7 +23,6 @@ class StaffCertTrainingsController < SecuredController
   # GET /staff_cert_trainings/1/edit
   def edit
     params[:page] ||= 1
-    @staff = Staff.find(params[:staff_id])
     @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
     add_breadcrumb "Certificates/Trainings", edit_staff_staff_cert_training_path(@staff, @staff_cert_training) unless same_as_current_user(@staff)
@@ -29,7 +31,6 @@ class StaffCertTrainingsController < SecuredController
   # POST /staff_cert_trainings
   # POST /staff_cert_trainings.xml
   def create
-    @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.build(params[:staff_cert_training])
     respond_to do |format|
       if @staff_cert_training.save
@@ -46,7 +47,6 @@ class StaffCertTrainingsController < SecuredController
   # PUT /staff_cert_trainings/1
   # PUT /staff_cert_trainings/1.xml
   def update
-    @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
     respond_to do |format|
       if @staff_cert_training.update_attributes(params[:staff_cert_training])
@@ -63,7 +63,6 @@ class StaffCertTrainingsController < SecuredController
   # DELETE /staff_cert_trainings/1
   # DELETE /staff_cert_trainings/1.xml
   def destroy
-    @staff = Staff.find(params[:staff_id])
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
     @staff_cert_training.destroy
 
@@ -72,11 +71,9 @@ class StaffCertTrainingsController < SecuredController
       format.xml  { head :ok }
     end
   end
-  
+
   def check_staff_access
-    @staff = Staff.find(params[:staff_id])
-    check_user_access(@staff)
-    # TODO: write in helper file and reuse everywhere 
+    # TODO: write in helper file and reuse everywhere
     if @staff && (@staff.id == @current_staff.id)
       set_tab :my_info
     else

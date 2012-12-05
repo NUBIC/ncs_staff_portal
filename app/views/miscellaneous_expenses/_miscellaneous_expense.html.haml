@@ -1,6 +1,6 @@
 - if @staff.external?
   %p.warning
-    %em Warning: 
+    %em Warning:
     #{@staff.display_name} is an external user and should not be using the application for time and expense entry.
 = form_for [@staff, @miscellaneous_expense] do |f|
   -if @miscellaneous_expense.errors.any?
@@ -40,15 +40,15 @@
   %p
     Note: Fields mark as (
     %em *
-    ) are mandatory fields. 
+    ) are mandatory fields.
     Miscellaneous expenses are the expenses and miles which are not related to either management task or data collection task.
 
   - if @staff.staff_type_code.blank?
     %p.warning
-      %em Warning: 
-      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+      %em Warning:
+      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff
       record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
-  
+
   :javascript
     // For the 'other' task type field
     // Check on pageload

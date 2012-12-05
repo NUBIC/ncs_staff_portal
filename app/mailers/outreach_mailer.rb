@@ -4,15 +4,15 @@ class OutreachMailer < ActionMailer::Base
     @current_user = current_user
     @outreach_event = outreach_event
     @update = update
-    
+
     subject = "An outreach event(#{outreach_event.name}) is "
     if @update
       subject << "updated"
-    else 
+    else
       subject << "created"
     end
     subject << " by #{current_user.full_name}"
-    
+
     mail(:to => "#{staff.name} <#{staff.email}>", :subject => subject)
   end
 end

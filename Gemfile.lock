@@ -32,6 +32,15 @@ GIT
   specs:
     database_cleaner (0.7.2)
 
+GIT
+  remote: https://github.com/NUBIC/ncs_navigator_configuration.git
+  revision: 0067e1dc47df1ec5cf7b837a654694259afdb691
+  specs:
+    ncs_navigator_configuration (0.3.3.pre)
+      fastercsv (~> 1.5)
+      inifile (~> 0.4.1)
+      ncs_mdes (~> 0.4)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -210,10 +219,6 @@ GEM
     multipart-post (1.1.5)
     ncs_mdes (0.10.0)
       nokogiri (~> 1.4)
-    ncs_navigator_configuration (0.3.2)
-      fastercsv (~> 1.5)
-      inifile (~> 0.4.1)
-      ncs_mdes (~> 0.4)
     net-ldap (0.1.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -352,7 +357,7 @@ DEPENDENCIES
   mail (= 2.2.19)
   ncs_mdes (>= 0.8.1)
   ncs_mdes_warehouse!
-  ncs_navigator_configuration
+  ncs_navigator_configuration!
   nilify_blanks
   pg
   rails (= 3.0.10)

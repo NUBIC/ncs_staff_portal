@@ -1,7 +1,115 @@
 - javascript 'nested_attributes', 'staff_languages_list'
 .breadcrumbs
   = render_breadcrumbs :separator => ' / '
-= render 'staff'
 
-
-
+= form_for @staff, :html => { :id => 'staff' }, :url => { :id => @staff.numeric_id, :action => :update } do |f|
+  - if @staff.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@staff.errors.count, "error")} prohibited this staff from being saved:"
+      %ul
+        - @staff.errors.full_messages.each do |msg|
+          %li= msg
+  - @staffLanguagesTemplate = generate_nested_attributes_template(f, :staff_languages, 'staff/staff_languages')
+  = hidden_field_tag "return_path", "staff_index_path"
+  .field
+    = label_tag "Name"
+    = text_field_tag "name", @staff.name, :disabled => true
+  .field
+    = f.label :email
+    = f.text_field :email, :disabled => true
+  .field
+    = f.label :username, NcsNavigator.configuration.study_center_username
+    = text_field_tag "username", @staff.display_username, :disabled => true
+  .field
+    = label_tag "Study center"
+    = text_field_tag "study_center", StaffPortal.study_center_name, :disabled => true
+    = f.hidden_field :study_center, :value => StaffPortal.study_center_id
+  .field
+    = f.label :staff_type_code, "Staff Type"
+    %em *
+    = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}
+  .field
+    = f.label :staff_type_other, "Other staff type"
+    = f.text_field :staff_type_other, {:size => 20 ,:id => "staff_type_other"}
+  .field
+    = f.label :pay_amount, "Pay amount (in US Dollars)"
+    %em *
+    = f.select :pay_type, ["Hourly","Yearly", "Voluntary"], {:prompt => 'Select pay type'},{:id => "pay_type"}
+    = f.text_field :pay_amount, {:id => "pay_amount", :size =>10}
+  .field
+    = f.label :formatted_birth_date , "Date of Birth (yyyy-mm-dd)"
+    %em *
+    - if !@staff.formatted_birth_date.blank? || @staff.age_group_code != NcsCode.unknown_code || @staff.age_group_code != NcsCode.refused_code
+      = radio_button_tag 'dob', 'date', true, :class => "dob"
+      = text_field_tag 'birth_date_field', @staff.formatted_birth_date, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10
+    - else
+      = radio_button_tag 'dob', 'date', false, :class => "dob"
+      = text_field_tag 'birth_date_field', nil, :class => 'datepicker', :id => "birth_date_field", :size => 10, :maxLength => 10
+    = radio_button_tag 'dob', NcsCode.unknown_code, @staff.age_group_code == NcsCode.unknown_code, :class => "dob"
+    = label_tag "Unknown"
+    = radio_button_tag 'dob', NcsCode.refused_code, @staff.age_group_code == NcsCode.refused_code, :class => "dob"
+    = label_tag "Refused"
+    = f.hidden_field :age_group_code, :id => "age_group_value"
+    = f.hidden_field :birth_date, :id => "dob_value"
+  .field
+    = f.label :gender_code, "Gender"
+    %em *
+    = f.select :gender_code, NcsCode.ncs_code_lookup(:gender_code), :prompt => 'Select Gender'
+  .field
+    = f.label :race_code, "Race"
+    %em *
+    = f.select :race_code, NcsCode.ncs_code_lookup(:race_code), {:prompt => 'Select Race'}, {:id => "race"}
+  .field
+    = f.label :race_other, "Other race type"
+    = f.text_field :race_other, {:size =>20 ,:id => "race_other"}
+  .field
+    = f.label :ethnicity_code, "Ethnicity"
+    %em *
+    = f.select :ethnicity_code, NcsCode.ncs_code_lookup(:ethnicity_code), :prompt => 'Select Ethnicity'
+  .field
+    = f.label :zipcode, "Home ZIP code"
+    %em *
+    = f.text_field :zipcode, {:size => 5, :maxLength => 5}
+  .field
+    = f.label :subcontractor_code, "Is this a subcontractor position?"
+    %em *
+    = f.select :subcontractor_code, NcsCode.ncs_code_lookup(:subcontractor_code), :prompt => 'Select'
+  .field
+    = f.label :experience_code, "Direct experience conducting population based, household field interviewing"
+    %em *
+    = f.select :experience_code, NcsCode.ncs_code_lookup(:experience_code), :prompt => 'Select Experience'
+  %table{ :class => 'records staff_languages' }
+    %thead
+      %tr
+        %th
+          Languages
+        %th
+    %tbody.nested_records_staff_languages
+      = f.fields_for :staff_languages do |staff_language|
+        = render :partial => 'staff/staff_languages', :locals => { :f => staff_language }
+    %tfoot
+      %tr
+        %td{ :colspan => '3' }
+          = link_to_add_fields "Add", :staff_languages
+  .actions
+    = f.submit 'Save', :class => "control_button"
+    = link_to 'Cancel', staff_path(params[:staff_id]), :class => "control_button"
+  %p
+    Note: Fields mark as (
+    %em *
+    ) are mandatory fields
+  :javascript
+    $(function () {
+      var staffLanguagesTemplate = '#{@staffLanguagesTemplate }',
+      staffLanguageUI = new NCSPortal.StaffLanguages.UI({staffLanguagesTemplate: staffLanguagesTemplate });
+    });
+    // For the 'other'  field
+    // Check on pageload
+    $(document).ready(function(){
+      get_dob_value();
+      wire_up_select_other("#staff_type","#staff_type_other");
+      wire_up_select_other("#race","#race_other");
+      wire_up_select_other_class(".nested_attribute_selector", ".nested_attribute_other", ".nested_attribute_other_label");
+      disabled_selected_options(".staff_languages_selector");
+      wire_up_pay_amount("#pay_type", "#pay_amount")
+    });

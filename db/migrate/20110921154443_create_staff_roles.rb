@@ -5,7 +5,7 @@ class CreateStaffRoles < ActiveRecord::Migration
       t.references :role
       t.timestamps
     end
-    
+
     execute "ALTER TABLE staff_roles ADD CONSTRAINT fk_staff_roles_staff FOREIGN KEY (staff_id) REFERENCES staff(id)"
     execute "ALTER TABLE staff_roles ADD CONSTRAINT fk_staff_roles_role FOREIGN KEY (role_id) REFERENCES roles(id)"
   end

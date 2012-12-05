@@ -1,6 +1,6 @@
 - if @staff.belongs_to_data_collection_group
   .breadcrumbs
-    = render_breadcrumbs :separator => ' / ' 
+    = render_breadcrumbs :separator => ' / '
   .content_tab
     - if @staff.belongs_to_management_group
       = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "other_tab"

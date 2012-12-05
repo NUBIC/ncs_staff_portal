@@ -38,10 +38,14 @@ module NcsStaffPortal
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+
     Dir.glob("./lib/*.{rb}").each { |file| require file }
-    
-    Aker.configure do
+
+    # Make NCS Navigator configuration available to the application.
+    require 'ncs_navigator/staff_portal/configuration'
+    config.extend(NcsNavigator::StaffPortal::Configuration)
+
+    config.aker do
       # The authentication protocol to use for interactive access.
       # `:form` is the default.
       ui_mode :cas
