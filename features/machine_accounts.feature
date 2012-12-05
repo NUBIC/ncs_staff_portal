@@ -15,6 +15,26 @@ Feature: Machine accounts
 
     Then the request is successful
 
+  Scenario: The PSC -> Ops user can retrieve roles for a staff member
+    Given staff with username staff1
+    And staff member staff1 has role "Staff Supervisor"
+
+    When an application authenticates as "psc_application" / "psc_application"
+    And sends a GET request for "/staff/staff1.json"
+
+    Then the request is successful
+    And the response contains the roles
+      | Staff Supervisor |
+
+  Scenario: The PSC -> Ops user can retrieve roles for a machine account
+    When an application authenticates as "psc_application" / "psc_application"
+    And sends a GET request for "/staff/ncs_navigator_cases_test.json"
+
+    Then the request is successful
+    And the response contains the roles
+      | Field Staff |
+      | Phone Staff |
+
   Scenario: Roles are supplied for the Cases -> PSC user
     When an application authenticates as "ncs_navigator_cases_test" / "ncs_navigator_cases_test"
     And sends a GET request for "/staff/ncs_navigator_cases_test.json"
@@ -31,6 +51,3 @@ Feature: Machine accounts
     And sends a GET request for "/staff/-2.json"
 
     Then the request is successful
-    And the response contains the roles
-      | Field Staff |
-      | Phone Staff |
