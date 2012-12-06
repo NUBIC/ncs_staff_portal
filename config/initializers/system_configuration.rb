@@ -5,7 +5,11 @@ module StaffPortal
   class << self
     
     def mdes
+<<<<<<< HEAD
       @mdes ||= NcsNavigator::Mdes('2.1')
+=======
+      @mdes ||= NcsNavigator::Mdes('2.0', :log => Rails.logger)
+>>>>>>> master
     end
     
     def configuration

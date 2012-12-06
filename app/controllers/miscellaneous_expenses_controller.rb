@@ -57,7 +57,7 @@ class MiscellaneousExpensesController < SecuredController
     miscellaneous_expense_temp  = MiscellaneousExpense.new(params[:miscellaneous_expense])
     unless miscellaneous_expense_temp.expense_date == @miscellaneous_expense.expense_date
       start_date = miscellaneous_expense_temp.expense_date.beginning_of_week unless miscellaneous_expense_temp.expense_date.blank?
-      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @miscellaneous_expense.staff_weekly_expense.rate)
       unless @miscellaneous_expense.staff_weekly_expense == staff_weekly_expense
         @miscellaneous_expense.staff_weekly_expense = staff_weekly_expense
       end 

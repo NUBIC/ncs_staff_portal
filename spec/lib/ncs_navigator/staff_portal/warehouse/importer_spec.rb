@@ -6,6 +6,7 @@ require File.expand_path('../importer_warehouse_setup', __FILE__)
 
 module NcsNavigator::StaffPortal::Warehouse
   describe 'Importer', :clean_with_truncation, :warehouse do
+
     include_context :importer_spec_warehouse
     
     let!(:importer) {

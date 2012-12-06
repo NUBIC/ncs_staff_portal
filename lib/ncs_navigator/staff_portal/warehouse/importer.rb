@@ -14,7 +14,10 @@ module NcsNavigator::StaffPortal::Warehouse
   # {Enumerator}.
   class Importer
     extend Forwardable
+<<<<<<< HEAD
     include NcsNavigator::Warehouse::Models::TwoPointOne
+=======
+>>>>>>> master
     BLOCK_SIZE = 2500
 
     attr_reader :wh_config
@@ -47,7 +50,7 @@ module NcsNavigator::StaffPortal::Warehouse
     
     def create_simply_mapped_staff_portal_records(mdes_producer)
       staff_portal_model = staff_portal_model_for_table(mdes_producer.name)
-      mdes_model = mdes_producer.model
+      mdes_model = mdes_producer.model(wh_config)
       count = mdes_model.count
       offset = 0
       while offset < count 
@@ -117,7 +120,7 @@ module NcsNavigator::StaffPortal::Warehouse
                 staff_portal_record = apply_other_value(staff_portal_record, code_attribute_name, other_attribute_name)
               end
             when :outreach_languages
-              outreach_event = Outreach.all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
+              outreach_event = wh_config.model(:Outreach).all(:outreach_event_id => staff_portal_record.outreach_event.outreach_event_id).first
               staff_portal_record.send("language_other=", outreach_event.outreach_lang_oth)
               staff_portal_record.send("source_id=", mdes_record.send("outreach_lang2_id"))
               staff_portal_record = apply_other_value(staff_portal_record, "language_code", "language_other")
@@ -233,7 +236,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     def column_map(staff_portal_model)
       column_maps[staff_portal_model] ||=
-        find_producer(staff_portal_model.table_name).column_map(staff_portal_model.column_names)
+        find_producer(staff_portal_model.table_name).column_map(staff_portal_model.column_names, wh_config)
     end
 
     def column_maps

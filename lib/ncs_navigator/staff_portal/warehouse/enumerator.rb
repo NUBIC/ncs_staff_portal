@@ -3,14 +3,17 @@ require 'ncs_navigator/staff_portal'
 module NcsNavigator::StaffPortal::Warehouse
   class Enumerator
     include NcsNavigator::Warehouse::Transformers::Database
+<<<<<<< HEAD
     include NcsNavigator::Warehouse::Models::TwoPointOne
+=======
+>>>>>>> master
     bcdatabase :name => 'ncs_staff_portal'
 
     on_unused_columns :fail
     ignored_columns :id, :created_at, :updated_at, :created_by
 
     age_expression = '((current_date - birth_date) / 365.25)'
-    produce_one_for_one(:staff, Staff,
+    produce_one_for_one(:staff, :Staff,
       :query => %Q(
         SELECT s.*,
           to_char(birth_date, 'YYYY') staff_yob,
@@ -44,7 +47,7 @@ module NcsNavigator::StaffPortal::Warehouse
       )
     )
 
-    produce_one_for_one(:staff_languages, StaffLanguage,
+    produce_one_for_one(:staff_languages, :StaffLanguage,
       :query => %Q(
         SELECT sl.*, s.staff_id AS public_id_for_staff
         FROM staff_languages sl
@@ -60,7 +63,7 @@ module NcsNavigator::StaffPortal::Warehouse
     )
 
     # Per PO dictum, combine all "others" into one row. See #1526.
-    produce_one_for_one(:staff_languages_other, StaffLanguage,
+    produce_one_for_one(:staff_languages_other, :StaffLanguage,
       :query => %Q(
         SELECT a.staff_language_id, b.staff_lang_oth, b.staff_lang, b.public_id_for_staff
           FROM  (SELECT sl.staff_language_id, s.staff_id AS public_id_for_staff FROM
@@ -82,7 +85,7 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     )
 
-   produce_one_for_one(:staff_cert_trainings, StaffCertTraining,
+   produce_one_for_one(:staff_cert_trainings, :StaffCertTraining,
      :query => %Q(
        SELECT
          sct.*,
@@ -103,7 +106,7 @@ module NcsNavigator::StaffPortal::Warehouse
      :ignored_columns => %w(staff_id expiration_date)
    )
 
-    produce_one_for_one(:staff_weekly_expenses, StaffWeeklyExpense,
+    produce_one_for_one(:staff_weekly_expenses, :StaffWeeklyExpense,
       :query => %Q(
         SELECT
           s.staff_id AS public_id_for_staff,
@@ -150,7 +153,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(hours miles expenses staff_id rate)
     )
 
-    produce_one_for_one(:management_tasks, StaffExpMngmntTasks,
+    produce_one_for_one(:management_tasks, :StaffExpMngmntTasks,
       :query => %Q(
         SELECT
           mt.*,
@@ -169,7 +172,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :ignored_columns => %w(staff_weekly_expense_id hours expenses miles task_date)
     )
 
-    produce_one_for_one(:data_collection_tasks, StaffExpDataCllctnTasks,
+    produce_one_for_one(:data_collection_tasks, :StaffExpDataCllctnTasks,
       :query => %Q(
         SELECT
           dc.*,
@@ -223,7 +226,7 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     end
 
-    produce_one_for_one(:outreach_events, Outreach,
+    produce_one_for_one(:outreach_events, :Outreach,
       :query => %Q(
         SELECT
           CASE
@@ -252,10 +255,26 @@ module NcsNavigator::StaffPortal::Warehouse
           ol.language_other AS lang_other,
           2 AS outreach_incident,
           oe.tailored_code,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.language_specific_code, -4) END AS outreach_lang1,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.race_specific_code,     -4) END AS outreach_race1,
-          CASE oe.tailored_code WHEN 2 THEN  2 ELSE COALESCE(oe.culture_specific_code,  -4) END AS outreach_culture1,
-          CASE oe.tailored_code WHEN 2 THEN -7 ELSE COALESCE(oe.culture_code,           -4) END AS outreach_culture2
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.language_specific_code, -4)
+            END
+          AS outreach_lang1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.race_specific_code, -4)
+            END
+          AS outreach_race1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN 2
+            ELSE COALESCE(oe.culture_specific_code, -4)
+            END
+          AS outreach_culture1,
+          CASE
+            WHEN oe.tailored_code=2 AND oe.source_id IS NULL THEN -7
+            ELSE COALESCE(oe.culture_code, -4)
+            END
+          AS outreach_culture2
         FROM outreach_events oe
          LEFT JOIN (
            SELECT outreach_event_id, ncs_ssu_id
@@ -273,7 +292,7 @@ module NcsNavigator::StaffPortal::Warehouse
       :prefix => 'outreach_'
     )
 
-    produce_one_for_one(:outreach_languages, OutreachLang2,
+    produce_one_for_one(:outreach_languages, :OutreachLang2,
       :query => outreach_join('outreach_languages', 'L'),
       # in MDES 2.0, language other is in the main OE record for some reason
       :ignored_columns => %w(language_other outreach_event_id outreach_lang2_id source_id),
@@ -284,7 +303,7 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     )
 
-    produce_one_for_one(:outreach_races, OutreachRace,
+    produce_one_for_one(:outreach_races, :OutreachRace,
       :query => outreach_join('outreach_races', 'R'),
       :ignored_columns => %w(outreach_event_id outreach_race_id source_id),
       :column_map => {
@@ -298,20 +317,24 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_records(:outreach_untailored_automatic,
       :query => %Q(
         SELECT
-          'staff_portal-' || oe.id || '-' || ns.ssu_id  AS outreach_event_id
+          CASE
+            WHEN oe.source_id IS NOT NULL THEN oe.source_id
+            ELSE 'staff_portal-' || oe.id || '-' || ns.ssu_id
+            END
+          AS outreach_event_id
         FROM outreach_events oe
          INNER JOIN outreach_segments os ON oe.id=os.outreach_event_id
          INNER JOIN ncs_ssus ns ON os.ncs_ssu_id=ns.id
-        WHERE oe.tailored_code=2
+        WHERE oe.tailored_code=2 AND oe.source_id IS NULL
       )
-    ) do |oe_id|
+    ) do |oe_id, meta_data|
       [
-        OutreachLang2.new(
+        meta_data[:configuration].model(:OutreachLang2).new(
           :outreach_lang2_id => [oe_id, 'L-UT'].join('-'),
           :outreach_event_id => oe_id,
           :outreach_lang2 => '1' # English
         ),
-        OutreachRace.new(
+        meta_data[:configuration].model(:OutreachRace).new(
           :outreach_race_id => [oe_id, 'R-UT'].join('-'),
           :outreach_event_id => oe_id,
           :outreach_race2 => '-7'
@@ -319,7 +342,7 @@ module NcsNavigator::StaffPortal::Warehouse
       ]
     end
 
-    produce_one_for_one(:outreach_targets, OutreachTarget,
+    produce_one_for_one(:outreach_targets, :OutreachTarget,
       :query => outreach_join('outreach_targets', 'T'),
       :ignored_columns => %w(outreach_event_id outreach_target_id source_id),
       :column_map => {
@@ -330,7 +353,7 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     )
 
-    produce_one_for_one(:outreach_evaluations, OutreachEval,
+    produce_one_for_one(:outreach_evaluations, :OutreachEval,
       :query => outreach_join('outreach_evaluations', 'E'),
       :ignored_columns => %w(outreach_event_id outreach_event_eval_id source_id),
       :column_map => {
@@ -341,7 +364,7 @@ module NcsNavigator::StaffPortal::Warehouse
       }
     )
 
-    produce_one_for_one(:outreach_staff_members, OutreachStaff,
+    produce_one_for_one(:outreach_staff_members, :OutreachStaff,
       :query => outreach_join('outreach_staff_members', 'S', :staff => true),
       :ignored_columns => %w(outreach_event_id staff_id outreach_event_staff_id source_id),
       :column_map => {

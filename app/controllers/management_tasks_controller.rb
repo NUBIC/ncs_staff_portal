@@ -56,7 +56,7 @@ class ManagementTasksController < SecuredController
     management_task_temp  = ManagementTask.new(params[:management_task])
     unless management_task_temp.task_date == @management_task.task_date
       start_date = management_task_temp.task_date.beginning_of_week unless management_task_temp.task_date.blank?
-      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @staff.hourly_rate)
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @management_task.staff_weekly_expense.rate)
       unless @management_task.staff_weekly_expense == staff_weekly_expense
         @management_task.staff_weekly_expense = staff_weekly_expense
       end 
