@@ -26,19 +26,19 @@ class StaffCertTraining < ActiveRecord::Base
   before_save :format_cert_date
   acts_as_mdes_record :public_id => :staff_cert_list_id
   validates :frequency, :length => { :maximum => 10 }
-  
+
   ncs_coded_attribute :certificate_type, 'CERTIFICATE_TYPE_CL1'
   ncs_coded_attribute :complete, 'CONFIRM_TYPE_CL2'
   ncs_coded_attribute :background_check, 'BACKGROUND_CHCK_LVL_CL1'
-  
+
   def format_cert_date
-    self.cert_date = cert_date.to_date.strftime("%Y-%m-%d") if !cert_date.blank? && only_date 
+    self.cert_date = cert_date.to_date.strftime("%Y-%m-%d") if !cert_date.blank? && only_date
   end
-  
+
   def valid_cert_date
     if only_date
       validates_date :cert_date, :allow_blank => complete_code == 1 ? false : true
-    end 
+    end
   end
 
   ATTRIBUTE_MAPPING = {
@@ -59,11 +59,11 @@ class StaffCertTraining < ActiveRecord::Base
   def formatted_expiration_date=(expiration_date)
     self.expiration_date = expiration_date
   end
-  
+
   def only_date
     (cert_date != NcsCode.unknown_date && cert_date != NcsCode.not_applicable_date) ? true : false
   end
-  
+
   def certificate_type_text
     self.certificate_type.display_text == "Other" ? self.certificate_type_other : self.certificate_type.display_text
   end

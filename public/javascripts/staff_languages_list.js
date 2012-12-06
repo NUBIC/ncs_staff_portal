@@ -6,4 +6,3 @@ NCSPortal.StaffLanguages.UI = function (config) {
       caller: this
    });
 };
-

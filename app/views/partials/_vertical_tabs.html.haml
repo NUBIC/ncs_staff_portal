@@ -1,15 +1,15 @@
 #tab_vertical
   = tabs_tag :namespace => :vertical do |tab|
     - if @staff
-      = tab.general_info 'General Information', staff_path(@staff.id)
-      = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@staff.id)
+      = tab.general_info 'General Information', staff_path(@staff.numeric_id)
+      = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@staff.numeric_id)
       - if @staff.id != @current_staff.id
         -if @staff.belongs_to_management_group
-          = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@staff.id)
+          = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@staff.numeric_id)
         -elsif @staff.belongs_to_data_collection_group
-          = tab.time_and_expenses 'Time and Expenses', new_staff_data_collection_task_path(@staff.id)
+          = tab.time_and_expenses 'Time and Expenses', new_staff_data_collection_task_path(@staff.numeric_id)
     - else
-      = tab.general_info 'General Information', staff_path(@current_staff)
-      = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@current_staff)
+      = tab.general_info 'General Information', staff_path(@current_staff.numeric_id)
+      = tab.cert_trainings 'Certificates/Training', new_staff_staff_cert_training_path(@current_staff.numeric_id)
 #content_vertical
   = yield

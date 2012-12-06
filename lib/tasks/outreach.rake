@@ -19,7 +19,7 @@ namespace :outreach do
       end
     end
     unless counter == 0
-      if counter == 1 
+      if counter == 1
         puts "#{counter} outreach event is updated with name to the NCS Navigator Ops"
       elsif
         puts "#{counter} outreach events are updated with name to the NCS Navigator Ops"

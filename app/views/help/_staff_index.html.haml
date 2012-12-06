@@ -1,8 +1,8 @@
 = render "/help/help_link"
 %textarea{ :cols => "0", :rows => "0", :id => "help_text", :class => "help_text", :style => "display:none", :title => "Manage Staff Details" }
   %p
-    Staff Supervisor can manage the staff details. Staff can be search by there first name, last name or #{NcsNavigator.configuration.study_center_username} 
+    Staff Supervisor can manage the staff details. Staff can be search by there first name, last name or #{NcsNavigator.configuration.study_center_username}
   %p
     All the visible staff for staff supervisor will be displayed in table sorted by username.
-    The table also have check box witch will show whether each user should receive a reminder email 
+    The table also have check box witch will show whether each user should receive a reminder email
     (a weekly email that will be sent to NCS Navigator Ops users who have not input any Time/Expense data during that week)

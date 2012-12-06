@@ -1,4 +1,5 @@
-= form_for [@staff, @staff_cert_training] do |f|
+- action = @staff_cert_training.new_record? ? :create : :update
+= form_for @staff_cert_training, :html => { :id => 'staff_cert_training' }, :url => { :staff_id => @staff.numeric_id, :id => @staff_cert_training.id, :action => action } do |f|
   -if @staff_cert_training.errors.any?
     #error_explanation
       %h2= "#{pluralize(@staff_cert_training.errors.count, "error")} prohibited this staff_cert_training from being saved:"
@@ -22,7 +23,7 @@
     - else
       = radio_button_tag 'cert_date', 'date', false, :class => "cert_date"
       = label_tag "Date staff member was certified"
-      = text_field_tag 'cert_date_val', nil, :class => 'datepicker_cert_date', :id => "cert_date_temp", :disabled => true, :size => 10, :maxLength => 10 
+      = text_field_tag 'cert_date_val', nil, :class => 'datepicker_cert_date', :id => "cert_date_temp", :disabled => true, :size => 10, :maxLength => 10
   .row
     = radio_button_tag 'cert_date', NcsCode.unknown_date, @staff_cert_training.cert_date == NcsCode.unknown_date, :class => "cert_date"
     = label_tag "Don't Know"
@@ -35,7 +36,7 @@
     %em *
     = f.select :background_check_code, NcsCode.ncs_code_lookup(:background_check_code), :prompt => 'Select Background level'
   .row
-    = f.label :frequency, "Frequency at which certification/training needs to be completed" 
+    = f.label :frequency, "Frequency at which certification/training needs to be completed"
     = f.text_field :frequency, { :size => 10, :maxLength => 10}
   .row
     = f.label :formatted_expiration_date, "Cerification/Training expiration date"

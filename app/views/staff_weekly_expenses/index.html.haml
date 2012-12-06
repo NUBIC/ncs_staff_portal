@@ -1,11 +1,11 @@
 - if permit?(Role::STAFF_SUPERVISOR)
   .content_tab
     - if @current_staff.belongs_to_management_group
-      = link_to 'Management Task', new_staff_management_task_path(@current_staff.id), :class => "other_tab"
+      = link_to 'Management Task', new_staff_management_task_path(@current_staff.numeric_id), :class => "other_tab"
     - if @current_staff.belongs_to_data_collection_group
-      = link_to 'Data Collection Task', new_staff_data_collection_task_path(@current_staff.id), :class => "other_tab"
-    = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@current_staff.id), :class => "other_tab"
-    = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @current_staff.id), :class => "other_tab"
+      = link_to 'Data Collection Task', new_staff_data_collection_task_path(@current_staff.numeric_id), :class => "other_tab"
+    = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@current_staff.numeric_id), :class => "other_tab"
+    = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @current_staff.numeric_id), :class => "other_tab"
     %span.current_tab
       Weekly Staff Summary
   .content_body
@@ -44,7 +44,7 @@
                 %td
                   %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
                     = staff_weekly_expense.comment
-                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id}, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
+                %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.numeric_id}, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete
       :javascript
           $(document).ready(function() {
             displayWeeklyExpenseList()
@@ -65,7 +65,7 @@
             });
 
           });
-    
+
           function displayWeeklyExpenseList() {
             var columnDefs = [
                 { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
@@ -96,7 +96,3 @@
             });
           }
     = will_paginate @staff_weekly_expenses, :previous_label => "Previous", :next_label => "Next"
-
-
-
-

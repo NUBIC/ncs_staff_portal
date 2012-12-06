@@ -23,4 +23,3 @@ guard 'rspec', :version => 2 , :cli => "--color --format nested --fail-fast --dr
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 end
-

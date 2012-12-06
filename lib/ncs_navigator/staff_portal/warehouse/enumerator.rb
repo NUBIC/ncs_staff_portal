@@ -3,10 +3,7 @@ require 'ncs_navigator/staff_portal'
 module NcsNavigator::StaffPortal::Warehouse
   class Enumerator
     include NcsNavigator::Warehouse::Transformers::Database
-<<<<<<< HEAD
-    include NcsNavigator::Warehouse::Models::TwoPointOne
-=======
->>>>>>> master
+
     bcdatabase :name => 'ncs_staff_portal'
 
     on_unused_columns :fail
@@ -119,12 +116,12 @@ module NcsNavigator::StaffPortal::Warehouse
           CASE
             WHEN swe.expenses IS NOT NULL THEN swe.expenses
             ELSE
-              COALESCE(t.staff_expenses, '0.0') 
+              COALESCE(t.staff_expenses, '0.0')
             END as staff_expenses,
           CASE
             WHEN swe.miles IS NOT NULL THEN swe.miles
             ELSE
-              COALESCE(t.staff_miles, '0.0') 
+              COALESCE(t.staff_miles, '0.0')
             END as staff_miles,
           to_char(swe.week_start_date, 'YYYY-MM-DD') week_start_date,
           swe.rate,

@@ -97,23 +97,23 @@ configuration in its default location, `/etc/nubic/ncs/navigator.ini`.
 
 To further customize NCS Navigator Ops for your center, add one or more of
 the following configuration elements to the `[Staff Portal]` section of
-the configuration file. `bootstrap_user` and `psc_user_password` are mandatory; 
+the configuration file. `bootstrap_user` and `psc_user_password` are mandatory;
 all others are optional.
 
     # The initial user for NCS Navigator Ops. This user will automatically
     # granted the User Administrator and System Administrator roles. Thus he will be able to
-    # provision more users and finish the initial PSC setup for NCS Navigator. The username 
+    # provision more users and finish the initial PSC setup for NCS Navigator. The username
     # must be one that can be authenticated with the CAS server that NCS Navigator Ops uses.
     bootstrap_user = jrp
-    
-    # The psc user password for NCS Navigator Ops. There will be application 
-    # user with username as "psc_application" which will be used for 
+
+    # The psc user password for NCS Navigator Ops. There will be application
+    # user with username as "psc_application" which will be used for
     # communication between Patient Study Calendar and NCS Navigator Ops.
     psc_user_password = "password"
 
     # for any futher development, developer's email address for development testing email
     development_email = "user@example.com"
-    
+
     # weekly email reminder can be enable or disable for the particular deployment.
     email_reminder = false
 
@@ -129,10 +129,9 @@ deployed to.
 
 For multiple SC deployment, you can create file for each study center and pass the file with the environment variable `STUDY_CENTER`.
 
-e.g `STUDY_CENTER=umn cap production deploy`. 
+e.g `STUDY_CENTER=umn cap production deploy`.
 
 This will read the configuration parameters from the 'umn_deploy.yml' file. By default file will be always `ncs_deploy.yml`
-
 
 [cap]: https://github.com/capistrano/capistrano/wiki/
 
@@ -173,9 +172,9 @@ If you have problems deploying, you can run this:
 and capistrano will try to tell you why it cannot deploy.
 
 if you make changes to the footer logo paths in navigator.ini in between deploys, you have to run rake task to copy images
-    
+
     $ bundle exec cap production config:images
-    
+
 you can seed the data to the database (MDES codes, Roles creation) with following command
 
     $ bundle exec cap production db:seed
@@ -230,7 +229,7 @@ This creates SSU and area records that reflect in the provided CSV from the [ncs
 Load SSUs:
 
     $ bundle exec rake psu:load_ncs_ssus
-    
+
 This creates SSU records that reflect in the provided CSV from the [ncs_navigator_configuration][] file which describes the sampling units for the study center.
 
 #### Giveaway items
@@ -248,7 +247,7 @@ items listed in the column `NAME`. This is not the mandatory task though because
 Load new users or map existing users with staff_id:
 
     $ bundle exec rake users:load[/path/to/users.csv]
-    
+
 The CSV must have the following header (along with the contents it implies):
 `USERNAME`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `STAFF_ID`
 

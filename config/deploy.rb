@@ -78,7 +78,7 @@ namespace :deploy do
       sudo "chmod -R g+w #{shared_path} #{release_path}"
     end
   end
-  
+
   task :setup_import_directories do
     unless ENV['NO_IMPORT_DIRECTORY']
       shared_import  = File.join(shared_path,  'importer_passthrough')
@@ -109,7 +109,7 @@ namespace :db do
   task :backup, :roles => :app do
     run "cd #{current_path} && rake RAILS_ENV=#{rails_env} db:backup"
   end
-  
+
   desc "Seed Data"
   task :seed, :roles => :app do
     run "cd #{current_path} && bundle exec rake RAILS_ENV=#{rails_env} db:seed"
@@ -122,4 +122,3 @@ namespace :config do
     run "cd #{release_path} && bundle exec rake RAILS_ENV=#{rails_env} config:images"
   end
 end
-

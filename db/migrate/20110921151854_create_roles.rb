@@ -3,7 +3,7 @@ class CreateRoles < ActiveRecord::Migration
     create_table :roles do |t|
       t.string :name, :null => false
     end
-    
+
     execute "INSERT into roles (name) values ('System Administrator')"
     execute "INSERT into roles (name) values ('User Administrator')"
     execute "INSERT into roles (name) values ('Staff Supervisor')"

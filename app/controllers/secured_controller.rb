@@ -1,34 +1,33 @@
 class SecuredController < ApplicationController
+  include Aker::Rails::SecuredController
+  include NcsNavigator::StaffPortal::UserLoading
+
   protect_from_forgery
-  include Aker::Rails::SecuredController 
-  
+
   before_filter :set_current_staff
 
   def dashboard
-    if permit?(*Role.management_group) 
-      redirect_to new_staff_management_task_path(@current_staff.id)
+    if permit?(*Role.management_group)
+      redirect_to new_staff_management_task_path(@current_staff.numeric_id)
     elsif permit?(*Role.data_collection_group)
-      redirect_to new_staff_data_collection_task_path(@current_staff.id)
+      redirect_to new_staff_data_collection_task_path(@current_staff.numeric_id)
     else
-      redirect_to staff_path(@current_staff)
+      redirect_to staff_path(@current_staff.numeric_id)
     end
   end
 
   def set_current_staff
-    @current_staff = Staff.find_by_username(current_user.username)
-    unless (@current_staff && @current_staff.is_active) or is_application_user?(current_user)
-      throw :warden
-    end
+    @current_staff = find_by_username(current_user.username)
+
+    throw :warden unless @current_staff.try(:is_active)
   end
-  
+
   def check_user_access(requested_staff)
     if requested_staff
-      unless is_application_user?(current_user) or requested_staff.id == @current_staff.id or @current_staff.visible_employees.map(&:id).include?(requested_staff.id)
-        throw :warden
-      end
+      throw :warden unless @current_staff.can_see_staff?(requested_staff)
     end
   end
-  
+
   def same_as_current_user(requested_staff)
     if @current_staff
       requested_staff.id == @current_staff.id ? true : false
@@ -36,10 +35,4 @@ class SecuredController < ApplicationController
       false
     end
   end
-
-  def is_application_user?(user)
-    ['psc_application', 'ncs_navigator_cases'].include?(user.username)
-  end
-
-  private :is_application_user?
 end

@@ -55,7 +55,7 @@ describe ManagementTask do
         task.should_not be_valid
         task.should have(1).error_on(:hours)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:management_task, :hours => 0)
         task.should be_valid
@@ -80,7 +80,7 @@ describe ManagementTask do
         task.should_not be_valid
         task.should have(1).error_on(:expenses)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:management_task, :expenses => 0)
         task.should be_valid
@@ -106,7 +106,7 @@ describe ManagementTask do
         task.should_not be_valid
         task.should have(1).error_on(:miles)
       end
-      
+
       it "should allow value to be 0" do
         task= FactoryGirl.build(:management_task, :miles => 0)
         task.should be_valid

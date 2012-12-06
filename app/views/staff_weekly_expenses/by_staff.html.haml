@@ -1,11 +1,11 @@
 .breadcrumbs
-  = render_breadcrumbs :separator => ' / ' 
+  = render_breadcrumbs :separator => ' / '
 .content_tab
   - if @staff.belongs_to_management_group
-    = link_to 'Management Task', new_staff_management_task_path(@staff.id), :class => "other_tab"
+    = link_to 'Management Task', new_staff_management_task_path(@staff.numeric_id), :class => "other_tab"
   - if @staff.belongs_to_data_collection_group
-    = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab"
-  = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@staff.id), :class => "other_tab"
+    = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.numeric_id), :class => "other_tab"
+  = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@staff.numeric_id), :class => "other_tab"
   %span.current_tab
     My Weekly Entries
   - if @staff.has_role(Role::STAFF_SUPERVISOR) && same_as_current_user(@staff)
@@ -13,7 +13,7 @@
 .content_body
   .section_gap
   .section
-    = search_form_for @q, :url => by_staff_staff_weekly_expenses_path(:staff_id => @staff.id) do |f|
+    = search_form_for @q, :url => by_staff_staff_weekly_expenses_path(:staff_id => @staff.numeric_id) do |f|
       %table
         %tr
           %td{ :colspan => "2" }
@@ -24,10 +24,10 @@
             = f.text_field :week_start_date_gteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
             = f.label :week_start_date_lteq, "To "
             = f.text_field :week_start_date_lteq, {:class => "week_datepicker", :size =>10, :maxlength =>10, :week_start_day => StaffPortal.week_start_day}
-            = hidden_field_tag :staff_id, @staff.id
+            = hidden_field_tag :staff_id, @staff.numeric_id
           %td
             = f.submit "Search",:class => "control_button"
-            = link_to 'Reset', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "control_button"
+            = link_to 'Reset', by_staff_staff_weekly_expenses_path(:staff_id => @staff.numeric_id), :class => "control_button"
   .section_gap
   .section
     .section_heading
@@ -46,7 +46,7 @@
               %td
                 %div{ :expense_id => staff_weekly_expense.id , :class => "comment"}
                   = staff_weekly_expense.comment
-              %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.id }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete 
+              %td= button_to "Delete", { :action => "destroy", :id => staff_weekly_expense.id, :staff_id => staff_weekly_expense.staff.numeric_id, :by_staff => true }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the weekly expense record.')", :method => :delete
     :javascript
         $(document).ready(function() {
           displayWeeklyExpenseList()
@@ -67,7 +67,7 @@
           });
 
         });
-  
+
         function displayWeeklyExpenseList() {
           var columnDefs = [
               { key: "week_start_date", label: "Week start date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},

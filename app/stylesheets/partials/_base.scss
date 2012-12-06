@@ -10,7 +10,6 @@ $blueprint-font-family    : Arial,Helvetica,sans-serif;
 // Or you can set $blueprint-grid-width to a fixed value and unset $blueprint-container-size -- it will be calculated for you.
 $blueprint-grid-width: ($blueprint-container-size + $blueprint-grid-margin) / $blueprint-grid-columns - $blueprint-grid-margin;
 
-
 //NCS custom colors
 $tab_nav_bg: #406CD5;
 $tab_nav_border: #406CD5;

@@ -8,7 +8,7 @@ Scenario: Redirect to staff index page for supervisor update staff
   And I go to the staff edit page for test111
   And I press "Save"
   Then I should be on the manage staff details page
-  
+
 Scenario: Redirect to staff page for supervisor update himself
   Given staff with username super11
   And staff member super11 has role "Staff Supervisor"
@@ -16,7 +16,7 @@ Scenario: Redirect to staff page for supervisor update himself
   And I go to the staff edit page for super11
   And I press "Save"
   Then I should be on the staff information page for super11
-  
+
 Scenario: Redirect to user list page for user admin update user
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -26,7 +26,7 @@ Scenario: Redirect to user list page for user admin update user
   And I go to the user edit page for test111
   And I press "Save"
   Then I should be on the manage users accounts page
-  
+
 Scenario: Redirect to staff page for user admin update himself as staff
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -34,7 +34,7 @@ Scenario: Redirect to staff page for user admin update himself as staff
   And I go to the staff edit page for super11
   And I press "Save"
   Then I should be on the staff information page for super11
-  
+
 Scenario: Redirect to user list page for user admin update himself as user
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -49,7 +49,7 @@ Scenario: Redirect to staff page for staff update on success
   And I go to the staff edit page for test111
   And I press "Save"
   Then I should be on the staff information page for test111
-  
+
 Scenario: Redirect to user list page when log in user has staff supervisor and user admin role and update user
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -60,7 +60,7 @@ Scenario: Redirect to user list page when log in user has staff supervisor and u
   And I go to the user edit page for test111
   And I press "Save"
   Then I should be on the manage users accounts page
-  
+
 Scenario: Redirect to staff index page when log in user has staff supervisor and user admin role and update staff
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -70,7 +70,7 @@ Scenario: Redirect to staff index page when log in user has staff supervisor and
   And I go to the staff edit page for test111
   And I press "Save"
   Then I should be on the manage staff details page
-  
+
 Scenario: Redirect to user list page when log in user has staff supervisor and user admin role and update himself as user
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -79,7 +79,7 @@ Scenario: Redirect to user list page when log in user has staff supervisor and u
   And I go to the user edit page for super11
   And I press "Save"
   Then I should be on the manage users accounts page
-  
+
 Scenario: Redirect to staff page when log in user has staff supervisor and user admin role and update himself as staff
   Given staff with username super11
   And staff member super11 has role "User Administrator"
@@ -88,5 +88,3 @@ Scenario: Redirect to staff page when log in user has staff supervisor and user 
   And I go to the staff edit page for super11
   And I press "Save"
   Then I should be on the staff information page for super11
-
-
