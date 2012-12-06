@@ -40,10 +40,10 @@ module ApplicationHelper
     else
       if (staff.hourly_rate.blank?)
         haml_concat "Not Entered."
-        haml_concat link_to "Update", edit_staff_path(staff.id)
+        haml_concat link_to "Update", edit_staff_path(staff.numeric_id)
       elsif (@staff.hourly_rate == 0)
         haml_concat "Voluntary Work."
-        haml_concat link_to "Update", edit_staff_path(staff.id)
+        haml_concat link_to "Update", edit_staff_path(staff.numeric_id)
       else
         haml_concat "$#{staff.hourly_rate}/hr."
       end
@@ -71,10 +71,10 @@ module ApplicationHelper
         weekly_task.management_tasks.sort_by(&:task_date).reverse.map do |mgmt|
           haml_tag :li do
             if (mgmt.task_type.display_text == "Other")
-              haml_concat link_to(mgmt.task_type_other, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat link_to(mgmt.task_type_other, edit_staff_management_task_path(weekly_task.staff.numeric_id, mgmt))
               haml_concat "(#{mgmt.hours})"
             else
-              haml_concat link_to(mgmt.task_type.display_text, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat link_to(mgmt.task_type.display_text, edit_staff_management_task_path(weekly_task.staff.numeric_id, mgmt))
               haml_concat "(#{mgmt.hours})"
             end
           end
@@ -84,10 +84,10 @@ module ApplicationHelper
         weekly_task.data_collection_tasks.map do |data_collection_task|
           haml_tag :li do
             if (data_collection_task.task_type.display_text == "Other")
-              haml_concat link_to(data_collection_task.task_type_other, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat link_to(data_collection_task.task_type_other, edit_staff_data_collection_task_path(weekly_task.staff.numeric_id, data_collection_task))
               haml_concat "(#{data_collection_task.hours})"
             else
-              haml_concat link_to(data_collection_task.task_type.display_text, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat link_to(data_collection_task.task_type.display_text, edit_staff_data_collection_task_path(weekly_task.staff.numeric_id, data_collection_task))
               haml_concat "(#{data_collection_task.hours})"
             end
           end
@@ -109,7 +109,7 @@ module ApplicationHelper
 
   def display_supervisors(supervisors)
     list = supervisors.map do |supervisor|
-      link_to(supervisor.name, edit_users_path(supervisor)) unless supervisor.nil?
+      link_to(supervisor.name, edit_users_path(supervisor.numeric_id)) unless supervisor.nil?
     end
     list.join(', ')
   end
