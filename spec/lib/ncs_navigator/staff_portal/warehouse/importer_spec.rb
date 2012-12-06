@@ -1058,7 +1058,6 @@ module NcsNavigator::StaffPortal::Warehouse
         let!(:mdes_outreach) {
           save_wh(wh_config.model(:Ssu).new(:sc_id => '20000029', :ssu_id => '1234567890', :ssu_name =>'testing'))
           enumerator.to_a(:outreach_events).first.tap { |p|
-            p.outreach_lang_oth = "Babylonian"
             p.outreach_event_id = "event_id_1234567890"
             save_wh(p) }
         }
@@ -1091,7 +1090,7 @@ module NcsNavigator::StaffPortal::Warehouse
         end
 
         it 'has correct outreach language other mapping from mdes outreach event' do
-          OutreachLanguage.first.language_other.should == "Babylonian"
+          OutreachLanguage.first.language_other.should be_nil
         end
 
       end

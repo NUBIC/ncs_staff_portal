@@ -418,7 +418,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
         [
           [:task_type, ncs_code(11), :mgmt_task_type, '11'],
-          [:task_type_other, 'Shuffling', :mgmt_task_type_oth],
+          [:task_type_other, nil, :mgmt_task_type_oth],
           [:hours, '12.0', :mgmt_task_hrs],
           [:hours, BigDecimal.new('0.12E2'), :mgmt_task_hrs, '12.0'],
           [:hours, nil, :mgmt_task_hrs, '0.0'],
@@ -450,7 +450,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
         [
           [:task_type, ncs_code(7), :data_coll_task_type, '7'],
-          [:task_type_other, 'Sketching', :data_coll_task_type_oth],
+          [:task_type_other, nil, :data_coll_task_type_oth],
           [:cases, 18, :data_coll_task_cases, '18'],
           [:transmit, 4, :data_coll_transmit, '4'],
           [:hours, '12.0', :data_coll_tasks_hrs],
@@ -492,9 +492,9 @@ module NcsNavigator::StaffPortal::Warehouse
         [
           [:event_date, '2011-07-05', :outreach_event_date, '2011-07-05'],
           [:mode, ncs_code(8), :outreach_mode, '8'],
-          [:mode_other, 'E', :outreach_mode_oth],
+          [:mode_other, nil, :outreach_mode_oth],
           [:outreach_type, ncs_code(5), :outreach_type, '5'],
-          [:culture_other, 'Secular Humanist', :outreach_culture_oth],
+          [:culture_other, nil, :outreach_culture_oth],
           [:cost, '250.00', :outreach_cost, '250.0'],
           [:cost, nil, :outreach_cost, '0.0'],
           [:no_of_staff, 18, :outreach_staffing, '18'],
@@ -503,7 +503,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
         it 'includes the other language from a different table' do
           Factory(:outreach_language,
-            :outreach_event => outreach_event, :language_other => 'Babylonian')
+            :outreach_event => outreach_event, :language_other => 'Babylonian', :language => Factory(:ncs_code, :local_code => -5))
           results.first.outreach_lang_oth.should == 'Babylonian'
         end
 
@@ -815,7 +815,7 @@ module NcsNavigator::StaffPortal::Warehouse
         context do
           include_context 'mapping test'
 
-          verify_mapping(:race_other, 'Klingon', :outreach_race_oth)
+          verify_mapping(:race_other, nil, :outreach_race_oth)
         end
 
         describe 'with multiple races' do
@@ -871,7 +871,7 @@ module NcsNavigator::StaffPortal::Warehouse
         context do
           include_context 'mapping test'
 
-          verify_mapping(:target_other, 'Hay bale', :outreach_target_ms_oth)
+          verify_mapping(:target_other, nil, :outreach_target_ms_oth)
         end
 
         describe 'with multiple targets' do
@@ -931,7 +931,7 @@ module NcsNavigator::StaffPortal::Warehouse
         context do
           include_context 'mapping test'
 
-          verify_mapping(:evaluation_other, 'Too slow', :outreach_eval_oth)
+          verify_mapping(:evaluation_other, nil, :outreach_eval_oth)
         end
 
         describe 'with multiple evaluations' do
