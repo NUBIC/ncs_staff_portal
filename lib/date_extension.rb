@@ -5,6 +5,6 @@ class Date
   	else
   	  days_to_start_day = wday.days
   	end
-    (self - days_to_start_day).midnight.strftime('%Y-%m-%d') 
+    (self - days_to_start_day).midnight.strftime('%Y-%m-%d')
   end
 end

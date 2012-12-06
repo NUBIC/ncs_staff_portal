@@ -1,3 +1,4 @@
+require 'aker/authorities/machine_account'
 require 'aker/authorities/staff_portal'
 
 NcsStaffPortal::Application.configure do
@@ -35,10 +36,16 @@ NcsStaffPortal::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # Load configuration
+  config.ncs_navigator.from_file("#{Rails.root}/spec/navigator.ini")
+
   config.aker do
     ui_mode :form
     api_mode :http_basic
-    authority Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml"),
-      Aker::Authorities::StaffPortal
+    authorities \
+      Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml"),
+      Aker::Authorities::Static.from_file("#{Rails.root}/spec/machine-users.yml"),
+      Aker::Authorities::StaffPortal,
+      Aker::Authorities::MachineAccount
   end
 end

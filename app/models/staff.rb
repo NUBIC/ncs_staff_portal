@@ -60,11 +60,11 @@ class Staff < ActiveRecord::Base
   has_many :roles, :through => :staff_roles
   has_many :supervisor_employees, :foreign_key => :supervisor_id, :dependent => :destroy
   has_many :employees, :through => :supervisor_employees, :class_name => "Staff"
-  
+
   accepts_nested_attributes_for :supervisor_employees, :allow_destroy => true
   accepts_nested_attributes_for :staff_roles, :allow_destroy => true
   accepts_nested_attributes_for :staff_languages, :allow_destroy => true
-  
+
   ncs_coded_attribute :staff_type, 'STUDY_STAFF_TYPE_CL1'
   ncs_coded_attribute :age_range, 'AGE_RANGE_CL1'
   ncs_coded_attribute :gender, 'GENDER_CL1'
@@ -73,21 +73,21 @@ class Staff < ActiveRecord::Base
   ncs_coded_attribute :ethnicity, 'ETHNICITY_CL1'
   ncs_coded_attribute :experience, 'EXPERIENCE_LEVEL_CL1'
   ncs_coded_attribute :lang, 'LANGUAGE_CL2'
-  
+
   validate :has_roles, :if => :create_presence_required?
   def has_roles
-    errors.add(:roles, "can not be empty when user has #{NcsNavigator.configuration.study_center_username}.User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank? && !self.username.blank? 
+    errors.add(:roles, "can not be empty when user has #{NcsNavigator.configuration.study_center_username}.User must have atleast one role assigned. Please select one or more roles.") if self.roles.blank? && !self.username.blank?
   end
-  
+
   def email_required?
     !username.blank? && create_presence_required? ? true : false
   end
-  
+
   before_save :calculate_hourly_rate, :update_employees
 
   acts_as_mdes_record :public_id => :staff_id
-  before_create :generate_numeric_id 
-    
+  before_create :generate_numeric_id
+
   def generate_numeric_id
     if self.numeric_id.blank?
       random = Staff.generate_random_number
@@ -98,9 +98,9 @@ class Staff < ActiveRecord::Base
       self.numeric_id = random
     end
   end
-  
+
   def self.generate_random_number
-    rand(2**31 - 11)   # Generates random number between 2**31 and 11. Keep 1..10 reserved.
+    rand(2**31 - 1)
   end
 
   def pay_amount_required
@@ -113,7 +113,7 @@ class Staff < ActiveRecord::Base
   def update_employees
     self.employees.delete_all unless self.has_role(Role::STAFF_SUPERVISOR)
   end
-  
+
   def self.find_by_role(role)
     Staff.joins(:roles).where("roles.name IN (?)", role).uniq
   end
@@ -150,9 +150,19 @@ class Staff < ActiveRecord::Base
   end
 
   def visible_employees
-    visible_employees = self.employees
-    visible_employees = Staff.all if visible_employees.empty? && has_role(Role::STAFF_SUPERVISOR)
-    visible_employees
+    @visible_employees ||= if employees.empty? && has_role(Role::STAFF_SUPERVISOR)
+                             Staff.all
+                           else
+                             employees
+                           end
+  end
+
+  def can_see_staff?(staff)
+    if has_role(Roles::USER_ADMINISTRATOR)
+      true
+    else
+      staff == self || visible_employees.any? { |e| e == staff }
+    end
   end
 
   def belongs_to_management_group
@@ -174,7 +184,7 @@ class Staff < ActiveRecord::Base
   def create_presence_required?
     validate_create == "true" ? true : false
   end
-  
+
   def update_presence_required?
     validate_update == "false" ? false : true
   end
@@ -221,11 +231,11 @@ class Staff < ActiveRecord::Base
   def last_name_first_name
     [last_name, first_name].reject(&:blank?).join(', ')
   end
-  
+
   def display_username
     username ? username : staff_id
   end
-  
+
   def display_name
     last_name_first_name.blank? ? staff_id : last_name_first_name
   end

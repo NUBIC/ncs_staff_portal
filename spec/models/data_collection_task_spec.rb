@@ -57,7 +57,7 @@ describe DataCollectionTask do
         task.should_not be_valid
         task.should have(1).error_on(:hours)
       end
-      
+
       it "should allow 0" do
         task= FactoryGirl.build(:data_collection_task, :hours => 0)
         task.should be_valid
@@ -82,7 +82,7 @@ describe DataCollectionTask do
         task.should_not be_valid
         task.should have(1).error_on(:expenses)
       end
-      
+
       it "should allow 0" do
         task= FactoryGirl.build(:data_collection_task, :expenses => 0)
         task.should be_valid
@@ -108,7 +108,7 @@ describe DataCollectionTask do
         task.should_not be_valid
         task.should have(1).error_on(:miles)
       end
-      
+
       it "should allow 0" do
         task= FactoryGirl.build(:data_collection_task, :miles => 0)
         task.should be_valid
@@ -155,4 +155,3 @@ describe DataCollectionTask do
     end
   end
 end
-

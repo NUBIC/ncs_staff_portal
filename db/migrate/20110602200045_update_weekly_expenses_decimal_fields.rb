@@ -12,7 +12,7 @@ class UpdateWeeklyExpensesDecimalFields < ActiveRecord::Migration
     REMAP.each do |old_name,new_name|
       rename_column(:staff_weekly_expenses, old_name, new_name)
       change_column(:staff_weekly_expenses, new_name, :decimal, {
-        :precision => (new_name == :expenses)? 10 : 5, 
+        :precision => (new_name == :expenses)? 10 : 5,
         :scale => 2
         })
     end

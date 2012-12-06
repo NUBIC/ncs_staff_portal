@@ -5,14 +5,14 @@ module ApplicationHelper
         haml_concat isCode ? value.display_text : value unless value.blank?
       end
   end
-  
+
   def display_cert_date(cert_date)
     if cert_date == NcsCode.not_applicable_date
       haml_tag :td,"Not Applicable"
     elsif cert_date == NcsCode.unknown_date
       haml_tag :td,"Don't Know"
     elsif !cert_date.blank?
-      haml_tag :td,cert_date 
+      haml_tag :td,cert_date
     else
       haml_tag :td
     end
@@ -29,7 +29,7 @@ module ApplicationHelper
       haml_tag :td
     end
   end
-  
+
   def display_task(value)
     value.blank? ? "0.0" : value
   end
@@ -49,11 +49,11 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def same_as_current_user(requested_staff)
     requested_staff.id == @current_staff.id ? true : false
   end
-  
+
   def display_languages(languages)
     list = languages.map do |language|
       if (language.lang.display_text == "Other")
@@ -95,7 +95,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def display_segments(segments)
     if segments.count != 0 && segments.count == NcsAreaSsu.all.count
       list = "All #{segments.count} segments"
@@ -106,21 +106,21 @@ module ApplicationHelper
       list.join(', ')
     end
   end
-  
+
   def display_supervisors(supervisors)
     list = supervisors.map do |supervisor|
       link_to(supervisor.name, edit_users_path(supervisor)) unless supervisor.nil?
     end
     list.join(', ')
   end
-  
+
   def display_roles(roles)
     list = roles.map do |role|
       role.name
     end
     list.join(', ')
   end
-  
+
   def javascript(*files)
     content_for(:head) { javascript_include_tag(*files) }
   end
@@ -165,7 +165,7 @@ module ApplicationHelper
     end
     "Release Version #{version}"
   end
-  
+
   class NCSTabsBuilder < TabsOnRails::Tabs::TabsBuilder
     def tab_for(tab, name, options)
       content = @context.link_to(name, options)

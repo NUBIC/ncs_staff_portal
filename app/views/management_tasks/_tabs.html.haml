@@ -5,7 +5,7 @@
     %span.current_tab
       Management Task
     - if @staff.belongs_to_data_collection_group
-      = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab"  
+      = link_to 'Data Collection Task', new_staff_data_collection_task_path(@staff.id), :class => "other_tab"
     = link_to 'Miscellaneous Expense', new_staff_miscellaneous_expense_path(@staff.id), :class => "other_tab"
     - if same_as_current_user(@staff)
       = link_to 'My Weekly Entries', by_staff_staff_weekly_expenses_path(:staff_id => @staff.id), :class => "other_tab"

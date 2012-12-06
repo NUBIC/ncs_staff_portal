@@ -29,14 +29,14 @@ describe NcsCode do
         NcsCode.should_receive(:attribute_lookup).with(:test_code).and_return("TEST_CODE_CL1")
         NcsCode.should_receive(:find_all_by_list_name).with("TEST_CODE_CL1").and_return(@ncs_codes)
       end
-    
+
       it "should return an array of integer and string for attributes" do
         test_type = NcsCode.ncs_code_lookup(:test_code)
         test_type.is_a?(Array).should be_true
-        test_type.first[0].is_a?(String).should be_true 
+        test_type.first[0].is_a?(String).should be_true
         test_type.first[1].is_a?(Integer).should be_true
       end
-    
+
       it "should return code and text for given attribute list" do
         test_type = NcsCode.ncs_code_lookup(:test_code)
         @ncs_return_code.each_with_index do |code, i|
@@ -44,7 +44,7 @@ describe NcsCode do
           code[1].should == test_type[i][1]
         end
       end
-    end 
+    end
     describe "attribute_lookup" do
       it "should return corresponding list name for attribute name" do
         staff_type_list  = NcsCode.attribute_lookup(:staff_type_code)

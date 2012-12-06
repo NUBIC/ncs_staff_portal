@@ -1,4 +1,3 @@
-
 FactoryGirl.define do
   factory :ncs_code do |code|
     code.list_name        "CONFIRM_TYPE_CL2"
@@ -63,7 +62,7 @@ FactoryGirl.define do
     task.expenses nil
     task.association :staff_weekly_expense, :factory => :staff_weekly_expense
   end
-  
+
   factory :miscellaneous_expense do |m_expense|
     m_expense.expense_date  Date.today
     m_expense.hours nil
@@ -118,13 +117,13 @@ FactoryGirl.define do
     area.psu_id "0012345"
     area.name {Factory.next(:area_name)}
   end
-  
+
   factory :ncs_ssu do |ssu|
     ssu.psu_id "0012345"
     ssu.ssu_id { Factory.next(:ssu) }
     ssu.ssu_name { Factory.next(:ssu) }
   end
-  
+
   factory :ncs_area_ssu do |ssu|
     ssu.association :ncs_area, :factory => :ncs_area
     ssu.association :ncs_ssu, :factory => :ncs_ssu
@@ -133,21 +132,21 @@ FactoryGirl.define do
   factory :outreach_segment do |segment|
     segment.association :ncs_ssu, :factory => :ncs_ssu
   end
-  
+
   factory :ncs_tsu do |tsu|
     tsu.psu_id "0012345"
     tsu.tsu_id { Factory.next(:tsu) }
     tsu.tsu_name { Factory.next(:tsu) }
   end
-  
+
   sequence :area_name do |n|
     "area_name#{n}"
   end
-  
+
   sequence :tsu do |n|
     "tsu_#{n}"
   end
-  
+
   sequence :ssu do |n|
     "ssu_#{n}"
   end

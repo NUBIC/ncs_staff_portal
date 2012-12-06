@@ -14,7 +14,6 @@ NCSPortal.OutreachItems = {};
 NCSPortal.OutreachLanguages = {};
 NCSPortal.SupervisorEmployees = {};
 
-
 // Added X-CSRF-Token to request header as per http://weblog.rubyonrails.org/2011/2/8/csrf-protection-bypass-in-ruby-on-rails
 $(document).ajaxSend(function(e, xhr, options) {
   var token = $("meta[name='csrf-token']").attr("content");
@@ -77,7 +76,7 @@ function check_select_for_yes_selector(select_id, yes_class, disabled_class){
           $(this).attr('disabled', 'disabled');
         }
 	    })
-	    
+
 	    $(disabled_class).each(function(){
         if ($(this).val()) {
           $(this).removeAttr('disabled');
@@ -98,10 +97,10 @@ function check_select_for_yes_selector(select_id, yes_class, disabled_class){
 }
 
 function wire_up_select_other_class(select_class, other_class, other_label_class){
-  $(select_class).each(function(){ 
+  $(select_class).each(function(){
     check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
   });
-  $(select_class).each(function(){ 
+  $(select_class).each(function(){
 	  $(this).change(function(){
 	    check_select_for_other_class($(this), $(this).siblings(other_class), other_label_class);
 	  });
@@ -126,7 +125,6 @@ function check_select_for_other_class(select_elt, other_elt, other_label_class){
     }
   }
 }
-
 
 function wire_up_yes_enable_radio(select_id, other_class){
   check_select_for_yes(select_id, other_class);
@@ -289,7 +287,6 @@ function check_select_for_yes_nested_attribute(select_id, nested_attribute_class
   }
 }
 
-
 function wire_up_pay_amount(select_id, other_id){
   check_select_for_pay_amount(select_id, other_id);
   $(select_id).change(function(){
@@ -303,7 +300,7 @@ function check_select_for_pay_amount(select_id, other_id){
 
   if((o.size() > 0) && (s.size() > 0)){
     if (s.val() == "Voluntary") {
-      o.val('0.00'); 
+      o.val('0.00');
       o.attr('disabled', 'disabled');
       o.css('background-color', '#d0d0d0');
     } else{
@@ -313,26 +310,24 @@ function check_select_for_pay_amount(select_id, other_id){
   }
 }
 
-
-
 $(document).ready(function(){
   $(".datepicker").attr('placeholder', 'YYYY-MM-DD');
   $(".week_datepicker").attr('placeholder', 'YYYY-MM-DD');
-  $(".datepicker").datepicker( { 
+  $(".datepicker").datepicker( {
     dateFormat: 'yy-mm-dd',
     changeMonth: true,
     changeYear: true,
     yearRange: '1920:2020'
   } );
 
-  $(".week_datepicker").datepicker( 
-  { 
+  $(".week_datepicker").datepicker(
+  {
     dateFormat: 'yy-mm-dd',
     changeMonth: true,
     changeYear: true,
     yearRange: '1920:2020',
     beforeShowDay: function(date)
-      { 
+      {
         if ($(this).attr('week_start_day') == "monday") {
           return [(date.getDay() == 1), ""]
         } else {
@@ -340,7 +335,7 @@ $(document).ready(function(){
         }
       }
   } );
-  
+
   $('.help_text_link').click(function(event) {
     var help_text = $(this).next('.help_text').val();
     var title = $(this).next('.help_text').attr('title');
@@ -356,5 +351,3 @@ $(document).ready(function(){
       });
   });
 })
-
-

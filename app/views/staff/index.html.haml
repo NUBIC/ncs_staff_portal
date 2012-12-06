@@ -1,5 +1,5 @@
 .breadcrumbs
-  = render_breadcrumbs :separator => ' / ' 
+  = render_breadcrumbs :separator => ' / '
 .block
   = search_form_for @q do |f|
     %table
@@ -46,7 +46,7 @@
   :javascript
       $(document).ready(function() {
         displayStaffList()
-        $(".notify").each(function(){ 
+        $(".notify").each(function(){
            $(this).change(function(){
              staff_id = $(this).attr('staff_id')
              notify = this.checked ? true : false
@@ -62,7 +62,7 @@
            });
          });
       });
-  
+
       function displayStaffList() {
         var columnDefs = [
             { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
@@ -84,5 +84,5 @@
             sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_ASC }
         });
       }
-    
+
   = will_paginate @staff_list, :previous_label => "Previous", :next_label => "Next"

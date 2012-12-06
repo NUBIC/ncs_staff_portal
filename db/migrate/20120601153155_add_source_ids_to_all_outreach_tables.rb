@@ -8,7 +8,7 @@ class AddSourceIdsToAllOutreachTables < ActiveRecord::Migration
     end
 
     def down
-      SOURCE_ID_MODELS.collect(&:last).each do 
+      SOURCE_ID_MODELS.collect(&:last).each do
         remove_column :source_id
       end
     end
