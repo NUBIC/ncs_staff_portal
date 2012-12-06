@@ -57,7 +57,7 @@ class DataCollectionTasksController < SecuredController
     data_collection_task_temp  = DataCollectionTask.new(params[:data_collection_task])
     unless data_collection_task_temp.task_date == @data_collection_task.task_date
       start_date = data_collection_task_temp.task_date.beginning_of_week unless data_collection_task_temp.task_date.blank?
-      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => data_collection_task.staff_weekly_expense.rate)
+      staff_weekly_expense = StaffWeeklyExpense.find_or_create_by_week_start_date_and_staff_id(start_date, @staff.id, :rate => @data_collection_task.staff_weekly_expense.rate)
       unless @data_collection_task.staff_weekly_expense == staff_weekly_expense
         @data_collection_task.staff_weekly_expense = staff_weekly_expense
       end 
