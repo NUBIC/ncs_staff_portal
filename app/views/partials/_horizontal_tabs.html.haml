@@ -5,9 +5,9 @@
     -if permit?(Role::STAFF_SUPERVISOR)
       = tab.time_and_expenses 'Time and Expense', staff_weekly_expenses_path
     -elsif permit?(*Role.data_collection_group)
-      = tab.time_and_expenses 'Time and Expenses', new_staff_data_collection_task_path(@current_staff.id)
+      = tab.time_and_expenses 'Time and Expenses', new_staff_data_collection_task_path(@current_staff.numeric_id)
     -elsif permit?(*Role.management_group)
-      = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@current_staff.id)
+      = tab.time_and_expenses 'Time and Expenses', new_staff_management_task_path(@current_staff.numeric_id)
     -if current_user.permit?(Role::STAFF_SUPERVISOR) || current_user.permit?(Role::SYSTEM_ADMINISTRATOR)|| current_user.permit?(Role::USER_ADMINISTRATOR)
       = tab.admin "Admin", administration_index_path
-    = tab.my_info 'My Information', staff_path(@current_staff)
+    = tab.my_info 'My Information', staff_path(@current_staff.numeric_id)

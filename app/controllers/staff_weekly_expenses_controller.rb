@@ -57,7 +57,7 @@ class StaffWeeklyExpensesController < StaffAuthorizedController
 
     respond_to do |format|
       format.html {
-      if params[:staff_id]
+      if params[:staff_id] && params[:by_staff]
         redirect_to(by_staff_staff_weekly_expenses_url(:staff_id => params[:staff_id]))
       else
         redirect_to(staff_weekly_expenses_url)
@@ -76,11 +76,10 @@ class StaffWeeklyExpensesController < StaffAuthorizedController
         set_tab :time_and_expenses, :vertical
         add_breadcrumb "Admin", :administration_index_path
         add_breadcrumb "Manage staff details", :staff_index_path
-        add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+        add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
       end
     end
     def tasks_layout
-      @staff = Staff.find(params[:staff_id])
       same_as_current_user(@staff) ? "layouts/application" : "layouts/staff_information"
     end
 end

@@ -24,4 +24,4 @@
 %p
   %b Language(s) spoken:
   = display_languages(@staff.staff_languages)
-= link_to 'Edit', edit_staff_path(@staff), :class => "edit_link icon_link"
+= link_to 'Edit', edit_staff_path(@staff.numeric_id), :class => "edit_link icon_link"

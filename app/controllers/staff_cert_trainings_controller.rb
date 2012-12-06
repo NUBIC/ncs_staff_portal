@@ -13,7 +13,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
     params[:page] ||= 1
     @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff_cert_training = @staff.staff_cert_trainings.build
-    add_breadcrumb "Certificates/Trainings", new_staff_staff_cert_training_path(@staff) unless same_as_current_user(@staff)
+    add_breadcrumb "Certificates/Trainings", new_staff_staff_cert_training_path(@staff.numeric_id) unless same_as_current_user(@staff)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @staff_cert_training }
@@ -25,7 +25,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
     params[:page] ||= 1
     @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
-    add_breadcrumb "Certificates/Trainings", edit_staff_staff_cert_training_path(@staff, @staff_cert_training) unless same_as_current_user(@staff)
+    add_breadcrumb "Certificates/Trainings", edit_staff_staff_cert_training_path(@staff.numeric_id, @staff_cert_training) unless same_as_current_user(@staff)
   end
 
   # POST /staff_cert_trainings
@@ -34,7 +34,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
     @staff_cert_training = @staff.staff_cert_trainings.build(params[:staff_cert_training])
     respond_to do |format|
       if @staff_cert_training.save
-        format.html { redirect_to(new_staff_staff_cert_training_path(@staff), :notice => 'Staff cert training was successfully created.') }
+        format.html { redirect_to(new_staff_staff_cert_training_path(@staff.numeric_id), :notice => 'Staff cert training was successfully created.') }
         format.xml  { render :xml => @staff_cert_training, :status => :created, :location => @staff_cert_training }
       else
         @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
@@ -50,7 +50,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
     @staff_cert_training = @staff.staff_cert_trainings.find(params[:id])
     respond_to do |format|
       if @staff_cert_training.update_attributes(params[:staff_cert_training])
-        format.html { redirect_to(new_staff_staff_cert_training_path(@staff), :notice => 'Staff cert training was successfully updated.') }
+        format.html { redirect_to(new_staff_staff_cert_training_path(@staff.numeric_id), :notice => 'Staff cert training was successfully updated.') }
         format.xml  { head :ok }
       else
         @staff_cert_trainings = @staff.staff_cert_trainings.paginate(:page => params[:page], :per_page => 20)
@@ -67,7 +67,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
     @staff_cert_training.destroy
 
     respond_to do |format|
-      format.html { redirect_to(new_staff_staff_cert_training_path(@staff))}
+      format.html { redirect_to(new_staff_staff_cert_training_path(@staff.numeric_id))}
       format.xml  { head :ok }
     end
   end
@@ -80,7 +80,7 @@ class StaffCertTrainingsController < StaffAuthorizedController
       set_tab :admin
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
-      add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+      add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
     end
   end
 end

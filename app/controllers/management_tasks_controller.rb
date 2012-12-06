@@ -40,7 +40,7 @@ class ManagementTasksController < StaffAuthorizedController
 
     respond_to do |format|
       if @management_task.save
-        format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully created.') }
+        format.html { redirect_to(new_staff_management_task_path(@staff.numeric_id), :notice => 'Management task was successfully created.') }
         format.xml  { render :xml => @management_task, :status => :created, :location => @management_task }
       else
         @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -65,7 +65,7 @@ class ManagementTasksController < StaffAuthorizedController
 
     respond_to do |format|
       if @management_task.update_attributes(params[:management_task])
-        format.html { redirect_to(new_staff_management_task_path(@staff), :notice => 'Management task was successfully updated.') }
+        format.html { redirect_to(new_staff_management_task_path(@staff.numeric_id), :notice => 'Management task was successfully updated.') }
         format.xml  { head :ok }
       else
         @management_tasks = @staff.management_tasks.sort_by(&:task_date).reverse.paginate(:page => params[:page], :per_page => 20)
@@ -82,7 +82,7 @@ class ManagementTasksController < StaffAuthorizedController
     @management_task.destroy
 
     respond_to do |format|
-      format.html { redirect_to(new_staff_management_task_path(@staff))}
+      format.html { redirect_to(new_staff_management_task_path(@staff.numeric_id))}
       format.xml  { head :ok }
     end
   end
@@ -96,7 +96,7 @@ class ManagementTasksController < StaffAuthorizedController
       set_tab :time_and_expenses, :vertical
       add_breadcrumb "Admin", :administration_index_path
       add_breadcrumb "Manage staff details", :staff_index_path
-      add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+      add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
     end
   end
 
