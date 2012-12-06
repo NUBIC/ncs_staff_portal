@@ -113,4 +113,3 @@ module NcsNavigator::StaffPortal
     private :select_for_insert_update_delete
   end
 end
-

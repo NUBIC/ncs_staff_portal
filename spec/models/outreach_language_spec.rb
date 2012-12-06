@@ -19,30 +19,30 @@ describe OutreachLanguage do
     language = Factory(:outreach_language)
     language.should_not be_nil
   end
-  
+
   it { should belong_to(:language) }
-  
+
   it { should belong_to(:outreach_event) }
-  
+
   it { should validate_presence_of(:language) }
-  
+
   describe "validates language_other" do
     let(:language_code) { Factory(:ncs_code, :list_name => "LANGUAGE_CL2", :display_text => "Other", :local_code => -5) }
-    
+
     it "should not valid if outreach language is 'Other' and language_other value is nil" do
       language = FactoryGirl.build(:outreach_language, :language => language_code)
       language.language_other = nil
       language.should_not be_valid
       language.should have(1).error_on(:language_other)
     end
-    
+
     it "should not valid if outreach language is 'Other' and language_other value is blank string" do
       language = FactoryGirl.build(:outreach_language, :language => language_code)
       language.language_other = ''
       language.should_not be_valid
       language.should have(1).error_on(:language_other)
     end
-    
+
     it "should be valid if outreach language is 'English' and language_other value is blank string" do
       language = FactoryGirl.build(:outreach_language)
       language.language_other = ''

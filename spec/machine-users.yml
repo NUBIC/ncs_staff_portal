@@ -1,0 +1,10 @@
+# This file provides (username, password) pairs for machine accounts in test
+# environments.
+#
+# Do NOT put group information here.  That should be handled by the
+# MachineAccount authority.
+users:
+  ncs_navigator_cases_test:
+    password: ncs_navigator_cases_test
+  psc_application:
+    password: psc_application

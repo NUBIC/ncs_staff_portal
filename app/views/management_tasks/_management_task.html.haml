@@ -1,8 +1,9 @@
 - if @staff.external?
   %p.warning
-    %em Warning: 
+    %em Warning:
     #{@staff.display_name} is an external user and should not be using the application for time and expense entry.
-= form_for [@staff, @management_task] do |f|
+- action = @management_task.new_record? ? :create : :update
+= form_for @management_task, :html => { :id => 'management_task' }, :url => { :staff_id => @staff.numeric_id, :id => @management_task.id, :action => action } do |f|
   -if @management_task.errors.any?
     #error_explanation
       %h2= "#{pluralize(@management_task.errors.count, "error")} prohibited this management_task from being saved:"
@@ -57,15 +58,13 @@
 
   - if @staff.staff_type_code.blank?
     %p.warning
-      %em Warning: 
-      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff 
+      %em Warning:
+      #{@staff.display_name} has an incomplete staff record. This time and expense data will not be submitted to the VDR until the staff
       record is complete. Please update the staff record #{link_to "here", edit_staff_path(@staff.id)}
-  
+
   :javascript
     // For the 'other' task type field
     // Check on pageload
     $(document).ready(function(){
       wire_up_select_other("#task_type","#task_type_other");
     });
-
-   

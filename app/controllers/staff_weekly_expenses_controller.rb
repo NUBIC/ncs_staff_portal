@@ -1,6 +1,13 @@
-class StaffWeeklyExpensesController < SecuredController
+class StaffWeeklyExpensesController < StaffAuthorizedController
   set_tab :time_and_expenses
-  before_filter :check_staff_access, :only => %w(by_staff) 
+
+  with_options(:except => :index) do |c|
+    c.before_filter :load_staff
+    c.before_filter :assert_staff
+    c.before_filter :check_requested_staff_visibility
+  end
+
+  before_filter :check_staff_access, :only => %w(by_staff)
   # GET /staff_weekly_expenses
   # GET /staff_weekly_expenses.xml
   def index
@@ -16,7 +23,6 @@ class StaffWeeklyExpensesController < SecuredController
   # GET /staff_weekly_expenses/by_staff?staff_id=
   def by_staff
     params[:page] ||= 1
-    @staff = Staff.find(params[:staff_id])
     @q = StaffWeeklyExpense.search(params[:q])
     @staff_weekly_expenses = (@staff.staff_weekly_expenses & @q.result(:distinct => true)).sort_by(&:week_start_date).reverse.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
@@ -33,7 +39,7 @@ class StaffWeeklyExpensesController < SecuredController
     @staff_weekly_expense.save!
 
     respond_to do |format|
-      format.json { 
+      format.json {
         if request.xhr?
           render :json => @staff_weekly_expense.comment
         else
@@ -51,10 +57,10 @@ class StaffWeeklyExpensesController < SecuredController
 
     respond_to do |format|
       format.html {
-      if params[:staff_id] 
+      if params[:staff_id] && params[:by_staff]
         redirect_to(by_staff_staff_weekly_expenses_url(:staff_id => params[:staff_id]))
       else
-        redirect_to(staff_weekly_expenses_url) 
+        redirect_to(staff_weekly_expenses_url)
       end
       }
       format.xml  { head :ok }
@@ -63,8 +69,6 @@ class StaffWeeklyExpensesController < SecuredController
 
   private
     def check_staff_access
-      @staff = Staff.find(params[:staff_id])
-      check_user_access(@staff)
       if same_as_current_user(@staff)
         set_tab :time_and_expenses
       else
@@ -72,11 +76,10 @@ class StaffWeeklyExpensesController < SecuredController
         set_tab :time_and_expenses, :vertical
         add_breadcrumb "Admin", :administration_index_path
         add_breadcrumb "Manage staff details", :staff_index_path
-        add_breadcrumb "#{@staff.display_name}", staff_path(@staff)
+        add_breadcrumb "#{@staff.display_name}", staff_path(@staff.numeric_id)
       end
     end
     def tasks_layout
-      @staff = Staff.find(params[:staff_id])
       same_as_current_user(@staff) ? "layouts/application" : "layouts/staff_information"
     end
 end

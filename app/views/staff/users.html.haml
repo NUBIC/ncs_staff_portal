@@ -34,7 +34,7 @@
       %table#user-list-tbl
         - @users.each do |user|
           %tr
-            %td= link_to user.display_username, edit_users_path(user)
+            %td= link_to user.display_username, edit_users_path(user.numeric_id)
             %td= user.name
             %td= display_roles(user.roles)
             %td= user.is_active ? "Active" : "Disabled"
@@ -43,7 +43,7 @@
       $(document).ready(function() {
         displayEventList()
       });
-  
+
       function displayEventList() {
         var columnDefs = [
             { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},
@@ -64,6 +64,6 @@
         new YAHOO.widget.DataTable("user-list", columnDefs, dataSource, {
             sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_DESC }
         });
-      
+
       }
   = will_paginate @users, :previous_label => "Previous", :next_label => "Next"

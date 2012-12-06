@@ -19,6 +19,6 @@ class OutreachTarget < ActiveRecord::Base
   ncs_coded_attribute :target, 'OUTREACH_TARGET_CL1'
   belongs_to :outreach_event
   validates_presence_of :target
-  
+
   validates_with OtherEntryValidator, :entry => :target, :other_entry => :target_other
 end

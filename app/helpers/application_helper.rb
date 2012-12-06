@@ -5,14 +5,14 @@ module ApplicationHelper
         haml_concat isCode ? value.display_text : value unless value.blank?
       end
   end
-  
+
   def display_cert_date(cert_date)
     if cert_date == NcsCode.not_applicable_date
       haml_tag :td,"Not Applicable"
     elsif cert_date == NcsCode.unknown_date
       haml_tag :td,"Don't Know"
     elsif !cert_date.blank?
-      haml_tag :td,cert_date 
+      haml_tag :td,cert_date
     else
       haml_tag :td
     end
@@ -29,7 +29,7 @@ module ApplicationHelper
       haml_tag :td
     end
   end
-  
+
   def display_task(value)
     value.blank? ? "0.0" : value
   end
@@ -40,20 +40,20 @@ module ApplicationHelper
     else
       if (staff.hourly_rate.blank?)
         haml_concat "Not Entered."
-        haml_concat link_to "Update", edit_staff_path(staff.id)
+        haml_concat link_to "Update", edit_staff_path(staff.numeric_id)
       elsif (@staff.hourly_rate == 0)
         haml_concat "Voluntary Work."
-        haml_concat link_to "Update", edit_staff_path(staff.id)
+        haml_concat link_to "Update", edit_staff_path(staff.numeric_id)
       else
         haml_concat "$#{staff.hourly_rate}/hr."
       end
     end
   end
-  
+
   def same_as_current_user(requested_staff)
     requested_staff.id == @current_staff.id ? true : false
   end
-  
+
   def display_languages(languages)
     list = languages.map do |language|
       if (language.lang.display_text == "Other")
@@ -71,10 +71,10 @@ module ApplicationHelper
         weekly_task.management_tasks.sort_by(&:task_date).reverse.map do |mgmt|
           haml_tag :li do
             if (mgmt.task_type.display_text == "Other")
-              haml_concat link_to(mgmt.task_type_other, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat link_to(mgmt.task_type_other, edit_staff_management_task_path(weekly_task.staff.numeric_id, mgmt))
               haml_concat "(#{mgmt.hours})"
             else
-              haml_concat link_to(mgmt.task_type.display_text, edit_staff_management_task_path(weekly_task.staff, mgmt))
+              haml_concat link_to(mgmt.task_type.display_text, edit_staff_management_task_path(weekly_task.staff.numeric_id, mgmt))
               haml_concat "(#{mgmt.hours})"
             end
           end
@@ -84,10 +84,10 @@ module ApplicationHelper
         weekly_task.data_collection_tasks.map do |data_collection_task|
           haml_tag :li do
             if (data_collection_task.task_type.display_text == "Other")
-              haml_concat link_to(data_collection_task.task_type_other, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat link_to(data_collection_task.task_type_other, edit_staff_data_collection_task_path(weekly_task.staff.numeric_id, data_collection_task))
               haml_concat "(#{data_collection_task.hours})"
             else
-              haml_concat link_to(data_collection_task.task_type.display_text, edit_staff_data_collection_task_path(weekly_task.staff, data_collection_task))
+              haml_concat link_to(data_collection_task.task_type.display_text, edit_staff_data_collection_task_path(weekly_task.staff.numeric_id, data_collection_task))
               haml_concat "(#{data_collection_task.hours})"
             end
           end
@@ -95,7 +95,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def display_segments(segments)
     if segments.count != 0 && segments.count == NcsAreaSsu.all.count
       list = "All #{segments.count} segments"
@@ -106,21 +106,21 @@ module ApplicationHelper
       list.join(', ')
     end
   end
-  
+
   def display_supervisors(supervisors)
     list = supervisors.map do |supervisor|
-      link_to(supervisor.name, edit_users_path(supervisor)) unless supervisor.nil?
+      link_to(supervisor.name, edit_users_path(supervisor.numeric_id)) unless supervisor.nil?
     end
     list.join(', ')
   end
-  
+
   def display_roles(roles)
     list = roles.map do |role|
       role.name
     end
     list.join(', ')
   end
-  
+
   def javascript(*files)
     content_for(:head) { javascript_include_tag(*files) }
   end
@@ -165,7 +165,7 @@ module ApplicationHelper
     end
     "Release Version #{version}"
   end
-  
+
   class NCSTabsBuilder < TabsOnRails::Tabs::TabsBuilder
     def tab_for(tab, name, options)
       content = @context.link_to(name, options)

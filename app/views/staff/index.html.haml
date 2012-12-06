@@ -1,5 +1,5 @@
 .breadcrumbs
-  = render_breadcrumbs :separator => ' / ' 
+  = render_breadcrumbs :separator => ' / '
 .block
   = search_form_for @q do |f|
     %table
@@ -32,7 +32,7 @@
       %table#staff-list-tbl
         - @staff_list.each do |staff|
           %tr
-            %td= link_to staff.display_username, staff
+            %td= link_to staff.display_username, staff_path(staff.numeric_id)
             %td= staff.name
             - if staff.staff_type_code.blank?
               %td= ""
@@ -42,11 +42,11 @@
               - else
                 %td= staff.staff_type.display_text
             %td
-              = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.id }
+              = check_box_tag "notify", '', staff.notify, { :class => 'notify', :staff_id => staff.numeric_id }
   :javascript
       $(document).ready(function() {
         displayStaffList()
-        $(".notify").each(function(){ 
+        $(".notify").each(function(){
            $(this).change(function(){
              staff_id = $(this).attr('staff_id')
              notify = this.checked ? true : false
@@ -62,7 +62,7 @@
            });
          });
       });
-  
+
       function displayStaffList() {
         var columnDefs = [
             { key: "username", label: "#{NcsNavigator.configuration.study_center_username}", sortable: true , sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_ASC }},
@@ -84,5 +84,5 @@
             sortedBy: { key: "username" , dir: YAHOO.widget.DataTable.CLASS_ASC }
         });
       }
-    
+
   = will_paginate @staff_list, :previous_label => "Previous", :next_label => "Next"

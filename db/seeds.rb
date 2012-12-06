@@ -8,12 +8,12 @@
 
 # MDES Version 1.2
 # require 'mdes_data_loader'
-# Our custom data seed loader 
+# Our custom data seed loader
 # MdesDataLoader::load_codes('MDES_V1.2-Specific_Code_Lists.csv')
 
 # #MDES Version 2.0
 # require 'mdes_data_loader'
-# # Our custom data seed loader 
+# # Our custom data seed loader
 # MdesDataLoader::load_codes_from_schema('2.0')
 
 require 'ncs_navigator/staff_portal/mdes_code_list_loader'

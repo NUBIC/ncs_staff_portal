@@ -19,6 +19,6 @@ class OutreachEvaluation < ActiveRecord::Base
   ncs_coded_attribute :evaluation, 'OUTREACH_EVAL_CL1'
   belongs_to :outreach_event
   validates_presence_of :evaluation
-    
+
   validates_with OtherEntryValidator, :entry => :evaluation, :other_entry => :evaluation_other
 end

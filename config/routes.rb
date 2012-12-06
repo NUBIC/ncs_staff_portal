@@ -18,16 +18,16 @@ NcsStaffPortal::Application.routes.draw do
     collection do
       get 'users'
     end
-    
+
     member do
       get 'edit_user'
     end
   end
-  
+
   resources :administration
 
   root :to => "public#index"
-  
+
   match 'dashboard' => 'secured#dashboard', :as => 'dashboard'
   match 'logout' => 'logout', :as => 'logout'
   match "users" => "staff#users", :via => [:get]

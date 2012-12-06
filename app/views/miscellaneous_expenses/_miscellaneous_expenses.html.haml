@@ -1,23 +1,23 @@
 .section
   .section_heading
     - model_name = (@miscellaneous_expenses.size == 1 ? "Miscellaneous expense" : "Miscellaneous expenses")
-    = raw page_entries_info @miscellaneous_expenses, {:model => model_name} 
+    = raw page_entries_info @miscellaneous_expenses, {:model => model_name}
   %div.yui-skin-sam
     %div#tasks-list
       %table#data-collection-tasks-list
         - @miscellaneous_expenses.each do |miscellaneous_expense|
           %tr
-            %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff, miscellaneous_expense)
+            %td= link_to miscellaneous_expense.expense_date, edit_staff_miscellaneous_expense_path(@staff.numeric_id, miscellaneous_expense)
             %td= display_task(miscellaneous_expense.hours)
             %td= display_task(miscellaneous_expense.miles)
             %td= display_task(miscellaneous_expense.expenses)
             %td= miscellaneous_expense.comment
-            %td= button_to "Delete", { :action => "destroy", :id => miscellaneous_expense.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the expense record.')", :method => :delete  
+            %td= button_to "Delete", { :action => "destroy", :id => miscellaneous_expense.id, :staff_id => params[:staff_id] }, :class => "control_button", :onclick => "return confirm('Are you sure want to delete? This will delete the expense record.')", :method => :delete
   :javascript
       $(document).ready(function() {
         displayTasksList()
       });
-    
+
       function displayTasksList() {
         var columnDefs = [
             { key: "date", label: "Task Date", sortable: true , formatter: "date", sortOptions: { defaultDir: YAHOO.widget.DataTable.CLASS_DESC }},

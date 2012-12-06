@@ -19,28 +19,28 @@ describe OutreachTarget do
     target = Factory(:outreach_target)
     target.should_not be_nil
   end
-  
+
   it { should belong_to(:target) }
-  
+
   it { should validate_presence_of(:target) }
-  
+
   describe "validates target_other" do
     let(:target_code) { Factory(:ncs_code, :list_name => "OUTREACH_TARGET_CL1", :display_text => "Other", :local_code => -5) }
-    
+
     it "should not valid if outreach target is 'Other' and target_other value is nil" do
       outreach_target = FactoryGirl.build(:outreach_target, :target => target_code)
       outreach_target.target_other = nil
       outreach_target.should_not be_valid
       outreach_target.should have(1).error_on(:target_other)
     end
-    
+
     it "should not valid if outreach target is 'Other' and target_other value is blank string" do
       outreach_target = FactoryGirl.build(:outreach_target, :target => target_code)
       outreach_target.target_other = ''
       outreach_target.should_not be_valid
       outreach_target.should have(1).error_on(:target_other)
     end
-    
+
     it "should be valid if outreach target is 'Building manager' and target_other value is blank string" do
       outreach_target = FactoryGirl.build(:outreach_target)
       outreach_target.target_other = ''
