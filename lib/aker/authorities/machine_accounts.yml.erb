@@ -1,7 +1,7 @@
 users:
   psc_application:
 <% if psc_user_password %>
-    password: '<%= psc_user_password %>'
+    password: <%= psc_user_password.inspect %>
 <% end %>
     identifiers:
       machine_account: true

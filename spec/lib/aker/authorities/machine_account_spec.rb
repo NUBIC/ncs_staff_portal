@@ -87,5 +87,46 @@ module Aker::Authorities
         end
       end
     end
+
+    describe '#populate' do
+      shared_examples 'PSC -> Ops user with a password' do
+        around do |example|
+          begin
+            navconf = Rails.application.config.ncs_navigator
+            u = navconf.staff_portal["psc_user_password"]
+            navconf.staff_portal["psc_user_password"] = psc_user_password
+            example.call
+          ensure
+            navconf.staff_portal["psc_user_password"] = u
+          end
+        end
+
+        before do
+          authority.populate
+        end
+
+        it "includes psc_user_password" do
+          authority.valid_credentials?(:user, 'psc_application', psc_user_password).should be_a(Aker::User)
+        end
+      end
+
+      describe 'with a simple password' do
+        let(:psc_user_password) { 'test' }
+
+        include_context 'PSC -> Ops user with a password'
+      end
+
+      describe 'with a password containing a single quote' do
+        let(:psc_user_password) { "te'st" }
+
+        include_context 'PSC -> Ops user with a password'
+      end
+
+      describe 'with a password containing a double quote' do
+        let(:psc_user_password) { 'te"st' }
+
+        include_context 'PSC -> Ops user with a password'
+      end
+    end
   end
 end
