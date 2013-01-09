@@ -1,4 +1,5 @@
 require 'aker/authorities/machine_account'
+require 'aker/authorities/staff_portal'
 
 NcsStaffPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -31,7 +32,7 @@ NcsStaffPortal::Application.configure do
   config.aker do
     static = Aker::Authorities::Static.from_file("#{Rails.root}/spec/test-users.yml")
 
-    authorities :cas, static, Aker::Authorities::MachineAccount
+    authorities :cas, Aker::Authorities::StaffPortal, static, Aker::Authorities::MachineAccount
     central '/etc/nubic/ncs/aker-local.yml'
   end
 end
