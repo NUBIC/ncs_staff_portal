@@ -15,7 +15,7 @@ namespace :users do
             ["username", csv["USERNAME"]], ["email", csv["EMAIL"]],
             ["study_center", StaffPortal.study_center_id], ["validate_update", "false"]
           ].each do |staff_portal_attribute, csv_record|
-            staff.send("#{staff_portal_attribute}=", csv_record)
+            staff.send("#{staff_portal_attribute}=", csv_record) if csv_record
           end
           staff.save!
           counter += 1
