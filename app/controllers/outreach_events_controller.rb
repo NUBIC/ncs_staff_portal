@@ -48,7 +48,7 @@ class OutreachEventsController < SecuredController
     respond_to do |format|
       if @outreach_event.save
         @outreach_event.outreach_staff_members.each do |s|
-          if s.staff.is_active
+          if NcsNavigator.configuration.staff_portal_email_reminder? && s.staff.is_active
             OutreachMailer.outreach_staff_mail(s.staff, @outreach_event, current_user).deliver unless current_user.username == s.staff.username
           end
         end
@@ -68,7 +68,7 @@ class OutreachEventsController < SecuredController
     respond_to do |format|
       if @outreach_event.update_attributes(params[:outreach_event])
         @outreach_event.outreach_staff_members.each do |s|
-          if s.staff.is_active
+          if NcsNavigator.configuration.staff_portal_email_reminder? && s.staff.is_active
             OutreachMailer.outreach_staff_mail(s.staff, @outreach_event, current_user, "true").deliver unless current_user.username == s.staff.username
           end
         end
