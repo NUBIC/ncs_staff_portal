@@ -163,6 +163,10 @@ module NcsNavigator::StaffPortal::Warehouse
           Staff.first.age_group_code.should == 4
         end
 
+        it 'creates a new record with yob set' do
+          Staff.first.yob_staff.should == 1977
+        end
+
         it 'creates a new record with correct code associations' do
           Staff.first.gender_code.should == 2
         end
