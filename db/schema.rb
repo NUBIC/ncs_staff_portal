@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907154724) do
+ActiveRecord::Schema.define(:version => 20130220171343) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20120907154724) do
     t.boolean  "notify",                                                          :default => true,  :null => false
     t.integer  "numeric_id",                                                                         :null => false
     t.integer  "age_group_code"
+    t.integer  "yob_staff"
   end
 
   add_index "staff", ["numeric_id"], :name => "uq_staff_numeric_id", :unique => true

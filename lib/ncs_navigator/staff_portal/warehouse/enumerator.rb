@@ -12,7 +12,11 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:staff, :Staff,
       :query => %Q(
         SELECT s.*,
-          to_char(birth_date, 'YYYY') staff_yob,
+          CASE
+            WHEN yob_staff IS NOT NULL THEN to_char(yob_staff, '9999')
+            ELSE
+              to_char(birth_date, 'YYYY')
+          END AS staff_yob,
           CASE
             WHEN age_group_code IS NOT NULL THEN age_group_code
             ELSE
@@ -38,7 +42,7 @@ module NcsNavigator::StaffPortal::Warehouse
       },
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
-        hourly_rate pay_type pay_amount
+        hourly_rate pay_type pay_amount yob_staff
         study_center ncs_active_date ncs_inactive_date
         external notify numeric_id age_group_code
       )
