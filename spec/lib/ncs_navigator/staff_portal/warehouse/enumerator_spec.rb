@@ -484,10 +484,26 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_lang_oth.should == 'Babylonian'
         end
 
-        it 'sums letters and attendees for quantity' do
+        it 'uses 0 for quantity when letters and attendees are null' do
+          results.first.outreach_quantity.should == '0'
+        end
+
+        it 'sums letters and attendees for quantity when letters and attendees are not null' do
           outreach_event.update_attributes(:letters_quantity => 8, :attendees_quantity => 3)
 
           results.first.outreach_quantity.should == '11'
+        end
+
+        it 'uses attendees for quantity if letters null' do
+          outreach_event.update_attributes(:attendees_quantity => 15)
+
+          results.first.outreach_quantity.should == '15'
+        end
+
+        it 'uses letters for quantity if attendees null' do
+          outreach_event.update_attributes(:letters_quantity => 8)
+
+          results.first.outreach_quantity.should == '8'
         end
 
         it 'always uses "no" for incidents (until incidents are supported)' do

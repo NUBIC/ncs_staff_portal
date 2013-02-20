@@ -228,7 +228,7 @@ module NcsNavigator::StaffPortal::Warehouse
           COALESCE(oe.cost, '0.0') AS cost,
           oe.no_of_staff AS outreach_staffing,
           oe.evaluation_result_code AS outreach_eval_result,
-          (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
+          (COALESCE(oe.letters_quantity, '0') + COALESCE(oe.attendees_quantity, '0')) AS outreach_quantity,
           ns.ssu_id,
           CASE
             WHEN os.ncs_tsu_id IS NOT NULL THEN (SELECT tsu_id FROM ncs_tsus WHERE id = os.ncs_tsu_id)
