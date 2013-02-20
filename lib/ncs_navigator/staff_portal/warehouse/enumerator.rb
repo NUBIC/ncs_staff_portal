@@ -12,7 +12,11 @@ module NcsNavigator::StaffPortal::Warehouse
     produce_one_for_one(:staff, :Staff,
       :query => %Q(
         SELECT s.*,
-          to_char(birth_date, 'YYYY') staff_yob,
+          CASE
+            WHEN yob_staff IS NOT NULL THEN to_char(yob_staff, '9999')
+            ELSE
+              to_char(birth_date, 'YYYY')
+          END AS staff_yob,
           CASE
             WHEN age_group_code IS NOT NULL THEN age_group_code
             ELSE
@@ -38,8 +42,9 @@ module NcsNavigator::StaffPortal::Warehouse
       },
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
-        hourly_rate pay_type pay_amount
-        study_center external notify numeric_id age_group_code
+        hourly_rate pay_type pay_amount yob_staff
+        study_center
+        external notify numeric_id age_group_code
       )
     )
 
@@ -225,7 +230,7 @@ module NcsNavigator::StaffPortal::Warehouse
           COALESCE(oe.cost, '0.0') AS cost,
           oe.no_of_staff AS outreach_staffing,
           oe.evaluation_result_code AS outreach_eval_result,
-          (oe.letters_quantity + oe.attendees_quantity) AS outreach_quantity,
+          (COALESCE(oe.letters_quantity, '0') + COALESCE(oe.attendees_quantity, '0')) AS outreach_quantity,
           ol.language_other AS lang_other,
           2 AS outreach_incident,
           oe.tailored_code,

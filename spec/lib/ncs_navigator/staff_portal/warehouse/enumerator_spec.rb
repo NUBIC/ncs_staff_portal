@@ -107,11 +107,16 @@ module NcsNavigator::StaffPortal::Warehouse
         ].each { |args| verify_mapping(*args) }
 
         describe 'year of birth' do
-          it 'is extracted when set' do
+          it 'is extracted from yob when staff_yob set' do
+            sp_record.update_attribute(:yob_staff, 1985)
+            results.last.staff_yob.should == '1985'
+          end
+
+          it 'is extracted from dob when staff_yob is null' do
             results.last.staff_yob.should == '1977'
           end
 
-          it 'is blank when unknown' do
+          it 'is blank when dob unknown' do
             sp_record.update_attribute(:birth_date, nil)
             results.last.staff_yob.should be_nil
           end
@@ -504,10 +509,26 @@ module NcsNavigator::StaffPortal::Warehouse
           results.first.outreach_lang_oth.should == 'Babylonian'
         end
 
-        it 'sums letters and attendees for quantity' do
+        it 'uses 0 for quantity when letters and attendees are null' do
+          results.first.outreach_quantity.should == '0'
+        end
+
+        it 'sums letters and attendees for quantity when letters and attendees are not null' do
           outreach_event.update_attributes(:letters_quantity => 8, :attendees_quantity => 3)
 
           results.first.outreach_quantity.should == '11'
+        end
+
+        it 'uses attendees for quantity if letters null' do
+          outreach_event.update_attributes(:attendees_quantity => 15)
+
+          results.first.outreach_quantity.should == '15'
+        end
+
+        it 'uses letters for quantity if attendees null' do
+          outreach_event.update_attributes(:letters_quantity => 8)
+
+          results.first.outreach_quantity.should == '8'
         end
 
         it 'always uses "no" for incidents (until incidents are supported)' do
