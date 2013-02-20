@@ -11,7 +11,6 @@ gem 'compass', '~>0.10.6'
 gem 'bcdatabase'
 gem 'tabs_on_rails'
 gem "breadcrumbs_on_rails"
-gem 'ncs_mdes', '>= 0.8.1'
 gem 'aker-rails'
 gem 'aker'
 gem 'mail', '2.2.19'
@@ -21,9 +20,10 @@ gem 'validates_timeliness', '~> 3.0.2'
 gem 'ncs_navigator_configuration', :git => 'https://github.com/NUBIC/ncs_navigator_configuration.git'
 gem 'uuidtools'
 gem 'exception_notification', :require => 'exception_notifier'
-# gem 'ncs_mdes_warehouse', '~> 0.10'
-gem 'ncs_mdes_warehouse',
-  :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
+gem 'ncs_mdes', '>= 0.11.0'
+gem 'ncs_mdes_warehouse', '~> 0.11'
+# gem 'ncs_mdes_warehouse',
+#   :git => 'git://github.com/NUBIC/ncs_mdes_warehouse.git'
 gem "nilify_blanks"
 gem "ransack"
 gem "strip_attributes", "~> 1.0"
