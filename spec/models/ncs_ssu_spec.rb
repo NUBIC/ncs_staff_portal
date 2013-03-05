@@ -2,9 +2,9 @@
 #
 # Table name: ncs_ssus
 #
-#  id         :integer         not null, primary key
-#  psu_id     :string(36)      not null
-#  ssu_id     :string(36)      not null
+#  id         :integer          not null, primary key
+#  psu_id     :string(36)       not null
+#  ssu_id     :string(36)       not null
 #  ssu_name   :string(255)
 #  created_at :datetime
 #  updated_at :datetime

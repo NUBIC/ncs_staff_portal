@@ -25,9 +25,6 @@
       %em *
       = f.text_field :name, {:size => 50}
     .row
-      PSU
-      = text_field_tag "", StaffPortal.psu_name, :readonly => true
-    .row
       Outreach Segments
       - if NcsArea.all.count > 0 && NcsAreaSsu.all.count > 0
         = select_tag("outreach_event[ncs_ssu_ids][]", grouped_options_for_select(NcsArea.all.sort_by(&:name).map {|area| [area.name,

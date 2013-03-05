@@ -2,7 +2,7 @@
 #
 # Table name: data_collection_tasks
 #
-#  id                          :integer         not null, primary key
+#  id                          :integer          not null, primary key
 #  staff_weekly_expense_id     :integer
 #  task_date                   :date
 #  task_type_code              :integer
@@ -15,7 +15,7 @@
 #  comment                     :text
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  staff_exp_data_coll_task_id :string(36)      not null
+#  staff_exp_data_coll_task_id :string(36)       not null
 #
 
 class DataCollectionTask < ActiveRecord::Base

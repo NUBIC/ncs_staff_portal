@@ -2,13 +2,13 @@
 #
 # Table name: outreach_targets
 #
-#  id                 :integer         not null, primary key
+#  id                 :integer          not null, primary key
 #  outreach_event_id  :integer
-#  target_code        :integer         not null
+#  target_code        :integer          not null
 #  target_other       :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  outreach_target_id :string(36)      not null
+#  outreach_target_id :string(36)       not null
 #  source_id          :string(36)
 #
 

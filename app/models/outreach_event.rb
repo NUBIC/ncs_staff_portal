@@ -2,13 +2,13 @@
 #
 # Table name: outreach_events
 #
-#  id                     :integer         not null, primary key
+#  id                     :integer          not null, primary key
 #  event_date             :string(10)
-#  mode_code              :integer         not null
+#  mode_code              :integer          not null
 #  mode_other             :string(255)
-#  outreach_type_code     :integer         not null
+#  outreach_type_code     :integer          not null
 #  outreach_type_other    :string(255)
-#  tailored_code          :integer         not null
+#  tailored_code          :integer          not null
 #  language_specific_code :integer
 #  race_specific_code     :integer
 #  culture_specific_code  :integer
@@ -16,14 +16,14 @@
 #  culture_other          :string(255)
 #  cost                   :decimal(, )
 #  no_of_staff            :integer
-#  evaluation_result_code :integer         not null
+#  evaluation_result_code :integer          not null
 #  created_at             :datetime
 #  updated_at             :datetime
 #  name                   :string(255)
 #  letters_quantity       :integer
 #  attendees_quantity     :integer
 #  created_by             :integer
-#  outreach_event_id      :string(36)      not null
+#  outreach_event_id      :string(36)       not null
 #  source_id              :string(36)
 #  event_date_date        :date
 #

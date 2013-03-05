@@ -13,7 +13,7 @@ namespace :users do
           [
             ["first_name", csv["FIRST_NAME"]], ["last_name", csv["LAST_NAME"]],
             ["username", csv["USERNAME"]], ["email", csv["EMAIL"]],
-            ["study_center", StaffPortal.study_center_id], ["validate_update", "false"]
+            ["validate_update", "false"]
           ].each do |staff_portal_attribute, csv_record|
             staff.send("#{staff_portal_attribute}=", csv_record) if csv_record
           end
@@ -27,8 +27,7 @@ namespace :users do
           Staff.create( :first_name => csv["FIRST_NAME"],
                         :last_name => csv["LAST_NAME"],
                         :username => csv["USERNAME"],
-                        :email => csv["EMAIL"],
-                        :study_center => StaffPortal.study_center_id)
+                        :email => csv["EMAIL"]
           counter += 1
         end
       end
