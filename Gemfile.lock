@@ -7,7 +7,8 @@ GIT
 
 GIT
   remote: https://github.com/NUBIC/ncs_navigator_configuration.git
-  revision: 0067e1dc47df1ec5cf7b837a654694259afdb691
+  revision: 2e304aa3e243e7a896cf0f57ddb92357105a254f
+  branch: issues_16_17
   specs:
     ncs_navigator_configuration (0.3.3.pre)
       fastercsv (~> 1.5)
