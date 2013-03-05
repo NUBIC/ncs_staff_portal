@@ -12,14 +12,6 @@ module StaffPortal
       @configuration ||= NcsNavigator.configuration
     end
 
-    def study_center_id
-      configuration.sc_id
-    end
-
-    def study_center_name
-      @study_center_name = mdes_label('study_center_cl1', study_center_id)
-    end
-
     def psu_id
       configuration.psus.first.id unless NcsNavigator.configuration.psus.blank?
     end

@@ -17,7 +17,7 @@ end
 Given /^an authenticated user$/ do
   header 'Accept', 'text/html'
   username = "superuser"
-  staff = Staff.create(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username, :study_center => 1234)
+  staff = Staff.create(:username => username, :email => "#{username}@test.com", :first_name => username, :last_name => username)
   steps %Q{
     Given I log in as "#{username}"
   }

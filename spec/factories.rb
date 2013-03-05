@@ -9,13 +9,11 @@ FactoryGirl.define do
     s.first_name "FName"
     s.last_name "LName"
     s.email {Factory.next(:email)}
-    s.study_center 123456
   end
 
   factory :valid_staff, :class => Staff do |s|
     s.first_name 'Josephine'
     s.last_name  'Hull'
-    s.study_center 2900092
     s.birth_date Date.new(1977, 1, 3)
     s.staff_type    { |a| a.association(:ncs_code, :list_name => 'STUDY_STAFF_TYPE_CL1', :local_code => 12, :display_text => 'Telephone Center Staff') }
     s.gender        { |a| a.association(:ncs_code, :list_name => 'GENDER_CL1', :local_code => 2, :display_text => 'Female') }

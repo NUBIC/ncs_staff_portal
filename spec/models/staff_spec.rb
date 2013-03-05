@@ -2,10 +2,9 @@
 #
 # Table name: staff
 #
-#  id                 :integer         not null, primary key
+#  id                 :integer          not null, primary key
 #  email              :string(255)
 #  username           :string(255)
-#  study_center       :integer
 #  staff_type_code    :integer
 #  staff_type_other   :string(255)
 #  subcontractor_code :integer
@@ -26,11 +25,12 @@
 #  last_name          :string(255)
 #  ncs_active_date    :date
 #  ncs_inactive_date  :date
-#  staff_id           :string(36)      not null
-#  external           :boolean         default(FALSE), not null
-#  notify             :boolean         default(TRUE), not null
-#  numeric_id         :integer         not null
+#  staff_id           :string(36)       not null
+#  external           :boolean          default(FALSE), not null
+#  notify             :boolean          default(TRUE), not null
+#  numeric_id         :integer          not null
 #  age_group_code     :integer
+#  yob_staff          :integer
 #
 
 require 'spec_helper'
@@ -510,7 +510,7 @@ describe Staff do
       @staff = FactoryGirl.create(:staff)
     end
 
-    ["username", "first_name", "last_name", "email", "study_center", "ncs_active_date", "ncs_inactive_date", "staff_type_other", "race_other", "numeric_id"].each do |key|
+    ["username", "first_name", "last_name", "email", "ncs_active_date", "ncs_inactive_date", "staff_type_other", "race_other", "numeric_id"].each do |key|
       it "contains #{key}" do
         @staff.as_json.has_key?("#{key}").should == true
       end
