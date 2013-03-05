@@ -2,13 +2,13 @@
 #
 # Table name: outreach_languages
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  outreach_event_id :integer
-#  language_code     :integer         not null
+#  language_code     :integer          not null
 #  language_other    :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  outreach_lang2_id :string(36)      not null
+#  outreach_lang2_id :string(36)       not null
 #  source_id         :string(36)
 #
 

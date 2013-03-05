@@ -2,8 +2,8 @@
 #
 # Table name: roles
 #
-#  id   :integer         not null, primary key
-#  name :string(255)     not null
+#  id   :integer          not null, primary key
+#  name :string(255)      not null
 #
 
 class Role < ActiveRecord::Base
