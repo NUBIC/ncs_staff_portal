@@ -41,7 +41,7 @@ end
 
 Given /staff with name (.+)$/ do |names|
   names.split(', ').each do |name|
-    staff = Factory(:valid_staff, :first_name => name, :last_name => name, :study_center => 1234)
+    staff = Factory(:valid_staff, :first_name => name, :last_name => name)
     Aker.configuration.authorities.detect { |a| a.is_a?(Aker::Authorities::Static) }.
       valid_credentials!(:user, name, name)
   end
@@ -86,9 +86,9 @@ end
 
 def valid_staff(username, name_flag = nil)
   if name_flag
-    staff = Factory(:valid_staff, :first_name => "fname_" + username, :last_name => "lname_" + username, :study_center => 1234)
+    staff = Factory(:valid_staff, :first_name => "fname_" + username, :last_name => "lname_" + username)
   else
-    staff = Factory(:valid_staff, :first_name => username, :last_name => username, :study_center => 1234)
+    staff = Factory(:valid_staff, :first_name => username, :last_name => username)
   end
   staff.username = username
   staff.email = "#{username}@test.com"

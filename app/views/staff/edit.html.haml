@@ -21,10 +21,6 @@
     = f.label :username, NcsNavigator.configuration.study_center_username
     = text_field_tag "username", @staff.display_username, :disabled => true
   .field
-    = label_tag "Study center"
-    = text_field_tag "study_center", StaffPortal.study_center_name, :disabled => true
-    = f.hidden_field :study_center, :value => StaffPortal.study_center_id
-  .field
     = f.label :staff_type_code, "Staff Type"
     %em *
     = f.select :staff_type_code, NcsCode.ncs_code_lookup(:staff_type_code), {:prompt => 'Select NCS Staff Type'}, {:id => "staff_type"}

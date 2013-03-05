@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226180313) do
+ActiveRecord::Schema.define(:version => 20130305161737) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -216,7 +216,6 @@ ActiveRecord::Schema.define(:version => 20130226180313) do
   create_table "staff", :force => true do |t|
     t.string   "email"
     t.string   "username"
-    t.integer  "study_center"
     t.integer  "staff_type_code"
     t.string   "staff_type_other"
     t.integer  "subcontractor_code"
