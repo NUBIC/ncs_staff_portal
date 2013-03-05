@@ -4,10 +4,6 @@ require 'ncs_navigator/configuration'
 module StaffPortal
   class << self
 
-    def mdes
-      @mdes ||= NcsNavigator::Mdes('2.0', :log => Rails.logger)
-    end
-
     def configuration
       @configuration ||= NcsNavigator.configuration
     end
@@ -42,6 +38,27 @@ module StaffPortal
 
     def week_start_day
       configuration.staff_portal['week_start_day']=~ /monday/ ? "monday" : "sunday"
+    end
+
+    ##
+    # @return [NcsNavigator::Mdes::Specification] the specification
+    # for the MDES version that StaffPortal currently corresponds to.
+    def mdes
+      mdes_version.specification
+    end
+
+    def mdes_version
+      @mdes_version ||= MdesVersion.new
+    end
+
+    def mdes_version=(version)
+      @mdes_version =
+        case version
+        when MdesVersion
+          version
+        else
+          MdesVersion.new(version.to_s)
+        end
     end
 
     private
