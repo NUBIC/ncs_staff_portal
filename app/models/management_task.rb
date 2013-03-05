@@ -2,10 +2,10 @@
 #
 # Table name: management_tasks
 #
-#  id                      :integer         not null, primary key
+#  id                      :integer          not null, primary key
 #  staff_weekly_expense_id :integer
-#  task_date               :date            not null
-#  task_type_code          :integer         not null
+#  task_date               :date             not null
+#  task_type_code          :integer          not null
 #  task_type_other         :string(255)
 #  hours                   :decimal(, )
 #  expenses                :decimal(, )
@@ -13,7 +13,7 @@
 #  comment                 :text
 #  created_at              :datetime
 #  updated_at              :datetime
-#  staff_exp_mgmt_task_id  :string(36)      not null
+#  staff_exp_mgmt_task_id  :string(36)       not null
 #
 
 class ManagementTask < ActiveRecord::Base

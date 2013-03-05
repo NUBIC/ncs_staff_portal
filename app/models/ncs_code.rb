@@ -2,10 +2,10 @@
 #
 # Table name: ncs_codes
 #
-#  id           :integer         not null, primary key
-#  list_name    :string(255)     not null
-#  display_text :string(255)     not null
-#  local_code   :integer         not null
+#  id           :integer          not null, primary key
+#  list_name    :string(255)      not null
+#  display_text :string(255)      not null
+#  local_code   :integer          not null
 #  created_at   :datetime
 #  updated_at   :datetime
 #

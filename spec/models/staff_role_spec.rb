@@ -2,7 +2,7 @@
 #
 # Table name: staff_roles
 #
-#  id         :integer         not null, primary key
+#  id         :integer          not null, primary key
 #  staff_id   :integer
 #  role_id    :integer
 #  created_at :datetime

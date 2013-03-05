@@ -2,12 +2,12 @@
 #
 # Table name: outreach_staff_members
 #
-#  id                      :integer         not null, primary key
+#  id                      :integer          not null, primary key
 #  staff_id                :integer
 #  outreach_event_id       :integer
 #  created_at              :datetime
 #  updated_at              :datetime
-#  outreach_event_staff_id :string(36)      not null
+#  outreach_event_staff_id :string(36)       not null
 #  source_id               :string(36)
 #
 
