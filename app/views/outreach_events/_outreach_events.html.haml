@@ -25,9 +25,6 @@
       %em *
       = f.text_field :name, {:size => 50}
     .row
-      PSU
-      = text_field_tag "", StaffPortal.psu_name, :readonly => true
-    .row
       Outreach Segments
       %em *
       - if NcsArea.all.count > 0 && NcsAreaSsu.all.count > 0

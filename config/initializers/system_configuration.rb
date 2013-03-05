@@ -12,14 +12,6 @@ module StaffPortal
       @configuration ||= NcsNavigator.configuration
     end
 
-    def psu_id
-      configuration.psus.first.id unless NcsNavigator.configuration.psus.blank?
-    end
-
-    def psu_name
-      @psu_name = mdes_label('psu_cl1', psu_id)
-    end
-
     def footer_logo_left_path
       "config/" << configuration.footer_logo_left.to_s.split("/").last if configuration.footer_logo_left
     end
