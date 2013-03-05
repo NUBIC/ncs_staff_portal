@@ -27,7 +27,7 @@ namespace :users do
           Staff.create( :first_name => csv["FIRST_NAME"],
                         :last_name => csv["LAST_NAME"],
                         :username => csv["USERNAME"],
-                        :email => csv["EMAIL"]
+                        :email => csv["EMAIL"])
           counter += 1
         end
       end
