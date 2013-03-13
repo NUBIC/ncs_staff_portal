@@ -3,10 +3,18 @@ require 'yaml'
 
 module NcsNavigator::StaffPortal
   class MdesCodeListLoader
-    FILENAME = Rails.root + 'db' + 'ncs_codes.yml'
+    attr_reader :mdes_version, :filename
 
     def initialize(options = {})
       @interactive = options[:interactive]
+      ver = options[:mdes_version]
+      @mdes_version = if ver
+        MdesVersion.new(ver)
+      else
+        StaffPortal.mdes_version
+      end
+      @filename = Rails.root + 'db' + "ncs_codes-#{mdes_version.number}.yml"
+
     end
 
     def interactive?
@@ -14,9 +22,9 @@ module NcsNavigator::StaffPortal
     end
 
     # n.b.: if you change the way this method works, you should run
-    # `rake mdes:code_lists:yaml` and commit the result.
+    # `rake mdes:code_lists:all_yaml` and commit the result.
     def create_yaml
-      yml = NcsStaffPortal.mdes.types.select(&:code_list).collect { |typ|
+      yml = mdes_version.specification.types.select(&:code_list).collect { |typ|
         # Merge display text for duplicate codes. In MDES 2.0, these only occur in PSU_CL1.
         code_list_index = typ.code_list.inject({}) { |i, cl_entry|
           # TODO: some display text entries have lots of random bytes
@@ -34,13 +42,13 @@ module NcsNavigator::StaffPortal
         }
       }.flatten.sort_by { |list_entry| [list_entry['list_name'], list_entry['local_code']] }
 
-      File.open(FILENAME.to_s, 'w') do |w|
+      File.open(filename.to_s, 'w:utf-8') do |w|
         w.write(yml.to_yaml)
       end
     end
 
     def load_from_yaml
-      create_yaml unless FILENAME.exist?
+      create_yaml unless filename.exist?
 
       partitioned = select_for_insert_update_delete
 
@@ -90,7 +98,7 @@ module NcsNavigator::StaffPortal
     private :do_update
 
     def select_for_insert_update_delete
-      yaml_entries = YAML.load(File.read(FILENAME.to_s))
+      yaml_entries = YAML.load(File.read(filename.to_s))
       existing_entries = ActiveRecord::Base.connection.
         select_all('SELECT list_name, local_code FROM ncs_codes')
 

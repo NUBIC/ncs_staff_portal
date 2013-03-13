@@ -38,6 +38,7 @@ Spork.prefork do
     config.before(:all) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
+      StaffPortal.mdes_version = '2.0' # TODO: support with different versions
       NcsNavigator::StaffPortal::MdesCodeListLoader.new.load_from_yaml
     end
 
