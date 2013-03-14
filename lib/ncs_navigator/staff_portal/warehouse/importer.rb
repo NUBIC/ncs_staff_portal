@@ -38,11 +38,15 @@ module NcsNavigator::StaffPortal::Warehouse
       end
     end
 
-    def self.automatic_producers
-      Enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" || rp.name.to_s == "staff_languages_other" }
+    def automatic_producers
+      enumerator.record_producers.reject { |rp| rp.name.to_s == "outreach_untailored_automatic" || rp.name.to_s == "staff_languages_other" }
     end
 
     private
+
+    def enumerator
+      Enumerator.select_implementation(wh_config)
+    end
 
     def create_simply_mapped_staff_portal_records(mdes_producer)
       staff_portal_model = staff_portal_model_for_table(mdes_producer.name)
@@ -222,7 +226,7 @@ module NcsNavigator::StaffPortal::Warehouse
     end
 
     def find_producer(name)
-      Enumerator.record_producers.find { |rp| rp.name.to_sym == name.to_sym }
+      enumerator.record_producers.find { |rp| rp.name.to_sym == name.to_sym }
     end
 
     def column_map(staff_portal_model)

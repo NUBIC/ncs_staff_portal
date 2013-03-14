@@ -13,8 +13,12 @@ module NcsNavigator::StaffPortal::Warehouse
       Importer.new(wh_config)
     }
 
+    let(:enumerator_class) {
+      Enumerator.select_implementation(wh_config)
+    }
+
     let(:enumerator) {
-      Enumerator.new(wh_config, :bcdatabase => bcdatabase_config)
+      enumerator_class.new(wh_config, :bcdatabase => bcdatabase_config)
     }
 
     def save_wh(record)
@@ -37,7 +41,7 @@ module NcsNavigator::StaffPortal::Warehouse
 
     describe 'strategy selection' do
       it 'handles most models automatically' do
-        Importer.automatic_producers.size.should == 12
+        importer.automatic_producers.size.should == 12
       end
     end
 
