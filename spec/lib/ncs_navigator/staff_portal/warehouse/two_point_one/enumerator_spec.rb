@@ -37,7 +37,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       Enumerator.bcdatabase[:name].should == 'ncs_staff_portal'
     end
 
-    shared_context 'mapping test' do
+    shared_context 'mapping test 2.1' do
       before do
         # ignore unused so we can see the mapping failures
         Enumerator.on_unused_columns :ignore
@@ -68,14 +68,14 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       wh_record.errors.to_a.should == []
     end
 
-    shared_examples 'one-to-one valid' do
+    shared_examples 'one-to-one valid 2.1' do
       it 'produces a single valid warehouse record from a valid NCS Navigator Ops record' do
         sp_record.should be_valid
         record_should_be_valid(results.first)
       end
     end
 
-    shared_examples 'staff associated' do
+    shared_examples 'staff associated 2.1' do
       it 'produces no records for an incomplete staff member' do
         staff.update_attribute(:zipcode, nil)
         results.size.should == 0
@@ -93,10 +93,10 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         results.collect(&:staff_zip).should == %w(92131)
       end
 
-      include_examples 'one-to-one valid'
+      include_examples 'one-to-one valid 2.1'
 
       context do
-        include_context 'mapping test'
+        include_context 'mapping test 2.1'
 
         [
           # prefix breaks default behavior
@@ -192,8 +192,8 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           results.size.should == 1
         end
 
-        include_examples 'staff associated'
-        include_examples 'one-to-one valid'
+        include_examples 'staff associated 2.1'
+        include_examples 'one-to-one valid 2.1'
       end
 
       context 'other' do
@@ -210,7 +210,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           results.last.staff_id.should == staff.staff_id
         end
 
-        include_examples 'staff associated'
+        include_examples 'staff associated 2.1'
 
         it 'ignores coded entries' do
           Factory(:staff_language, :staff => staff)
@@ -255,11 +255,11 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         results.size.should == 1
       end
 
-      include_examples 'one-to-one valid'
-      include_examples 'staff associated'
+      include_examples 'one-to-one valid 2.1'
+      include_examples 'staff associated 2.1'
 
       context do
-        include_context 'mapping test'
+        include_context 'mapping test 2.1'
 
         [
           [:certificate_type, ncs_code(7), :cert_train_type, '7'],
@@ -287,11 +287,11 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         results.first.weekly_exp_id.should == sp_record.weekly_exp_id
       end
 
-      include_examples 'one-to-one valid'
-      include_examples 'staff associated'
+      include_examples 'one-to-one valid 2.1'
+      include_examples 'staff associated 2.1'
 
       context do
-        include_examples 'mapping test'
+        include_examples 'mapping test 2.1'
 
         [
           [:week_start_date, Date.new(2011, 4, 8), :week_start_date, '2011-04-08'],
@@ -300,8 +300,8 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         ].each { |args| verify_mapping(*args) }
       end
 
-      shared_examples 'summed attributes' do
-        include_context 'mapping test'
+      shared_examples 'summed attributes 2.1' do
+        include_context 'mapping test 2.1'
 
         it 'produces one expense record for many tasks' do
           results.size.should == 1
@@ -379,7 +379,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
         let!(:task3) { Factory(:management_task, :staff_weekly_expense => sp_record) }
 
-        include_examples 'summed attributes'
+        include_examples 'summed attributes 2.1'
       end
 
       describe 'with data collection tasks' do
@@ -387,7 +387,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         let!(:task2) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
         let!(:task3) { Factory(:data_collection_task, :staff_weekly_expense => sp_record) }
 
-        include_examples 'summed attributes'
+        include_examples 'summed attributes 2.1'
       end
 
       describe 'with both kinds of tasks and miscellaneous_expense' do
@@ -395,7 +395,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         let!(:task2) { Factory(:management_task, :staff_weekly_expense => sp_record) }
         let!(:task3) { Factory(:miscellaneous_expense, :staff_weekly_expense => sp_record) }
 
-        include_examples 'summed attributes'
+        include_examples 'summed attributes 2.1'
       end
     end
 
@@ -414,11 +414,11 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
         results.size.should == 1
       end
 
-      include_examples 'one-to-one valid'
-      include_examples 'staff associated'
+      include_examples 'one-to-one valid 2.1'
+      include_examples 'staff associated 2.1'
 
       context do
-        include_context 'mapping test'
+        include_context 'mapping test 2.1'
 
         [
           [:task_type, ncs_code(11), :mgmt_task_type, '11'],
@@ -438,8 +438,8 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       let(:sp_model) { DataCollectionTask }
       let!(:sp_record) { Factory(:data_collection_task, :staff_weekly_expense => expense) }
 
-      include_examples 'one-to-one valid'
-      include_examples 'staff associated'
+      include_examples 'one-to-one valid 2.1'
+      include_examples 'staff associated 2.1'
 
       it 'uses the public ID for the associated weekly expense' do
         results.first.staff_weekly_expense_id.should == StaffWeeklyExpense.first.weekly_exp_id
@@ -450,7 +450,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       end
 
       context do
-        include_context 'mapping test'
+        include_context 'mapping test 2.1'
 
         [
           [:task_type, ncs_code(7), :data_coll_task_type, '7'],
@@ -475,7 +475,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       }
 
       shared_examples 'a basic outreach event 2.1' do
-        include_context 'mapping test'
+        include_context 'mapping test 2.1'
 
         let(:sp_record) { outreach_event }
 
@@ -491,7 +491,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           end
         end
 
-        include_examples 'one-to-one valid'
+        include_examples 'one-to-one valid 2.1'
 
         [
           [:event_date, '2011-07-05', :outreach_event_date, '2011-07-05'],
@@ -775,7 +775,7 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           end
         end
 
-        include_examples 'one-to-one valid'
+        include_examples 'one-to-one valid 2.1'
 
         describe 'with multiple languages' do
           let!(:outreach_language2) {
@@ -830,10 +830,10 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           end
         end
 
-        include_examples 'one-to-one valid'
+        include_examples 'one-to-one valid 2.1'
 
         context do
-          include_context 'mapping test'
+          include_context 'mapping test 2.1'
 
           verify_mapping(:race_other, nil, :outreach_race_oth)
         end
@@ -886,10 +886,10 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           end
         end
 
-        include_examples 'one-to-one valid'
+        include_examples 'one-to-one valid 2.1'
 
         context do
-          include_context 'mapping test'
+          include_context 'mapping test 2.1'
 
           verify_mapping(:target_other, nil, :outreach_target_ms_oth)
         end
@@ -946,10 +946,10 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           end
         end
 
-        include_examples 'one-to-one valid'
+        include_examples 'one-to-one valid 2.1'
 
         context do
-          include_context 'mapping test'
+          include_context 'mapping test 2.1'
 
           verify_mapping(:evaluation_other, nil, :outreach_eval_oth)
         end
@@ -1014,8 +1014,8 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
           results.first.staff_id.should == outreach_staff_member.staff.public_id
         end
 
-        include_examples 'one-to-one valid'
-        include_examples 'staff associated'
+        include_examples 'one-to-one valid 2.1'
+        include_examples 'staff associated 2.1'
 
         describe 'with multiple staff' do
           let!(:outreach_staff_member2) {
