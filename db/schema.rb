@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220171343) do
+ActiveRecord::Schema.define(:version => 20130226180313) do
 
   create_table "data_collection_tasks", :force => true do |t|
     t.integer  "staff_weekly_expense_id"
@@ -52,6 +52,10 @@ ActiveRecord::Schema.define(:version => 20130220171343) do
   end
 
   add_index "management_tasks", ["staff_exp_mgmt_task_id"], :name => "uq_management_tasks_staff_exp_mgmt_task_id", :unique => true
+
+  create_table "mdes_version", :id => false, :force => true do |t|
+    t.string "number", :limit => 10, :null => false
+  end
 
   create_table "miscellaneous_expenses", :force => true do |t|
     t.integer  "staff_weekly_expense_id"

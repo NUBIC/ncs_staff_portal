@@ -16,6 +16,10 @@
 # # Our custom data seed loader
 # MdesDataLoader::load_codes_from_schema('2.0')
 
+if ENV['INITIAL_MDES_VERSION']
+  MdesVersion.set!(ENV['INITIAL_MDES_VERSION'])
+end
+
 require 'ncs_navigator/staff_portal/mdes_code_list_loader'
 NcsNavigator::StaffPortal::MdesCodeListLoader.new(:interactive => true).load_from_yaml
 
