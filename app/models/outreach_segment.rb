@@ -2,7 +2,7 @@
 #
 # Table name: outreach_segments
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  outreach_event_id :integer
 #  created_at        :datetime
 #  updated_at        :datetime

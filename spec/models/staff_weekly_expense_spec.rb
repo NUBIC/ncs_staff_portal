@@ -2,14 +2,14 @@
 #
 # Table name: staff_weekly_expenses
 #
-#  id              :integer         not null, primary key
+#  id              :integer          not null, primary key
 #  staff_id        :integer
-#  week_start_date :date            not null
+#  week_start_date :date             not null
 #  rate            :decimal(10, 2)
 #  comment         :text
 #  created_at      :datetime
 #  updated_at      :datetime
-#  weekly_exp_id   :string(36)      not null
+#  weekly_exp_id   :string(36)       not null
 #  hours           :decimal(10, 2)
 #  miles           :decimal(10, 2)
 #  expenses        :decimal(10, 2)

@@ -2,9 +2,9 @@
 #
 # Table name: supervisor_employees
 #
-#  id            :integer         not null, primary key
-#  supervisor_id :integer         not null
-#  employee_id   :integer         not null
+#  id            :integer          not null, primary key
+#  supervisor_id :integer          not null
+#  employee_id   :integer          not null
 #
 
 class SupervisorEmployee < ActiveRecord::Base

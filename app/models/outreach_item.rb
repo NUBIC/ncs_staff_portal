@@ -2,11 +2,11 @@
 #
 # Table name: outreach_items
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  outreach_event_id :integer
-#  item_name         :string(255)     not null
+#  item_name         :string(255)      not null
 #  item_other        :string(255)
-#  item_quantity     :integer         not null
+#  item_quantity     :integer          not null
 #  created_at        :datetime
 #  updated_at        :datetime
 #
