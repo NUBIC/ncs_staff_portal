@@ -2,18 +2,18 @@
 #
 # Table name: staff_cert_trainings
 #
-#  id                    :integer         not null, primary key
+#  id                    :integer          not null, primary key
 #  staff_id              :integer
-#  certificate_type_code :integer         not null
-#  complete_code         :integer         not null
+#  certificate_type_code :integer          not null
+#  complete_code         :integer          not null
 #  cert_date             :string(255)
-#  background_check_code :integer         not null
+#  background_check_code :integer          not null
 #  frequency             :string(10)
 #  expiration_date       :date
 #  comment               :text
 #  created_at            :datetime
 #  updated_at            :datetime
-#  staff_cert_list_id    :string(36)      not null
+#  staff_cert_list_id    :string(36)       not null
 #
 
 class StaffCertTraining < ActiveRecord::Base

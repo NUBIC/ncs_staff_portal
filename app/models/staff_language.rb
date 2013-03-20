@@ -2,13 +2,13 @@
 #
 # Table name: staff_languages
 #
-#  id                :integer         not null, primary key
+#  id                :integer          not null, primary key
 #  staff_id          :integer
-#  lang_code         :integer         not null
+#  lang_code         :integer          not null
 #  lang_other        :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  staff_language_id :string(36)      not null
+#  staff_language_id :string(36)       not null
 #
 
 class StaffLanguage < ActiveRecord::Base

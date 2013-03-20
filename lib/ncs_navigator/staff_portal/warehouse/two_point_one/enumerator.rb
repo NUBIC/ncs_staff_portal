@@ -44,7 +44,6 @@ module NcsNavigator::StaffPortal::Warehouse::TwoPointOne
       :ignored_columns => %w(
         email username first_name last_name birth_date zipcode
         hourly_rate pay_type pay_amount yob_staff
-        study_center
         external notify numeric_id age_group_code
       )
     )
