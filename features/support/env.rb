@@ -55,6 +55,9 @@ Capybara.register_driver :rack_api do |app|
 end
 
 Capybara.default_driver = :rack_interactive
+StaffPortal.mdes_version = '2.0'
+NcsNavigator::StaffPortal::MdesCodeListLoader.new.load_from_yaml
+
 
 Before('@api') do
   Capybara.current_driver = :rack_api

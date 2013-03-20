@@ -11,15 +11,16 @@
             = f.label :event_date_cont, "Event Date"
             = f.text_field :event_date_cont, :class => 'datepicker'
           %td
-            = f.label :ncs_ssus_ssu_name_cont, "Segment Name"
-            = f.text_field :ncs_ssus_ssu_name_cont
+            = f.label :staff_first_name_or_staff_last_name_or_staff_staff_id_cont, "Staff member"
+            = f.text_field :staff_first_name_or_staff_last_name_or_staff_staff_id_cont
         %tr
           %td
             = f.label :name_cont, "Event Name"
             = f.text_field :name_cont
-          %td
-            = f.label :staff_first_name_or_staff_last_name_or_staff_staff_id_cont, "Staff member"
-            = f.text_field :staff_first_name_or_staff_last_name_or_staff_staff_id_cont
+          - if NcsSsu.all.count > 0
+            %td
+              = f.label :ncs_ssus_ssu_name_cont, "Segment Name"
+              = f.text_field :ncs_ssus_ssu_name_cont
         %tr
           %td
             = f.submit "Search",:class => "control_button"
@@ -39,6 +40,10 @@
                 %td= link_to outreach_event.name_text, edit_outreach_event_path(outreach_event)
               - else
                 %td= outreach_event.name_text
+              - if NcsSsu.all.count > 0
+                %td= display_segments(outreach_event.outreach_segments)
+              - else
+                %td
               %td= display_segments(outreach_event.outreach_segments)
               %td= outreach_event.evaluation_result.display_text
               %td= outreach_event.mode_text
@@ -82,6 +87,16 @@
           var dataTable = new YAHOO.widget.DataTable("event-list", columnDefs, dataSource, {
               sortedBy: { key: "date" , dir: YAHOO.widget.DataTable.CLASS_DESC }
           });
+
+          var ssuCount = #{NcsSsu.all.count}
+          if (ssuCount == 0) {
+            $('.yui-dt-col-segment').each(function(){
+              YAHOO.util.Dom.addClass($(this), 'hide')
+            })
+            dataTable.hideColumn("segment");
+          } else {
+            dataTable.showColumn("segment");
+          }
 
           var canDelete = #{@can_delete}
           if (canDelete) {

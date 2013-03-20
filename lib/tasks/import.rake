@@ -31,7 +31,8 @@ namespace :import do
   desc 'Import operational data'
   task :operational => [:warehouse_setup, :environment] do
     require 'ncs_navigator/staff_portal'
-    importer = NcsNavigator::StaffPortal::Warehouse::Importer.new(import_wh_config)
+    importer_class = NcsNavigator::StaffPortal::Warehouse::Importer.select_implementation(import_wh_config)
+    importer = importer_class.new(import_wh_config)
 
     tables = case
              when ENV['TABLES']
