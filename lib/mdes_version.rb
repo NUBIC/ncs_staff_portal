@@ -62,7 +62,7 @@ class MdesVersion
   # @return [NcsNavigator::Mdes::Specification] a memoized specification for
   #   the current number.
   def specification
-    @specification ||= NcsNavigator::Mdes(number)
+    @specification ||= NcsNavigator::Mdes(number, :log => Rails.logger)
   end
 
   def specification=(spec)
