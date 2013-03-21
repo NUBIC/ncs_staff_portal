@@ -7,5 +7,8 @@
 .footer_logo_back
   = image_tag(StaffPortal.footer_logo_right_path) if StaffPortal.footer_logo_right_path
 
-.app_version
-  = app_version_helper
+.versions
+  .app_version
+    = app_version_helper
+  .mdes_version
+    = mdes_version_helper

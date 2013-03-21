@@ -166,6 +166,10 @@ module ApplicationHelper
     "Release Version #{version}"
   end
 
+  def mdes_version_helper
+    "MDES Version #{StaffPortal.mdes.version}"
+  end
+
   class NCSTabsBuilder < TabsOnRails::Tabs::TabsBuilder
     def tab_for(tab, name, options)
       content = @context.link_to(name, options)

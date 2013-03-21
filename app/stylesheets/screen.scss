@@ -210,10 +210,16 @@ body.ncs {
         @include column(3,true);
       }
 
-      .app_version {
+      .versions {
         color: #999;
         @include column($blueprint-grid-columns);
-        text-align: right;
+        .app_version {
+          @include column(11);
+        }
+        .mdes_version {
+          @include column(12, true);
+          text-align: right;
+        }
       }
     } // end of footer
   }
