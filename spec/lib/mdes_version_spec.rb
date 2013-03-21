@@ -68,11 +68,29 @@ describe MdesVersion do
 
       it 'throws an exception if the new version is different' do
         expect { MdesVersion.set!('2.1') }.
-          should raise_error(/This deployment already has an MDES version \(2\.0\)\. Upgrades aren't implemented yet \(#2090\)\./)
+          should raise_error(/This deployment already has an MDES version \(2\.0\)\. Use a migrator to change MDES versions\./)
       end
 
       it 'does nothing if the new version is the same' do
         expect { MdesVersion.set!('2.0') }.should_not raise_error
+      end
+    end
+    describe '.change!' do
+      it 'fails if changed to nil' do
+        expect { MdesVersion.change!(nil) }.should raise_error(/MDES version cannot be blank./)
+      end
+
+      it 'fails if no version is set' do
+        remove_db_version_number
+
+        expect { MdesVersion.change!('3.0') }.to raise_error('No MDES version set for this deployment yet.')
+      end
+
+      it 'when a version is already set it changes the version' do
+        set_db_version_number '2.0'
+
+        MdesVersion.change!('2.1')
+        MdesVersion.new.number.should == '2.1'
       end
     end
   end
