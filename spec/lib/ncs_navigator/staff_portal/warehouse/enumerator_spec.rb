@@ -50,6 +50,16 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end
 
+      describe 'for MDES 3.2' do
+        before do
+          wh_config.mdes_version = '3.2'
+        end
+
+        it 'uses the TwoPointOne version' do
+          actual.enum.should be_a ThreePointTwo::Enumerator
+        end
+      end
+
       # N.b.: this test is only actually possible if there is a version
       # of the MDES that the Warehouse supports but for which there is no
       # corresponding op enumerator. This is true now but will not always be.
