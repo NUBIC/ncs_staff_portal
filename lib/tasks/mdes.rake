@@ -64,12 +64,19 @@ namespace :mdes do
   namespace :version do
     desc 'Print the current MDES version'
     task :show => :environment do
-      puts "Current MDES version is #{StaffPortal.mdes.mdes_version}."
+      puts "Current MDES version is #{StaffPortal.mdes.version}."
     end
 
     desc 'Set the MDES version in a new deployment'
     task :set, [:version] => [:environment] do |t, args|
       MdesVersion.set!(args[:version])
+    end
+
+    desc 'Convert this instance to the named MDES version'
+    task :migrate, [:to_version] => [:environment] do |t, args|
+      fail "Please specify :to_version" unless args[:to_version]
+      NcsNavigator::StaffPortal::Mdes::VersionMigrator.
+        new(:interactive => true).migrate!(args[:to_version])
     end
   end
 end
