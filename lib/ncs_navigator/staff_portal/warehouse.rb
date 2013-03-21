@@ -9,5 +9,6 @@ module NcsNavigator::StaffPortal
     autoload :Passthrough, 					'ncs_navigator/staff_portal/warehouse/passthrough'
     autoload :TwoPointZero,                 'ncs_navigator/staff_portal/warehouse/two_point_zero'
     autoload :TwoPointOne,                  'ncs_navigator/staff_portal/warehouse/two_point_one'
+    autoload :ThreePointZero,               'ncs_navigator/staff_portal/warehouse/three_point_zero'
   end
 end
