@@ -16,15 +16,23 @@ module NcsNavigator::StaffPortal::Mdes
     # - #from: the version this migration expects Ops to be in before it
     #   starts executing.
     # - #to: the version this migration will leave Ops in after #run is complete.
-    KNOWN_MIGRATIONS = [
-    ]
+    #
+    # @return [Array<#run,#to#from>]
+    def self.default_migrations(options={})
+      [
+        # No semantic differences 3.0 -> 3.2
+        VersionMigrations::Basic.new('3.0', '3.2', options)
+      ]
+    end
 
     attr_reader :start_version, :known_migrations
 
     def initialize(options={})
-      @start_version = options.delete(:start_version) || StaffPortal.mdes_version.number
-      @known_migrations = options.delete(:known_migrations) || KNOWN_MIGRATIONS
       @interactive = options.delete(:interactive)
+      @start_version = options.delete(:start_version) ||
+        StaffPortal.mdes_version.number
+      @known_migrations = options.delete(:known_migrations) ||
+        self.class.default_migrations(:interactive => @interactive)
     end
 
     ##
@@ -82,9 +90,12 @@ module NcsNavigator::StaffPortal::Mdes
       end
 
       all.each do |migration|
-        $stderr.print "Migrating from #{migration.from} to #{migration.to}..." if interactive?
+        $stderr.puts "Migrating from #{migration.from} to #{migration.to}." if interactive?
         migration.run
-        $stderr.puts "done." if interactive?
+      end
+
+      if interactive?
+        $stderr.puts "MDES version migration complete. Registered MDES version for this deployment is now #{MdesVersion.new.number}."
       end
     end
   end

@@ -64,7 +64,7 @@ namespace :mdes do
   namespace :version do
     desc 'Print the current MDES version'
     task :show => :environment do
-      puts "Current MDES version is #{StaffPortal.mdes.mdes_version}."
+      puts "Current MDES version is #{StaffPortal.mdes.version}."
     end
 
     desc 'Set the MDES version in a new deployment'
