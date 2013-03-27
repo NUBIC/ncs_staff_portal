@@ -101,7 +101,7 @@ end
 
 # after deploying, generate static pages, copy over uploads and results, cleanup old deploys,
 # aggressively set permissions, copy images to current image config location.
-after 'deploy:update_code', 'deploy:cleanup', 'deploy:permissions', 'config:images', 'deploy:setup_import_directories'
+after 'deploy:update_code', 'deploy:cleanup', 'config:images', 'deploy:setup_import_directories'
 
 # Database
 namespace :db do
