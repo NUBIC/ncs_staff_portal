@@ -40,6 +40,16 @@ module NcsNavigator::StaffPortal::Warehouse
         end
       end
 
+      describe 'for MDES 2.2' do
+        before do
+          wh_config.mdes_version = '2.2'
+        end
+
+        it 'uses the TwoPointOne version' do
+          actual.enum.should be_a TwoPointTwo::Enumerator
+        end
+      end
+
       describe 'for MDES 3.0' do
         before do
           wh_config.mdes_version = '3.0'
