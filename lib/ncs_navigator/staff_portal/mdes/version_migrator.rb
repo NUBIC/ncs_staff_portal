@@ -23,8 +23,9 @@ module NcsNavigator::StaffPortal::Mdes
         # No semantic differences 3.0 -> 3.2
         VersionMigrations::Basic.new('3.0', '3.2', options),
         # No semantic differences 2.0 -> 2.1
-        VersionMigrations::Basic.new('2.0', '2.1', options)
-
+        VersionMigrations::Basic.new('2.0', '2.1', options),
+        # No semantic differences 2.1 -> 2.2
+        VersionMigrations::Basic.new('2.1', '2.2', options)
       ]
     end
 
