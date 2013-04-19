@@ -73,15 +73,18 @@ module NcsNavigator::StaffPortal::Warehouse
       # N.b.: this test is only actually possible if there is a version
       # of the MDES that the Warehouse supports but for which there is no
       # corresponding op enumerator. This is true now but will not always be.
-      describe 'for an unsupported MDES version' do
-        before do
-          wh_config.mdes_version = '3.1'
-        end
 
-        it 'throws an exception' do
-          expect { actual }.to raise_error(/^Ops has no enumerator for MDES 3.1./)
-        end
-      end
+      # Currently Staff Portal has enumerators for all available MDES versions.
+
+      # describe 'for an unsupported MDES version' do
+      #   before do
+      #     wh_config.mdes_version = '3.1'
+      #   end
+
+      #   it 'throws an exception' do
+      #     expect { actual }.to raise_error(/^Ops has no enumerator for MDES 3.1./)
+      #   end
+      # end
     end
   end
 end
