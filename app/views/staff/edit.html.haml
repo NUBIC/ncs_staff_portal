@@ -74,6 +74,10 @@
     = f.label :experience_code, "Direct experience conducting population based, household field interviewing"
     %em *
     = f.select :experience_code, NcsCode.ncs_code_lookup(:experience_code), :prompt => 'Select Experience'
+  .field
+    = f.label :comment, "Comment"
+  .field
+    = f.text_area :comment, {:cols => 40, :rows => 10}
   %table{ :class => 'records staff_languages' }
     %thead
       %tr
